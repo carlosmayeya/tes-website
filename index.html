@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecnología Explicada Simple</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4FC3F7;
+    --blue-ice: #80D8FF;
+    --blue-dark: #0D2233;
+    --blue-mid: #0A3A5C;
+    --black: #000000;
+    --black-soft: #080808;
+    --grey: #4A6070;
+    --white: #FFFFFF;
+    --white-dim: rgba(255,255,255,0.75);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--blue); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,195,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,195,247,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(79,195,247,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-glow-2 {
+    position: absolute;
+    bottom: -300px;
+    left: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(79,195,247,0.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--blue);
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(52px, 7vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .hero-title .highlight {
+    color: var(--blue);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--white-dim);
+    max-width: 520px;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .hero-stat {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    background: rgba(79,195,247,0.08);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 8px 16px;
+    margin-bottom: 40px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover::after { opacity: 0.15; }
+
+  .btn-secondary {
+    border: 1px solid rgba(79,195,247,0.4);
+    color: var(--blue);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(79,195,247,0.08);
+    border-color: var(--blue);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--grey);
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 100px 48px;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--blue);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 54px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+    color: var(--white-dim);
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.6;
+    margin-bottom: 60px;
+  }
+
+  /* SERIES SECTION */
+  .series-section {
+    background: var(--black-soft);
+    border-top: 1px solid rgba(79,195,247,0.08);
+    border-bottom: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .series-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .serie-card {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.08);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .serie-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--blue);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .serie-card:hover {
+    background: var(--blue-dark);
+    border-color: rgba(79,195,247,0.25);
+  }
+
+  .serie-card:hover::before { opacity: 1; }
+
+  .serie-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--blue);
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .serie-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .serie-desc {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .serie-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+  }
+
+  .badge-live {
+    background: rgba(79,195,247,0.15);
+    color: var(--blue);
+    border: 1px solid rgba(79,195,247,0.3);
+  }
+
+  .badge-soon {
+    background: rgba(255,255,255,0.05);
+    color: var(--grey);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .serie-count {
+    font-size: 12px;
+    color: var(--grey);
+    margin-top: 12px;
+  }
+
+  /* BLOG SECTION */
+  .blog-section {
+    background: var(--black);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .blog-card {
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .blog-card:hover {
+    border-color: rgba(79,195,247,0.3);
+    background: rgba(79,195,247,0.03);
+  }
+
+  .blog-card::after {
+    content: '→';
+    position: absolute;
+    top: 36px;
+    right: 36px;
+    color: var(--blue);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s;
+    font-size: 18px;
+  }
+
+  .blog-card:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .blog-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 16px;
+  }
+
+  .blog-category {
+    color: var(--blue);
+  }
+
+  .blog-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .blog-excerpt {
+    font-size: 14px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .blog-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--blue);
+    margin: 20px 0;
+    opacity: 0.5;
+  }
+
+  /* PRODUCT SECTION */
+  .product-section {
+    background: var(--blue-dark);
+    border-top: 1px solid rgba(79,195,247,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-section::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .product-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .product-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--blue);
+    background: rgba(79,195,247,0.1);
+    border: 1px solid rgba(79,195,247,0.25);
+    padding: 6px 14px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .product-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 52px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .product-desc {
+    font-size: 16px;
+    color: var(--white-dim);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 36px;
+  }
+
+  .product-includes {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+
+  .product-includes li {
+    font-size: 14px;
+    color: var(--white-dim);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(79,195,247,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .product-includes li::before {
+    content: '✓';
+    color: var(--blue);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .product-form {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 40px;
+  }
+
+  .form-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .form-subtitle {
+    font-size: 13px;
+    color: var(--grey);
+    margin-bottom: 28px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(79,195,247,0.2);
+    color: var(--white);
+    padding: 14px 16px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input::placeholder { color: var(--grey); }
+
+  .form-input:focus {
+    border-color: var(--blue);
+    background: rgba(79,195,247,0.04);
+  }
+
+  .form-note {
+    font-size: 11px;
+    color: var(--grey);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  .price-badge {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 24px 0;
+  }
+
+  .price-amount {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 42px;
+    color: var(--blue);
+  }
+
+  .price-label {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.4;
+  }
+
+  .price-strike {
+    font-size: 18px;
+    color: var(--grey);
+    text-decoration: line-through;
+  }
+
+  /* GUÍAS EXTENDIDAS */
+  .guias-section {
+    background: var(--black-soft);
+    border-top: 1px solid rgba(79,195,247,0.08);
+    border-bottom: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .guias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .guia-card {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .guia-card:hover {
+    border-color: rgba(79,195,247,0.3);
+    background: var(--blue-dark);
+  }
+
+  .guia-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--blue);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .guia-card:hover::before { opacity: 1; }
+
+  .guia-serie-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--blue);
+    text-transform: uppercase;
+    background: rgba(79,195,247,0.08);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 4px 10px;
+    display: inline-block;
+    margin-bottom: 18px;
+  }
+
+  .guia-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .guia-desc {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .guia-meta {
+    display: flex;
+    gap: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+  }
+
+  .guia-arrow {
+    position: absolute;
+    bottom: 36px;
+    right: 36px;
+    color: var(--blue);
+    font-size: 18px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s;
+  }
+
+  .guia-card:hover .guia-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* BIBLIOTECA DE PROMPTS */
+  .prompts-section {
+    background: var(--black);
+  }
+
+  .prompts-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid rgba(79,195,247,0.2);
+    background: transparent;
+    color: var(--grey);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: rgba(79,195,247,0.1);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+
+  .prompt-card {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.12);
+    padding: 28px;
+    transition: all 0.2s;
+  }
+
+  .prompt-card:hover {
+    border-color: rgba(79,195,247,0.3);
+  }
+
+  .prompt-category {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .prompt-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  .prompt-box {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(79,195,247,0.15);
+    border-left: 3px solid var(--blue);
+    padding: 14px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .copy-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    background: transparent;
+    border: 1px solid rgba(79,195,247,0.3);
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .copy-btn:hover {
+    background: rgba(79,195,247,0.1);
+  }
+
+  .copy-btn.copied {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
+  /* RECURSOS / PDFs */
+  .recursos-section {
+    background: var(--black-soft);
+    border-top: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .recursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .recurso-card {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 36px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .recurso-card:hover {
+    border-color: rgba(79,195,247,0.3);
+    background: var(--blue-dark);
+  }
+
+  .recurso-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .recurso-serie {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .recurso-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .recurso-desc {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+
+  .recurso-includes {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+
+  .recurso-includes li {
+    font-size: 12px;
+    color: var(--white-dim);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(79,195,247,0.07);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .recurso-includes li::before {
+    content: '→';
+    color: var(--blue);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  /* MODAL EMAIL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open {
+    display: flex;
+  }
+
+  .modal-box {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.25);
+    padding: 48px;
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--grey);
+    font-size: 22px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--white); }
+
+  .modal-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .modal-subtitle {
+    font-size: 13px;
+    color: var(--white-dim);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(79,195,247,0.08);
+    padding: 60px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--grey);
+    font-weight: 300;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--grey);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--blue); }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--grey);
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeUp 0.6s ease forwards; }
+  .hero-title { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-subtitle { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-stat { animation: fadeUp 0.6s 0.25s ease both; }
+  .hero-ctas { animation: fadeUp 0.6s 0.3s ease both; }
+
+  /* NEON LINE */
+  .neon-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0.3;
+    margin: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 72px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-scroll { left: 24px; }
+    .product-inner { grid-template-columns: 1fr; gap: 48px; }
+    footer { padding: 48px 24px; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">TES</div>
+  <ul class="nav-links">
+    <li><a href="#series">Series</a></li>
+    <li><a href="#guias">Guías</a></li>
+    <li><a href="#prompts">Prompts</a></li>
+    <li><a href="#recursos">Recursos</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="https://youtube.com/@tecnologiaexplicadasimple" target="_blank">YouTube →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Series 1–3 publicadas · Serie 4 en curso</div>
+    <h1 class="hero-title">Tecnología <span class="highlight">sin complicaciones.</span></h1>
+    <p class="hero-subtitle">
+      Explicamos IA, redes, cloud y ciberseguridad de forma clara y útil.<br>Sin jerga. Sin humo. Con ejemplos que recuerdas mañana.
+    </p>
+    <div class="hero-stat">⚡ El 95% de la gente usa IA sin entender cómo funciona.<br><span style="color: var(--white-dim); font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.05em;">Tú estás a punto de ser de la otra parte.</span></div>
+    <div class="hero-ctas">
+      <a href="https://youtube.com/@tecnologiaexplicadasimple" target="_blank" class="btn-primary">Ver el canal →</a>
+      <a href="#series" class="btn-secondary">Ver todas las series</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<div class="neon-line"></div>
+
+<!-- SERIES -->
+<section class="series-section" id="series">
+  <div class="section-label">Contenido</div>
+  <h2 class="section-title">Las series</h2>
+  <p class="section-subtitle">Un roadmap completo para entender la tecnología que mueve el mundo. Desde cero. Sin prerequisitos.</p>
+
+  <div class="series-grid">
+
+    <div class="serie-card">
+      <div class="serie-number">SERIE 01</div>
+      <div class="serie-name">IA Explicada Simple</div>
+      <div class="serie-desc">Transistores, redes neuronales, entrenamiento y prompts. La base de todo lo que viene.</div>
+      <span class="serie-badge badge-live">✓ Publicada</span>
+      <div class="serie-count">10 Shorts + Vídeo largo</div>
+    </div>
+
+    <div class="serie-card">
+      <div class="serie-number">SERIE 02</div>
+      <div class="serie-name">Internet y Redes</div>
+      <div class="serie-desc">Cómo llegan los datos de un servidor al otro lado del mundo en menos de un segundo.</div>
+      <span class="serie-badge badge-live">✓ Publicada</span>
+      <div class="serie-count">9 Shorts + Vídeo largo</div>
+    </div>
+
+    <div class="serie-card">
+      <div class="serie-number">SERIE 03</div>
+      <div class="serie-name">La Nube</div>
+      <div class="serie-desc">Dónde están realmente tus fotos. Cómo Netflix sirve vídeo a 270 millones sin caerse.</div>
+      <span class="serie-badge badge-live">✓ Publicada</span>
+      <div class="serie-count">9 Shorts + Vídeo largo</div>
+    </div>
+
+    <div class="serie-card">
+      <div class="serie-number">SERIE 04</div>
+      <div class="serie-name">Ciberseguridad</div>
+      <div class="serie-desc">Hackers, firewalls, cifrado y VPNs. Todo lo que te protege sin que lo sepas.</div>
+      <span class="serie-badge badge-live">● En curso</span>
+      <div class="serie-count">9 Shorts + Vídeo largo</div>
+    </div>
+
+    <div class="serie-card">
+      <div class="serie-number">SERIE 05</div>
+      <div class="serie-name">IA Práctica para Profesionales</div>
+      <div class="serie-desc">Ventas, análisis de datos, reuniones y automatización. IA aplicada a tu trabajo real.</div>
+      <span class="serie-badge badge-soon">Próximamente</span>
+      <div class="serie-count">9 Shorts + Vídeo largo</div>
+    </div>
+
+    <div class="serie-card">
+      <div class="serie-number">SERIE 06–09</div>
+      <div class="serie-name">Programación, Web, Apps y Claude</div>
+      <div class="serie-desc">Crea webs, apps y automatizaciones con IA. Sin saber programar.</div>
+      <span class="serie-badge badge-soon">En desarrollo</span>
+      <div class="serie-count">4 series · 36+ Shorts</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="neon-line"></div>
+
+<!-- BLOG -->
+<section class="blog-section" id="blog">
+  <div class="section-label">Artículos</div>
+  <h2 class="section-title">Blog de tecnología</h2>
+  <p class="section-subtitle">Análisis profundos sobre IA y tecnología. Sin clickbait. Con argumentos reales.</p>
+
+  <div class="blog-grid">
+
+    <a href="#" class="blog-card">
+      <div class="blog-meta">
+        <span class="blog-category">IA · Historia</span>
+        <span>Mayo 2026</span>
+      </div>
+      <div class="blog-title">La historia de los que se quedaron atrás — y por qué tú no quieres ser uno de ellos</div>
+      <div class="blog-divider"></div>
+      <div class="blog-excerpt">Desde la piedra afilada hasta la IA. Cada revolución tecnológica tiene dos tipos de personas: los que se adaptan y los que desaparecen.</div>
+    </a>
+
+    <a href="#" class="blog-card">
+      <div class="blog-meta">
+        <span class="blog-category">IA · Opinión</span>
+        <span>Mayo 2026</span>
+      </div>
+      <div class="blog-title">La IA y el futuro: mi opinión sincera y sin filtro</div>
+      <div class="blog-divider"></div>
+      <div class="blog-excerpt">Lo que nadie dice en voz alta sobre la IA. Memorias perfectas, vínculos emocionales y por qué esto no es una distopía.</div>
+    </a>
+
+    <a href="#" class="blog-card">
+      <div class="blog-meta">
+        <span class="blog-category">IA · Privacidad</span>
+        <span>Mayo 2026</span>
+      </div>
+      <div class="blog-title">Si le preguntas a tu IA quién eres, ¿qué diría?</div>
+      <div class="blog-divider"></div>
+      <div class="blog-excerpt">Le estás entregando información que no darías a nadie. Tus miedos. Tus finanzas. Tus problemas íntimos. ¿Eres consciente de lo que estás construyendo?</div>
+    </a>
+
+    <a href="#" class="blog-card">
+      <div class="blog-meta">
+        <span class="blog-category">IA · Sociedad</span>
+        <span>Mayo 2026</span>
+      </div>
+      <div class="blog-title">La nueva desigualdad que nadie está viendo</div>
+      <div class="blog-divider"></div>
+      <div class="blog-excerpt">Si la IA hace a todos más inteligentes, ¿quién es realmente el más listo? Ilimitados vs limitados: una nueva brecha que se acumula cada día.</div>
+    </a>
+
+    <a href="#" class="blog-card">
+      <div class="blog-meta">
+        <span class="blog-category">IA · Infraestructura</span>
+        <span>Mayo 2026</span>
+      </div>
+      <div class="blog-title">El verdadero coste de la IA — y quién lo está pagando</div>
+      <div class="blog-divider"></div>
+      <div class="blog-excerpt">Cada vez que le escribes a una IA, en algún lugar del mundo se consume agua. No es una metáfora. Es física.</div>
+    </a>
+
+    <a href="#" class="blog-card" style="border-style: dashed; opacity: 0.5; cursor: default;">
+      <div class="blog-meta">
+        <span class="blog-category">Próximamente</span>
+      </div>
+      <div class="blog-title" style="color: var(--grey);">Más artículos en camino</div>
+      <div class="blog-divider"></div>
+      <div class="blog-excerpt">Nuevos análisis publicados con cada serie del canal.</div>
+    </a>
+
+  </div>
+</section>
+
+<div class="neon-line"></div>
+
+<!-- PRODUCT -->
+<section class="product-section" id="producto">
+  <div class="product-inner">
+    <div>
+      <div class="product-tag">⚡ Producto · Lista de espera</div>
+      <h2 class="product-title">IA para Directivos de Ventas</h2>
+      <p class="product-desc">La guía práctica que nadie más te da. Sistemas reales, prompts probados y casos de uso concretos para directivos que quieren resultados, no teoría.</p>
+
+      <ul class="product-includes">
+        <li>Guía PDF de 25-30 páginas lista para aplicar</li>
+        <li>5 vídeos privados con demostraciones reales</li>
+        <li>Prompts exactos para ventas, reuniones y análisis</li>
+        <li>Sistema completo de trabajo con IA diario</li>
+        <li>Acceso a actualizaciones futuras incluido</li>
+      </ul>
+
+      <div class="price-badge">
+        <span class="price-amount">47€</span>
+        <div>
+          <div class="price-strike">97€</div>
+          <div class="price-label">Precio de lanzamiento<br>para lista de espera</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-form">
+      <div class="form-title">Apúntate a la lista</div>
+      <div class="form-subtitle">Acceso anticipado + precio especial de lanzamiento</div>
+
+      <div class="form-group">
+        <input type="email" class="form-input" placeholder="Tu email profesional">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input" placeholder="Tu nombre">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input" placeholder="Tu cargo / empresa (opcional)">
+      </div>
+
+      <button class="btn-primary" style="width: 100%; margin-top: 8px; border: none; cursor: pointer; font-size: 14px;">
+        Quiero acceso anticipado →
+      </button>
+
+      <div class="form-note">
+        Sin spam. Sin compromisos. Te avisamos cuando esté listo y tienes 48h para decidir.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUÍAS EXTENDIDAS -->
+<div class="neon-line"></div>
+<section class="guias-section" id="guias">
+  <div class="section-label">Exclusivo web</div>
+  <h2 class="section-title">Guías extendidas</h2>
+  <p class="section-subtitle">La versión completa de los carruseles de Instagram. Más contexto, más ejemplos, más profundidad.</p>
+
+  <div class="guias-grid">
+
+    <a href="#" class="guia-card">
+      <span class="guia-serie-tag">Serie 01 · IA</span>
+      <div class="guia-title">Cómo funciona la IA de verdad — guía completa</div>
+      <div class="guia-desc">Desde transistores hasta prompts avanzados. Todo lo que necesitas saber para entender y usar la IA con ventaja real.</div>
+      <div class="guia-meta">
+        <span>12 min lectura</span>
+        <span>·</span>
+        <span>5 conceptos clave</span>
+      </div>
+      <span class="guia-arrow">→</span>
+    </a>
+
+    <a href="#" class="guia-card">
+      <span class="guia-serie-tag">Serie 02 · Redes</span>
+      <div class="guia-title">Cómo funciona internet — de tu dedo a la pantalla</div>
+      <div class="guia-desc">IP, DNS, paquetes, HTTPS y firewall. El viaje completo que hace cada clic que das en un segundo.</div>
+      <div class="guia-meta">
+        <span>10 min lectura</span>
+        <span>·</span>
+        <span>7 conceptos clave</span>
+      </div>
+      <span class="guia-arrow">→</span>
+    </a>
+
+    <a href="#" class="guia-card">
+      <span class="guia-serie-tag">Serie 03 · Nube</span>
+      <div class="guia-title">La nube explicada — de tus fotos a los servidores de Netflix</div>
+      <div class="guia-desc">Dónde están tus datos, cómo Netflix no se cae nunca, y cómo las empresas pierden (y ahorran) dinero en la nube.</div>
+      <div class="guia-meta">
+        <span>14 min lectura</span>
+        <span>·</span>
+        <span>8 conceptos clave</span>
+      </div>
+      <span class="guia-arrow">→</span>
+    </a>
+
+    <a href="#" class="guia-card" style="opacity: 0.5; cursor: default; border-style: dashed;">
+      <span class="guia-serie-tag">Serie 04 · Próximamente</span>
+      <div class="guia-title" style="color: var(--grey);">Ciberseguridad — guía completa</div>
+      <div class="guia-desc">Se publica al terminar la Serie 4.</div>
+      <div class="guia-meta"><span>En preparación</span></div>
+    </a>
+
+  </div>
+</section>
+
+<!-- BIBLIOTECA DE PROMPTS -->
+<div class="neon-line"></div>
+<section class="prompts-section" id="prompts">
+  <div class="section-label">Herramientas</div>
+  <h2 class="section-title">Biblioteca de prompts</h2>
+  <p class="section-subtitle">Los prompts exactos que usamos. Cópialos, pégalos y adáptalos a tu caso.</p>
+
+  <div class="prompts-filters">
+    <button class="filter-btn active" onclick="filterPrompts('todos', this)">Todos</button>
+    <button class="filter-btn" onclick="filterPrompts('ventas', this)">Ventas</button>
+    <button class="filter-btn" onclick="filterPrompts('reuniones', this)">Reuniones</button>
+    <button class="filter-btn" onclick="filterPrompts('emails', this)">Emails</button>
+    <button class="filter-btn" onclick="filterPrompts('aprendizaje', this)">Aprendizaje</button>
+    <button class="filter-btn" onclick="filterPrompts('analisis', this)">Análisis</button>
+  </div>
+
+  <div class="prompts-grid" id="prompts-grid">
+
+    <div class="prompt-card" data-cat="reuniones">
+      <div class="prompt-category">Reuniones</div>
+      <div class="prompt-title">Preparar una reunión de ventas en 45 segundos</div>
+      <div class="prompt-box" id="p1">Actúa como consultor de ventas B2B senior. Tengo una reunión con [nombre] de [empresa] del sector [sector] el [fecha]. Su reto principal es [reto]. Mi objetivo es [objetivo]. Genera: 1) Contexto clave de la empresa. 2) Agenda de 30 minutos. 3) 4 preguntas para descubrir necesidades. 4) Cierre de siguiente paso.</div>
+      <button class="copy-btn" onclick="copyPrompt('p1', this)">⧉ Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card" data-cat="emails">
+      <div class="prompt-category">Emails</div>
+      <div class="prompt-title">Email de seguimiento que consigue respuesta</div>
+      <div class="prompt-box" id="p2">Actúa como director de ventas con 15 años de experiencia en B2B. Escribe un email de seguimiento para [nombre] de [empresa]. Contexto: [última interacción]. Mi objetivo es [objetivo]. Tono: profesional pero cercano. Máximo 5 líneas. Sin frases genéricas. Termina con una pregunta de sí o no fácil de responder.</div>
+      <button class="copy-btn" onclick="copyPrompt('p2', this)">⧉ Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card" data-cat="ventas">
+      <div class="prompt-category">Ventas</div>
+      <div class="prompt-title">Generar ideas de leads en LinkedIn</div>
+      <div class="prompt-box" id="p3">Actúa como director de marketing con 15 años de experiencia en B2B. Dame 5 ideas concretas para generar leads en LinkedIn con menos de 2 horas de trabajo semanal. Explica cada idea en máximo 3 líneas. Incluye el tipo de contenido, el gancho y el CTA exacto para cada una.</div>
+      <button class="copy-btn" onclick="copyPrompt('p3', this)">⧉ Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card" data-cat="aprendizaje">
+      <div class="prompt-category">Aprendizaje</div>
+      <div class="prompt-title">Aprender cualquier concepto técnico rápido</div>
+      <div class="prompt-box" id="p4">Explícame [concepto] como si tuviera 12 años. Usa una sola metáfora del mundo real y mantenla durante toda la explicación. Al final dame 3 preguntas para comprobar que lo entendí. Si las respondo mal, corrígeme y explica dónde me equivoqué.</div>
+      <button class="copy-btn" onclick="copyPrompt('p4', this)">⧉ Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card" data-cat="analisis">
+      <div class="prompt-category">Análisis</div>
+      <div class="prompt-title">Analizar datos de ventas sin Excel</div>
+      <div class="prompt-box" id="p5">Actúa como analista de ventas senior. Voy a pegarte mis datos de ventas de [período]. Quiero que identifiques: 1) Los 3 patrones más importantes. 2) Lo que está funcionando y por qué. 3) Lo que no funciona y qué cambiaria. 4) Una acción concreta para la próxima semana. Sé directo. Sin rodeos.</div>
+      <button class="copy-btn" onclick="copyPrompt('p5', this)">⧉ Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card" data-cat="reuniones">
+      <div class="prompt-category">Reuniones</div>
+      <div class="prompt-title">Cierre de siguiente paso — 3 versiones</div>
+      <div class="prompt-box" id="p6">Dame 3 formas diferentes de proponer el siguiente paso al final de una reunión de ventas. Una directa, una consultiva y una que genere urgencia sin presionar. Para el contexto: [producto/servicio] con [tipo de cliente].</div>
+      <button class="copy-btn" onclick="copyPrompt('p6', this)">⧉ Copiar prompt</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- RECURSOS / PDFs -->
+<div class="neon-line"></div>
+<section class="recursos-section" id="recursos">
+  <div class="section-label">Descargables</div>
+  <h2 class="section-title">Recursos gratuitos</h2>
+  <p class="section-subtitle">Guías PDF descargables, una por serie. Deja tu email y te llega al instante.</p>
+
+  <div class="recursos-grid">
+
+    <div class="recurso-card">
+      <span class="recurso-icon">📄</span>
+      <div class="recurso-serie">Serie 01 · IA Explicada Simple</div>
+      <div class="recurso-title">Guía PDF — IA desde cero</div>
+      <div class="recurso-desc">El resumen completo de la Serie 1. Conceptos, metáforas y prompts listos para usar.</div>
+      <ul class="recurso-includes">
+        <li>Transistores y puertas lógicas explicados</li>
+        <li>Cómo aprende la IA — paso a paso</li>
+        <li>3 técnicas de prompts avanzados</li>
+        <li>Mapa de qué IA usar para qué</li>
+      </ul>
+      <button class="btn-primary" style="border: none; cursor: pointer; font-size: 12px;" onclick="openModal('Guía PDF — IA desde cero', 'Serie 01')">Descargar gratis →</button>
+    </div>
+
+    <div class="recurso-card">
+      <span class="recurso-icon">📄</span>
+      <div class="recurso-serie">Serie 02 · Internet y Redes</div>
+      <div class="recurso-title">Guía PDF — Cómo funciona internet</div>
+      <div class="recurso-desc">IP, DNS, paquetes, HTTPS y firewall. Todo en una sola hoja de referencia.</div>
+      <ul class="recurso-includes">
+        <li>Glosario visual de 15 términos clave</li>
+        <li>El viaje de un clic — diagrama completo</li>
+        <li>3 trucos para mejorar tu WiFi hoy</li>
+        <li>Checklist de seguridad básica</li>
+      </ul>
+      <button class="btn-primary" style="border: none; cursor: pointer; font-size: 12px;" onclick="openModal('Guía PDF — Cómo funciona internet', 'Serie 02')">Descargar gratis →</button>
+    </div>
+
+    <div class="recurso-card">
+      <span class="recurso-icon">📄</span>
+      <div class="recurso-serie">Serie 03 · La Nube</div>
+      <div class="recurso-title">Guía PDF — La nube explicada</div>
+      <div class="recurso-desc">IaaS, PaaS, SaaS, redundancia y edge computing. El mapa completo de la nube.</div>
+      <ul class="recurso-includes">
+        <li>Comparativa AWS vs Azure vs Google Cloud</li>
+        <li>Los 4 errores más caros en la nube</li>
+        <li>La regla 3-2-1 para tus backups</li>
+        <li>Checklist para auditar tu gasto en la nube</li>
+      </ul>
+      <button class="btn-primary" style="border: none; cursor: pointer; font-size: 12px;" onclick="openModal('Guía PDF — La nube explicada', 'Serie 03')">Descargar gratis →</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL EMAIL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-tag" id="modal-tag">Recurso gratuito</div>
+    <div class="modal-title" id="modal-title">Descarga tu guía</div>
+    <div class="modal-subtitle">Déjanos tu email y te enviamos el PDF al instante. Sin spam. Sin compromisos.</div>
+    <div class="form-group">
+      <input type="text" class="form-input" placeholder="Tu nombre" id="modal-name">
+    </div>
+    <div class="form-group" style="margin-top: 12px;">
+      <input type="email" class="form-input" placeholder="Tu email" id="modal-email">
+    </div>
+    <button class="btn-primary" style="width: 100%; margin-top: 16px; border: none; cursor: pointer;" onclick="submitModal()">
+      Enviarme el PDF →
+    </button>
+    <div class="form-note" style="margin-top: 12px;">Lo recibirás en menos de 2 minutos en tu bandeja de entrada.</div>
+  </div>
+</div>
+
+<script>
+  // FILTRO PROMPTS
+  function filterPrompts(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.prompt-card').forEach(card => {
+      if (cat === 'todos' || card.dataset.cat === cat) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // COPIAR PROMPT
+  function copyPrompt(id, btn) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '⧉ Copiar prompt';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // MODAL
+  function openModal(title, serie) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-tag').textContent = serie + ' · Recurso gratuito';
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  function submitModal() {
+    const email = document.getElementById('modal-email').value;
+    const name = document.getElementById('modal-name').value;
+    if (!email || !name) {
+      alert('Por favor, rellena tu nombre y email.');
+      return;
+    }
+    // Aquí irá la integración con tu herramienta de email (Mailchimp, ConvertKit, etc.)
+    const btn = event.target;
+    btn.textContent = '✓ ¡En camino!';
+    btn.style.opacity = '0.7';
+    setTimeout(closeModal, 1500);
+  }
+</script>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Tecnología Explicada Simple</div>
+    <div class="footer-tagline">Tecnología sin complicaciones. Para los que quieren entender de verdad.</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="https://youtube.com/@tecnologiaexplicadasimple" target="_blank">YouTube</a></li>
+    <li><a href="https://instagram.com/tecnologia.explicada.simple" target="_blank">Instagram</a></li>
+    <li><a href="#guias">Guías</a></li>
+    <li><a href="#prompts">Prompts</a></li>
+    <li><a href="#recursos">Recursos</a></li>
+    <li><a href="#blog">Blog</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Tecnología Explicada Simple · El Equipo TES</div>
+</footer>
+
+</body>
+</html>
