@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo funciona internet de verdad — Guía completa | Tecnología Explicada Simple</title>
+<meta name="description" content="Guía completa sobre cómo funciona internet desde cero. IP, router, WiFi, paquetes de datos, DNS, HTTPS y firewall explicados con ejemplos reales. Sin jerga técnica.">
+<meta name="keywords" content="cómo funciona internet, qué es una IP, qué es un router, qué es DNS, qué es HTTPS, paquetes de datos, cómo funciona el WiFi">
+<link rel="canonical" href="https://tecnologiaexplicadasimple.com/guias/serie-2-internet-redes">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4FC3F7;
+    --blue-ice: #80D8FF;
+    --blue-dark: #0D2233;
+    --blue-mid: #0A3A5C;
+    --black: #000000;
+    --black-soft: #080808;
+    --grey: #4A6070;
+    --white: #FFFFFF;
+    --white-dim: rgba(255,255,255,0.75);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .nav-back {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--grey);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--blue); }
+
+  .article-hero {
+    padding: 120px 48px 60px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .article-breadcrumb {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .article-breadcrumb a {
+    color: var(--grey);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .article-breadcrumb a:hover { color: var(--blue); }
+
+  .article-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    background: rgba(79,195,247,0.08);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 5px 12px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .article-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .article-title span { color: var(--blue); }
+
+  .article-subtitle {
+    font-size: 18px;
+    color: var(--white-dim);
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 620px;
+  }
+
+  .article-meta {
+    display: flex;
+    gap: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--grey);
+    text-transform: uppercase;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(79,195,247,0.1);
+    flex-wrap: wrap;
+  }
+
+  .article-meta span { color: var(--blue); }
+
+  .article-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  .article-body h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--white);
+    margin: 48px 0 16px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .article-body h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--blue);
+    margin: 32px 0 12px;
+  }
+
+  .article-body p {
+    font-size: 16px;
+    color: var(--white-dim);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .article-body strong { color: var(--white); font-weight: 500; }
+
+  .article-body ul, .article-body ol {
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+
+  .article-body li {
+    font-size: 16px;
+    color: var(--white-dim);
+    line-height: 1.7;
+    margin-bottom: 8px;
+    font-weight: 300;
+  }
+
+  .concept-block {
+    background: var(--blue-dark);
+    border-left: 3px solid var(--blue);
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+
+  .concept-block .concept-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .concept-block p { margin-bottom: 0; color: var(--white); font-weight: 400; font-size: 15px; }
+
+  .stat-block {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 24px 28px;
+    margin: 28px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--white-dim);
+    line-height: 1.6;
+  }
+
+  .stat-label strong { color: var(--blue); font-size: 20px; font-family: 'Syne', sans-serif; display: block; margin-bottom: 4px; }
+
+  .journey-steps {
+    margin: 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .journey-step {
+    background: var(--blue-dark);
+    border-left: 3px solid rgba(79,195,247,0.3);
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+
+  .journey-step:hover { border-left-color: var(--blue); }
+
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-content strong {
+    display: block;
+    font-size: 14px;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+
+  .step-content span {
+    font-size: 13px;
+    color: var(--grey);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 24px 0;
+  }
+
+  .col-left {
+    background: rgba(10,10,10,0.9);
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .col-right {
+    background: var(--blue-mid);
+    padding: 20px;
+    border: 1px solid rgba(79,195,247,0.2);
+  }
+
+  .col-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .col-left .col-label { color: var(--grey); }
+  .col-right .col-label { color: var(--blue); }
+  .col-left p, .col-right p { font-size: 14px; margin-bottom: 0; line-height: 1.6; }
+
+  .takeaway {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.25);
+    padding: 24px 28px;
+    margin: 32px 0;
+  }
+
+  .takeaway-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .takeaway p { color: var(--white); font-weight: 400; font-size: 15px; margin-bottom: 0; }
+
+  .checklist {
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .check-item {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .check-icon {
+    color: var(--blue);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .check-content strong {
+    display: block;
+    font-size: 14px;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+
+  .check-content span { font-size: 13px; color: var(--grey); line-height: 1.5; }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0.2;
+    margin: 48px 0;
+  }
+
+  .pdf-cta {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+    border: 1px solid rgba(79,195,247,0.3);
+    padding: 48px;
+    margin: 60px 0 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pdf-cta::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(79,195,247,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .pdf-cta-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .pdf-cta h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .pdf-cta p {
+    font-size: 15px;
+    color: var(--white-dim);
+    max-width: 460px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+  }
+
+  .pdf-includes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .pdf-include-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--blue-ice);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pdf-include-item::before { content: '✓'; color: var(--blue); }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+
+  .next-article {
+    border-top: 1px solid rgba(79,195,247,0.08);
+    padding: 48px 0 0;
+    margin-top: 60px;
+  }
+
+  .next-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .next-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--white);
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+    margin-bottom: 8px;
+  }
+
+  .next-title:hover { color: var(--blue); }
+  .next-desc { font-size: 14px; color: var(--grey); }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.25);
+    padding: 48px;
+    max-width: 460px;
+    width: 90%;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 24px;
+    background: none; border: none;
+    color: var(--grey); font-size: 20px; cursor: pointer;
+  }
+
+  .modal-close:hover { color: var(--white); }
+
+  .modal-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .modal-subtitle {
+    font-size: 13px;
+    color: var(--white-dim);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(79,195,247,0.2);
+    color: var(--white);
+    padding: 13px 16px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .form-input::placeholder { color: var(--grey); }
+  .form-input:focus { border-color: var(--blue); }
+  .form-note { font-size: 11px; color: var(--grey); margin-top: 12px; line-height: 1.5; }
+
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(79,195,247,0.08);
+    padding: 40px 48px;
+    text-align: center;
+    margin-top: 80px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--grey);
+    opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .article-hero { padding: 100px 20px 40px; }
+    .article-body { padding: 0 20px 60px; }
+    .article-title { font-size: 30px; }
+    .article-subtitle { font-size: 16px; line-height: 1.7; }
+    .article-body p { font-size: 16px; line-height: 1.8; }
+    .article-body li { font-size: 15px; line-height: 1.7; }
+    .article-body h2 { font-size: 22px; }
+    .article-body h3 { font-size: 17px; }
+    .concept-block p { font-size: 15px; }
+    .two-col { grid-template-columns: 1fr; }
+    .pdf-cta { padding: 32px 20px; }
+    .pdf-cta h3 { font-size: 22px; }
+    .pdf-includes { flex-direction: column; align-items: center; gap: 10px; }
+    .modal-box { padding: 32px 20px; }
+    .stat-block { flex-direction: column; gap: 12px; }
+    footer { padding: 32px 20px; }
+    .step-content strong { font-size: 14px; }
+    .check-content strong { font-size: 14px; }
+    .check-content span { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">TES</a>
+  <a href="index.html#guias" class="nav-back">← Volver a guías</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span>·</span>
+    <a href="index.html#guias">Guías</a>
+    <span>·</span>
+    Serie 2
+  </div>
+  <div class="article-tag">Serie 02 · Internet y Redes</div>
+  <h1 class="article-title">Cómo funciona internet <span>de verdad</span></h1>
+  <p class="article-subtitle">De tu dedo a la pantalla en menos de un segundo. Todo lo que ocurre en ese tiempo invisible que nunca te habían explicado.</p>
+  <div class="article-meta">
+    <div>Por <span>El Equipo TES</span></div>
+    <div>10 min lectura</div>
+    <div>Serie <span>02</span> de 9</div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>Ahora mismo, mientras lees esto, hay información viajando hacia ti desde un servidor que puede estar a diez mil kilómetros de distancia. En menos de un segundo. Sin que tú hagas nada más que abrir una página.</p>
+
+  <p>Nadie te ha explicado cómo es posible eso. Y es una pena, porque entenderlo no solo es fascinante — cambia la forma en que usas la tecnología, detectas problemas y tomas decisiones digitales.</p>
+
+  <div class="takeaway">
+    <div class="takeaway-label">⚡ Lo que te llevas de esta guía</div>
+    <p>Entender el viaje completo de cada clic que das — desde tu dedo hasta la pantalla — y por qué la IA, el WiFi que falla y la seguridad de tu banco dependen exactamente del mismo sistema.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>El viaje completo en un segundo</h2>
+
+  <p>Cuando tocas la pantalla para abrir una web, ocurre algo que muy poca gente entiende. Siete tecnologías trabajando juntas, en menos de un segundo, para darte la respuesta.</p>
+
+  <div class="journey-steps">
+    <div class="journey-step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <strong>Tu dedo toca la pantalla</strong>
+        <span>Tu dispositivo genera una señal eléctrica y la convierte en datos.</span>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <strong>El router actúa</strong>
+        <span>Recibe esos datos y los envía hacia internet como paquetes numerados.</span>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <strong>El DNS traduce</strong>
+        <span>Convierte "google.com" en la dirección IP real del servidor.</span>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <strong>Los paquetes viajan</strong>
+        <span>Por cables físicos, bajo el mar si hace falta, hasta el servidor correcto.</span>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <strong>HTTPS protege todo</strong>
+        <span>El viaje entero va cifrado. Nadie puede interceptarlo y leerlo.</span>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <strong>El firewall filtra</strong>
+        <span>Bloquea lo peligroso, deja pasar lo legítimo, en milisegundos.</span>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="step-num">07</div>
+      <div class="step-content">
+        <strong>Aparece en tu pantalla</strong>
+        <span>Los paquetes vuelven, se reensamblan en orden y ves el resultado.</span>
+      </div>
+    </div>
+  </div>
+
+  <p>Todo eso en un segundo. Y cada vez que le escribes a una IA — a Claude, a ChatGPT, a cualquiera — exactamente el mismo viaje. Miles de millones de veces al día, en todo el mundo, simultáneamente.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>La dirección de tu casa en internet: la IP</h2>
+
+  <p>Tu casa tiene una dirección postal. Sin ella, ningún paquete podría llegarte. En internet ocurre exactamente lo mismo — todo necesita una dirección. Se llama <strong>IP</strong> (Internet Protocol).</p>
+
+  <div class="two-col">
+    <div class="col-left">
+      <div class="col-label">IP Pública</div>
+      <p>La dirección de tu casa hacia internet. La tiene tu router. Es única — nadie más la tiene en ese momento.</p>
+    </div>
+    <div class="col-right">
+      <div class="col-label">IP Privada</div>
+      <p>La dirección de cada dispositivo dentro de tu casa. Como los números de apartamento dentro de un edificio.</p>
+    </div>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">La metáfora exacta</div>
+    <p>Tu IP pública es el número de tu edificio. Las IPs privadas son los números de cada piso. El cartero (internet) solo necesita saber el edificio. El portero (router) se encarga de repartir a cada piso.</p>
+  </div>
+
+  <p>Sin IP, los datos no sabrían adónde ir. Internet sería un caos total — como intentar enviar una carta sin escribir ninguna dirección en el sobre. La IA también usa IPs cada vez que se comunica entre sus servidores. Todo conectado. Todo con dirección.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>El router: el policía de tráfico de tu red</h2>
+
+  <p>En tu casa llega un solo cable de internet. Pero tienes diez dispositivos conectados. ¿Quién reparte todo? El router.</p>
+
+  <p>Su trabajo es doble: recibe el flujo de datos que llega de internet y lo dirige correctamente a cada dispositivo, y al mismo tiempo crea tu red WiFi para que todo funcione sin cables.</p>
+
+  <div class="concept-block">
+    <div class="concept-label">Cómo decide a quién enviar cada cosa</div>
+    <p>Cada dispositivo tiene su IP privada. Cuando tu móvil pide una web, el router recuerda que fue él quien la pidió y le devuelve la respuesta solo a él — no a todos los demás dispositivos de la casa.</p>
+  </div>
+
+  <div class="stat-block">
+    <div class="stat-icon">🧠</div>
+    <div class="stat-label">
+      <strong>Los routers modernos usan IA</strong>
+      Para priorizar el tráfico automáticamente. Tu videollamada va antes que la actualización de una app. Sin que tú configures nada.
+    </div>
+  </div>
+
+  <h3>Por qué el WiFi falla aunque tengas señal</h3>
+
+  <p>Tienes plena señal y la página no carga. La razón más común no es la señal — es la saturación.</p>
+
+  <p>El WiFi viaja por el aire en canales, como emisoras de radio. Si tu vecino usa el mismo canal que tú, hay interferencias. Si demasiados dispositivos comparten el mismo grifo de datos, el flujo se reduce para todos.</p>
+
+  <div class="checklist">
+    <div class="check-item">
+      <div class="check-icon">☑</div>
+      <div class="check-content">
+        <strong>Pon el router en alto y en el centro</strong>
+        <span>La señal viaja en todas direcciones desde el router. En una esquina pierdes la mitad.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-icon">☑</div>
+      <div class="check-content">
+        <strong>Cambia al canal menos saturado</strong>
+        <span>Desde la configuración del router puedes ver qué canales están más libres y cambiar al menos congestionado.</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-icon">☑</div>
+      <div class="check-content">
+        <strong>Conecta por cable lo que más importa</strong>
+        <span>El cable es siempre más rápido y estable que el WiFi. Videollamadas, trabajo, gaming — usa cable.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Los paquetes de datos: por qué internet es tan fiable</h2>
+
+  <p>Cuando abres una web, esa información no viaja junta como un bloque. Se corta en miles de trozos pequeños — los <strong>paquetes de datos</strong>.</p>
+
+  <p>Cada paquete lleva tres cosas: su parte de la información, la dirección de origen y la dirección de destino. Y lleva además su número de secuencia — el orden en que tiene que recomponerse al llegar.</p>
+
+  <div class="concept-block">
+    <div class="concept-label">La metáfora perfecta</div>
+    <p>Imagina una carta enorme cortada en cien sobres pequeños. Cada sobre viaja por el camino más rápido disponible en ese momento. Algunos van por la derecha, otros por la izquierda. Al llegar, se reordenan solos por su número. Si uno se pierde, se pide de nuevo. Por eso internet es tan fiable incluso cuando fallan cables.</p>
+  </div>
+
+  <p>Cuando la IA te responde, también lo hace así — en paquetes que se van recomponiendo en tu pantalla en tiempo real. Por eso a veces ves cómo el texto aparece palabra a palabra: cada paquete llegando y mostrándose en orden.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>El DNS: la guía telefónica de internet</h2>
+
+  <p>Cuando escribes "google.com" en tu navegador, tu ordenador tiene un problema: no entiende palabras. Solo entiende números. ¿Quién traduce?</p>
+
+  <p>El <strong>DNS</strong> (Domain Name System). Es exactamente una guía telefónica — pero de internet. Cuando escribes un nombre, el DNS busca su número real (su IP) y te lleva allí en milisegundos.</p>
+
+  <div class="stat-block">
+    <div class="stat-icon">📋</div>
+    <div class="stat-label">
+      <strong>142.250.185.14</strong>
+      Es la IP real de Google. Sin DNS tendrías que memorizar un número así para cada web que visitas. El DNS lo hace invisible para ti — escribes el nombre, él encuentra el número.
+    </div>
+  </div>
+
+  <p>Hay miles de servidores DNS distribuidos por todo el mundo. Si uno falla, otro toma el relevo automáticamente. Por eso internet casi nunca se cae del todo — tiene redundancia en cada nivel.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>HTTPS y firewall: las dos capas que te protegen ahora mismo</h2>
+
+  <p>Todo lo que viaja por internet podría ser interceptado. Lo que evita que eso sea un problema son dos capas de protección que están funcionando ahora mismo mientras lees esto.</p>
+
+  <h3>HTTPS — el sobre cerrado con candado</h3>
+
+  <div class="two-col">
+    <div class="col-left">
+      <div class="col-label">HTTP — sin cifrado</div>
+      <p>Como una postal. Cualquiera que la intercepte por el camino puede leer exactamente lo que dice. Contraseñas, datos, todo visible.</p>
+    </div>
+    <div class="col-right">
+      <div class="col-label">HTTPS — cifrado</div>
+      <p>Como un sobre cerrado con candado. Aunque alguien la intercepte, no puede leer nada. Solo tú y el servidor tienen la clave.</p>
+    </div>
+  </div>
+
+  <p>Antes de que viaje ningún dato, tu dispositivo y el servidor acuerdan una clave secreta en milisegundos — como dos espías acordando un código antes de hablar. Esa "S" al final de HTTPS significa que esa conversación ya ocurrió y todo está protegido.</p>
+
+  <div class="takeaway">
+    <div class="takeaway-label">Regla práctica</div>
+    <p>Comprueba siempre el candado en la barra del navegador antes de introducir datos bancarios o contraseñas. Si no hay HTTPS, no pongas nada personal.</p>
+  </div>
+
+  <h3>Firewall — el portero de tu red</h3>
+
+  <p>El firewall revisa todo lo que entra y sale de tu red y decide en milisegundos qué pasa y qué se bloquea. Tu router tiene uno. Tu ordenador tiene otro. Las empresas grandes tienen capas y capas.</p>
+
+  <div class="concept-block">
+    <div class="concept-label">Cómo decide qué bloquear</div>
+    <p>Usa reglas: si el tráfico viene de una dirección sospechosa, bloqueado. Si el puerto no está autorizado, bloqueado. Si el comportamiento no es el esperado, bloqueado. Los firewalls modernos usan IA para detectar amenazas nuevas antes de que tú las veas llegar.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Lo que te llevas</h2>
+
+  <p>Ahora entiendes lo que ocurre cada vez que tocas la pantalla. IP, router, DNS, paquetes, HTTPS, firewall — todo junto, todo el tiempo, en menos de un segundo. Y la IA que usas cada día recorre exactamente el mismo camino, miles de millones de veces al día.</p>
+
+  <p>Eso no es solo conocimiento técnico. Es la base para entender por qué unas herramientas son seguras y otras no, por qué el WiFi falla y cómo arreglarlo, y cómo funciona la infraestructura sobre la que vive tu trabajo.</p>
+
+  <div class="pdf-cta">
+    <div class="pdf-cta-tag">📄 Recurso gratuito · Serie 02</div>
+    <h3>Descarga la hoja de referencia en PDF</h3>
+    <p>El glosario de los 7 conceptos clave, el diagrama del viaje completo y el checklist de seguridad básica — en una sola página para guardar en tu móvil.</p>
+    <div class="pdf-includes">
+      <div class="pdf-include-item">Glosario de 7 conceptos</div>
+      <div class="pdf-include-item">Diagrama del viaje completo</div>
+      <div class="pdf-include-item">Checklist de seguridad</div>
+      <div class="pdf-include-item">3 trucos para mejorar el WiFi</div>
+    </div>
+    <button class="btn-primary" onclick="openModal()">Descargar PDF gratis →</button>
+  </div>
+
+  <div class="next-article">
+    <div class="next-label">Siguiente guía →</div>
+    <a href="guia-serie-3-nube.html" class="next-title">La nube explicada — de tus fotos a los servidores de Netflix</a>
+    <div class="next-desc">Serie 03 · La Nube · 12 min lectura</div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-tag">Serie 02 · Recurso gratuito</div>
+    <div class="modal-title">Descarga tu PDF</div>
+    <p class="modal-subtitle">Déjanos tu email y te enviamos la hoja de referencia al instante. Sin spam.</p>
+    <input type="text" class="form-input" placeholder="Tu nombre" id="modal-name">
+    <input type="email" class="form-input" placeholder="Tu email" id="modal-email">
+    <button class="btn-primary" style="width: 100%; margin-top: 4px;" onclick="submitModal()">Enviarme el PDF →</button>
+    <div class="form-note">Lo recibirás en menos de 2 minutos en tu bandeja de entrada.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
+</footer>
+
+<script>
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+  function submitModal() {
+    const email = document.getElementById('modal-email').value;
+    const name = document.getElementById('modal-name').value;
+    if (!email || !name) { alert('Por favor, rellena tu nombre y email.'); return; }
+    const btn = event.target;
+    btn.textContent = '✓ ¡En camino!';
+    btn.style.opacity = '0.7';
+    setTimeout(closeModal, 1500);
+  }
+</script>
+
+</body>
+</html>
