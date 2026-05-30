@@ -631,6 +631,20 @@
     text-decoration: line-through;
   }
 
+  a.serie-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
+  }
+
+  a.serie-card:hover {
+    background: var(--blue-dark);
+    border-color: rgba(79,195,247,0.25);
+  }
+
+  a.serie-card:hover::before { opacity: 1; }
+
   /* GUÍAS EXTENDIDAS */
   .guias-section {
     background: var(--black-soft);
@@ -1149,37 +1163,37 @@
 
   <div class="series-grid">
 
-    <div class="serie-card">
+    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg0omCzphMQX0DeAl2_tDTBL" target="_blank" class="serie-card">
       <div class="serie-number">SERIE 01</div>
       <div class="serie-name">IA Explicada Simple</div>
       <div class="serie-desc">Transistores, redes neuronales, entrenamiento y prompts. La base de todo lo que viene.</div>
       <span class="serie-badge badge-live">✓ Publicada</span>
       <div class="serie-count">10 Shorts + Vídeo largo</div>
-    </div>
+    </a>
 
-    <div class="serie-card">
+    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg31cDzrMuGsq2gFjmF94EDD" target="_blank" class="serie-card">
       <div class="serie-number">SERIE 02</div>
       <div class="serie-name">Internet y Redes</div>
       <div class="serie-desc">Cómo llegan los datos de un servidor al otro lado del mundo en menos de un segundo.</div>
       <span class="serie-badge badge-live">✓ Publicada</span>
       <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </div>
+    </a>
 
-    <div class="serie-card">
+    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg00QvczbYlhQ3pdZDJREYkf" target="_blank" class="serie-card">
       <div class="serie-number">SERIE 03</div>
       <div class="serie-name">La Nube</div>
       <div class="serie-desc">Dónde están realmente tus fotos. Cómo Netflix sirve vídeo a 270 millones sin caerse.</div>
       <span class="serie-badge badge-live">✓ Publicada</span>
       <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </div>
+    </a>
 
-    <div class="serie-card">
+    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg1kRTMayQysKEf_JpmL-XQ1" target="_blank" class="serie-card">
       <div class="serie-number">SERIE 04</div>
       <div class="serie-name">Ciberseguridad</div>
       <div class="serie-desc">Hackers, firewalls, cifrado y VPNs. Todo lo que te protege sin que lo sepas.</div>
       <span class="serie-badge badge-live">● En curso</span>
       <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </div>
+    </a>
 
     <div class="serie-card">
       <div class="serie-number">SERIE 05</div>
@@ -1204,13 +1218,13 @@
 
 <!-- BLOG -->
 <section class="blog-section" id="blog">
-  <div class="section-label">Artículos</div>
-  <h2 class="section-title">Blog de tecnología</h2>
+  <div class="section-label">Reflexión</div>
+  <h2 class="section-title">Más allá del código</h2>
   <p class="section-subtitle">Análisis profundos sobre IA y tecnología. Con rigor, con contexto y sin clickbait.</p>
 
   <div class="blog-grid">
 
-    <a href="#" class="blog-card">
+    <a href="blog-historia-quedaron-atras.html" class="blog-card">
       <div class="blog-meta">
         <span class="blog-category">IA · Historia</span>
         <span>Mayo 2026</span>
@@ -1220,7 +1234,7 @@
       <div class="blog-excerpt">Desde la piedra afilada hasta la IA. Cada revolución tecnológica tiene dos tipos de personas: los que se adaptan y los que desaparecen.</div>
     </a>
 
-    <a href="#" class="blog-card">
+    <a href="blog-ia-futuro-opinion.html" class="blog-card">
       <div class="blog-meta">
         <span class="blog-category">IA · Opinión</span>
         <span>Mayo 2026</span>
@@ -1230,7 +1244,7 @@
       <div class="blog-excerpt">Lo que nadie dice en voz alta sobre la IA. Memorias perfectas, vínculos emocionales y por qué esto no es una distopía.</div>
     </a>
 
-    <a href="#" class="blog-card">
+    <a href="blog-ia-espejo.html" class="blog-card">
       <div class="blog-meta">
         <span class="blog-category">IA · Privacidad</span>
         <span>Mayo 2026</span>
@@ -1240,7 +1254,7 @@
       <div class="blog-excerpt">Le estás entregando información que no darías a nadie. Tus miedos. Tus finanzas. Tus problemas íntimos. ¿Eres consciente de lo que estás construyendo?</div>
     </a>
 
-    <a href="#" class="blog-card">
+    <a href="blog-nueva-desigualdad.html" class="blog-card">
       <div class="blog-meta">
         <span class="blog-category">IA · Sociedad</span>
         <span>Mayo 2026</span>
@@ -1250,7 +1264,7 @@
       <div class="blog-excerpt">Si la IA hace a todos más inteligentes, ¿quién es realmente el más listo? Ilimitados vs limitados: una nueva brecha que se acumula cada día.</div>
     </a>
 
-    <a href="#" class="blog-card">
+    <a href="blog-coste-ia.html" class="blog-card">
       <div class="blog-meta">
         <span class="blog-category">IA · Infraestructura</span>
         <span>Mayo 2026</span>
