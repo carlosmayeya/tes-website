@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La historia de los que se quedaron atrás — Más allá del código | TES</title>
+<meta name="description" content="Desde la piedra afilada hasta la IA. Cada revolución tecnológica tiene dos tipos de personas: los que se adaptan y los que desaparecen. ¿En cuál estás tú?">
+<meta name="keywords" content="revolución tecnológica, inteligencia artificial futuro, adaptarse a la IA, historia tecnología, miedo al cambio tecnológico">
+<link rel="canonical" href="https://tecnologiaexplicadasimple.com/blog/historia-quedaron-atras">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4FC3F7; --blue-ice: #80D8FF; --blue-dark: #0D2233;
+    --blue-mid: #0A3A5C; --black: #000000; --grey: #4A6070;
+    --white: #FFFFFF; --white-dim: rgba(255,255,255,0.75);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.7; }
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 48px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(79,195,247,0.08); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); text-decoration: none; }
+  .nav-back { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--grey); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--blue); }
+  .article-hero { padding: 120px 48px 60px; max-width: 800px; margin: 0 auto; }
+  .article-breadcrumb { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .article-breadcrumb a { color: var(--grey); text-decoration: none; transition: color 0.2s; }
+  .article-breadcrumb a:hover { color: var(--blue); }
+  .article-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--blue); background: rgba(79,195,247,0.08); border: 1px solid rgba(79,195,247,0.2); padding: 5px 12px; text-transform: uppercase; margin-bottom: 20px; }
+  .article-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px, 5vw, 46px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .article-title span { color: var(--blue); }
+  .article-subtitle { font-size: 18px; color: var(--white-dim); font-weight: 300; line-height: 1.6; margin-bottom: 32px; max-width: 600px; }
+  .article-meta { display: flex; gap: 24px; flex-wrap: wrap; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--grey); text-transform: uppercase; padding-bottom: 32px; border-bottom: 1px solid rgba(79,195,247,0.1); }
+  .article-meta span { color: var(--blue); }
+  .article-body { max-width: 800px; margin: 0 auto; padding: 0 48px 80px; }
+  .article-body h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--white); margin: 48px 0 16px; letter-spacing: -0.01em; line-height: 1.2; }
+  .article-body p { font-size: 17px; color: var(--white-dim); line-height: 1.85; margin-bottom: 24px; font-weight: 300; }
+  .article-body strong { color: var(--white); font-weight: 500; }
+  .highlight-block { background: var(--blue-dark); border-left: 3px solid var(--blue); padding: 24px 28px; margin: 32px 0; }
+  .highlight-block p { margin-bottom: 0; color: var(--white); font-weight: 400; font-size: 16px; }
+  .timeline { margin: 36px 0; display: flex; flex-direction: column; gap: 2px; }
+  .timeline-item { background: var(--blue-dark); border-left: 3px solid rgba(79,195,247,0.3); padding: 20px 24px; display: flex; gap: 16px; transition: border-color 0.2s; }
+  .timeline-item:hover { border-left-color: var(--blue); }
+  .timeline-era { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; flex-shrink: 0; width: 100px; margin-top: 3px; }
+  .timeline-content strong { display: block; font-size: 15px; color: var(--white); margin-bottom: 4px; }
+  .timeline-content span { font-size: 13px; color: var(--grey); line-height: 1.5; }
+  .question-block { background: rgba(79,195,247,0.05); border: 1px solid rgba(79,195,247,0.2); padding: 32px; margin: 36px 0; text-align: center; }
+  .question-block p { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: var(--white); margin-bottom: 0; line-height: 1.4; }
+  .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--blue), transparent); opacity: 0.2; margin: 48px 0; }
+  .cta-block { background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid)); border: 1px solid rgba(79,195,247,0.3); padding: 40px; margin: 60px 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 12px; }
+  .cta-block p { font-size: 15px; color: var(--white-dim); margin-bottom: 24px; line-height: 1.6; }
+  .btn-primary { background: var(--blue); color: var(--black); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 14px 32px; border: none; cursor: pointer; display: inline-block; text-decoration: none; transition: opacity 0.2s; }
+  .btn-primary:hover { opacity: 0.9; }
+  .next-article { border-top: 1px solid rgba(79,195,247,0.08); padding: 40px 0 0; margin-top: 60px; }
+  .next-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 12px; }
+  .next-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: var(--white); text-decoration: none; display: block; transition: color 0.2s; margin-bottom: 6px; }
+  .next-title:hover { color: var(--blue); }
+  .next-desc { font-size: 13px; color: var(--grey); }
+  footer { background: var(--black); border-top: 1px solid rgba(79,195,247,0.08); padding: 40px 48px; text-align: center; margin-top: 80px; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); opacity: 0.5; }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .article-hero { padding: 100px 20px 40px; }
+    .article-body { padding: 0 20px 60px; }
+    .article-title { font-size: 28px; }
+    .article-subtitle { font-size: 16px; }
+    .article-body p { font-size: 16px; line-height: 1.8; }
+    .article-body h2 { font-size: 20px; }
+    .timeline-item { flex-direction: column; gap: 6px; }
+    .timeline-era { width: auto; }
+    .cta-block { padding: 28px 20px; }
+    footer { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">TES</a>
+  <a href="index.html#blog" class="nav-back">← Más allá del código</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span>·</span>
+    <a href="index.html#blog">Más allá del código</a>
+    <span>·</span>
+    Historia
+  </div>
+  <div class="article-tag">Más allá del código · Historia · IA</div>
+  <h1 class="article-title">La historia de los que <span>se quedaron atrás</span></h1>
+  <p class="article-subtitle">Desde la piedra afilada hasta la IA. Siempre hubo dos tipos de personas ante cada revolución tecnológica. La pregunta es en cuál estás tú.</p>
+  <div class="article-meta">
+    <div>Por <span>El Equipo TES</span></div>
+    <div>8 min lectura</div>
+    <div>Más allá del <span>código</span></div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>Hace casi tres millones de años, un humano cogió dos piedras y las golpeó, creando el primer filo afilado. Pero había otro que miró esa piedra y pensó: "Eso es peligroso, mejor sigo con mis dientes y uñas." Ese humano comió peor, tuvo menos energía, y su tribu se quedó atrás.</p>
+
+  <p>No es una historia sobre inteligencia. Es una historia sobre <strong>disposición al cambio</strong>. Y lleva repitiéndose desde entonces, con cada revolución tecnológica que ha sacudido al mundo.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>El mismo patrón, una y otra vez</h2>
+
+  <p>La historia de la tecnología no es lineal. Es un ciclo. Llega una herramienta nueva, una parte de la humanidad la abraza, otra parte la rechaza, y al final el mundo avanza de todas formas — con o sin los que dijeron que no.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-era">Hace 3M años</div>
+      <div class="timeline-content">
+        <strong>La piedra afilada</strong>
+        <span>"Es peligroso. Mejor seguir con los dientes." Los que la adoptaron comieron mejor y sobrevivieron más.</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-era">~400.000 a.C.</div>
+      <div class="timeline-content">
+        <strong>El fuego</strong>
+        <span>"Destruye el bosque. Es magia oscura." Los que lo usaron se calentaron, cocinaron y prosperaron.</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-era">~3500 a.C.</div>
+      <div class="timeline-content">
+        <strong>La rueda</strong>
+        <span>"Va contra la naturaleza. Las cosas siempre se han movido con esfuerzo." Los que la usaron construyeron civilizaciones.</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-era">~3000 a.C.</div>
+      <div class="timeline-content">
+        <strong>La escritura</strong>
+        <span>"¿Para qué guardar ideas en barro? La memoria de los ancianos basta." Los que escribieron transmitieron conocimiento durante siglos.</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-era">Siglo XIX</div>
+      <div class="timeline-content">
+        <strong>La máquina de vapor</strong>
+        <span>Rompieron telares, quemaron fábricas. La revolución industrial llegó igual. Los que se adaptaron prosperaron.</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-era">Siglo XX</div>
+      <div class="timeline-content">
+        <strong>La electricidad e internet</strong>
+        <span>"Es invisible, no me fío." Luego: "Nadie va a comprar por una pantalla." Hoy no podemos imaginar la vida sin ninguna de las dos.</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-era">Ahora</div>
+      <div class="timeline-content">
+        <strong>La inteligencia artificial</strong>
+        <span>"Es peligrosa. Va a destruir empleos. Prefiero seguir como siempre." La historia ya nos ha enseñado cómo termina esta película.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>El miedo no es irracional — pero tampoco es suficiente</h2>
+
+  <p>Es importante decirlo con claridad: el miedo a las nuevas tecnologías no es estupidez. Es una respuesta humana completamente lógica ante lo desconocido. Los que rompieron los telares en el siglo XIX tenían razón en tener miedo — sus trabajos desaparecieron. Su error no fue sentir miedo. Su error fue pensar que resistirse detendría el cambio.</p>
+
+  <p>El cambio no se detiene. Nunca lo ha hecho.</p>
+
+  <div class="highlight-block">
+    <p>La pregunta nunca ha sido "¿va a cambiar el mundo?". La pregunta siempre ha sido "¿vas a estar del lado de los que aprovechan el cambio, o del lado de los que lo sufren?"</p>
+  </div>
+
+  <p>Con la IA ocurre exactamente lo mismo. Los empleos que desaparezcan no desaparecerán porque la IA sea malvada — desaparecerán porque alguien encontró una forma más eficiente de hacer lo mismo. Y surgirán empleos nuevos que hoy no existen, igual que surgieron cuando llegó internet.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Lo que separa a los dos grupos</h2>
+
+  <p>Mirando la historia, la diferencia entre los que prosperan y los que se quedan atrás no es la inteligencia. No es el dinero. No es la suerte. Es una sola cosa: <strong>la disposición a aprender antes de que sea obligatorio</strong>.</p>
+
+  <p>Los que aprendieron a usar internet en 1998 cuando era "una moda" construyeron los negocios más grandes de las dos décadas siguientes. Los que esperaron a que fuera "necesario" llegaron tarde al mercado y compitieron en inferioridad de condiciones.</p>
+
+  <p>Con la IA, la ventana de tiempo para aprender antes de que sea obligatorio se está cerrando. No tan rápido como algunos dicen, pero sí más rápido de lo que muchos creen.</p>
+
+  <div class="question-block">
+    <p>La pregunta no es si la IA va a cambiarlo todo.<br>La pregunta es: ¿vas a ser de los que la usan<br>o de los que se quedaron mirando?</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Por qué este canal existe</h2>
+
+  <p>Tecnología Explicada Simple nació de una convicción simple: la brecha tecnológica no debería depender de cuánto dinero tienes ni de cuántos años llevas en el sector. Debería depender de cuánto quieres entender.</p>
+
+  <p>No enseñamos tecnología para que seas programador. La enseñamos para que entiendas cómo funciona el mundo en el que vives y trabajas — y puedas tomar mejores decisiones con esa comprensión.</p>
+
+  <p>Porque quien entiende cómo funciona la IA, las redes, la nube y la ciberseguridad tiene una ventaja real. No teórica. Real. En las negociaciones, en las decisiones de compra, en cómo usa las herramientas, en cómo detecta las estafas, en cómo construye su carrera.</p>
+
+  <div class="cta-block">
+    <h3>Empieza por el principio</h3>
+    <p>Si todavía no has visto la Serie 1, es el mejor lugar para empezar. Transistores, redes neuronales, prompts y qué IA usar para qué — todo desde cero.</p>
+    <a href="guia-serie-1-ia.html" class="btn-primary">Leer la guía de Serie 1 →</a>
+  </div>
+
+  <div class="next-article">
+    <div class="next-label">Siguiente artículo →</div>
+    <a href="blog-ia-futuro-opinion.html" class="next-title">La IA y el futuro: mi opinión sincera y sin filtro</a>
+    <div class="next-desc">Más allá del código · 10 min lectura</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
+</footer>
+</body>
+</html>

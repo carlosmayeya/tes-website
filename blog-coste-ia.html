@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El verdadero coste de la IA — y quién lo está pagando | Más allá del código | TES</title>
+<meta name="description" content="Cada vez que le escribes a una IA, en algún lugar del mundo se consume agua. No es una metáfora. Es física. Y hay personas trabajando para resolverlo de formas que parecen ciencia ficción.">
+<meta name="keywords" content="coste energético IA, consumo agua centros datos, infraestructura IA, edge computing, computación cuántica IA, servidores en el espacio">
+<link rel="canonical" href="https://tecnologiaexplicadasimple.com/blog/coste-ia">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --blue: #4FC3F7; --blue-ice: #80D8FF; --blue-dark: #0D2233; --blue-mid: #0A3A5C; --black: #000000; --grey: #4A6070; --white: #FFFFFF; --white-dim: rgba(255,255,255,0.75); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.7; }
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 48px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(79,195,247,0.08); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); text-decoration: none; }
+  .nav-back { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--grey); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--blue); }
+  .article-hero { padding: 120px 48px 60px; max-width: 800px; margin: 0 auto; }
+  .article-breadcrumb { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .article-breadcrumb a { color: var(--grey); text-decoration: none; }
+  .article-breadcrumb a:hover { color: var(--blue); }
+  .article-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--blue); background: rgba(79,195,247,0.08); border: 1px solid rgba(79,195,247,0.2); padding: 5px 12px; text-transform: uppercase; margin-bottom: 20px; }
+  .article-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px, 5vw, 46px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .article-title span { color: var(--blue); }
+  .article-subtitle { font-size: 18px; color: var(--white-dim); font-weight: 300; line-height: 1.6; margin-bottom: 32px; max-width: 600px; }
+  .article-meta { display: flex; gap: 24px; flex-wrap: wrap; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--grey); text-transform: uppercase; padding-bottom: 32px; border-bottom: 1px solid rgba(79,195,247,0.1); }
+  .article-meta span { color: var(--blue); }
+  .article-body { max-width: 800px; margin: 0 auto; padding: 0 48px 80px; }
+  .article-body h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--white); margin: 48px 0 16px; line-height: 1.2; }
+  .article-body h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--blue); margin: 32px 0 12px; }
+  .article-body p { font-size: 17px; color: var(--white-dim); line-height: 1.85; margin-bottom: 24px; font-weight: 300; }
+  .article-body strong { color: var(--white); font-weight: 500; }
+  .highlight-block { background: var(--blue-dark); border-left: 3px solid var(--blue); padding: 24px 28px; margin: 32px 0; }
+  .highlight-block p { margin-bottom: 0; color: var(--white); font-weight: 400; font-size: 16px; line-height: 1.7; }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 32px 0; }
+  .stat-card { background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.15); padding: 24px 16px; text-align: center; }
+  .stat-number { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--blue); line-height: 1; margin-bottom: 8px; }
+  .stat-desc { font-size: 12px; color: var(--white-dim); line-height: 1.5; }
+  .solutions { display: flex; flex-direction: column; gap: 2px; margin: 32px 0; }
+  .solution-item { background: var(--blue-dark); border-left: 3px solid var(--blue); padding: 22px 24px; }
+  .solution-num { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 8px; }
+  .solution-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 8px; }
+  .solution-desc { font-size: 14px; color: var(--white-dim); line-height: 1.6; }
+  .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--blue), transparent); opacity: 0.2; margin: 48px 0; }
+  .cta-block { background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid)); border: 1px solid rgba(79,195,247,0.3); padding: 40px; margin: 60px 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 12px; }
+  .cta-block p { font-size: 15px; color: var(--white-dim); margin-bottom: 24px; line-height: 1.6; }
+  .btn-primary { background: var(--blue); color: var(--black); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 14px 32px; border: none; cursor: pointer; display: inline-block; text-decoration: none; transition: opacity 0.2s; }
+  .btn-primary:hover { opacity: 0.9; }
+  .back-to-blog { border-top: 1px solid rgba(79,195,247,0.08); padding: 40px 0 0; margin-top: 60px; }
+  .back-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 12px; }
+  .back-link { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--blue); text-decoration: none; display: block; transition: opacity 0.2s; }
+  .back-link:hover { opacity: 0.8; }
+  footer { background: var(--black); border-top: 1px solid rgba(79,195,247,0.08); padding: 40px 48px; text-align: center; margin-top: 80px; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); opacity: 0.5; }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .article-hero { padding: 100px 20px 40px; }
+    .article-body { padding: 0 20px 60px; }
+    .article-title { font-size: 28px; }
+    .article-subtitle { font-size: 16px; }
+    .article-body p { font-size: 16px; line-height: 1.8; }
+    .article-body h2 { font-size: 20px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat-number { font-size: 24px; }
+    .cta-block { padding: 28px 20px; }
+    footer { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">TES</a>
+  <a href="index.html#blog" class="nav-back">← Más allá del código</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span>·</span>
+    <a href="index.html#blog">Más allá del código</a>
+    <span>·</span>
+    Infraestructura
+  </div>
+  <div class="article-tag">Más allá del código · Infraestructura · IA</div>
+  <h1 class="article-title">El verdadero coste de la IA — <span>y quién lo está pagando</span></h1>
+  <p class="article-subtitle">Cada vez que le escribes a una IA, en algún lugar del mundo se consume agua. No es una metáfora. Es física. Y hay personas trabajando para resolverlo de formas que parecen ciencia ficción.</p>
+  <div class="article-meta">
+    <div>Por <span>El Equipo TES</span></div>
+    <div>11 min lectura</div>
+    <div>Más allá del <span>código</span></div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>Cuando le escribes a Claude, a ChatGPT, a Grok — tu mensaje no llega a ningún cerebro mágico en las nubes. Llega a un edificio. Un centro de datos. Dentro hay miles de chips especiales llamados GPUs, cada uno trabajando a plena potencia, cada uno generando calor que hay que disipar con agua y aire frío que consume electricidad. Mucha electricidad.</p>
+
+  <p>Cada pregunta que haces tiene un coste físico real en ese edificio. Un coste que tú no ves, pero que alguien está pagando. Y cuando entiendas la escala de ese coste — y cómo se está intentando resolver — vas a ver la IA de una forma completamente diferente.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Los números que lo cambian todo</h2>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">6B</div>
+      <div class="stat-desc">galones de agua consumió Google en 2024 solo para refrigerar sus centros de datos. En un solo año. Una sola empresa.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">318B$</div>
+      <div class="stat-desc">invertidos en infraestructura de IA global en 2025. No en modelos ni aplicaciones — en cables, edificios, chips y sistemas de refrigeración.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2%</div>
+      <div class="stat-desc">de toda la electricidad del planeta consumida por centros de datos en 2025. Un número que podría duplicarse para 2030.</div>
+    </div>
+  </div>
+
+  <p>Esto no es sostenible a largo plazo. Y todo el mundo en la industria lo sabe. Por eso hay una carrera global para resolver este problema — y las soluciones que se están construyendo parecen sacadas de una película de ciencia ficción.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Las cuatro apuestas que cambiarán todo</h2>
+
+  <div class="solutions">
+    <div class="solution-item">
+      <div class="solution-num">Solución 01 · Disponible ahora</div>
+      <div class="solution-title">Refrigeración por inmersión</div>
+      <div class="solution-desc">En lugar de usar agua y aire para enfriar los chips, empresas como Microsoft y Submer están sumergiendo los servidores enteros en un líquido especial — no conductor de electricidad, pero increíblemente eficiente disipando calor. Menos agua, menos energía, misma potencia de cálculo. Microsoft encontró un nuevo refrigerante en apenas 200 horas, un proceso que normalmente lleva meses. Ya se está desplegando en nuevos centros de datos.</div>
+    </div>
+    <div class="solution-item">
+      <div class="solution-num">Solución 02 · En desarrollo</div>
+      <div class="solution-title">Energía nuclear para IA</div>
+      <div class="solution-desc">Meta, Google, Microsoft y Amazon están firmando acuerdos con operadores nucleares. Pequeños reactores modulares — compactos, seguros, sin emisiones. La Comisión Europea invirtió 330 millones de euros en energía de fusión para 2026-2027. China lanzó una empresa estatal de fusión de 2.100 millones de dólares en 2025. La apuesta: energía limpia, constante y sin depender de la red eléctrica, 24 horas al día.</div>
+    </div>
+    <div class="solution-item">
+      <div class="solution-num">Solución 03 · En planificación</div>
+      <div class="solution-title">Centros de datos en el espacio</div>
+      <div class="solution-desc">Los dos grandes problemas de los centros de datos son la refrigeración y la energía. En el espacio no hay atmósfera — el calor se disipa directamente al vacío, a menos 270 grados. Sin agua, sin sistemas de refrigeración. Y la energía: paneles solares apuntando directamente al sol, sin nubes, sin ciclo de noche. Energía ilimitada y constante. SpaceX ya tiene la tecnología para llevar cosas al espacio cada semana. En los próximos diez años, esto deja de ser impensable.</div>
+    </div>
+    <div class="solution-item">
+      <div class="solution-num">Solución 04 · En investigación</div>
+      <div class="solution-title">Computación cuántica</div>
+      <div class="solution-desc">Procesa información de forma fundamentalmente diferente — no bits que son cero o uno, sino qubits que pueden ser los dos al mismo tiempo. El resultado teórico es una eficiencia energética órdenes de magnitud superior a la actual. Una startup llamada Sygaldry acaba de recaudar 139 millones de dólares para desarrollar infraestructura de IA acelerada con computación cuántica. Google, Microsoft e IonQ están en esa misma carrera. No sabemos cuándo llegará. Pero cuando llegue, todo cambia.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Por qué esto importa para ti — ahora mismo</h2>
+
+  <p>Podrías pensar que todo esto es muy interesante pero muy lejano. No lo es.</p>
+
+  <p>Hay billones de dólares apostados a resolver este problema — no porque los ingenieros sean altruistas, sino porque la recompensa es enorme. La electricidad fue exclusiva en su momento. Solo los ricos la tenían. Luego alguien descubrió cómo escalarla y hacerla barata. Y todo cambió.</p>
+
+  <div class="highlight-block">
+    <p>Lo mismo va a pasar con la IA. Alguien va a resolver el problema del agua, de la energía, del coste de los tokens. Y cuando lo resuelva, la IA no será un privilegio de quien puede pagar 350€ al mes. Será tan accesible como la electricidad. La pregunta no es si va a pasar. La pregunta es cuándo.</p>
+  </div>
+
+  <p>Ahora mismo estás viviendo el momento más interesante de la historia de la tecnología. No porque la IA sea perfecta — sino porque no lo es. Los límites que sientes hoy, el agua que se consume, la energía que se gasta, los tokens que se agotan: todo eso son problemas sin resolver. Y los problemas sin resolver son oportunidades.</p>
+
+  <p>Las personas que entienden estos problemas, que saben por qué existen, que pueden ver hacia dónde va la tecnología — esas personas no solo van a usar la solución cuando llegue. Van a ser parte de ella.</p>
+
+  <p>Y tú ya estás un paso adelante. Porque entiendes el sistema. Y entender el sistema es la ventaja que ningún límite de tokens puede quitarte.</p>
+
+  <div class="cta-block">
+    <h3>Entiende la infraestructura que hace posible la IA</h3>
+    <p>La guía de Serie 3 explica cómo funciona la nube — los servidores, la redundancia y por qué las empresas pierden miles de euros sin saber por qué.</p>
+    <a href="guia-serie-3-nube.html" class="btn-primary">La nube explicada desde cero →</a>
+  </div>
+
+  <div class="back-to-blog">
+    <div class="back-label">Explorar más artículos</div>
+    <a href="index.html#blog" class="back-link">← Volver a Más allá del código</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
+</footer>
+</body>
+</html>

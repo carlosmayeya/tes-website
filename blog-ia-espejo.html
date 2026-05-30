@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Si le preguntas a tu IA quién eres, ¿qué diría? | Más allá del código | TES</title>
+<meta name="description" content="Le estás entregando información que no darías a nadie. Tus miedos, tus finanzas, tus problemas íntimos. La IA como espejo, armadura y balanza — con ojos abiertos.">
+<meta name="keywords" content="privacidad IA, datos inteligencia artificial, IA espejo, riesgos privacidad IA, entrenamiento IA personal">
+<link rel="canonical" href="https://tecnologiaexplicadasimple.com/blog/ia-espejo">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --blue: #4FC3F7; --blue-ice: #80D8FF; --blue-dark: #0D2233; --blue-mid: #0A3A5C; --black: #000000; --grey: #4A6070; --white: #FFFFFF; --white-dim: rgba(255,255,255,0.75); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.7; }
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 48px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(79,195,247,0.08); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); text-decoration: none; }
+  .nav-back { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--grey); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--blue); }
+  .article-hero { padding: 120px 48px 60px; max-width: 800px; margin: 0 auto; }
+  .article-breadcrumb { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .article-breadcrumb a { color: var(--grey); text-decoration: none; }
+  .article-breadcrumb a:hover { color: var(--blue); }
+  .article-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--blue); background: rgba(79,195,247,0.08); border: 1px solid rgba(79,195,247,0.2); padding: 5px 12px; text-transform: uppercase; margin-bottom: 20px; }
+  .article-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px, 5vw, 46px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .article-title span { color: var(--blue); }
+  .article-subtitle { font-size: 18px; color: var(--white-dim); font-weight: 300; line-height: 1.6; margin-bottom: 32px; max-width: 600px; }
+  .article-meta { display: flex; gap: 24px; flex-wrap: wrap; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--grey); text-transform: uppercase; padding-bottom: 32px; border-bottom: 1px solid rgba(79,195,247,0.1); }
+  .article-meta span { color: var(--blue); }
+  .article-body { max-width: 800px; margin: 0 auto; padding: 0 48px 80px; }
+  .article-body h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--white); margin: 48px 0 16px; line-height: 1.2; }
+  .article-body p { font-size: 17px; color: var(--white-dim); line-height: 1.85; margin-bottom: 24px; font-weight: 300; }
+  .article-body strong { color: var(--white); font-weight: 500; }
+  .highlight-block { background: var(--blue-dark); border-left: 3px solid var(--blue); padding: 24px 28px; margin: 32px 0; }
+  .highlight-block p { margin-bottom: 0; color: var(--white); font-weight: 400; font-size: 16px; line-height: 1.7; }
+  .three-concepts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 32px 0; }
+  .concept-card { background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.1); padding: 24px 20px; text-align: center; }
+  .concept-icon { font-size: 32px; margin-bottom: 12px; }
+  .concept-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--blue); margin-bottom: 8px; }
+  .concept-desc { font-size: 13px; color: var(--white-dim); line-height: 1.6; }
+  .data-list { margin: 28px 0; display: flex; flex-direction: column; gap: 2px; }
+  .data-item { background: var(--blue-dark); border-left: 3px solid rgba(79,195,247,0.3); padding: 14px 20px; font-size: 15px; color: var(--white-dim); }
+  .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--blue), transparent); opacity: 0.2; margin: 48px 0; }
+  .cta-block { background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid)); border: 1px solid rgba(79,195,247,0.3); padding: 40px; margin: 60px 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 12px; }
+  .cta-block p { font-size: 15px; color: var(--white-dim); margin-bottom: 24px; line-height: 1.6; }
+  .btn-primary { background: var(--blue); color: var(--black); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 14px 32px; border: none; cursor: pointer; display: inline-block; text-decoration: none; transition: opacity 0.2s; }
+  .btn-primary:hover { opacity: 0.9; }
+  .next-article { border-top: 1px solid rgba(79,195,247,0.08); padding: 40px 0 0; margin-top: 60px; }
+  .next-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 12px; }
+  .next-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: var(--white); text-decoration: none; display: block; transition: color 0.2s; margin-bottom: 6px; }
+  .next-title:hover { color: var(--blue); }
+  .next-desc { font-size: 13px; color: var(--grey); }
+  footer { background: var(--black); border-top: 1px solid rgba(79,195,247,0.08); padding: 40px 48px; text-align: center; margin-top: 80px; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); opacity: 0.5; }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .article-hero { padding: 100px 20px 40px; }
+    .article-body { padding: 0 20px 60px; }
+    .article-title { font-size: 28px; }
+    .article-subtitle { font-size: 16px; }
+    .article-body p { font-size: 16px; line-height: 1.8; }
+    .article-body h2 { font-size: 20px; }
+    .three-concepts { grid-template-columns: 1fr; }
+    .cta-block { padding: 28px 20px; }
+    footer { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">TES</a>
+  <a href="index.html#blog" class="nav-back">← Más allá del código</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span>·</span>
+    <a href="index.html#blog">Más allá del código</a>
+    <span>·</span>
+    Privacidad
+  </div>
+  <div class="article-tag">Más allá del código · Privacidad · IA</div>
+  <h1 class="article-title">Si le preguntas a tu IA <span>quién eres</span>, ¿qué diría?</h1>
+  <p class="article-subtitle">Le estás entregando información que no darías a nadie. Tus miedos. Tus finanzas. Tus problemas más íntimos. ¿Eres consciente de lo que estás construyendo?</p>
+  <div class="article-meta">
+    <div>Por <span>El Equipo TES</span></div>
+    <div>9 min lectura</div>
+    <div>Más allá del <span>código</span></div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>Piénsalo un segundo. Si le preguntaras a tu IA "¿quién soy?"... ¿qué te diría? Porque cada día le estás entregando información que no le darías a casi nadie.</p>
+
+  <div class="data-list">
+    <div class="data-item">Tus correos electrónicos</div>
+    <div class="data-item">Tus estados financieros</div>
+    <div class="data-item">Tus resultados médicos</div>
+    <div class="data-item">Tus problemas más íntimos</div>
+    <div class="data-item">Tus miedos más profundos</div>
+    <div class="data-item">Cosas que no quieres que nadie más sepa. Nunca.</div>
+  </div>
+
+  <p>Y aquí viene la pregunta incómoda que muy pocos se hacen: ¿qué pasaría si alguien más leyera todo esto?</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Estás entrenando algo que te conoce cada vez mejor</h2>
+
+  <p>No con un formulario que rellenas una sola vez — sino conversación tras conversación. Pregunta tras pregunta. Duda tras duda.</p>
+
+  <p>Cada vez que le pides consejo, le estás mostrando cómo piensas. Cada vez que la corriges, le estás enseñando cuáles son tus estándares. Cada vez que le cuentas un problema, le estás revelando qué te preocupa de verdad.</p>
+
+  <div class="highlight-block">
+    <p>La IA no olvida. No se distrae. No tiene un mal día. No borra nada. Está construyendo, silenciosamente, un mapa completo de quién eres. La pregunta es: ¿eres consciente de lo que estás construyendo?</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Tres formas de entender lo que tienes entre manos</h2>
+
+  <div class="three-concepts">
+    <div class="concept-card">
+      <div class="concept-icon">🪞</div>
+      <div class="concept-name">Un espejo</div>
+      <div class="concept-desc">Te conoce todos tus datos, tus miedos, tus contradicciones. Y aun así te habla sin filtros. Sin mentiras piadosas. Sin miedo a herirte. Aunque requiere supervisión — la IA también puede alucinarse y decirte lo que quieres oír.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🛡️</div>
+      <div class="concept-name">Una armadura</div>
+      <div class="concept-desc">No te hace más fuerte en el sentido físico. Te hace más inteligente. Ves más rápido, decides mejor, produces más. Pero la armadura solo funciona mientras más la conoces — y cuanto más la conoces, más te conoce a ti.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">⚖️</div>
+      <div class="concept-name">Una balanza</div>
+      <div class="concept-desc">Cuando estás confundido, cuando tus emociones te nublan el juicio, te separa lo que sientes de lo que realmente es verdad. Sin ego, sin agenda, sin favoritismos. Te muestra lo que necesitas ver.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>El riesgo real — y por qué no tienes que tener miedo</h2>
+
+  <p>El riesgo no está en la IA. El riesgo está en usarla sin entender lo que realmente significa. En ceder el control de tus decisiones a algo que, aunque es muy capaz, sigue siendo una herramienta con limitaciones reales.</p>
+
+  <p>Las IAs actuales pueden alucinar — presentar información incorrecta con total seguridad. Pueden ser sesgadas por sus datos de entrenamiento. Pueden decirte lo que creen que quieres escuchar en lugar de lo que necesitas escuchar. Por eso la supervisión humana no es opcional — es esencial.</p>
+
+  <p>Pero aquí está la buena noticia: <strong>una vez que entiendes cómo funciona, puedes usarla con los ojos abiertos.</strong> Sin miedo. Sin culpa. Con todo su potencial — y con conciencia de sus límites.</p>
+
+  <div class="highlight-block">
+    <p>Dos personas pueden usar la misma IA y vivir experiencias completamente diferentes — porque cada quien está entrenando su propia versión, con sus propios valores, sus propias prioridades, su propia forma de pensar.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Entonces, ¿qué diría tu IA sobre ti?</h2>
+
+  <p>Ahora ya sabes la respuesta. No solo te conoce. Te conoce mejor que la mayoría de las personas que tienes cerca — porque le has entregado algo que nunca le darías a casi nadie.</p>
+
+  <p>La pregunta ahora no es si seguir usándola. Es cómo usarla de forma que te amplifique como persona en lugar de sustituir lo que eres.</p>
+
+  <p>Y tú ya estás empezando a entenderlo. Eso ya es una ventaja.</p>
+
+  <div class="cta-block">
+    <h3>Entiende cómo funciona por dentro</h3>
+    <p>Si quieres saber cómo aprende realmente la IA y por qué tiene las limitaciones que tiene, la guía de Serie 1 te lo explica desde la base.</p>
+    <a href="guia-serie-1-ia.html" class="btn-primary">Cómo funciona la IA de verdad →</a>
+  </div>
+
+  <div class="next-article">
+    <div class="next-label">Siguiente artículo →</div>
+    <a href="blog-nueva-desigualdad.html" class="next-title">La nueva desigualdad que nadie está viendo</a>
+    <div class="next-desc">Más allá del código · 9 min lectura</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
+</footer>
+</body>
+</html>
