@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La nube explicada desde cero — Guía completa | Tecnología Explicada Simple</title>
+<meta name="description" content="Guía completa sobre la nube. Dónde están tus fotos, qué es un servidor, AWS vs Azure vs Google Cloud, cómo funciona Netflix y los errores más caros en la nube.">
+<meta name="keywords" content="qué es la nube, cómo funciona la nube, AWS Azure Google Cloud, IaaS PaaS SaaS, servidores cloud, nube pública privada híbrida">
+<link rel="canonical" href="https://tecnologiaexplicadasimple.com/guias/serie-3-nube">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4FC3F7;
+    --blue-ice: #80D8FF;
+    --blue-dark: #0D2233;
+    --blue-mid: #0A3A5C;
+    --black: #000000;
+    --grey: #4A6070;
+    --white: #FFFFFF;
+    --white-dim: rgba(255,255,255,0.75);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); text-decoration: none;
+  }
+
+  .nav-back {
+    font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+    color: var(--grey); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--blue); }
+
+  .article-hero { padding: 120px 48px 60px; max-width: 860px; margin: 0 auto; }
+
+  .article-breadcrumb {
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
+    color: var(--grey); text-transform: uppercase; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .article-breadcrumb a { color: var(--grey); text-decoration: none; transition: color 0.2s; }
+  .article-breadcrumb a:hover { color: var(--blue); }
+
+  .article-tag {
+    display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.25em; color: var(--blue); background: rgba(79,195,247,0.08);
+    border: 1px solid rgba(79,195,247,0.2); padding: 5px 12px; text-transform: uppercase; margin-bottom: 20px;
+  }
+
+  .article-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(32px, 5vw, 52px); line-height: 1.05;
+    letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  .article-title span { color: var(--blue); }
+
+  .article-subtitle {
+    font-size: 18px; color: var(--white-dim); font-weight: 300;
+    line-height: 1.6; margin-bottom: 32px; max-width: 620px;
+  }
+
+  .article-meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--grey); text-transform: uppercase;
+    padding-bottom: 32px; border-bottom: 1px solid rgba(79,195,247,0.1);
+  }
+  .article-meta span { color: var(--blue); }
+
+  .article-body { max-width: 860px; margin: 0 auto; padding: 0 48px 80px; }
+
+  .article-body h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px;
+    color: var(--white); margin: 48px 0 16px; letter-spacing: -0.01em; line-height: 1.2;
+  }
+
+  .article-body h3 {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px;
+    color: var(--blue); margin: 32px 0 12px;
+  }
+
+  .article-body p {
+    font-size: 16px; color: var(--white-dim); line-height: 1.8; margin-bottom: 20px; font-weight: 300;
+  }
+
+  .article-body strong { color: var(--white); font-weight: 500; }
+
+  .article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 20px; }
+  .article-body li { font-size: 16px; color: var(--white-dim); line-height: 1.7; margin-bottom: 8px; font-weight: 300; }
+
+  .concept-block {
+    background: var(--blue-dark); border-left: 3px solid var(--blue); padding: 24px 28px; margin: 24px 0;
+  }
+  .concept-block .concept-label {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em;
+    color: var(--blue); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .concept-block p { margin-bottom: 0; color: var(--white); font-weight: 400; font-size: 15px; }
+
+  .stat-block {
+    background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.2);
+    padding: 24px 28px; margin: 28px 0; display: flex; align-items: center; gap: 20px;
+  }
+  .stat-icon { font-size: 28px; flex-shrink: 0; }
+  .stat-label { font-size: 14px; color: var(--white-dim); line-height: 1.6; }
+  .stat-label strong { color: var(--blue); font-size: 20px; font-family: 'Syne', sans-serif; display: block; margin-bottom: 4px; }
+
+  .three-col {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 28px 0;
+  }
+
+  .cloud-card {
+    background: var(--blue-dark); padding: 24px 20px; border: 1px solid rgba(79,195,247,0.1);
+    transition: border-color 0.2s;
+  }
+  .cloud-card:hover { border-color: rgba(79,195,247,0.3); }
+
+  .cloud-card-title {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px;
+    color: var(--blue); margin-bottom: 6px;
+  }
+  .cloud-card-subtitle {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em;
+    color: var(--grey); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .cloud-card p { font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 0; }
+
+  .saas-row {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.1);
+    padding: 16px 20px; margin-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .saas-row:hover { border-color: rgba(79,195,247,0.3); }
+
+  .saas-acronym {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px;
+    color: var(--blue); width: 60px; flex-shrink: 0;
+  }
+  .saas-name { font-size: 11px; color: var(--grey); font-family: 'Space Mono', monospace; display: block; margin-bottom: 3px; }
+  .saas-desc { font-size: 14px; color: var(--white); }
+  .saas-examples { font-size: 12px; color: var(--grey); margin-top: 2px; }
+
+  .error-list { margin: 24px 0; display: flex; flex-direction: column; gap: 2px; }
+
+  .error-item {
+    background: var(--blue-dark); border-left: 3px solid rgba(255,80,80,0.4);
+    padding: 18px 22px; display: flex; gap: 14px; align-items: flex-start;
+  }
+
+  .error-num {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    color: rgba(255,120,120,0.8); flex-shrink: 0; margin-top: 2px;
+  }
+
+  .error-content strong { display: block; font-size: 14px; color: var(--white); margin-bottom: 3px; }
+  .error-content span { font-size: 13px; color: var(--grey); line-height: 1.5; }
+
+  .takeaway {
+    background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.25);
+    padding: 24px 28px; margin: 32px 0;
+  }
+  .takeaway-label {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em;
+    color: var(--blue); text-transform: uppercase; margin-bottom: 10px;
+  }
+  .takeaway p { color: var(--white); font-weight: 400; font-size: 15px; margin-bottom: 0; }
+
+  .section-divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0.2; margin: 48px 0;
+  }
+
+  .rule-321 {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 24px 0;
+  }
+  .rule-col {
+    background: var(--blue-dark); padding: 20px; text-align: center;
+    border: 1px solid rgba(79,195,247,0.1);
+  }
+  .rule-num {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 42px;
+    color: var(--blue); line-height: 1; margin-bottom: 8px;
+  }
+  .rule-text { font-size: 13px; color: var(--white-dim); line-height: 1.5; }
+
+  .pdf-cta {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+    border: 1px solid rgba(79,195,247,0.3); padding: 48px; margin: 60px 0 0;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .pdf-cta::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(79,195,247,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .pdf-cta-tag {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.3em; color: var(--blue); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .pdf-cta h3 {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px;
+    color: var(--white); margin-bottom: 12px;
+  }
+  .pdf-cta p {
+    font-size: 15px; color: var(--white-dim); max-width: 460px;
+    margin: 0 auto 28px; line-height: 1.6;
+  }
+  .pdf-includes { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+  .pdf-include-item {
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
+    color: var(--blue-ice); display: flex; align-items: center; gap: 6px;
+  }
+  .pdf-include-item::before { content: '✓'; color: var(--blue); }
+
+  .btn-primary {
+    background: var(--blue); color: var(--black);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase; padding: 16px 36px;
+    border: none; cursor: pointer; display: inline-block; text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+
+  .next-article { border-top: 1px solid rgba(79,195,247,0.08); padding: 48px 0 0; margin-top: 60px; }
+  .next-label {
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
+    color: var(--grey); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .next-title {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px;
+    color: var(--white); text-decoration: none; display: block; transition: color 0.2s; margin-bottom: 8px;
+  }
+  .next-title:hover { color: var(--blue); }
+  .next-desc { font-size: 14px; color: var(--grey); }
+
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+    z-index: 500; align-items: center; justify-content: center; backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--black); border: 1px solid rgba(79,195,247,0.25);
+    padding: 48px; max-width: 460px; width: 90%; position: relative;
+  }
+  .modal-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--grey); font-size: 20px; cursor: pointer; }
+  .modal-close:hover { color: var(--white); }
+  .modal-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--blue); text-transform: uppercase; margin-bottom: 14px; }
+  .modal-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 8px; }
+  .modal-subtitle { font-size: 13px; color: var(--white-dim); margin-bottom: 24px; line-height: 1.5; }
+  .form-input {
+    width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(79,195,247,0.2);
+    color: var(--white); padding: 13px 16px; font-size: 14px; font-family: 'Inter', sans-serif;
+    outline: none; margin-bottom: 12px; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--grey); }
+  .form-input:focus { border-color: var(--blue); }
+  .form-note { font-size: 11px; color: var(--grey); margin-top: 12px; line-height: 1.5; }
+
+  footer {
+    background: var(--black); border-top: 1px solid rgba(79,195,247,0.08);
+    padding: 40px 48px; text-align: center; margin-top: 80px;
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); opacity: 0.5; }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .article-hero { padding: 100px 20px 40px; }
+    .article-body { padding: 0 20px 60px; }
+    .article-title { font-size: 30px; }
+    .article-subtitle { font-size: 16px; line-height: 1.7; }
+    .article-body p { font-size: 16px; line-height: 1.8; }
+    .article-body li { font-size: 15px; line-height: 1.7; }
+    .article-body h2 { font-size: 22px; }
+    .article-body h3 { font-size: 17px; }
+    .concept-block p { font-size: 15px; }
+    .three-col { grid-template-columns: 1fr; }
+    .rule-321 { grid-template-columns: repeat(3, 1fr); }
+    .rule-num { font-size: 32px; }
+    .rule-text { font-size: 12px; }
+    .saas-acronym { font-size: 18px; width: 50px; }
+    .pdf-cta { padding: 32px 20px; }
+    .pdf-cta h3 { font-size: 22px; }
+    .pdf-includes { flex-direction: column; align-items: center; gap: 10px; }
+    .modal-box { padding: 32px 20px; }
+    .stat-block { flex-direction: column; gap: 12px; }
+    footer { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">TES</a>
+  <a href="index.html#guias" class="nav-back">← Volver a guías</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span>·</span>
+    <a href="index.html#guias">Guías</a>
+    <span>·</span>
+    Serie 3
+  </div>
+  <div class="article-tag">Serie 03 · La Nube</div>
+  <h1 class="article-title">La nube explicada <span>desde cero</span></h1>
+  <p class="article-subtitle">De tus fotos del móvil a los servidores de Netflix. Dónde están realmente tus datos y por qué eso importa más de lo que crees.</p>
+  <div class="article-meta">
+    <div>Por <span>El Equipo TES</span></div>
+    <div>12 min lectura</div>
+    <div>Serie <span>03</span> de 9</div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>Tienes miles de fotos en tu móvil. Música en Spotify. Documentos en Google Drive. Series en Netflix. Todo eso existe en algún lugar físico del mundo — en edificios enormes, refrigerados las 24 horas, protegidos como búnkeres. A eso le llamamos la nube.</p>
+
+  <p>Pero la nube no es una metáfora poética. Es infraestructura real. Y entenderla cambia la forma en que proteges tu información, eliges tus herramientas y tomas decisiones tecnológicas en tu trabajo.</p>
+
+  <div class="takeaway">
+    <div class="takeaway-label">⚡ Lo que te llevas de esta guía</div>
+    <p>Entender dónde están realmente tus datos, cómo funciona Netflix sin caerse nunca, qué significan IaaS, PaaS y SaaS, y los errores que cuestan miles de euros a empresas que migran a la nube sin saber lo que hacen.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Tus fotos no están en las nubes</h2>
+
+  <p>Cuando subes una foto a iCloud o Google Photos, esa foto no desaparece en el aire. Viaja por internet y aterriza en un servidor físico. En un edificio real. Con empleados reales que, técnicamente, podrían acceder a ella.</p>
+
+  <p>Aquí viene algo que muy poca gente sabe:</p>
+
+  <div class="concept-block">
+    <div class="concept-label">La verdad sobre las nubes de fotos</div>
+    <p><strong>Google</strong> escanea tus fotos para entrenar su IA. <strong>Apple</strong> dice que no lo hace. Ninguna de las dos es completamente gratuita: pagas con tus datos o con tu dinero. La nube no es mala — pero usarla sin entenderla es ceder el control sin saberlo.</p>
+  </div>
+
+  <p>Los profesionales que gestionan información sensible nunca dependen de una sola nube. Usan la regla 3-2-1:</p>
+
+  <div class="rule-321">
+    <div class="rule-col">
+      <div class="rule-num">3</div>
+      <div class="rule-text">copias de tus datos</div>
+    </div>
+    <div class="rule-col">
+      <div class="rule-num">2</div>
+      <div class="rule-text">formatos distintos</div>
+    </div>
+    <div class="rule-col">
+      <div class="rule-num">1</div>
+      <div class="rule-text">copia fuera de casa</div>
+    </div>
+  </div>
+
+  <p>Así nunca dependes de que una sola empresa no tenga un fallo, un hackeo o un cambio de política.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>El servidor: el músculo invisible detrás de todo</h2>
+
+  <p>Un servidor es un ordenador que nunca duerme. Imagina un camarero que atiende a mil personas al mismo tiempo, sin descanso, sin errores, los 365 días del año. Tú pides una página web, el servidor la busca y te la sirve en milisegundos.</p>
+
+  <p>Eso es todo. Cliente pide. Servidor entrega.</p>
+
+  <div class="stat-block">
+    <div class="stat-icon">🤖</div>
+    <div class="stat-label">
+      <strong>La IA también vive en servidores</strong>
+      Cuando le escribes a Claude o a ChatGPT, tu mensaje viaja hasta un servidor con miles de chips especiales, procesa tu pregunta y te devuelve la respuesta. Todo en menos de 3 segundos. Cada respuesta que recibes tiene un coste físico real detrás.
+    </div>
+  </div>
+
+  <p>Saber esto te permite entender por qué la IA tiene límites de uso, por qué algunos servicios fallan justo cuando más los necesitas, y por qué el precio de estos servicios no es arbitrario — hay infraestructura física detrás de cada clic.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Los tres tipos de nube — y elegir mal cuesta caro</h2>
+
+  <p>No toda la nube es igual. Hay tres modelos, y cada uno existe por una razón.</p>
+
+  <div class="three-col">
+    <div class="cloud-card">
+      <div class="cloud-card-title">Nube Pública</div>
+      <div class="cloud-card-subtitle">El piso compartido</div>
+      <p>Alquilas capacidad en servidores que comparten miles de empresas. Barato, flexible, escalable. AWS, Google Cloud, Azure. Ideal para startups y proyectos que necesitan crecer rápido.</p>
+    </div>
+    <div class="cloud-card">
+      <div class="cloud-card-title">Nube Privada</div>
+      <div class="cloud-card-subtitle">Tu piso propio</div>
+      <p>Tus propios servidores, bajo tu control total. Máxima seguridad, máximo coste. Los bancos, hospitales y gobiernos viven aquí — donde los datos no pueden compartir paredes con nadie.</p>
+    </div>
+    <div class="cloud-card">
+      <div class="cloud-card-title">Nube Híbrida</div>
+      <div class="cloud-card-subtitle">Lo mejor de los dos</div>
+      <p>Lo confidencial en tu servidor privado. Lo que necesita escalar en la nube pública. La opción más inteligente para empresas que usan IA con datos sensibles.</p>
+    </div>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">La IA y la nube híbrida</div>
+    <p>Las empresas que usan modelos como Claude o ChatGPT internamente casi siempre usan nube híbrida. Los datos sensibles no salen de sus servidores privados. La potencia de cálculo para procesar la IA la alquilan en la nube pública. Lo mejor de los dos mundos.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>IaaS, PaaS y SaaS — las tres siglas que debes entender</h2>
+
+  <p>Alguien, en algún momento, te va a mencionar estas siglas. Y si no las entiendes, pueden venderte algo que no necesitas — o que cuesta diez veces más de lo necesario.</p>
+
+  <div class="saas-row">
+    <div class="saas-acronym">IaaS</div>
+    <div>
+      <span class="saas-name">Infrastructure as a Service</span>
+      <div class="saas-desc">El edificio vacío. Tú construyes todo lo demás — el sistema, las aplicaciones, la seguridad.</div>
+      <div class="saas-examples">AWS EC2 · Google Compute Engine · Azure VMs</div>
+    </div>
+  </div>
+
+  <div class="saas-row">
+    <div class="saas-acronym">PaaS</div>
+    <div>
+      <span class="saas-name">Platform as a Service</span>
+      <div class="saas-desc">El edificio con herramientas. Tú solo traes tu aplicación — el resto ya está montado.</div>
+      <div class="saas-examples">Google App Engine · Heroku · Azure App Service</div>
+    </div>
+  </div>
+
+  <div class="saas-row">
+    <div class="saas-acronym">SaaS</div>
+    <div>
+      <span class="saas-name">Software as a Service</span>
+      <div class="saas-desc">El producto terminado. Solo abres y usas. Alguien más gestiona todo lo demás.</div>
+      <div class="saas-examples">Claude · ChatGPT · Gmail · Spotify · Netflix · Canva</div>
+    </div>
+  </div>
+
+  <div class="takeaway">
+    <div class="takeaway-label">La regla del 90%</div>
+    <p>El 90% de los profesionales solo necesita SaaS. Entender la diferencia no es para elegir cuál usar — es para no dejarte vender IaaS cuando no lo necesitas. Eso puede costarte miles de euros al año en complejidad y mantenimiento innecesarios.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>AWS vs Azure vs Google Cloud — la regla simple para elegir</h2>
+
+  <p>Tres empresas controlan más del 65% de la nube mundial. Elegir la equivocada no te arruina, pero sí te complica la vida innecesariamente.</p>
+
+  <div class="three-col">
+    <div class="cloud-card">
+      <div class="cloud-card-title">AWS</div>
+      <div class="cloud-card-subtitle">Amazon · El más grande</div>
+      <p>Si no sabes cuál elegir, probablemente es este. El más maduro, el mayor ecosistema de herramientas. Netflix, Airbnb, NASA — y Claude — corren sobre AWS.</p>
+    </div>
+    <div class="cloud-card">
+      <div class="cloud-card-title">Azure</div>
+      <div class="cloud-card-subtitle">Microsoft · El integrado</div>
+      <p>Si tu empresa ya usa Windows, Office 365 o Teams, Azure conecta solo. Preferido por bancos y gobiernos. ChatGPT corre sobre Azure.</p>
+    </div>
+    <div class="cloud-card">
+      <div class="cloud-card-title">Google Cloud</div>
+      <div class="cloud-card-subtitle">Google · El más potente en IA</div>
+      <p>El más fuerte en inteligencia artificial y análisis de datos. Si tu negocio vive de datos, este es tu sitio. Gemini vive en Google Cloud.</p>
+    </div>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">No es casualidad</div>
+    <p>Claude corre sobre AWS. ChatGPT usa Azure. Gemini vive en Google Cloud. Cada IA eligió la infraestructura que mejor se adapta a lo que hace. La regla es simple: empresa con Microsoft → Azure. Startup desde cero → AWS. Negocio basado en datos e IA → Google Cloud.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Cómo Netflix sirve vídeo a 270 millones sin caerse nunca</h2>
+
+  <p>Netflix tiene 270 millones de suscriptores. Millones pulsan play simultáneamente. Y casi nunca falla. La razón no es magia — es <strong>redundancia</strong>.</p>
+
+  <p>Cuando das play, no te conectas a un solo servidor. Te conectas a decenas al mismo tiempo. Tu película no viaja desde América — ya está guardada a pocos kilómetros de ti, en servidores distribuidos en más de 100 países.</p>
+
+  <div class="concept-block">
+    <div class="concept-label">La metáfora de los puentes</div>
+    <p>Imagina que vas a cruzar una ciudad. Con un solo puente: si se corta, te quedas parado. Con cien puentes: si uno falla, tomas otro sin ni notarlo. Netflix tiene cien puentes para cada película. Si un servidor falla, otro toma el relevo en milisegundos.</p>
+  </div>
+
+  <div class="stat-block">
+    <div class="stat-icon">☁️</div>
+    <div class="stat-label">
+      <strong>Lo que realmente compran las empresas en la nube</strong>
+      No solo almacenamiento. Compran la garantía de que nunca se caen. La redundancia no es un lujo — es la diferencia entre un negocio digital que funciona y uno que desaparece cuando falla un servidor.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Los 4 errores que arruinan la migración a la nube</h2>
+
+  <p>Migrar a la nube puede ser la mejor decisión tecnológica de tu empresa — o uno de los errores más caros. La diferencia está en lo que nadie te dice antes de firmar el contrato.</p>
+
+  <div class="error-list">
+    <div class="error-item">
+      <div class="error-num">01</div>
+      <div class="error-content">
+        <strong>Mover todo sin optimizar nada</strong>
+        <span>Copias tu sistema antiguo a la nube sin cambiar nada. Resultado: pagas más por exactamente lo mismo de siempre. La nube no mejora automáticamente lo que ya funciona mal.</span>
+      </div>
+    </div>
+    <div class="error-item">
+      <div class="error-num">02</div>
+      <div class="error-content">
+        <strong>Sin plan de seguridad desde el día uno</strong>
+        <span>La nube no es segura por defecto. Tú configuras quién entra y quién no. Si no lo haces correctamente desde el principio, cualquiera puede entrar.</span>
+      </div>
+    </div>
+    <div class="error-item">
+      <div class="error-num">03</div>
+      <div class="error-content">
+        <strong>Sin límites de gasto configurados</strong>
+        <span>Una sola aplicación mal programada puede generarte una factura de miles de euros en una noche. Ha pasado. Muchas veces. La nube cobra por uso — como la luz de tu casa.</span>
+      </div>
+    </div>
+    <div class="error-item">
+      <div class="error-num">04</div>
+      <div class="error-content">
+        <strong>Todo el negocio en un solo proveedor</strong>
+        <span>Si ese proveedor cae, tú caes con él. La nube no arruina empresas. La improvisación sí. La IA puede detectar estos riesgos en tiempo real — pero solo si alguien la configura correctamente desde el principio.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-block">
+    <div class="stat-icon">💰</div>
+    <div class="stat-label">
+      <strong>30-40% de reducción de factura</strong>
+      Las empresas que optimizan su nube con IA reducen su gasto entre un 30 y un 40% sin perder rendimiento. La nube barata no existe. La nube bien gestionada, sí.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Lo que te llevas</h2>
+
+  <p>Ahora entiendes que la nube no es un concepto abstracto — es infraestructura física con costes reales, decisiones estratégicas y riesgos concretos. Sabes dónde están tus fotos, por qué Netflix no se cae, qué significan IaaS, PaaS y SaaS, y los errores que debes evitar si alguna vez migras sistemas a la nube.</p>
+
+  <p>Y sabes algo más importante: la IA que usas cada día vive en esa infraestructura. Entender la nube es entender el terreno sobre el que se construye todo lo que viene.</p>
+
+  <div class="pdf-cta">
+    <div class="pdf-cta-tag">📄 Recurso gratuito · Serie 03</div>
+    <h3>Descarga la hoja de referencia en PDF</h3>
+    <p>La comparativa de los tres proveedores, la regla 3-2-1, el desglose de IaaS/PaaS/SaaS y el checklist para auditar tu gasto en la nube — en una sola página.</p>
+    <div class="pdf-includes">
+      <div class="pdf-include-item">Comparativa AWS vs Azure vs GCP</div>
+      <div class="pdf-include-item">Regla 3-2-1 de backups</div>
+      <div class="pdf-include-item">Checklist anti-errores</div>
+      <div class="pdf-include-item">Glosario de términos clave</div>
+    </div>
+    <button class="btn-primary" onclick="openModal()">Descargar PDF gratis →</button>
+  </div>
+
+  <div class="next-article">
+    <div class="next-label">Siguiente guía →</div>
+    <a href="guia-serie-4-ciberseguridad.html" class="next-title">Ciberseguridad explicada — cómo proteger lo que es tuyo</a>
+    <div class="next-desc">Serie 04 · Ciberseguridad · En publicación</div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-tag">Serie 03 · Recurso gratuito</div>
+    <div class="modal-title">Descarga tu PDF</div>
+    <p class="modal-subtitle">Déjanos tu email y te enviamos la hoja de referencia al instante. Sin spam.</p>
+    <input type="text" class="form-input" placeholder="Tu nombre" id="modal-name">
+    <input type="email" class="form-input" placeholder="Tu email" id="modal-email">
+    <button class="btn-primary" style="width: 100%; margin-top: 4px;" onclick="submitModal()">Enviarme el PDF →</button>
+    <div class="form-note">Lo recibirás en menos de 2 minutos en tu bandeja de entrada.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
+</footer>
+
+<script>
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+  function submitModal() {
+    const email = document.getElementById('modal-email').value;
+    const name = document.getElementById('modal-name').value;
+    if (!email || !name) { alert('Por favor, rellena tu nombre y email.'); return; }
+    const btn = event.target;
+    btn.textContent = '✓ ¡En camino!';
+    btn.style.opacity = '0.7';
+    setTimeout(closeModal, 1500);
+  }
+</script>
+
+</body>
+</html>
