@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo funciona la IA de verdad — Guía completa | Tecnología Explicada Simple</title>
+<meta name="description" content="Guía completa sobre cómo funciona la inteligencia artificial desde cero. Transistores, redes neuronales, entrenamiento y prompts. Sin jerga. Con ejemplos reales.">
+<meta name="keywords" content="cómo funciona la IA, inteligencia artificial explicada, transistores IA, redes neuronales, prompts IA, aprender IA desde cero">
+<link rel="canonical" href="https://tecnologiaexplicadasimple.com/guias/serie-1-ia">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4FC3F7;
+    --blue-ice: #80D8FF;
+    --blue-dark: #0D2233;
+    --blue-mid: #0A3A5C;
+    --black: #000000;
+    --black-soft: #080808;
+    --grey: #4A6070;
+    --white: #FFFFFF;
+    --white-dim: rgba(255,255,255,0.75);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .nav-back {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--grey);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--blue); }
+
+  /* HERO ARTICLE */
+  .article-hero {
+    padding: 120px 48px 60px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .article-breadcrumb {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .article-breadcrumb a {
+    color: var(--grey);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .article-breadcrumb a:hover { color: var(--blue); }
+
+  .article-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    background: rgba(79,195,247,0.08);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 5px 12px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .article-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .article-title span { color: var(--blue); }
+
+  .article-subtitle {
+    font-size: 18px;
+    color: var(--white-dim);
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 620px;
+  }
+
+  .article-meta {
+    display: flex;
+    gap: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--grey);
+    text-transform: uppercase;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(79,195,247,0.1);
+  }
+
+  .article-meta span { color: var(--blue); }
+
+  /* ARTICLE BODY */
+  .article-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  .article-body h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--white);
+    margin: 48px 0 16px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .article-body h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--blue);
+    margin: 32px 0 12px;
+  }
+
+  .article-body p {
+    font-size: 16px;
+    color: var(--white-dim);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .article-body strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .article-body ul, .article-body ol {
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+
+  .article-body li {
+    font-size: 16px;
+    color: var(--white-dim);
+    line-height: 1.7;
+    margin-bottom: 8px;
+    font-weight: 300;
+  }
+
+  /* SPECIAL BLOCKS */
+  .concept-block {
+    background: var(--blue-dark);
+    border-left: 3px solid var(--blue);
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+
+  .concept-block .concept-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .concept-block p {
+    margin-bottom: 0;
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .stat-block {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 24px 28px;
+    margin: 28px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--blue);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--white-dim);
+    line-height: 1.5;
+  }
+
+  .prompt-example {
+    background: rgba(4,13,20,0.9);
+    border: 1px solid rgba(79,195,247,0.15);
+    border-left: 3px solid var(--blue);
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--blue-ice);
+    line-height: 1.7;
+  }
+
+  .prompt-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 28px 0;
+  }
+
+  .col-bad {
+    background: rgba(10,10,10,0.9);
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .col-good {
+    background: var(--blue-mid);
+    padding: 20px;
+    border: 1px solid rgba(79,195,247,0.2);
+  }
+
+  .col-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .col-bad .col-label { color: var(--grey); }
+  .col-good .col-label { color: var(--blue); }
+
+  .col-bad p, .col-good p { font-size: 14px; margin-bottom: 0; }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0.2;
+    margin: 48px 0;
+  }
+
+  /* TAKEAWAY BOX */
+  .takeaway {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.25);
+    padding: 28px 32px;
+    margin: 36px 0;
+  }
+
+  .takeaway-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .takeaway p {
+    color: var(--white);
+    font-weight: 400;
+    font-size: 15px;
+    margin-bottom: 0;
+  }
+
+  /* PDF CTA */
+  .pdf-cta {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+    border: 1px solid rgba(79,195,247,0.3);
+    padding: 48px;
+    margin: 60px 0 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pdf-cta::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(79,195,247,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .pdf-cta-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .pdf-cta h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .pdf-cta p {
+    font-size: 15px;
+    color: var(--white-dim);
+    max-width: 480px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+  }
+
+  .pdf-includes {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .pdf-include-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--blue-ice);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pdf-include-item::before {
+    content: '✓';
+    color: var(--blue);
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.25);
+    padding: 48px;
+    max-width: 460px;
+    width: 90%;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--grey);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .modal-close:hover { color: var(--white); }
+
+  .modal-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .modal-subtitle {
+    font-size: 13px;
+    color: var(--white-dim);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(79,195,247,0.2);
+    color: var(--white);
+    padding: 13px 16px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .form-input::placeholder { color: var(--grey); }
+  .form-input:focus { border-color: var(--blue); }
+
+  .form-note {
+    font-size: 11px;
+    color: var(--grey);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* NEXT ARTICLE */
+  .next-article {
+    border-top: 1px solid rgba(79,195,247,0.08);
+    padding: 48px 0 0;
+    margin-top: 60px;
+  }
+
+  .next-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .next-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--white);
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+    margin-bottom: 8px;
+  }
+
+  .next-title:hover { color: var(--blue); }
+
+  .next-desc {
+    font-size: 14px;
+    color: var(--grey);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(79,195,247,0.08);
+    padding: 40px 48px;
+    text-align: center;
+    margin-top: 80px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--grey);
+    opacity: 0.5;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .article-hero { padding: 100px 20px 40px; }
+    .article-body { padding: 0 20px 60px; }
+    .two-col { grid-template-columns: 1fr; }
+    .pdf-cta { padding: 32px 24px; }
+    .pdf-cta h3 { font-size: 22px; }
+    .pdf-includes { flex-direction: column; align-items: center; gap: 12px; }
+    .modal-box { padding: 32px 24px; }
+    footer { padding: 32px 20px; }
+    .stat-block { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">TES</a>
+  <a href="index.html#guias" class="nav-back">← Volver a guías</a>
+</nav>
+
+<!-- ARTICLE HERO -->
+<div class="article-hero">
+  <div class="article-breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span>·</span>
+    <a href="index.html#guias">Guías</a>
+    <span>·</span>
+    Serie 1
+  </div>
+  <div class="article-tag">Serie 01 · IA Explicada Simple</div>
+  <h1 class="article-title">Cómo funciona la IA <span>de verdad</span></h1>
+  <p class="article-subtitle">Desde transistores hasta prompts avanzados. Todo lo que necesitas saber para entender y usar la inteligencia artificial con ventaja real.</p>
+  <div class="article-meta">
+    <div>Por <span>El Equipo TES</span></div>
+    <div>10 min lectura</div>
+    <div>Serie <span>01</span> de 9</div>
+  </div>
+</div>
+
+<!-- ARTICLE BODY -->
+<div class="article-body">
+
+  <p>El 95% de las personas que usan inteligencia artificial cada día no saben cómo funciona. No es un insulto — es simplemente que nadie se lo ha explicado bien. Los medios hablan de IA como si fuera magia o ciencia ficción. Los técnicos la explican con jerga que aleja a cualquiera. Y en el medio queda la mayoría: gente inteligente que usa la herramienta sin entender qué tiene entre manos.</p>
+
+  <p>Esta guía cambia eso. Cuando termines de leerla, entenderás la IA desde su base física hasta cómo hablarle para obtener resultados que te ahorren horas de trabajo. Sin rodeos. Sin tecnicismos innecesarios.</p>
+
+  <div class="takeaway">
+    <div class="takeaway-label">⚡ Lo que te llevas de esta guía</div>
+    <p>Entender de dónde viene la IA, cómo aprende, por qué no es magia y cómo hablarle para que trabaje de verdad para ti — no para todos los demás.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Por qué importa entender esto ahora</h2>
+
+  <p>Jensen Huang, el CEO de NVIDIA — la empresa que fabrica los chips que hacen funcionar toda la IA que conoces — lo dijo con una claridad brutal: <strong>"La IA no te quitará el trabajo. Alguien que sabe usarla, sí."</strong></p>
+
+  <p>No es una amenaza. Es una descripción de lo que ya está pasando. La IA ya está en ventas, en marketing, en finanzas, en gestión de equipos — no como algo del futuro, sino ahora mismo. Y la brecha entre quien la usa bien y quien no ya se está notando: en los sueldos, en las oportunidades, en quién sube y quién se queda.</p>
+
+  <p>Entonces no aprendes IA para ser más listo. La aprendes para no quedarte fuera de una conversación que ya empezó sin ti.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Todo empieza con un grifo</h2>
+
+  <p>Antes de hablar de inteligencia artificial, hay que hablar de algo ridículamente simple: un interruptor.</p>
+
+  <p>Imagina un grifo de agua. Cuando lo abres, el agua fluye. Cuando lo cierras, para. Eso es todo. Ahora imagina que ese grifo es tan pequeño que caben 50.000 millones dentro de la uña de tu dedo pulgar — y que puede abrirse y cerrarse miles de millones de veces por segundo. Eso es un <strong>transistor</strong>.</p>
+
+  <div class="concept-block">
+    <div class="concept-label">El transistor — 3 partes</div>
+    <p><strong>Entrada:</strong> donde llega la electricidad. <strong>Mando:</strong> el control que decide si fluye. <strong>Salida:</strong> donde sale la electricidad. Una señal pequeña en el mando controla un flujo enorme.</p>
+  </div>
+
+  <div class="stat-block">
+    <div class="stat-number">50B</div>
+    <div class="stat-label">transistores caben en la uña de tu dedo pulgar. Cada uno abre y cierra miles de millones de veces por segundo. Eso es el hardware que hace posible todo lo que ves en pantalla.</div>
+  </div>
+
+  <p>El transistor es el átomo de la tecnología moderna. Todo — tu móvil, tu ordenador, los servidores de Netflix, los modelos de IA — es transistores abriendo y cerrando en patrones increíblemente complejos a velocidades que ningún humano puede seguir.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>De grifos a cerebros: puertas lógicas y redes neuronales</h2>
+
+  <p>Cuando conectas varios transistores entre sí, obtienes algo llamado <strong>puerta lógica</strong>. Piensa en ellas como las piezas de LEGO más pequeñas que existen. Cada una solo sabe responder una pregunta: ¿sí o no?</p>
+
+  <p>¿Llegó electricidad por los dos lados? Sí → abre. ¿Solo por uno? No → cierra. Suena demasiado simple para ser útil. Pero cuando conectas millones de esas piezas de forma inteligente, en capas, empiezan a pasar cosas extraordinarias.</p>
+
+  <div class="concept-block">
+    <div class="concept-label">Cómo funciona una red neuronal</div>
+    <p>La primera capa detecta patrones muy simples — bordes, colores, formas básicas. La segunda toma esos patrones y los combina. La tercera combina las combinaciones. Capa tras capa, el sistema pasa de detectar bordes a reconocer conceptos complejos, entender contexto y tomar decisiones que parecen inteligentes.</p>
+  </div>
+
+  <p>Eso es una <strong>red neuronal</strong> — el cerebro digital dentro de cualquier IA moderna. No es magia. Es arquitectura. Millones de puertas lógicas organizadas en capas, pasándose información entre sí a la velocidad de la luz.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Cómo aprende la IA — y por qué no es lo que imaginas</h2>
+
+  <p>Aquí viene la parte que más gente malentiende. Cuando una IA "aprende", no está pensando como tú. No tiene curiosidad. No tiene intuición. No tiene ningún tipo de comprensión real del mundo.</p>
+
+  <p>Lo que hace es esto:</p>
+
+  <ol>
+    <li>Le muestras millones de ejemplos — imágenes, textos, preguntas con sus respuestas correctas</li>
+    <li>La IA genera una respuesta</li>
+    <li>Compara esa respuesta con la correcta</li>
+    <li>Ajusta sus conexiones internas — un poco aquí, un poco allá</li>
+    <li>Repite ese proceso miles de millones de veces</li>
+  </ol>
+
+  <p>Cada ajuste es minúsculo. Pero mil millones de ajustes minúsculos crean algo que parece inteligencia real. Eso es el entrenamiento de una IA. No es inspiración. Es repetición a escala brutal.</p>
+
+  <div class="stat-block">
+    <div class="stat-number">≈ ciudad</div>
+    <div class="stat-label">Entrenar un modelo de IA grande consume tanta energía como una ciudad mediana durante varios días. No es una exageración. Es física. Por eso la IA tiene límites de uso — hay un coste real detrás de cada respuesta.</div>
+  </div>
+
+  <div class="takeaway">
+    <div class="takeaway-label">Lo que esto significa para ti</div>
+    <p>La IA no piensa. Predice. Genera la continuación más probable de lo que le dices, basándose en patrones que aprendió durante el entrenamiento. Cuando lo entiendes, dejas de sorprenderte de sus errores — y empiezas a saber cómo evitarlos.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>El poder real: cómo le hablas lo cambia todo</h2>
+
+  <p>Una vez que la IA está entrenada, lo que determina si obtienes una respuesta mediocre o una respuesta que te ahorra horas de trabajo eres tú. Específicamente, cómo le hablas. A eso se le llama <strong>prompt</strong>.</p>
+
+  <p>Mira la diferencia en tiempo real:</p>
+
+  <div class="prompt-label">Prompt malo</div>
+  <div class="two-col">
+    <div class="col-bad">
+      <div class="col-label">✗ Lo que escribes</div>
+      <p>"Cuéntame sobre marketing."</p>
+    </div>
+    <div class="col-good">
+      <div class="col-label">✓ Lo que obtienes</div>
+      <p>Una respuesta genérica de 500 palabras que no te sirve para nada concreto.</p>
+    </div>
+  </div>
+
+  <div class="prompt-label" style="margin-top: 20px;">Prompt bueno</div>
+  <div class="prompt-example">"Actúa como director de marketing con 15 años de experiencia en B2B. Dame 5 ideas concretas para generar leads en LinkedIn con menos de 2 horas de trabajo semanal. Explica cada idea en máximo 3 líneas."</div>
+
+  <p>La misma IA. Un resultado completamente diferente. La diferencia no está en la herramienta — está en cómo la usas.</p>
+
+  <h3>Las 3 técnicas que lo cambian todo</h3>
+
+  <div class="concept-block">
+    <div class="concept-label">Técnica 1 — Pensamiento paso a paso</div>
+    <p>Di literalmente: "Piensa paso a paso antes de responder." Suena extraño, pero funciona. La IA organiza mejor su razonamiento y comete menos errores en tareas complejas.</p>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">Técnica 2 — Ejemplos previos</div>
+    <p>Dale 2-3 ejemplos del formato que quieres antes de hacer tu pregunta. La IA imitará ese patrón. Si quieres una lista con viñetas, ponle una lista con viñetas como ejemplo primero.</p>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">Técnica 3 — Rol claro y específico</div>
+    <p>"Actúa como..." seguido de un perfil concreto. No un experto genérico — un experto específico con contexto específico. Cuanto más preciso, mejor la respuesta.</p>
+  </div>
+
+  <p>Cuando combinas estas tres técnicas, dejas de luchar contra la IA. Empiezas a trabajar con ella.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Qué IA usar y para qué</h2>
+
+  <p>No existe la IA perfecta para todo. Existe la correcta para cada tarea. Este es el mapa mental más honesto que puedo darte:</p>
+
+  <div class="concept-block">
+    <div class="concept-label">ChatGPT — El todoterreno</div>
+    <p>Brainstorm, creatividad, textos variados. Si no sabes cuál usar, empieza aquí.</p>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">Claude — El analista</div>
+    <p>Documentos largos, razonamiento complejo, respuestas con matiz. Ideal para análisis profundos.</p>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">Grok — El directo</div>
+    <p>Respuestas técnicas sin filtros. Preguntas difíciles que otras IAs evitan responder.</p>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">Gemini — El conectado</div>
+    <p>Información reciente y conexión con el ecosistema Google. Ideal si ya usas Google Workspace.</p>
+  </div>
+
+  <p>Saber cuál usar en cada momento ya es una habilidad profesional. Y ahora la tienes.</p>
+
+  <div class="section-divider"></div>
+
+  <h2>Lo que te llevas</h2>
+
+  <p>Si llegaste hasta aquí, ya entiendes la IA mejor que el 95% de las personas que la usan cada día. Sabes de dónde viene (transistores → puertas lógicas → redes neuronales), cómo aprende (repetición brutal, no magia), cómo hablarle (rol + tarea + formato) y qué herramienta usar para qué.</p>
+
+  <p>Eso no es conocimiento teórico. Es ventaja competitiva real.</p>
+
+  <!-- PDF CTA -->
+  <div class="pdf-cta">
+    <div class="pdf-cta-tag">📄 Recurso gratuito · Serie 01</div>
+    <h3>Descarga la guía completa en PDF</h3>
+    <p>La versión cheatsheet de todo lo que acabas de leer. Conceptos clave, metáforas, el mapa de qué IA usar y los 3 prompts esenciales — en una sola hoja de referencia.</p>
+    <div class="pdf-includes">
+      <div class="pdf-include-item">Cheatsheet de conceptos clave</div>
+      <div class="pdf-include-item">Mapa de qué IA usar</div>
+      <div class="pdf-include-item">3 prompts listos para copiar</div>
+      <div class="pdf-include-item">Glosario visual</div>
+    </div>
+    <button class="btn-primary" onclick="openModal()">Descargar PDF gratis →</button>
+  </div>
+
+  <!-- NEXT ARTICLE -->
+  <div class="next-article">
+    <div class="next-label">Siguiente guía →</div>
+    <a href="guia-serie-2-redes.html" class="next-title">Cómo funciona internet — de tu dedo a la pantalla</a>
+    <div class="next-desc">Serie 02 · Internet y Redes · 10 min lectura</div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-tag">Serie 01 · Recurso gratuito</div>
+    <div class="modal-title">Descarga tu PDF</div>
+    <p class="modal-subtitle">Déjanos tu email y te enviamos el cheatsheet al instante. Sin spam.</p>
+    <input type="text" class="form-input" placeholder="Tu nombre" id="modal-name">
+    <input type="email" class="form-input" placeholder="Tu email" id="modal-email">
+    <button class="btn-primary" style="width: 100%; margin-top: 4px;" onclick="submitModal()">Enviarme el PDF →</button>
+    <div class="form-note">Lo recibirás en menos de 2 minutos en tu bandeja de entrada.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
+</footer>
+
+<script>
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  function submitModal() {
+    const email = document.getElementById('modal-email').value;
+    const name = document.getElementById('modal-name').value;
+    if (!email || !name) {
+      alert('Por favor, rellena tu nombre y email.');
+      return;
+    }
+    const btn = event.target;
+    btn.textContent = '✓ ¡En camino!';
+    btn.style.opacity = '0.7';
+    setTimeout(closeModal, 1500);
+  }
+</script>
+
+</body>
+</html>
