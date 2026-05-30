@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ciberseguridad explicada desde cero — Guía completa | Tecnología Explicada Simple</title>
+<meta name="description" content="Guía completa de ciberseguridad. Qué es un hacker, cómo funcionan las contraseñas, phishing, cifrado, VPN y cómo protegerte. Sin jerga. Con ejemplos reales.">
+<meta name="keywords" content="ciberseguridad explicada, qué es un hacker, cómo funciona el phishing, contraseñas seguras, qué es una VPN, cifrado de datos, autenticación dos pasos">
+<link rel="canonical" href="https://tecnologiaexplicadasimple.com/guias/serie-4-ciberseguridad">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4FC3F7;
+    --blue-ice: #80D8FF;
+    --blue-dark: #0D2233;
+    --blue-mid: #0A3A5C;
+    --black: #000000;
+    --grey: #4A6070;
+    --white: #FFFFFF;
+    --white-dim: rgba(255,255,255,0.75);
+    --red: rgba(255,80,80,0.8);
+    --red-bg: rgba(255,50,50,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); text-decoration: none;
+  }
+
+  .nav-back {
+    font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+    color: var(--grey); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--blue); }
+
+  .article-hero { padding: 120px 48px 60px; max-width: 860px; margin: 0 auto; }
+
+  .article-breadcrumb {
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
+    color: var(--grey); text-transform: uppercase; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .article-breadcrumb a { color: var(--grey); text-decoration: none; transition: color 0.2s; }
+  .article-breadcrumb a:hover { color: var(--blue); }
+
+  .article-tag {
+    display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.25em; color: var(--blue); background: rgba(79,195,247,0.08);
+    border: 1px solid rgba(79,195,247,0.2); padding: 5px 12px; text-transform: uppercase; margin-bottom: 20px;
+  }
+
+  .article-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(32px, 5vw, 52px); line-height: 1.05;
+    letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  .article-title span { color: var(--blue); }
+
+  .article-subtitle {
+    font-size: 18px; color: var(--white-dim); font-weight: 300;
+    line-height: 1.6; margin-bottom: 32px; max-width: 620px;
+  }
+
+  .article-meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--grey); text-transform: uppercase;
+    padding-bottom: 32px; border-bottom: 1px solid rgba(79,195,247,0.1);
+  }
+  .article-meta span { color: var(--blue); }
+
+  .article-body { max-width: 860px; margin: 0 auto; padding: 0 48px 80px; }
+
+  .article-body h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px;
+    color: var(--white); margin: 48px 0 16px; letter-spacing: -0.01em; line-height: 1.2;
+  }
+
+  .article-body h3 {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px;
+    color: var(--blue); margin: 32px 0 12px;
+  }
+
+  .article-body p {
+    font-size: 16px; color: var(--white-dim); line-height: 1.8; margin-bottom: 20px; font-weight: 300;
+  }
+
+  .article-body strong { color: var(--white); font-weight: 500; }
+  .article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 20px; }
+  .article-body li { font-size: 16px; color: var(--white-dim); line-height: 1.7; margin-bottom: 8px; font-weight: 300; }
+
+  .concept-block {
+    background: var(--blue-dark); border-left: 3px solid var(--blue); padding: 24px 28px; margin: 24px 0;
+  }
+  .concept-block .concept-label {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em;
+    color: var(--blue); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .concept-block p { margin-bottom: 0; color: var(--white); font-weight: 400; font-size: 15px; }
+
+  .warning-block {
+    background: var(--red-bg); border-left: 3px solid var(--red); padding: 24px 28px; margin: 24px 0;
+  }
+  .warning-block .warning-label {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em;
+    color: var(--red); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .warning-block p { margin-bottom: 0; color: var(--white); font-weight: 400; font-size: 15px; }
+
+  .stat-block {
+    background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.2);
+    padding: 24px 28px; margin: 28px 0; display: flex; align-items: center; gap: 20px;
+  }
+  .stat-icon { font-size: 28px; flex-shrink: 0; }
+  .stat-label { font-size: 14px; color: var(--white-dim); line-height: 1.6; }
+  .stat-label strong { color: var(--blue); font-size: 20px; font-family: 'Syne', sans-serif; display: block; margin-bottom: 4px; }
+
+  .hacker-types {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 28px 0;
+  }
+
+  .hacker-card {
+    padding: 22px 18px; border: 1px solid rgba(79,195,247,0.1);
+  }
+  .hacker-card.white { background: rgba(255,255,255,0.03); }
+  .hacker-card.grey { background: rgba(79,195,247,0.05); }
+  .hacker-card.black { background: var(--red-bg); border-color: rgba(255,80,80,0.15); }
+
+  .hacker-icon { font-size: 24px; margin-bottom: 10px; }
+  .hacker-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .hacker-card.white .hacker-name { color: var(--white); }
+  .hacker-card.grey .hacker-name { color: var(--blue); }
+  .hacker-card.black .hacker-name { color: var(--red); }
+  .hacker-desc { font-size: 13px; color: var(--white-dim); line-height: 1.5; }
+
+  .password-rules {
+    display: flex; flex-direction: column; gap: 2px; margin: 24px 0;
+  }
+
+  .rule-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--blue-dark); padding: 16px 20px;
+    border: 1px solid rgba(79,195,247,0.1);
+  }
+
+  .rule-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .rule-content strong { display: block; font-size: 14px; color: var(--white); margin-bottom: 3px; }
+  .rule-content span { font-size: 13px; color: var(--grey); line-height: 1.5; }
+
+  .phishing-signals {
+    display: flex; flex-direction: column; gap: 2px; margin: 24px 0;
+  }
+
+  .signal-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--red-bg); padding: 14px 20px;
+    border-left: 3px solid var(--red);
+  }
+
+  .signal-icon { color: var(--red); font-family: 'Space Mono', monospace; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+  .signal-text { font-size: 14px; color: var(--white-dim); line-height: 1.5; }
+  .signal-text strong { color: var(--white); }
+
+  .protection-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 28px 0;
+  }
+
+  .protection-card {
+    background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.1);
+    padding: 24px 20px; transition: border-color 0.2s;
+  }
+  .protection-card:hover { border-color: rgba(79,195,247,0.3); }
+
+  .protection-icon { font-size: 28px; margin-bottom: 12px; }
+  .protection-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 8px; }
+  .protection-desc { font-size: 13px; color: var(--white-dim); line-height: 1.6; }
+
+  .takeaway {
+    background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.25); padding: 24px 28px; margin: 32px 0;
+  }
+  .takeaway-label {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em;
+    color: var(--blue); text-transform: uppercase; margin-bottom: 10px;
+  }
+  .takeaway p { color: var(--white); font-weight: 400; font-size: 15px; margin-bottom: 0; }
+
+  .section-divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0.2; margin: 48px 0;
+  }
+
+  .pdf-cta {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+    border: 1px solid rgba(79,195,247,0.3); padding: 48px; margin: 60px 0 0;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .pdf-cta::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(79,195,247,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .pdf-cta-tag {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.3em; color: var(--blue); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .pdf-cta h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; color: var(--white); margin-bottom: 12px; }
+  .pdf-cta p { font-size: 15px; color: var(--white-dim); max-width: 460px; margin: 0 auto 28px; line-height: 1.6; }
+  .pdf-includes { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+  .pdf-include-item {
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
+    color: var(--blue-ice); display: flex; align-items: center; gap: 6px;
+  }
+  .pdf-include-item::before { content: '✓'; color: var(--blue); }
+
+  .btn-primary {
+    background: var(--blue); color: var(--black);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase; padding: 16px 36px;
+    border: none; cursor: pointer; display: inline-block; text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+
+  .next-article { border-top: 1px solid rgba(79,195,247,0.08); padding: 48px 0 0; margin-top: 60px; }
+  .next-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 16px; }
+  .next-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px; color: var(--white); text-decoration: none; display: block; transition: color 0.2s; margin-bottom: 8px; }
+  .next-title:hover { color: var(--blue); }
+  .next-desc { font-size: 14px; color: var(--grey); }
+
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+    z-index: 500; align-items: center; justify-content: center; backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--black); border: 1px solid rgba(79,195,247,0.25); padding: 48px; max-width: 460px; width: 90%; position: relative; }
+  .modal-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--grey); font-size: 20px; cursor: pointer; }
+  .modal-close:hover { color: var(--white); }
+  .modal-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--blue); text-transform: uppercase; margin-bottom: 14px; }
+  .modal-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 8px; }
+  .modal-subtitle { font-size: 13px; color: var(--white-dim); margin-bottom: 24px; line-height: 1.5; }
+  .form-input {
+    width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(79,195,247,0.2);
+    color: var(--white); padding: 13px 16px; font-size: 14px; font-family: 'Inter', sans-serif;
+    outline: none; margin-bottom: 12px; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--grey); }
+  .form-input:focus { border-color: var(--blue); }
+  .form-note { font-size: 11px; color: var(--grey); margin-top: 12px; line-height: 1.5; }
+
+  footer { background: var(--black); border-top: 1px solid rgba(79,195,247,0.08); padding: 40px 48px; text-align: center; margin-top: 80px; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); opacity: 0.5; }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .article-hero { padding: 100px 20px 40px; }
+    .article-body { padding: 0 20px 60px; }
+    .article-title { font-size: 30px; }
+    .article-subtitle { font-size: 16px; line-height: 1.7; }
+    .article-body p { font-size: 16px; line-height: 1.8; }
+    .article-body li { font-size: 15px; line-height: 1.7; }
+    .article-body h2 { font-size: 22px; }
+    .article-body h3 { font-size: 17px; }
+    .concept-block p, .warning-block p { font-size: 15px; }
+    .hacker-types { grid-template-columns: 1fr; }
+    .protection-grid { grid-template-columns: 1fr; }
+    .pdf-cta { padding: 32px 20px; }
+    .pdf-cta h3 { font-size: 22px; }
+    .pdf-includes { flex-direction: column; align-items: center; gap: 10px; }
+    .modal-box { padding: 32px 20px; }
+    .stat-block { flex-direction: column; gap: 12px; }
+    footer { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">TES</a>
+  <a href="index.html#guias" class="nav-back">← Volver a guías</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span>·</span>
+    <a href="index.html#guias">Guías</a>
+    <span>·</span>
+    Serie 4
+  </div>
+  <div class="article-tag">Serie 04 · Ciberseguridad</div>
+  <h1 class="article-title">Ciberseguridad <span>explicada desde cero</span></h1>
+  <p class="article-subtitle">Hackers, contraseñas, phishing, cifrado y VPNs. Todo lo que te protege — y todo lo que te pone en riesgo — explicado sin jerga.</p>
+  <div class="article-meta">
+    <div>Por <span>El Equipo TES</span></div>
+    <div>12 min lectura</div>
+    <div>Serie <span>04</span> de 9</div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>Ahora mismo, mientras lees esto, alguien en algún lugar del mundo está intentando acceder a una cuenta que no es suya. No es una hipérbole — son millones de intentos diarios, automatizados, contra todo tipo de personas y empresas.</p>
+
+  <p>La buena noticia es que protegerse no requiere ser experto en tecnología. Requiere entender cómo funcionan los ataques más comunes — y aplicar cuatro o cinco hábitos que cambian todo.</p>
+
+  <div class="takeaway">
+    <div class="takeaway-label">⚡ Lo que te llevas de esta guía</div>
+    <p>Entender qué es realmente un hacker, cómo funcionan los ataques más comunes, por qué tus contraseñas fallan y las cuatro capas de protección que puedes activar hoy mismo.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Qué es un hacker realmente</h2>
+
+  <p>El hacker de película — capucha negra, pantallas con código verde — es una fantasía. La realidad es mucho más variada, y entenderla cambia cómo piensas en la seguridad.</p>
+
+  <div class="hacker-types">
+    <div class="hacker-card white">
+      <div class="hacker-icon">🤍</div>
+      <div class="hacker-name">Sombrero blanco</div>
+      <div class="hacker-desc">Hackers éticos contratados por empresas para encontrar vulnerabilidades antes de que lo hagan los malos. Son los que protegen los sistemas que usas.</div>
+    </div>
+    <div class="hacker-card grey">
+      <div class="hacker-icon">🩶</div>
+      <div class="hacker-name">Sombrero gris</div>
+      <div class="hacker-desc">Buscan vulnerabilidades sin permiso, pero no con intención de hacer daño. Suelen avisar a las empresas después de encontrar el fallo.</div>
+    </div>
+    <div class="hacker-card black">
+      <div class="hacker-icon">🖤</div>
+      <div class="hacker-name">Sombrero negro</div>
+      <div class="hacker-desc">Los que atacan con intención maliciosa — robar datos, dinero o acceso. Son la minoría, pero son el motivo por el que existe la ciberseguridad.</div>
+    </div>
+  </div>
+
+  <p>La mayoría de los ataques que sufren personas normales no son ejecutados por hackers sofisticados. Son ataques automatizados y masivos — robots que prueban millones de combinaciones de contraseñas o envían millones de emails de phishing hasta que alguien cae.</p>
+
+  <div class="concept-block">
+    <div class="concept-label">La IA en ciberseguridad</div>
+    <p>Los atacantes ya usan IA para crear phishing más convincente, detectar vulnerabilidades más rápido y personalizar ataques a escala. Y los defensores también usan IA para detectar comportamientos anómalos antes de que causen daño. Es una carrera armamentística constante.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Por qué tus contraseñas fallan — y cómo arreglarlo</h2>
+
+  <p>El 80% de las brechas de seguridad tienen una contraseña débil o reutilizada como causa raíz. No es una estadística inventada — es el resultado de años de análisis de hackeos reales.</p>
+
+  <div class="warning-block">
+    <div class="warning-label">⚠ Las contraseñas más usadas en 2025</div>
+    <p>"123456", "password", "qwerty", tu nombre + año de nacimiento, el nombre de tu mascota. Si usas alguna de estas o algo parecido, tu cuenta ya es vulnerable.</p>
+  </div>
+
+  <p>El problema no es que la gente sea descuidada — es que el sistema de contraseñas está roto por diseño. Tenemos demasiadas cuentas para recordar contraseñas únicas y complejas para todas.</p>
+
+  <div class="password-rules">
+    <div class="rule-item">
+      <div class="rule-icon">✓</div>
+      <div class="rule-content">
+        <strong>Usa un gestor de contraseñas</strong>
+        <span>1Password, Bitwarden o el gestor nativo de tu móvil. Genera y recuerda contraseñas únicas y complejas por ti. Solo necesitas recordar una.</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">✓</div>
+      <div class="rule-content">
+        <strong>Nunca reutilices contraseñas</strong>
+        <span>Si hackean un servicio y usas la misma contraseña en otro, ese otro también está comprometido. Una cuenta, una contraseña.</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">✓</div>
+      <div class="rule-content">
+        <strong>Más longitud, menos complejidad</strong>
+        <span>Una frase de 4 palabras aleatorias es más segura que una contraseña de 8 caracteres con símbolos. "sol-libro-camión-verde" es excelente.</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">✓</div>
+      <div class="rule-content">
+        <strong>Activa la autenticación en dos pasos</strong>
+        <span>Aunque alguien tenga tu contraseña, no puede entrar sin el segundo factor — el código que llega a tu móvil. Esto solo ya elimina el 99% del riesgo.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Phishing: el ataque que no necesita hackear nada</h2>
+
+  <p>El phishing es el ataque más efectivo de la historia de la ciberseguridad — no porque sea sofisticado, sino porque explota algo que ningún software puede parchear del todo: el juicio humano.</p>
+
+  <p>La mecánica es simple: alguien te envía un mensaje que parece legítimo — de tu banco, de Netflix, de un colega — con un enlace que lleva a una página falsa donde introduces tus credenciales. En ese momento, las tienes ellos.</p>
+
+  <div class="phishing-signals">
+    <div class="signal-item">
+      <div class="signal-icon">!</div>
+      <div class="signal-text"><strong>Urgencia artificial:</strong> "Tu cuenta será bloqueada en 24 horas". La urgencia te impide pensar con claridad.</div>
+    </div>
+    <div class="signal-item">
+      <div class="signal-icon">!</div>
+      <div class="signal-text"><strong>Dominio ligeramente incorrecto:</strong> "amaz0n.com" en lugar de "amazon.com". Revisa siempre la barra de direcciones.</div>
+    </div>
+    <div class="signal-item">
+      <div class="signal-icon">!</div>
+      <div class="signal-text"><strong>Te piden datos que ya deberían tener:</strong> Tu banco nunca te pedirá la contraseña por email. Nunca.</div>
+    </div>
+    <div class="signal-item">
+      <div class="signal-icon">!</div>
+      <div class="signal-text"><strong>Errores sutiles de diseño o texto:</strong> Logos ligeramente diferentes, fuentes distintas, textos con errores de traducción.</div>
+    </div>
+    <div class="signal-item">
+      <div class="signal-icon">!</div>
+      <div class="signal-text"><strong>Remitente sospechoso:</strong> El nombre dice "Banco Santander" pero el email es "soporte@santander-seguridad.xyz".</div>
+    </div>
+  </div>
+
+  <div class="concept-block">
+    <div class="concept-label">La regla de oro ante cualquier email sospechoso</div>
+    <p>No hagas clic en el enlace. Ve directamente al sitio escribiendo la dirección en el navegador. Si hay un problema real con tu cuenta, lo verás al entrar directamente.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Las cuatro capas que te protegen</h2>
+
+  <p>La ciberseguridad no es un interruptor que activas o desactivas — es una suma de capas. Cada una añade fricción para el atacante. Con suficientes capas, el coste de atacarte supera el beneficio, y buscan a alguien más fácil.</p>
+
+  <div class="protection-grid">
+    <div class="protection-card">
+      <div class="protection-icon">🔐</div>
+      <div class="protection-title">Cifrado</div>
+      <div class="protection-desc">Convierte tus datos en texto incomprensible para cualquiera que los intercepte sin la clave. HTTPS cifra tu navegación. WhatsApp cifra tus mensajes. El cifrado es la base de la privacidad digital.</div>
+    </div>
+    <div class="protection-card">
+      <div class="protection-icon">📱</div>
+      <div class="protection-title">Autenticación en dos pasos (2FA)</div>
+      <div class="protection-desc">Un segundo factor de verificación además de la contraseña. Aunque alguien robe tu contraseña, no puede entrar sin el código que llega a tu teléfono. La capa más impactante por el tiempo que cuesta activarla.</div>
+    </div>
+    <div class="protection-card">
+      <div class="protection-icon">🛡️</div>
+      <div class="protection-title">Firewall y antivirus</div>
+      <div class="protection-desc">El firewall controla qué entra y sale de tu red. El antivirus detecta software malicioso antes de que cause daño. Tu ordenador ya tiene ambos — asegúrate de que están activados y actualizados.</div>
+    </div>
+    <div class="protection-card">
+      <div class="protection-icon">🌐</div>
+      <div class="protection-title">VPN</div>
+      <div class="protection-desc">Crea un túnel cifrado entre tu dispositivo e internet. Imprescindible en WiFi público — aeropuertos, cafeterías, hoteles. Oculta tu IP y protege tu tráfico de miradas no deseadas.</div>
+    </div>
+  </div>
+
+  <div class="stat-block">
+    <div class="stat-icon">🤖</div>
+    <div class="stat-label">
+      <strong>La IA ya protege tu seguridad</strong>
+      Los sistemas modernos de ciberseguridad usan IA para detectar comportamientos anómalos en tiempo real — un inicio de sesión desde un país diferente, un patrón de acceso inusual, un archivo que se comporta como malware. La IA detecta antes de que tú te enteres.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Qué es un virus informático — y cómo funciona realmente</h2>
+
+  <p>Un virus informático es software diseñado para hacer algo que el propietario del dispositivo no quiere que ocurra — robar datos, cifrar archivos para pedir rescate, usar tu ordenador para atacar otros sistemas o simplemente causar daño.</p>
+
+  <p>Los más peligrosos hoy no son los que borran archivos — son los <strong>ransomware</strong>: cifran todos tus archivos y piden dinero para devolverte la clave. Han paralizado hospitales, empresas y gobiernos enteros.</p>
+
+  <div class="concept-block">
+    <div class="concept-label">Cómo evitar el 95% de los malware</div>
+    <p>No descargues archivos de fuentes no verificadas. No hagas clic en adjuntos de emails inesperados. Mantén el sistema operativo actualizado — las actualizaciones cierran vulnerabilidades que los atacantes explotan. Y haz copias de seguridad regulares: si tienes backup, el ransomware pierde todo su poder sobre ti.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Cuándo usar una VPN — y cuándo no hace falta</h2>
+
+  <p>La VPN (Red Privada Virtual) crea un túnel cifrado entre tu dispositivo e internet. Todo tu tráfico pasa por ese túnel antes de salir — nadie en la red local puede interceptarlo ni ver adónde vas.</p>
+
+  <div class="password-rules">
+    <div class="rule-item">
+      <div class="rule-icon">✓</div>
+      <div class="rule-content">
+        <strong>Úsala siempre en WiFi público</strong>
+        <span>Aeropuertos, cafeterías, hoteles. El WiFi público no está cifrado — cualquiera en la misma red puede intentar interceptar tu tráfico.</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">✓</div>
+      <div class="rule-content">
+        <strong>Úsala para acceder a recursos de empresa desde casa</strong>
+        <span>La VPN empresarial crea una conexión segura con los servidores de tu empresa como si estuvieras en la oficina.</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">—</div>
+      <div class="rule-content">
+        <strong>En casa con tu WiFi personal no es urgente</strong>
+        <span>Tu WiFi doméstico ya está cifrado. Una VPN añade privacidad extra, pero no es la prioridad si no has activado el 2FA en tus cuentas todavía.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="takeaway">
+    <div class="takeaway-label">El orden correcto de prioridades</div>
+    <p>Primero activa el 2FA en todas tus cuentas importantes. Luego instala un gestor de contraseñas. Luego aprende a detectar phishing. La VPN viene después — es importante, pero las tres primeras capas te protegen más del 95% de los ataques reales.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2>Lo que te llevas</h2>
+
+  <p>Ahora entiendes qué es realmente un hacker, por qué las contraseñas fallan y cómo arreglarlo, cómo detectar un intento de phishing antes de caer en él, y las cuatro capas de protección que puedes activar hoy. La ciberseguridad no es para paranoides — es para personas que entienden el mundo en el que viven.</p>
+
+  <p>Y hay algo más: la IA está cambiando la ciberseguridad en ambas direcciones — los atacantes la usan para hacer ataques más convincentes, y los defensores la usan para detectarlos más rápido. Entender esto te pone un paso adelante.</p>
+
+  <div class="pdf-cta">
+    <div class="pdf-cta-tag">📄 Recurso gratuito · Serie 04</div>
+    <h3>Descarga la hoja de referencia en PDF</h3>
+    <p>El checklist de seguridad personal, la guía para detectar phishing y las cuatro capas de protección — en una sola página para guardar y compartir.</p>
+    <div class="pdf-includes">
+      <div class="pdf-include-item">Checklist de seguridad personal</div>
+      <div class="pdf-include-item">Señales de phishing</div>
+      <div class="pdf-include-item">Las 4 capas de protección</div>
+      <div class="pdf-include-item">Guía de contraseñas seguras</div>
+    </div>
+    <button class="btn-primary" onclick="openModal()">Descargar PDF gratis →</button>
+  </div>
+
+  <div class="next-article">
+    <div class="next-label">Siguiente guía →</div>
+    <a href="index.html#series" class="next-title">IA Práctica para Profesionales — próximamente</a>
+    <div class="next-desc">Serie 05 · En producción</div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-tag">Serie 04 · Recurso gratuito</div>
+    <div class="modal-title">Descarga tu PDF</div>
+    <p class="modal-subtitle">Déjanos tu email y te enviamos la hoja de referencia al instante. Sin spam.</p>
+    <input type="text" class="form-input" placeholder="Tu nombre" id="modal-name">
+    <input type="email" class="form-input" placeholder="Tu email" id="modal-email">
+    <button class="btn-primary" style="width: 100%; margin-top: 4px;" onclick="submitModal()">Enviarme el PDF →</button>
+    <div class="form-note">Lo recibirás en menos de 2 minutos en tu bandeja de entrada.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
+</footer>
+
+<script>
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+  function submitModal() {
+    const email = document.getElementById('modal-email').value;
+    const name = document.getElementById('modal-name').value;
+    if (!email || !name) { alert('Por favor, rellena tu nombre y email.'); return; }
+    const btn = event.target;
+    btn.textContent = '✓ ¡En camino!';
+    btn.style.opacity = '0.7';
+    setTimeout(closeModal, 1500);
+  }
+</script>
+
+</body>
+</html>
