@@ -1063,9 +1063,71 @@
   }
 
   /* RESPONSIVE */
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--blue);
+    transition: all 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
   @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.97);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      z-index: 150;
+      list-style: none;
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links a {
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--blue); }
     section { padding: 60px 20px; }
     .hero { padding: 90px 20px 60px; }
     .hero-scroll { left: 20px; }
@@ -1117,14 +1179,19 @@
     <img src="logo.jpg" alt="TES" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(79,195,247,0.3);">
     <div class="nav-logo">TES</div>
   </div>
-  <ul class="nav-links">
-    <li><a href="#series">Series</a></li>
-    <li><a href="#guias">Guías</a></li>
-    <li><a href="#prompts">Prompts Brutales</a></li>
-    <li><a href="#recursos">Recursos</a></li>
-    <li><a href="#blog">Blog</a></li>
-    <li><a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank">YouTube →</a></li>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#series" onclick="closeMenu()">Series</a></li>
+    <li><a href="#guias" onclick="closeMenu()">Guías</a></li>
+    <li><a href="#prompts" onclick="closeMenu()">Prompts Brutales</a></li>
+    <li><a href="#recursos" onclick="closeMenu()">Recursos</a></li>
+    <li><a href="#blog" onclick="closeMenu()">Blog</a></li>
+    <li><a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" onclick="closeMenu()">YouTube →</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1538,6 +1605,23 @@
 </div>
 
 <script>
+  // MENÚ HAMBURGUESA
+  function toggleMenu() {
+    const nav = document.getElementById('nav-links');
+    const btn = document.getElementById('hamburger');
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+  }
+
+  function closeMenu() {
+    const nav = document.getElementById('nav-links');
+    const btn = document.getElementById('hamburger');
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
   // FILTRO PROMPTS
   function filterPrompts(cat, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
