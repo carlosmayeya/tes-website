@@ -1469,7 +1469,7 @@
         <li>3 técnicas de prompts avanzados</li>
         <li>Mapa de qué IA usar para qué</li>
       </ul>
-      <a href="https://drive.google.com/uc?export=download&id=1kRHDJwsSiuMuf9ByUZ1DjvLcKU73tNKt" target="_blank" class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none;">Descargar gratis →</a>
+      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — IA desde cero', 'Serie 01', 'https://drive.google.com/file/d/1kRHDJwsSiuMuf9ByUZ1DjvLcKU73tNKt/view')">Descargar gratis →</a>
     </div>
 
     <div class="recurso-card">
@@ -1483,7 +1483,7 @@
         <li>3 trucos para mejorar tu WiFi hoy</li>
         <li>Checklist de seguridad básica</li>
       </ul>
-      <a href="https://drive.google.com/uc?export=download&id=1myec8MVQLXonLIxl1K-x3SU2g5VW0PLm" target="_blank" class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none;">Descargar gratis →</a>
+      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — Cómo funciona internet', 'Serie 02', 'https://drive.google.com/file/d/1myec8MVQLXonLIxl1K-x3SU2g5VW0PLm/view')">Descargar gratis →</a>
     </div>
 
     <div class="recurso-card">
@@ -1497,7 +1497,7 @@
         <li>La regla 3-2-1 para tus backups</li>
         <li>Checklist para auditar tu gasto en la nube</li>
       </ul>
-      <a href="https://drive.google.com/uc?export=download&id=18bwS2OJLXSFxvL5nMVCo41g3IUSIzaCn" target="_blank" class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none;">Descargar gratis →</a>
+      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — La nube explicada', 'Serie 03', 'https://drive.google.com/file/d/18bwS2OJLXSFxvL5nMVCo41g3IUSIzaCn/view')">Descargar gratis →</a>
     </div>
 
     <div class="recurso-card">
@@ -1511,7 +1511,7 @@
         <li>Las 4 capas de protección explicadas</li>
         <li>Plan de acción por plazo temporal</li>
       </ul>
-      <a href="https://drive.google.com/uc?export=download&id=1DplnZFaB_tuxsKukUioZHIExXUMsaO3P" target="_blank" class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none;">Descargar gratis →</a>
+      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — Protege lo que es tuyo', 'Serie 04', 'https://drive.google.com/file/d/1DplnZFaB_tuxsKukUioZHIExXUMsaO3P/view')">Descargar gratis →</a>
     </div>
 
   </div>
@@ -1523,7 +1523,7 @@
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-tag" id="modal-tag">Recurso gratuito</div>
     <div class="modal-title" id="modal-title">Descarga tu guía</div>
-    <div class="modal-subtitle">Déjanos tu email y te enviamos el PDF al instante. Sin spam. Sin compromisos.</div>
+    <div class="modal-subtitle">Un paso rápido y el PDF es tuyo. Sin spam. Sin compromisos.</div>
     <div class="form-group">
       <input type="text" class="form-input" placeholder="Tu nombre" id="modal-name">
     </div>
@@ -1531,9 +1531,9 @@
       <input type="email" class="form-input" placeholder="Tu email" id="modal-email">
     </div>
     <button class="btn-primary" style="width: 100%; margin-top: 16px; border: none; cursor: pointer;" onclick="submitModal()">
-      Enviarme el PDF →
+      Acceder al PDF →
     </button>
-    <div class="form-note" style="margin-top: 12px;">Lo recibirás en menos de 2 minutos en tu bandeja de entrada.</div>
+    <div class="form-note" style="margin-top: 12px;">El PDF se abrirá en una nueva pestaña al instante.</div>
   </div>
 </div>
 
@@ -1565,9 +1565,14 @@
   }
 
   // MODAL
-  function openModal(title, serie) {
+  let currentPdfUrl = '';
+
+  function openModal(title, serie, pdfUrl) {
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-tag').textContent = serie + ' · Recurso gratuito';
+    document.getElementById('modal-name').value = '';
+    document.getElementById('modal-email').value = '';
+    currentPdfUrl = pdfUrl;
     document.getElementById('modal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -1588,11 +1593,12 @@
       alert('Por favor, rellena tu nombre y email.');
       return;
     }
-    // Aquí irá la integración con tu herramienta de email (Mailchimp, ConvertKit, etc.)
     const btn = event.target;
-    btn.textContent = '✓ ¡En camino!';
+    btn.textContent = '✓ Abriendo PDF...';
     btn.style.opacity = '0.7';
-    setTimeout(closeModal, 1500);
+    // Abre el PDF en nueva pestaña
+    window.open(currentPdfUrl, '_blank');
+    setTimeout(closeModal, 1000);
   }
 </script>
 
