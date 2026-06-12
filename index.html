@@ -1365,55 +1365,87 @@
 
 <div class="neon-line"></div>
 
-<!-- PRODUCT -->
+<!-- PRODUCTO / FUNDADORES -->
 <section class="product-section" id="producto">
   <div class="product-inner">
     <div>
-      <div class="product-tag">⚡ Producto · Lista de espera</div>
-      <h2 class="product-title">IA para Directivos de Ventas</h2>
-      <p class="product-desc">La guía práctica que nadie más te da. Sistemas reales, prompts probados y casos de uso concretos para directivos que quieren resultados, no teoría.</p>
+      <div class="product-tag">⚡ Comunidad · Lista de fundadores</div>
+      <h2 class="product-title">Ayúdanos a construir lo que necesitas</h2>
+      <p class="product-desc">Estamos desarrollando los primeros productos de TES. Antes de construir, queremos saber exactamente qué te sería más útil — y quienes nos lo digan primero tendrán acceso anticipado y precio de fundador.</p>
 
       <ul class="product-includes">
-        <li>Guía PDF de 25-30 páginas lista para aplicar</li>
-        <li>5 vídeos privados con demostraciones reales</li>
-        <li>Prompts exactos para ventas, reuniones y análisis</li>
-        <li>Sistema completo de trabajo con IA diario</li>
-        <li>Acceso a actualizaciones futuras incluido</li>
+        <li>Acceso anticipado a todos los productos TES</li>
+        <li>Precio de fundador — siempre mejor que el precio público</li>
+        <li>Voto directo en qué construimos primero</li>
+        <li>Acceso a contenido exclusivo mientras desarrollamos</li>
       </ul>
 
-      <div class="price-badge">
-        <span class="price-amount">47€</span>
-        <div>
-          <div class="price-strike">97€</div>
-          <div class="price-label">Precio de lanzamiento<br>para lista de espera</div>
-        </div>
+      <div style="margin-top: 28px; background: rgba(79,195,247,0.06); border-left: 3px solid var(--blue); padding: 16px 20px;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; margin-bottom: 6px;">En desarrollo ahora mismo</div>
+        <div style="font-size: 14px; color: var(--white-dim); line-height: 1.6;">Prompts Brutales Edición Completa · Curso de IA desde Cero · Guías avanzadas por serie</div>
       </div>
     </div>
 
     <div class="product-form">
-      <div class="form-title">Apúntate a la lista</div>
-      <div class="form-subtitle">Acceso anticipado + precio especial de lanzamiento</div>
+      <div class="form-title">Únete a los fundadores</div>
+      <div class="form-subtitle">Cuéntanos qué necesitas — construimos en base a eso</div>
 
       <div class="form-group">
-        <input type="email" class="form-input" placeholder="Tu email profesional">
+        <input type="text" class="form-input" placeholder="Tu nombre" id="founder-name">
       </div>
       <div class="form-group">
-        <input type="text" class="form-input" placeholder="Tu nombre">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-input" placeholder="Tu cargo / empresa (opcional)">
+        <input type="email" class="form-input" placeholder="Tu email" id="founder-email">
       </div>
 
-      <button class="btn-primary" style="width: 100%; margin-top: 8px; border: none; cursor: pointer; font-size: 14px;">
-        Quiero acceso anticipado →
+      <div style="margin: 16px 0 8px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--blue); text-transform: uppercase;">¿Qué te interesa más?</div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;" id="survey-options">
+        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
+          <input type="radio" name="interes" value="prompts" style="accent-color: var(--blue);"> Prompts Brutales — colecciones completas
+        </label>
+        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
+          <input type="radio" name="interes" value="curso-ia" style="accent-color: var(--blue);"> Curso completo de IA desde cero
+        </label>
+        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
+          <input type="radio" name="interes" value="curso-ventas" style="accent-color: var(--blue);"> IA aplicada a ventas y negocios
+        </label>
+        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
+          <input type="radio" name="interes" value="guias" style="accent-color: var(--blue);"> Guías avanzadas por serie
+        </label>
+      </div>
+
+      <button class="btn-primary" style="width: 100%; margin-top: 4px; border: none; cursor: pointer; font-size: 14px;" onclick="submitFounder()">
+        Quiero ser fundador →
       </button>
 
-      <div class="form-note">
-        Sin spam. Sin compromisos. Te avisamos cuando esté listo y tienes 48h para decidir.
+      <div class="form-note" id="founder-note">
+        Sin spam. Sin compromisos. Cuando lancemos, tú decides si compras.
+      </div>
+      <div id="founder-success" style="display:none; margin-top: 12px; color: #4ade80; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.6;">
+        ✓ Ya estás en la lista de fundadores.<br>Te avisamos antes que a nadie.
       </div>
     </div>
   </div>
 </section>
+
+<script>
+function submitFounder() {
+  const name = document.getElementById('founder-name').value;
+  const email = document.getElementById('founder-email').value;
+  const interes = document.querySelector('input[name="interes"]:checked');
+  if (!name || !email) { alert('Por favor, rellena tu nombre y email.'); return; }
+  const recurso = 'Lista Fundadores — ' + (interes ? interes.value : 'sin selección');
+  fetch('https://script.google.com/macros/s/AKfycbwzsnUiyIBJIgCk4YaHRbsuF4wlYJvw9fcAJRl-7OQU-wBXzRtomnyxNlBD8u69u4oH/exec', {
+    method: 'POST', mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nombre: name, email: email, recurso: recurso })
+  });
+  document.getElementById('founder-success').style.display = 'block';
+  document.getElementById('founder-note').style.display = 'none';
+  document.querySelector('#survey-options').style.opacity = '0.4';
+  document.querySelector('#survey-options').style.pointerEvents = 'none';
+}
+</script>
 
 <!-- GUÍAS EXTENDIDAS -->
 <div class="neon-line"></div>
