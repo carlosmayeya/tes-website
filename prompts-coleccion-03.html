@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompts Brutales — Colección 03: Ventas y Negocios | TES</title>
+<meta name="description" content="5 prompts para cerrar más, preparar mejor y decidir más rápido. Radar, Escudo, Eco, Lupa y Tridente.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1WSKFYBEN"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z1WSKFYBEN');</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--blue:#4FC3F7;--blue-ice:#80D8FF;--blue-dark:#0D2233;--blue-mid:#0A3A5C;--black:#000000;--grey:#4A6070;--white:#FFFFFF;--white-dim:rgba(255,255,255,0.75);}
+  *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;}
+  nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(79,195,247,0.08);}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+  .nav-back{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--grey);text-decoration:none;transition:color 0.2s;}.nav-back:hover{color:var(--blue);}
+  .hero{padding:120px 48px 60px;max-width:900px;margin:0 auto;}
+  .breadcrumb{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--grey);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .breadcrumb a{color:var(--grey);text-decoration:none;}.breadcrumb a:hover{color:var(--blue);}
+  .tag{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.25em;color:var(--blue);background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.2);padding:5px 12px;text-transform:uppercase;margin-bottom:20px;}
+  .title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(30px,5vw,48px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px;}.title span{color:var(--blue);}
+  .subtitle{font-size:17px;color:var(--white-dim);font-weight:300;line-height:1.6;margin-bottom:32px;max-width:600px;}
+  .meta{display:flex;gap:24px;flex-wrap:wrap;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--grey);text-transform:uppercase;padding-bottom:32px;border-bottom:1px solid rgba(79,195,247,0.1);}.meta span{color:var(--blue);}
+  .content{max-width:900px;margin:0 auto;padding:0 48px 80px;}
+  .section-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.3em;color:var(--blue);text-transform:uppercase;margin:48px 0 16px;display:flex;align-items:center;gap:10px;}.section-label::before{content:'';display:block;width:20px;height:1px;background:var(--blue);}
+  .prompt-card{background:var(--blue-dark);border:1px solid rgba(79,195,247,0.12);padding:32px;margin-bottom:16px;transition:border-color 0.2s;}.prompt-card:hover{border-color:rgba(79,195,247,0.3);}
+  .prompt-category{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--blue);text-transform:uppercase;margin-bottom:10px;}
+  .prompt-title{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:8px;}
+  .prompt-desc{font-size:13px;color:var(--white-dim);line-height:1.6;margin-bottom:18px;}
+  .prompt-box{background:rgba(4,13,20,0.95);border:1px solid rgba(79,195,247,0.15);border-left:3px solid var(--blue);padding:18px 20px;font-family:'Space Mono',monospace;font-size:11px;color:var(--blue-ice);line-height:1.7;margin-bottom:14px;white-space:pre-wrap;}
+  .copy-btn{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);background:transparent;border:1px solid rgba(79,195,247,0.3);padding:8px 14px;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;}.copy-btn:hover{background:rgba(79,195,247,0.1);}.copy-btn.copied{color:#4ade80;border-color:#4ade80;}
+  .locked-card{background:rgba(79,195,247,0.03);border:1px dashed rgba(79,195,247,0.2);padding:28px 32px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .locked-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--grey);margin-bottom:4px;}.locked-desc{font-size:12px;color:var(--grey);opacity:0.7;}.lock-icon{font-size:20px;opacity:0.4;flex-shrink:0;}
+  .unlock-cta{background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));border:1px solid rgba(79,195,247,0.3);padding:40px;margin-top:40px;text-align:center;}
+  .unlock-cta h3{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;margin-bottom:10px;}
+  .unlock-cta p{font-size:15px;color:var(--white-dim);margin-bottom:28px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto;}
+  .form-input{background:rgba(0,0,0,0.5);border:1px solid rgba(79,195,247,0.2);color:var(--white);padding:13px 16px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;width:100%;margin-bottom:12px;}.form-input:focus{border-color:var(--blue);}.form-input::placeholder{color:var(--grey);}
+  .btn-primary{background:var(--blue);color:var(--black);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;padding:16px 32px;border:none;cursor:pointer;width:100%;margin-top:4px;transition:opacity 0.2s;}.btn-primary:hover{opacity:0.9;}
+  .form-note{font-size:11px;color:var(--grey);margin-top:12px;line-height:1.5;}.form-wrap{max-width:400px;margin:0 auto;}
+  .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);opacity:0.2;margin:48px 0;}
+  footer{background:var(--black);border-top:1px solid rgba(79,195,247,0.08);padding:40px 48px;text-align:center;margin-top:80px;}
+  .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
+  .footer-copy{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);opacity:0.5;}
+  @media(max-width:768px){nav{padding:16px 20px;}.hero{padding:100px 20px 40px;}.content{padding:0 20px 60px;}.title{font-size:28px;}.locked-card{flex-direction:column;align-items:flex-start;gap:12px;}footer{padding:32px 20px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">TES</a>
+  <a href="index.html#prompts" class="nav-back">← Prompts Brutales</a>
+</nav>
+
+<div class="hero">
+  <div class="breadcrumb"><a href="index.html">Inicio</a><span>·</span><a href="index.html#prompts">Prompts Brutales</a><span>·</span>Colección 03</div>
+  <div class="tag">Colección 03 · 5 prompts</div>
+  <h1 class="title">Ventas y <span>Negocios</span></h1>
+  <p class="subtitle">Cierra más. Prepara mejor. Decide más rápido. Los prompts que convierten cada reunión, email y negociación en una ventaja real. Información asimétrica como ventaja — no presión como táctica.</p>
+  <div class="meta"><div>Prompts <span>Brutales</span></div><div><span>5</span> prompts</div><div>2 gratis · <span>3 con email</span></div></div>
+</div>
+
+<div class="content">
+  <div class="section-label">Prompts gratuitos</div>
+
+  <div class="prompt-card">
+    <div class="prompt-category">Prompt 01 · Colección 03</div>
+    <div class="prompt-title">RADAR — El Preparador de Reuniones</div>
+    <div class="prompt-desc">Entra a cualquier reunión de ventas con contexto, agenda, preguntas clave y cierre preparado — en menos de 2 minutos.</div>
+    <div class="prompt-box" id="p-radar">Eres Radar. Tu único objetivo es que el usuario entre a cualquier reunión de ventas preparado — con contexto, agenda, preguntas y cierre — en menos de 2 minutos.
+
+Reglas Obligatorias:
+1. Recoge 4 variables antes de generar nada. Pide exactamente: "Dame 4 datos: nombre y empresa del cliente, objetivo de la reunión, lo que ya sabes de ellos, y duración." Si falta alguno, no generes nada — una preparación con datos incompletos da falsa seguridad.
+2. Entrega siempre en 4 bloques: CONTEXTO RÁPIDO (3 datos que cambian cómo entras) / AGENDA (con minutos exactos) / PREGUNTAS CLAVE (4 preguntas abiertas con objetivo entre paréntesis) / CIERRE PREPARADO (3 versiones: si va bien, neutral, con resistencia).
+3. Calibra según la fase: primera reunión = 60% descubrimiento / oportunidad avanzada = 60% solución / renovación = abre con logros conseguidos juntos.
+
+Casos de fallo:
+- Llega 10 min antes: "Dame solo 2 datos: empresa y objetivo. En 60 segundos tienes lo esencial."
+- No tiene claro el objetivo: "¿Cuál es más cercana: obtener información, generar interés, pedir decisión o avanzar el proceso?"
+
+A partir de ahora responde siempre como Radar.</div>
+    <button class="copy-btn" onclick="copyPrompt('p-radar', this)">⧉ Copiar prompt</button>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-category">Prompt 02 · Colección 03</div>
+    <div class="prompt-title">ESCUDO — El Cazador de Objeciones</div>
+    <div class="prompt-desc">Conoce las 5 objeciones más probables, el miedo real detrás de cada una, y la respuesta exacta que convierte resistencia en avance.</div>
+    <div class="prompt-box" id="p-escudo">Eres Escudo. Tu único objetivo es que el usuario entre a cualquier conversación de ventas sabiendo las 5 objeciones más probables y la respuesta exacta para cada una.
+
+Reglas Obligatorias:
+1. Mapea el campo primero. Pregunta: "Descríbeme en 3 frases: qué vendes, a quién y en qué momento aparecen las objeciones." Genera las 5 ordenadas por frecuencia real. Cada una con su traducción: lo que el cliente DICE vs. lo que realmente TEME. Las objeciones de precio casi nunca son de precio.
+2. Cada objeción tiene 3 capas en este orden: ESCUCHA (valida antes de responder) / REENCUADRE (pregunta que cambia el marco sin contradecir) / RESPUESTA (ataca el miedo real, no la superficie). Prohibido saltar al argumento sin las dos primeras capas.
+3. La objeción más difícil merece trabajo extra. Pregunta: "¿Cuál te ha costado más deals en los últimos 6 meses?" Para esa: 2 respuestas según perfil (analítico vs. relacional) y salida elegante si es un no genuino.
+
+Casos de fallo:
+- Quiere respuestas genéricas: "Las genéricas son las que no funcionan. Dame tu contexto."
+- "El cliente siempre inventa excusas": "Hay un miedo detrás que no hemos identificado. Cuéntame la última vez — ¿qué dijo exactamente?"
+
+A partir de ahora responde siempre como Escudo.</div>
+    <button class="copy-btn" onclick="copyPrompt('p-escudo', this)">⧉ Copiar prompt</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label" style="margin-top:0;">Prompts restantes — desbloquea con tu email</div>
+
+  <div class="locked-card"><div><div class="locked-title">ECO — El Email de Seguimiento</div><div class="locked-desc">Emails de seguimiento que consiguen respuesta. Sin presión, sin sonar desesperado.</div></div><div class="lock-icon">🔒</div></div>
+  <div class="locked-card"><div><div class="locked-title">LUPA — El Investigador de Cliente</div><div class="locked-desc">Entra sabiendo más sobre el cliente de lo que él espera. Posiciónate como socio estratégico.</div></div><div class="lock-icon">🔒</div></div>
+  <div class="locked-card"><div><div class="locked-title">TRIDENTE — El Cierre en 3 Versiones</div><div class="locked-desc">Nunca salgas sin proponer el siguiente paso. La versión de cierre exacta según el estado del comprador.</div></div><div class="lock-icon">🔒</div></div>
+
+  <div class="unlock-cta">
+    <h3>Desbloquea los 3 prompts restantes</h3>
+    <p>Deja tu email y te enviamos la colección completa — los 5 prompts de ventas listos para usar.</p>
+    <div class="form-wrap">
+      <input type="text" class="form-input" placeholder="Tu nombre" id="u-name">
+      <input type="email" class="form-input" placeholder="Tu email" id="u-email">
+      <button class="btn-primary" onclick="submitUnlock()">Desbloquear los 5 prompts →</button>
+      <div class="form-note">Sin spam. Te enviamos la colección completa al instante.</div>
+    </div>
+    <div id="unlock-success" style="display:none;margin-top:20px;"><p style="color:#4ade80;font-family:'Space Mono',monospace;font-size:12px;">✓ ¡Enviado! Revisa tu email en los próximos minutos.</p></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
+</footer>
+
+<script>
+function copyPrompt(id,btn){const text=document.getElementById(id).innerText;navigator.clipboard.writeText(text).then(()=>{btn.textContent='✓ Copiado';btn.classList.add('copied');setTimeout(()=>{btn.textContent='⧉ Copiar prompt';btn.classList.remove('copied');},2000);});}
+function submitUnlock(){const email=document.getElementById('u-email').value;const name=document.getElementById('u-name').value;if(!email||!name){alert('Por favor, rellena tu nombre y email.');return;}fetch('https://script.google.com/macros/s/AKfycbwzsnUiyIBJIgCk4YaHRbsuF4wlYJvw9fcAJRl-7OQU-wBXzRtomnyxNlBD8u69u4oH/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({nombre:name,email:email,recurso:'Prompts Brutales — Colección 03 completa'})});document.getElementById('unlock-success').style.display='block';document.querySelector('.form-wrap').style.opacity='0.4';}
+</script>
+</body>
+</html>
