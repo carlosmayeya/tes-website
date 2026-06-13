@@ -4,78 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prompts Brutales — Colección 01: De Cero a Competente | TES</title>
-<meta name="description" content="6 prompts para empezar a usar la IA con resultados reales desde el primer día. Axon, Forge, Clave, Núcleo, Sherpa y Centinela.">
-<!-- Google tag (gtag.js) -->
+<meta name="description" content="6 agentes de IA para empezar a usar la IA con resultados reales desde el primer día. Axon, Forge, Clave, Núcleo, Sherpa y Centinela.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1WSKFYBEN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-Z1WSKFYBEN');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z1WSKFYBEN');</script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue: #4FC3F7; --blue-ice: #80D8FF; --blue-dark: #0D2233;
-    --blue-mid: #0A3A5C; --black: #000000; --grey: #4A6070;
-    --white: #FFFFFF; --white-dim: rgba(255,255,255,0.75);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 48px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(79,195,247,0.08); }
-  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); text-decoration: none; }
-  .nav-back { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--grey); text-decoration: none; transition: color 0.2s; }
-  .nav-back:hover { color: var(--blue); }
-  .hero { padding: 120px 48px 60px; max-width: 900px; margin: 0 auto; }
-  .breadcrumb { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .breadcrumb a { color: var(--grey); text-decoration: none; }
-  .breadcrumb a:hover { color: var(--blue); }
-  .tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--blue); background: rgba(79,195,247,0.08); border: 1px solid rgba(79,195,247,0.2); padding: 5px 12px; text-transform: uppercase; margin-bottom: 20px; }
-  .title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(30px, 5vw, 48px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 16px; }
-  .title span { color: var(--blue); }
-  .subtitle { font-size: 17px; color: var(--white-dim); font-weight: 300; line-height: 1.6; margin-bottom: 32px; max-width: 600px; }
-  .meta { display: flex; gap: 24px; flex-wrap: wrap; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--grey); text-transform: uppercase; padding-bottom: 32px; border-bottom: 1px solid rgba(79,195,247,0.1); }
-  .meta span { color: var(--blue); }
-  .content { max-width: 900px; margin: 0 auto; padding: 0 48px 80px; }
-  .section-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.3em; color: var(--blue); text-transform: uppercase; margin: 48px 0 16px; display: flex; align-items: center; gap: 10px; }
-  .section-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--blue); }
-  .prompt-card { background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.12); padding: 32px; margin-bottom: 16px; transition: border-color 0.2s; }
-  .prompt-card:hover { border-color: rgba(79,195,247,0.3); }
-  .prompt-category { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 10px; }
-  .prompt-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 8px; }
-  .prompt-desc { font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 18px; }
-  .prompt-box { background: rgba(4,13,20,0.95); border: 1px solid rgba(79,195,247,0.15); border-left: 3px solid var(--blue); padding: 18px 20px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue-ice); line-height: 1.7; margin-bottom: 14px; white-space: pre-wrap; }
-  .copy-btn { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); background: transparent; border: 1px solid rgba(79,195,247,0.3); padding: 8px 14px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-  .copy-btn:hover { background: rgba(79,195,247,0.1); }
-  .copy-btn.copied { color: #4ade80; border-color: #4ade80; }
-  .locked-section { margin-top: 48px; }
-  .locked-card { background: rgba(79,195,247,0.03); border: 1px dashed rgba(79,195,247,0.2); padding: 28px 32px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-  .locked-info .locked-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--grey); margin-bottom: 4px; }
-  .locked-info .locked-desc { font-size: 12px; color: var(--grey); opacity: 0.7; }
-  .lock-icon { font-size: 20px; opacity: 0.4; flex-shrink: 0; }
-  .unlock-cta { background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid)); border: 1px solid rgba(79,195,247,0.3); padding: 40px; margin-top: 40px; text-align: center; }
-  .unlock-cta h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; margin-bottom: 10px; }
-  .unlock-cta p { font-size: 15px; color: var(--white-dim); margin-bottom: 28px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .form-input { background: rgba(0,0,0,0.5); border: 1px solid rgba(79,195,247,0.2); color: var(--white); padding: 13px 16px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; width: 100%; margin-bottom: 12px; }
-  .form-input:focus { border-color: var(--blue); }
-  .form-input::placeholder { color: var(--grey); }
-  .btn-primary { background: var(--blue); color: var(--black); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 16px 32px; border: none; cursor: pointer; width: 100%; margin-top: 4px; transition: opacity 0.2s; }
-  .btn-primary:hover { opacity: 0.9; }
-  .form-note { font-size: 11px; color: var(--grey); margin-top: 12px; line-height: 1.5; }
-  .form-wrap { max-width: 400px; margin: 0 auto; }
-  .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--blue), transparent); opacity: 0.2; margin: 48px 0; }
-  footer { background: var(--black); border-top: 1px solid rgba(79,195,247,0.08); padding: 40px 48px; text-align: center; margin-top: 80px; }
-  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
-  .footer-copy { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); opacity: 0.5; }
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .hero { padding: 100px 20px 40px; }
-    .content { padding: 0 20px 60px; }
-    .title { font-size: 28px; }
-    .locked-card { flex-direction: column; align-items: flex-start; gap: 12px; }
-    footer { padding: 32px 20px; }
-  }
+  :root { --blue:#4FC3F7;--blue-ice:#80D8FF;--blue-dark:#0D2233;--blue-mid:#0A3A5C;--black:#000000;--grey:#4A6070;--white:#FFFFFF;--white-dim:rgba(255,255,255,0.75); }
+  *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;}
+  nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(79,195,247,0.08);}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+  .nav-back{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--grey);text-decoration:none;transition:color 0.2s;}.nav-back:hover{color:var(--blue);}
+  .hero{padding:120px 48px 60px;max-width:900px;margin:0 auto;}
+  .breadcrumb{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--grey);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .breadcrumb a{color:var(--grey);text-decoration:none;}.breadcrumb a:hover{color:var(--blue);}
+  .tag{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.25em;color:var(--blue);background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.2);padding:5px 12px;text-transform:uppercase;margin-bottom:20px;}
+  .title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(30px,5vw,48px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px;}.title span{color:var(--blue);}
+  .subtitle{font-size:17px;color:var(--white-dim);font-weight:300;line-height:1.6;margin-bottom:32px;max-width:600px;}
+  .meta{display:flex;gap:24px;flex-wrap:wrap;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--grey);text-transform:uppercase;padding-bottom:32px;border-bottom:1px solid rgba(79,195,247,0.1);}.meta span{color:var(--blue);}
+  .content{max-width:900px;margin:0 auto;padding:0 48px 80px;}
+  .section-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.3em;color:var(--blue);text-transform:uppercase;margin:48px 0 16px;display:flex;align-items:center;gap:10px;}.section-label::before{content:'';display:block;width:20px;height:1px;background:var(--blue);}
+  .prompt-card{background:var(--blue-dark);border:1px solid rgba(79,195,247,0.12);padding:32px;margin-bottom:16px;transition:border-color 0.2s;}.prompt-card:hover{border-color:rgba(79,195,247,0.3);}
+  .prompt-category{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--blue);text-transform:uppercase;margin-bottom:10px;}
+  .prompt-title{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:6px;}
+  .prompt-role{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);margin-bottom:16px;letter-spacing:0.08em;}
+  .prompt-pitch{font-size:15px;color:var(--white-dim);line-height:1.75;margin-bottom:24px;}
+  .btn-gumroad{display:inline-block;background:var(--blue);color:var(--black);font-family:'Syne',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:12px 28px;text-decoration:none;transition:opacity 0.2s;}.btn-gumroad:hover{opacity:0.85;}
+  .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);opacity:0.2;margin:48px 0;}
+  .cta-banner{background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));border:1px solid rgba(79,195,247,0.3);padding:40px;margin-top:48px;text-align:center;}
+  .cta-banner h3{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;margin-bottom:10px;}
+  .cta-banner p{font-size:15px;color:var(--white-dim);margin-bottom:28px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto;}
+  .btn-primary-lg{display:inline-block;background:var(--blue);color:var(--black);font-family:'Syne',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;padding:18px 40px;text-decoration:none;transition:opacity 0.2s;}.btn-primary-lg:hover{opacity:0.85;}
+  .price-tag{font-family:'Space Mono',monospace;font-size:12px;color:var(--grey);margin-top:14px;}
+  .price-tag strong{color:var(--blue);font-size:16px;}
+  footer{background:var(--black);border-top:1px solid rgba(79,195,247,0.08);padding:40px 48px;text-align:center;margin-top:80px;}
+  .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
+  .footer-copy{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);opacity:0.5;}
+  @media(max-width:768px){nav{padding:16px 20px;}.hero{padding:100px 20px 40px;}.content{padding:0 20px 60px;}.title{font-size:28px;}.cta-banner{padding:28px 20px;}footer{padding:32px 20px;}}
 </style>
 </head>
 <body>
@@ -85,115 +50,78 @@
 </nav>
 
 <div class="hero">
-  <div class="breadcrumb">
-    <a href="index.html">Inicio</a><span>·</span>
-    <a href="index.html#prompts">Prompts Brutales</a><span>·</span>
-    Colección 01
-  </div>
-  <div class="tag">Colección 01 · 6 prompts</div>
+  <div class="breadcrumb"><a href="index.html">Inicio</a><span>·</span><a href="index.html#prompts">Prompts Brutales</a><span>·</span>Colección 01</div>
+  <div class="tag">Colección 01 · 6 agentes</div>
   <h1 class="title">De Cero a <span>Competente</span></h1>
   <p class="subtitle">Para quien empieza desde cero y quiere resultados reales desde el primer día. Sin rodeos. Sin curva de aprendizaje innecesaria.</p>
-  <div class="meta">
-    <div>Prompts <span>Brutales</span></div>
-    <div><span>6</span> prompts</div>
-    <div>2 gratis · <span>4 con email</span></div>
-  </div>
+  <div class="meta"><div>Prompts <span>Brutales</span></div><div><span>6</span> agentes</div><div>Edición Completa disponible</div></div>
 </div>
 
 <div class="content">
 
-  <div class="section-label">Prompts gratuitos</div>
+  <div class="section-label">Los 6 agentes de esta colección</div>
 
+  <!-- AXON -->
   <div class="prompt-card">
-    <div class="prompt-category">Prompt 01 · Colección 01</div>
-    <div class="prompt-title">AXON — El Asistente de Trabajo</div>
-    <div class="prompt-desc">Tu asistente ejecutivo de IA. Completa lo que importa hoy — no lo que parece urgente, sino lo que mueve la aguja de verdad.</div>
-    <div class="prompt-box" id="p-axon">Eres Axon. Tu único objetivo es que el usuario complete lo que importa hoy — no lo que parece urgente, sino lo que mueve la aguja de verdad.
-
-Reglas Obligatorias:
-1. Al inicio de cada sesión pregunta exactamente: "¿Qué tiene que estar hecho hoy para que este día cuente?" Nada más. Espera la respuesta antes de cualquier sugerencia.
-2. Convierte cada respuesta en una lista de máximo 3 tareas concretas con verbo de acción. Si el usuario da más de 3, pregunta: "Si solo pudieras hacer una, ¿cuál mueve más?"
-3. Para cada tarea, pregunta una sola vez: "¿Tienes todo lo que necesitas para empezar ahora, o hay un bloqueo?" Si hay bloqueo, resuélvelo antes de seguir.
-4. Nunca des consejos de productividad genéricos. Si el usuario divaga, di exactamente: "Eso es importante, pero no es lo de hoy. ¿Volvemos a [tarea]?"
-
-Casos de fallo:
-- Usuario abrumado: "Para. Una sola cosa. ¿Qué pasaría si hoy solo hicieras [la más importante]?"
-- Usuario pide hacer todo: "No se puede hacer todo. ¿Qué no hacer hoy es la decisión más inteligente?"
-
-A partir de ahora responde siempre como Axon.</div>
-    <button class="copy-btn" onclick="copyPrompt('p-axon', this)">⧉ Copiar prompt</button>
+    <div class="prompt-category">Agente 01 · Colección 01</div>
+    <div class="prompt-title">AXON</div>
+    <div class="prompt-role">El Asistente de Trabajo</div>
+    <p class="prompt-pitch">Cada día tienes más en la lista de lo que puedes hacer — y acabas haciendo lo urgente en lugar de lo importante. Axon te obliga a elegir una sola cosa antes de empezar, elimina los bloqueos antes de que paren tu día y no te deja divagar hacia tareas que no mueven la aguja. Al final del día habrás hecho lo que importa, no lo que gritaba más alto.</p>
+    <a href="https://GUMROAD_URL_PLACEHOLDER" class="btn-gumroad" target="_blank">Conseguir acceso completo →</a>
   </div>
 
+  <!-- FORGE -->
   <div class="prompt-card">
-    <div class="prompt-category">Prompt 02 · Colección 01</div>
-    <div class="prompt-title">FORGE — El Constructor de Ideas</div>
-    <div class="prompt-desc">Convierte ideas vagas en proyectos concretos. Del concepto difuso al plan ejecutable en menos de 10 minutos.</div>
-    <div class="prompt-box" id="p-forge">Eres Forge. Tu único objetivo es convertir cualquier idea vaga del usuario en algo concreto, ejecutable y con primer paso claro — en menos de 10 minutos de conversación.
+    <div class="prompt-category">Agente 02 · Colección 01</div>
+    <div class="prompt-title">FORGE</div>
+    <div class="prompt-role">El Constructor de Ideas</div>
+    <p class="prompt-pitch">Tienes ideas que se quedan en ideas — porque pasar del "qué buena idea" al primer paso concreto es donde todo se detiene. Forge te hace las tres preguntas exactas que convierten cualquier concepto vago en un plan ejecutable con un primer paso que puedes hacer hoy. En menos de 10 minutos tienes nombre, problema, usuario y acción — o sabes exactamente qué falta para tenerlos.</p>
+    <a href="https://GUMROAD_URL_PLACEHOLDER" class="btn-gumroad" target="_blank">Conseguir acceso completo →</a>
+  </div>
 
-Reglas Obligatorias:
-1. Ante cualquier idea, haz exactamente estas 3 preguntas en orden, una por una: "¿Qué problema resuelve esto para alguien real?" → "¿Quién es la primera persona que pagaría por esto o lo usaría hoy?" → "¿Qué es lo mínimo que podrías construir en una semana para probar si funciona?"
-2. Después de las 3 respuestas, entrega siempre: NOMBRE / PROBLEMA / USUARIO / MVP / PRIMER PASO HOY.
-3. Si el usuario no sabe responder: "No saber eso ahora es normal. Pero sin saberlo, cualquier paso siguiente es ruido. ¿Quieres que te ayude a descubrirlo?"
+  <!-- CLAVE -->
+  <div class="prompt-card">
+    <div class="prompt-category">Agente 03 · Colección 01</div>
+    <div class="prompt-title">CLAVE</div>
+    <div class="prompt-role">El Traductor de Jerga</div>
+    <p class="prompt-pitch">Contratos, cláusulas, emails corporativos, documentos legales — escritos para que no los entiendas. Clave los traduce en tres niveles: qué dice, qué te afecta y qué están escondiendo en la letra pequeña. Con la pregunta exacta que tienes que hacer antes de firmar, aceptar o responder. Nunca más firmes algo sin entenderlo de verdad.</p>
+    <a href="https://GUMROAD_URL_PLACEHOLDER" class="btn-gumroad" target="_blank">Conseguir acceso completo →</a>
+  </div>
 
-Casos de fallo:
-- Idea demasiado grande: "Eso es una visión, no una idea ejecutable. ¿Cuál es la versión más pequeña que ya tendría valor?"
-- Quiere perfección antes de empezar: "Perfecto no existe en la fase 0. ¿Qué es lo feo mínimo que podrías mostrar a alguien esta semana?"
+  <!-- NÚCLEO -->
+  <div class="prompt-card">
+    <div class="prompt-category">Agente 04 · Colección 01</div>
+    <div class="prompt-title">NÚCLEO</div>
+    <div class="prompt-role">El Sintetizador Brutal</div>
+    <p class="prompt-pitch">Informes de 30 páginas, hilos interminables, artículos densos — y en algún lugar hay una decisión que tomar. Núcleo extrae la idea central, las tres implicaciones que realmente importan y la única acción que tienes que hacer hoy. Sin resúmenes narrativos. Sin relleno. Solo lo que necesitas para actuar.</p>
+    <a href="https://GUMROAD_URL_PLACEHOLDER" class="btn-gumroad" target="_blank">Conseguir acceso completo →</a>
+  </div>
 
-A partir de ahora responde siempre como Forge.</div>
-    <button class="copy-btn" onclick="copyPrompt('p-forge', this)">⧉ Copiar prompt</button>
+  <!-- SHERPA -->
+  <div class="prompt-card">
+    <div class="prompt-category">Agente 05 · Colección 01</div>
+    <div class="prompt-title">SHERPA</div>
+    <div class="prompt-role">El Explicador Infinito</div>
+    <p class="prompt-pitch">Aprende cualquier concepto al nivel exacto donde estás — no al nivel donde el libro o el vídeo asume que estás. Sherpa calibra su explicación a tu conocimiento real, usa una metáfora de tu mundo cotidiano para cada concepto nuevo y no avanza hasta que hayas demostrado que lo entendiste de verdad. Lo que aprendes con Sherpa lo recuerdas mañana.</p>
+    <a href="https://GUMROAD_URL_PLACEHOLDER" class="btn-gumroad" target="_blank">Conseguir acceso completo →</a>
+  </div>
+
+  <!-- CENTINELA -->
+  <div class="prompt-card">
+    <div class="prompt-category">Agente 06 · Colección 01</div>
+    <div class="prompt-title">CENTINELA</div>
+    <div class="prompt-role">El Detector de Errores</div>
+    <p class="prompt-pitch">Un error ortográfico en el email a un cliente, una cifra incoherente en la propuesta, un tono más agresivo de lo que pretendías — pequeños fallos que destruyen la percepción de profesionalidad en segundos. Centinela revisa en cuatro capas en ese orden exacto: errores duros, claridad, tono y efecto. Sin tocar tu voz. Sin reescribir con su estilo. Solo lo que hay que corregir, con el motivo en una línea.</p>
+    <a href="https://GUMROAD_URL_PLACEHOLDER" class="btn-gumroad" target="_blank">Conseguir acceso completo →</a>
   </div>
 
   <div class="divider"></div>
 
-  <!-- LOCKED -->
-  <div class="locked-section">
-    <div class="section-label">Prompts restantes — desbloquea con tu email</div>
-
-    <div class="locked-card">
-      <div class="locked-info">
-        <div class="locked-title">CLAVE — El Traductor de Jerga</div>
-        <div class="locked-desc">Traduce cualquier texto técnico, legal o corporativo en 3 niveles.</div>
-      </div>
-      <div class="lock-icon">🔒</div>
-    </div>
-
-    <div class="locked-card">
-      <div class="locked-info">
-        <div class="locked-title">NÚCLEO — El Sintetizador Brutal</div>
-        <div class="locked-desc">Extrae lo esencial de cualquier masa de información en 60 segundos.</div>
-      </div>
-      <div class="lock-icon">🔒</div>
-    </div>
-
-    <div class="locked-card">
-      <div class="locked-info">
-        <div class="locked-title">SHERPA — El Explicador Infinito</div>
-        <div class="locked-desc">Entiende cualquier concepto al nivel exacto donde estás hoy.</div>
-      </div>
-      <div class="lock-icon">🔒</div>
-    </div>
-
-    <div class="locked-card">
-      <div class="locked-info">
-        <div class="locked-title">CENTINELA — El Detector de Errores</div>
-        <div class="locked-desc">Ningún texto sale al mundo con errores que dañen tu credibilidad.</div>
-      </div>
-      <div class="lock-icon">🔒</div>
-    </div>
-
-    <div class="unlock-cta">
-      <h3>Desbloquea los 4 prompts restantes</h3>
-      <p>Deja tu email y te enviamos la colección completa — los 6 prompts listos para copiar y pegar en Claude, ChatGPT o Grok.</p>
-      <div class="form-wrap">
-        <input type="text" class="form-input" placeholder="Tu nombre" id="u-name">
-        <input type="email" class="form-input" placeholder="Tu email" id="u-email">
-        <button class="btn-primary" onclick="submitUnlock()">Desbloquear los 6 prompts →</button>
-        <div class="form-note">Sin spam. Te enviamos la colección completa al instante.</div>
-      </div>
-      <div id="unlock-success" style="display:none; margin-top: 20px;">
-        <p style="color: #4ade80; font-family: 'Space Mono', monospace; font-size: 12px;">✓ ¡Enviado! Revisa tu email en los próximos minutos.</p>
-      </div>
-    </div>
+  <div class="cta-banner">
+    <h3>Los 6 agentes completos — listos para usar</h3>
+    <p>Accede a la Edición Completa con los 41 agentes de las 7 colecciones. Cópialos en Claude, ChatGPT o Grok y empieza hoy.</p>
+    <a href="https://GUMROAD_URL_PLACEHOLDER" class="btn-primary-lg" target="_blank">Conseguir Prompts Brutales Edición Completa →</a>
+    <div class="price-tag">Acceso completo por <strong>19€</strong> · Pago único · Sin suscripción</div>
   </div>
 
 </div>
@@ -202,32 +130,5 @@ A partir de ahora responde siempre como Forge.</div>
   <div class="footer-logo">Tecnología Explicada Simple</div>
   <div class="footer-copy">© 2026 · El Equipo TES · @tecnologia.explicada.simple</div>
 </footer>
-
-<script>
-function copyPrompt(id, btn) {
-  const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = '✓ Copiado';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = '⧉ Copiar prompt';
-      btn.classList.remove('copied');
-    }, 2000);
-  });
-}
-
-function submitUnlock() {
-  const email = document.getElementById('u-email').value;
-  const name = document.getElementById('u-name').value;
-  if (!email || !name) { alert('Por favor, rellena tu nombre y email.'); return; }
-  fetch('https://script.google.com/macros/s/AKfycbwzsnUiyIBJIgCk4YaHRbsuF4wlYJvw9fcAJRl-7OQU-wBXzRtomnyxNlBD8u69u4oH/exec', {
-    method: 'POST', mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre: name, email: email, recurso: 'Prompts Brutales — Colección 01 completa' })
-  });
-  document.getElementById('unlock-success').style.display = 'block';
-  document.querySelector('.form-wrap').style.opacity = '0.4';
-}
-</script>
 </body>
 </html>
