@@ -597,6 +597,20 @@ function App() {
     setChatOpen(true);
   };
 
+
+  // Strip markdown from agent responses
+  const cleanMarkdown = (text) => {
+    return text
+      .replace(/#{1,6}\s+/g, '')           // Remove ## headers
+      .replace(/\*\*([^*]+)\*\*/g, '$1')  // Remove **bold**
+      .replace(/\*([^*]+)\*/g, '$1')        // Remove *italic*
+      .replace(/_{2}([^_]+)_{2}/g, '$1')     // Remove __bold__
+      .replace(/`([^`]+)`/g, '$1')           // Remove `code`
+      .replace(/---/g, '—')                  // Replace --- with em dash
+      .replace(/\n{3,}/g, '\n\n')           // Max 2 newlines
+      .trim();
+  };
+
   const sendChat = async () => {
     if (!chatInput.trim() || chatLoading) return;
     const msg = chatInput.trim();
@@ -616,7 +630,7 @@ function App() {
         })
       });
       const data = await res.json();
-      setChatMsgs(prev => [...prev, { role:"agent", content: data.content?.[0]?.text || "Error de conexión." }]);
+      setChatMsgs(prev => [...prev, { role:"agent", content: cleanMarkdown(data.content?.[0]?.text || "Error de conexión.") }]);
     } catch {
       setChatMsgs(prev => [...prev, { role:"agent", content:"Error de conexión. Inténtalo de nuevo." }]);
     } finally { setChatLoading(false); }
@@ -820,7 +834,7 @@ function App() {
 
       {/* CHAT PANEL */}
       {chatOpen && chatPrompt && (
-        <div style={{position:"fixed",bottom:0,right:0,width:"100%",maxWidth:420,height:580,background:"#080808",border:"1px solid rgba(79,195,247,0.18)",borderBottom:"none",borderRadius:"20px 20px 0 0",display:"flex",flexDirection:"column",zIndex:200,boxShadow:"0 -20px 60px rgba(0,0,0,0.7)"}}>
+        <div style={{position:"fixed",bottom:0,right:0,width:"100%",maxWidth:420,height:"70vh",minHeight:520,maxHeight:650,background:"#080808",border:"1px solid rgba(79,195,247,0.18)",borderBottom:"none",borderRadius:"20px 20px 0 0",display:"flex",flexDirection:"column",zIndex:200,boxShadow:"0 -20px 60px rgba(0,0,0,0.7)"}}>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 18px",borderBottom:"1px solid rgba(255,255,255,0.06)",flexShrink:0}}>
             <div style={{display:"flex",alignItems:"center",gap:10}}>
               <div style={{width:8,height:8,borderRadius:"50%",background:"#4FC3F7",animation:"pulse 2s infinite"}}/>
@@ -830,7 +844,7 @@ function App() {
           </div>
           <div style={{flex:1,overflowY:"auto",padding:16,display:"flex",flexDirection:"column",gap:10}}>
             {chatMsgs.map((m,i) => (
-              <div key={i} style={{maxWidth:"85%",padding:"11px 15px",borderRadius:m.role==="agent"?"4px 14px 14px 14px":"14px 14px 4px 14px",fontSize:14,lineHeight:1.55,background:m.role==="agent"?"rgba(79,195,247,0.07)":"rgba(255,255,255,0.06)",border:m.role==="agent"?"1px solid rgba(79,195,247,0.1)":"none",color:"rgba(255,255,255,0.85)",alignSelf:m.role==="agent"?"flex-start":"flex-end"}}>{m.content}</div>
+              <div key={i} style={{maxWidth:"88%",width:"fit-content",padding:"13px 16px",borderRadius:m.role==="agent"?"4px 16px 16px 16px":"16px 16px 4px 16px",fontSize:14,lineHeight:1.65,background:m.role==="agent"?"rgba(79,195,247,0.07)":"rgba(255,255,255,0.06)",border:m.role==="agent"?"1px solid rgba(79,195,247,0.1)":"none",color:"rgba(255,255,255,0.88)",alignSelf:m.role==="agent"?"flex-start":"flex-end",wordBreak:"break-word",whiteSpace:"pre-wrap"}}>{m.content}</div>
             ))}
             {chatLoading && (
               <div style={{maxWidth:"85%",padding:"14px 15px",borderRadius:"4px 14px 14px 14px",background:"rgba(79,195,247,0.07)",border:"1px solid rgba(79,195,247,0.1)",alignSelf:"flex-start",display:"flex",gap:4,alignItems:"center"}}>
@@ -839,9 +853,9 @@ function App() {
             )}
             <div ref={msgsEnd}/>
           </div>
-          <div style={{padding:"10px 14px 16px",borderTop:"1px solid rgba(255,255,255,0.06)",display:"flex",gap:10,flexShrink:0}}>
+          <div style={{padding:"12px 14px 24px",borderTop:"1px solid rgba(255,255,255,0.06)",display:"flex",gap:10,flexShrink:0,alignItems:"flex-end"}}>
             <textarea
-              style={{flex:1,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"10px 14px",color:"#fff",fontSize:14,fontFamily:"inherit",resize:"none",outline:"none",minHeight:44,maxHeight:120}}
+              style={{flex:1,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"inherit",resize:"none",outline:"none",minHeight:50,maxHeight:140,lineHeight:1.5}}
               placeholder={`Escribe a ${chatPrompt.nombre}...`}
               value={chatInput}
               onChange={e => setChatInput(e.target.value)}
@@ -851,7 +865,7 @@ function App() {
             <button
               onClick={sendChat}
               disabled={!chatInput.trim()||chatLoading}
-              style={{background:!chatInput.trim()||chatLoading?"rgba(79,195,247,0.2)":"#4FC3F7",color:!chatInput.trim()||chatLoading?"rgba(0,0,0,0.4)":"#000",border:"none",borderRadius:11,width:44,height:44,fontSize:20,cursor:!chatInput.trim()||chatLoading?"not-allowed":"pointer",display:"flex",alignItems:"center",justifyContent:"center",alignSelf:"flex-end",flexShrink:0}}
+              style={{background:!chatInput.trim()||chatLoading?"rgba(79,195,247,0.25)":"#4FC3F7",color:!chatInput.trim()||chatLoading?"rgba(255,255,255,0.3)":"#000",border:"none",borderRadius:14,width:52,height:52,fontSize:22,fontWeight:700,cursor:!chatInput.trim()||chatLoading?"not-allowed":"pointer",display:"flex",alignItems:"center",justifyContent:"center",alignSelf:"flex-end",flexShrink:0,boxShadow:!chatInput.trim()||chatLoading?"none":"0 0 16px rgba(79,195,247,0.4)"}}
             >↑</button>
           </div>
         </div>
