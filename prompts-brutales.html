@@ -662,7 +662,7 @@ function App() {
     <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"40px 24px",textAlign:"center"}}>
       <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(79,195,247,0.1)",border:"1px solid rgba(79,195,247,0.3)",borderRadius:100,padding:"6px 16px",fontSize:12,fontWeight:700,color:"#4FC3F7",letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:32}}>⚡ Tecnología Explicada Simple</div>
       <div style={{fontSize:"clamp(52px,12vw,96px)",fontWeight:900,lineHeight:0.9,letterSpacing:"-0.04em",marginBottom:8}}>
-        Prompts<br/><span style={{color:"#4FC3F7"}}>Brutales</span>
+        Agentes<br/><span style={{color:"#4FC3F7"}}>Brutales</span>
       </div>
       <div style={{fontSize:"clamp(24px,5vw,44px)",fontWeight:900,letterSpacing:"-0.03em",color:"rgba(255,255,255,0.2)",marginBottom:40}}>Edición Completa</div>
       <p style={{maxWidth:500,fontSize:17,lineHeight:1.65,color:"rgba(255,255,255,0.7)",marginBottom:12}}>
@@ -695,6 +695,7 @@ function App() {
         )}
         <span style={{fontSize:15,fontWeight:800,letterSpacing:"-0.02em"}}>Agentes <span style={{color:"#4FC3F7"}}>Brutales</span></span>
       </div>
+      <button onClick={() => setView("tes")} style={{background:"none",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"5px 12px",fontSize:12,fontWeight:600,color:"rgba(255,255,255,0.6)",cursor:"pointer",marginRight:6}}>TES ↗</button>
       {isPro
         ? <div style={{background:"rgba(79,195,247,0.12)",border:"1px solid rgba(79,195,247,0.3)",borderRadius:8,padding:"5px 12px",fontSize:12,fontWeight:700,color:"#4FC3F7"}}>✓ PRO</div>
         : <button onClick={() => setModal("unlock")} style={{background:"#4FC3F7",color:"#000",border:"none",borderRadius:9,padding:"8px 16px",fontSize:13,fontWeight:800,cursor:"pointer"}}>Desbloquear — 19€</button>
@@ -720,7 +721,7 @@ function App() {
               onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.03)";e.currentTarget.style.borderColor="rgba(255,255,255,0.07)"}}
             >
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
-                <span style={{fontSize:11,fontWeight:700,color:"rgba(79,195,247,0.6)",letterSpacing:"0.1em",textTransform:"uppercase"}}>Colección {col.id}</span>
+                <span style={{fontSize:11,fontWeight:700,color:"#4FC3F7",letterSpacing:"0.1em",textTransform:"uppercase"}}>Colección {col.id}</span>
                 <span style={{fontSize:26}}>{col.icono}</span>
               </div>
               <div style={{fontSize:17,fontWeight:700,letterSpacing:"-0.02em",lineHeight:1.2}}>{col.nombre}</div>
@@ -756,7 +757,7 @@ function App() {
                 onMouseEnter={e=>{ if(!locked){e.currentTarget.style.background="rgba(79,195,247,0.05)";e.currentTarget.style.borderColor="rgba(79,195,247,0.2)"}}}
                 onMouseLeave={e=>{ e.currentTarget.style.background=locked?"rgba(255,255,255,0.015)":"rgba(255,255,255,0.03)";e.currentTarget.style.borderColor=locked?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.07)"}}
               >
-                <div style={{fontSize:11,fontWeight:700,color:"rgba(79,195,247,0.4)",width:26,flexShrink:0}}>{String(i+1).padStart(2,"0")}</div>
+                <div style={{fontSize:11,fontWeight:700,color:"#4FC3F7",width:26,flexShrink:0}}>{String(i+1).padStart(2,"0")}</div>
                 <div style={{flex:1,minWidth:0}}>
                   <div style={{fontSize:15,fontWeight:700,letterSpacing:"-0.01em",marginBottom:2}}>
                     {p.nombre}
@@ -787,7 +788,7 @@ function App() {
 
           <div style={{background:"rgba(79,195,247,0.03)",border:"1px solid rgba(79,195,247,0.12)",borderRadius:16,overflow:"hidden",marginBottom:16}}>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"13px 20px",borderBottom:"1px solid rgba(79,195,247,0.08)",background:"rgba(79,195,247,0.04)"}}>
-              <span style={{fontSize:11,fontWeight:700,color:"rgba(79,195,247,0.6)",letterSpacing:"0.1em",textTransform:"uppercase"}}>El Prompt</span>
+              <span style={{fontSize:11,fontWeight:700,color:"#4FC3F7",letterSpacing:"0.1em",textTransform:"uppercase"}}>El Prompt</span>
               <button
                 onClick={() => copy(activePrompt.texto, activePrompt.nombre)}
                 style={{display:"flex",alignItems:"center",gap:6,background:copied===activePrompt.nombre?"#4caf50":"#4FC3F7",color:copied===activePrompt.nombre?"#fff":"#000",border:"none",borderRadius:8,padding:"7px 14px",fontSize:12,fontWeight:700,cursor:"pointer"}}
@@ -859,6 +860,49 @@ function App() {
   );
 
   // ── MODAL DESBLOQUEAR ──────────────────────────────────────────────────────
+
+  // ── TES RESOURCES ─────────────────────────────────────────────────────────
+  if (view === "tes") return (
+    <div>
+      <Nav/>
+      <div style={{maxWidth:880,margin:"0 auto",padding:"40px 20px 100px"}}>
+        <div style={{fontSize:28,fontWeight:800,letterSpacing:"-0.03em",marginBottom:6}}>Tecnología Explicada Simple</div>
+        <div style={{fontSize:14,color:"rgba(255,255,255,0.65)",marginBottom:40}}>Todo el contenido gratuito — en el canal que prefieras.</div>
+
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:14}}>
+          {[
+            { icon:"🌐", name:"Web TES", sub:"Guías, recursos y más", url:"https://tecnologiaexplicadasimple.com", color:"#4FC3F7" },
+            { icon:"▶️", name:"YouTube", sub:"@Tecnologia.Explicada.Simple", url:"https://www.youtube.com/@Tecnologia.Explicada.Simple", color:"#ff0000" },
+            { icon:"📸", name:"Instagram", sub:"@tecnologia.explicada.simple", url:"https://www.instagram.com/tecnologia.explicada.simple", color:"#e1306c" },
+            { icon:"🎵", name:"TikTok", sub:"@techexplicadasimple", url:"https://www.tiktok.com/@techexplicadasimple", color:"#69c9d0" },
+          ].map(item => (
+            <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer"
+              style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:16,padding:24,display:"flex",flexDirection:"column",gap:12,textDecoration:"none",color:"#fff",transition:"all 0.15s"}}
+              onMouseEnter={e=>{e.currentTarget.style.background="rgba(255,255,255,0.06)";e.currentTarget.style.borderColor="rgba(255,255,255,0.15)"}}
+              onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.03)";e.currentTarget.style.borderColor="rgba(255,255,255,0.07)"}}
+            >
+              <span style={{fontSize:32}}>{item.icon}</span>
+              <div>
+                <div style={{fontSize:17,fontWeight:700,letterSpacing:"-0.02em",marginBottom:4}}>{item.name}</div>
+                <div style={{fontSize:12,color:"rgba(255,255,255,0.5)"}}>{item.sub}</div>
+              </div>
+              <div style={{fontSize:13,color:item.color,fontWeight:600,marginTop:"auto"}}>Visitar →</div>
+            </a>
+          ))}
+        </div>
+
+        <div style={{marginTop:48,padding:24,background:"rgba(79,195,247,0.04)",border:"1px solid rgba(79,195,247,0.12)",borderRadius:16}}>
+          <div style={{fontSize:15,fontWeight:700,marginBottom:8}}>¿Tienes dudas o feedback sobre Agentes Brutales?</div>
+          <div style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:16}}>Escríbenos directamente por Instagram o deja un comentario en YouTube.</div>
+          <a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" rel="noopener noreferrer"
+            style={{display:"inline-flex",alignItems:"center",gap:8,background:"#4FC3F7",color:"#000",borderRadius:10,padding:"10px 20px",fontSize:13,fontWeight:700,textDecoration:"none"}}>
+            Contactar por Instagram →
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+
   return null;
 
 }
