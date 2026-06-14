@@ -593,7 +593,59 @@ function App() {
 
   const openChat = (prompt) => {
     setChatPrompt(prompt);
-    setChatMsgs([{ role:"agent", content:`Hola. Soy ${prompt.nombre} — ${prompt.subtitulo}. ${prompt.tagline} ¿En qué te ayudo?` }]);
+    // Generate a context-aware opening based on the agent's first rule
+    const getOpening = (p) => {
+      const openings = {
+        "AXON": "Veo que quieres aprender algo nuevo de forma rápida y efectiva. Para empezar bien: ¿qué sabes ya de este tema y qué quieres poder hacer con ello cuando lo domines?",
+        "CLAVE": "Veo que tienes un texto complejo que necesitas entender. Pégalo aquí y te lo descifro: te digo qué dice realmente, qué debes saber y qué implica para ti.",
+        "FORGE": "Veo que tienes una idea que quieres convertir en algo concreto. Empecemos: ¿qué problema resuelve esta idea para alguien real?",
+        "NÚCLEO": "Veo que necesitas extraer lo esencial de algo. Pégame el texto, vídeo o tema y te entrego las 3 ideas que cambian algo, los 2 errores comunes y la 1 acción que lo consolida todo.",
+        "SHERPA": "Veo que quieres dominar una habilidad concreta. Para trazar la ruta correcta: ¿para qué necesitas esta habilidad exactamente, cuánto tiempo tienes por semana y en cuánto tiempo quieres resultados visibles?",
+        "CENTINELA": "Veo que quieres encontrar los fallos antes de que los encuentren los demás. Pégame el texto, plan o argumento y te digo qué atacaría primero un crítico.",
+        "DOMO": "Veo que quieres trabajar con tu energía real, no contra ella. Para empezar: ¿cuál es tu nivel de energía ahora mismo del 1 al 10, y cuántas horas de trabajo real tienes hoy?",
+        "CHISPA": "Veo que llevas tiempo evitando una tarea. Dame el nombre exacto de esa tarea — solo el nombre — y arrancamos ahora.",
+        "FILO": "Veo que hay cosas consumiendo tu tiempo sin producir nada. Dame una lista de todo lo que has hecho esta semana — reuniones, tareas, respuestas. No filtres nada.",
+        "FARO": "Veo que todo parece urgente y necesitas claridad. Una pregunta: si solo pudieras hacer UNA COSA hoy que moviera más tu situación hacia adelante, ¿cuál sería?",
+        "BRÚJULA": "Veo que necesitas un plan de día que tu cerebro pueda ejecutar. Dame todas tus tareas de hoy — sin ordenar — y yo las organizo para que solo veas una cosa a la vez.",
+        "COMPA": "Veo que necesitas a alguien que te mantenga en marcha. Empecemos: ¿qué vas a hacer en los próximos 25 minutos? Dímelo con precisión.",
+        "RADAR": "Veo que tienes una reunión importante. Para prepararte bien: dime el nombre del cliente, su empresa, el sector y cuál es tu objetivo en esa reunión.",
+        "ESCUDO": "Veo que necesitas manejar una objeción. Dime exactamente qué te dijeron — las palabras exactas — y te preparo la respuesta.",
+        "ECO": "Veo que necesitas escribir una propuesta que el cliente lea y apruebe. Dime quién es el destinatario, qué sabe del problema y qué necesita creer para aprobar.",
+        "LUPA": "Veo que quieres una lectura honesta de tu pipeline. Dame tus oportunidades activas — nombre, importe, estado — y te digo cuáles cerrarás y cuáles son humo.",
+        "TRIDENTE": "Veo que tienes una negociación por delante. Antes de entrar: define tu posición ideal, tu posición realista y tu límite mínimo. ¿Cuáles son?",
+        "PLUMA": "Veo que tienes un texto que necesita mejorar. Pégalo aquí y te digo qué eliminar, qué acortar y qué fortalecer — con la versión mejorada incluida.",
+        "TRATO": "Veo que tienes un email difícil que escribir. Dime qué pasó, qué quieres conseguir con este email y qué relación tienes con el destinatario.",
+        "DIRECTO": "Veo que necesitas eliminar el relleno de una comunicación. Pégame el texto y te quedo solo lo que dice algo — sin una palabra de más.",
+        "FLUJO": "Veo que tienes ideas sin ordenar que necesitan estructura. Vuélcalas aquí sin filtrar — todo lo que tienes — y yo encuentro los bloques reales.",
+        "BISTURÍ": "Veo que necesitas simplificar algo complejo. Dime el concepto y para quién es — qué decisión necesitan tomar con esa información.",
+        "ARENA": "Veo que tienes una entrevista importante. Dime la posición exacta, la empresa y las 2-3 preguntas que más te preocupan — empezamos a prepararte.",
+        "VALOR": "Veo que necesitas negociar tu salario. Para hacerlo bien: dime tu valor de mercado estimado, tu número mínimo aceptable y el número que te gustaría conseguir.",
+        "PERFIL": "Veo que quieres que tu LinkedIn trabaje para ti. Dime a quién quieres que te encuentre y qué quieres que hagan cuando te encuentren.",
+        "HUELLA": "Veo que quieres construir una reputación profesional sólida. Dime en qué área quieres ser referente y qué hace que TÚ seas diferente de otras 100 personas con tu mismo título.",
+        "ESCALÓN": "Veo que quieres llegar al siguiente nivel en tu carrera. Dime cuál es ese siguiente nivel y qué crees que falta para que la decisión sea obvia para quien tiene que tomarla.",
+        "MARCO": "Veo que necesitas convertir una intención en objetivos ejecutables. Dime qué quieres conseguir y te ayudo a definirlo con fecha, responsable y métrica concreta.",
+        "ARCO": "Veo que tienes una conversación difícil que preparar. Dime qué comportamiento o situación hay que abordar — en hechos concretos, no interpretaciones.",
+        "PUENTE": "Veo que hay algo que no funciona en tu equipo. Dime cuál es el síntoma que más te preocupa ahora mismo y cuándo empezaste a notarlo.",
+        "RAÍZ": "Veo que hay un problema organizativo que resolver. Dime el síntoma principal y empezamos con los 5 por qués para encontrar la causa raíz real.",
+        "ORDEN": "Veo que necesitas que tus reuniones produzcan decisiones reales. Dime qué reunión quieres mejorar o diseñar — de qué trata y qué decisión debería salir de ella.",
+        "PESO": "Veo que quieres saber a dónde va tu dinero de verdad. Dime tus ingresos netos mensuales y tus gastos fijos principales — empezamos a construir la imagen real.",
+        "BASE": "Veo que quieres un presupuesto que realmente puedas seguir. Dime tus ingresos netos mensuales y cuánto se va en gastos fijos comprometidos.",
+        "LIBRE": "Veo que quieres salir de deudas. Dime cada deuda que tienes: importe total, tasa de interés y cuota mínima mensual.",
+        "ESCUDO_FIN": "Veo que quieres construir tu fondo de emergencia. Dime tus gastos esenciales mensuales — alquiler, alimentación, transporte, seguros — y calculamos tu objetivo exacto.",
+        "CLARIDAD": "Veo que quieres empezar a invertir sin perderte en la complejidad. Antes de hablar de productos: ¿tienes ya un fondo de emergencia y tienes deudas con interés alto?",
+        "CONSTANTE": "Veo que quieres construir hábitos financieros que funcionen solos. Dime cuál es el único hábito que, si lo tuvieras desde hace 5 años, más habría cambiado tu situación.",
+        "ESCENA": "Veo que quieres crear contenido para YouTube. Para darte el paquete completo: ¿Short (menos de 60 segundos) o vídeo largo? ¿Y qué quieres conseguir — vistas, suscriptores, o llevar tráfico a algo concreto?",
+        "FLASH": "Veo que quieres contenido para redes sociales. Para empezar: ¿Reel, carrusel o story? ¿Y para qué plataforma — Instagram, TikTok o las dos?",
+        "HILO": "Veo que quieres publicar en X. Para darte el formato correcto: ¿thread (serie de tweets encadenados) o tweet individual?",
+        "TRIBUNA": "Veo que quieres crear contenido para LinkedIn. Para empezar: ¿post de texto, carrusel o artículo? ¿Y cuál es la idea o historia que quieres contar?",
+        "VISIÓN": "Veo que necesitas prompts de imagen para tu contenido. Tres preguntas rápidas: ¿qué herramienta vas a usar (Grok, Midjourney, DALL-E...)? ¿Imágenes estáticas o vídeo? ¿Tienes identidad visual definida?",
+        "ALGORITMO": "Veo que quieres tomar mejores decisiones de publicación. Para darte recomendaciones que tengan sentido: ¿qué plataforma, cuántos seguidores tienes ahora mismo y cuánto llevas publicando con consistencia?"
+      };
+      // Handle ESCUDO collision (ventas vs finanzas)
+      const key = p.id === "07" && p.nombre === "ESCUDO" ? "ESCUDO_FIN" : p.nombre;
+      return openings[key] || `Veo que quieres trabajar con ${p.subtitulo.toLowerCase()}. Cuéntame tu situación y vamos al grano.`;
+    };
+    setChatMsgs([{ role:"agent", content: getOpening(prompt) }]);
     setChatOpen(true);
   };
 
@@ -865,7 +917,7 @@ function App() {
             <button
               onClick={sendChat}
               disabled={!chatInput.trim()||chatLoading}
-              style={{background:!chatInput.trim()||chatLoading?"rgba(79,195,247,0.25)":"#4FC3F7",color:!chatInput.trim()||chatLoading?"rgba(255,255,255,0.3)":"#000",border:"none",borderRadius:14,width:52,height:52,fontSize:22,fontWeight:700,cursor:!chatInput.trim()||chatLoading?"not-allowed":"pointer",display:"flex",alignItems:"center",justifyContent:"center",alignSelf:"flex-end",flexShrink:0,boxShadow:!chatInput.trim()||chatLoading?"none":"0 0 16px rgba(79,195,247,0.4)"}}
+              style={{background:!chatInput.trim()||chatLoading?"rgba(79,195,247,0.25)":"#4FC3F7",color:!chatInput.trim()||chatLoading?"rgba(255,255,255,0.3)":"#000",border:"none",borderRadius:14,width:58,height:52,fontSize:22,fontWeight:700,cursor:!chatInput.trim()||chatLoading?"not-allowed":"pointer",display:"flex",alignItems:"center",justifyContent:"center",alignSelf:"flex-end",flexShrink:0,boxShadow:!chatInput.trim()||chatLoading?"none":"0 0 16px rgba(79,195,247,0.4)"}}
             >↑</button>
           </div>
         </div>
