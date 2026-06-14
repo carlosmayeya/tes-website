@@ -1113,20 +1113,22 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.97);
+      background: #000000;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 32px;
+      gap: 18px;
       z-index: 150;
       list-style: none;
+      padding: 40px 20px;
+      overflow-y: auto;
     }
 
-    .nav-links.open { display: flex; background: #000000; }
+    .nav-links.open { display: flex; }
 
     .nav-links a {
-      font-size: 20px;
-      letter-spacing: 0.1em;
+      font-size: 16px;
+      letter-spacing: 0.08em;
       color: var(--white);
       text-decoration: none;
       text-transform: uppercase;
@@ -1136,6 +1138,12 @@
     }
 
     .nav-links a:hover { color: var(--blue); }
+
+    /* Banner Agentes Brutales — columna única en móvil */
+    .banner-inner-grid {
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+    }
     section { padding: 60px 20px; }
     .hero { padding: 90px 20px 60px; }
     .hero-scroll { left: 20px; }
@@ -1190,7 +1198,7 @@
   <ul class="nav-links" id="nav-links">
     <li><a href="#series" onclick="closeMenu()">Series</a></li>
     <li><a href="#guias" onclick="closeMenu()">Guías</a></li>
-    <li><a href="#prompts" onclick="closeMenu()">Prompts Brutales</a></li>
+    <li><a href="#prompts" onclick="closeMenu()">Agentes Brutales</a></li>
     <li><a href="#recursos" onclick="closeMenu()">Recursos</a></li>
     <li><a href="#blog" onclick="closeMenu()">Blog</a></li>
     <li><a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" onclick="closeMenu()">YouTube →</a></li>
@@ -1382,7 +1390,7 @@
 
       <div style="margin-top: 28px; background: rgba(79,195,247,0.06); border-left: 3px solid var(--blue); padding: 16px 20px;">
         <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; margin-bottom: 6px;">En desarrollo ahora mismo</div>
-        <div style="font-size: 14px; color: var(--white-dim); line-height: 1.6;">Prompts Brutales Edición Completa · Curso de IA desde Cero · Guías avanzadas por serie</div>
+        <div style="font-size: 14px; color: var(--white-dim); line-height: 1.6;">Agentes Brutales Edición Completa · Curso de IA desde Cero · Guías avanzadas por serie</div>
       </div>
     </div>
 
@@ -1401,7 +1409,7 @@
 
       <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;" id="survey-options">
         <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
-          <input type="radio" name="interes" value="prompts" style="accent-color: var(--blue);"> Prompts Brutales — colecciones completas
+          <input type="radio" name="interes" value="prompts" style="accent-color: var(--blue);"> Agentes Brutales — colecciones completas
         </label>
         <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
           <input type="radio" name="interes" value="curso-ia" style="accent-color: var(--blue);"> Curso completo de IA desde cero
@@ -1507,17 +1515,17 @@ function submitFounder() {
   </div>
 </section>
 
-<!-- PROMPTS BRUTALES -->
+<!-- AGENTES BRUTALES -->
 <div class="neon-line"></div>
 <section class="prompts-section" id="prompts">
   <div class="section-label">Herramientas</div>
-  <h2 class="section-title">Prompts Brutales</h2>
-  <p class="section-subtitle">41 agentes de IA. 7 colecciones. Cada uno construido para conseguir un resultado concreto — no para impresionar, sino para funcionar.</p>
+  <h2 class="section-title">Agentes Brutales</h2>
+  <p class="section-subtitle">47 agentes de IA. 8 colecciones. Cada uno construido para conseguir un resultado concreto — no para impresionar, sino para funcionar.</p>
 
   <!-- BANNER EDICIÓN COMPLETA -->
   <div style="background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.25); padding: 40px; margin-bottom: 48px; position: relative; overflow: hidden;">
     <div style="position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(79,195,247,0.1) 0%, transparent 65%); pointer-events: none;"></div>
-    <div style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
+    <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
       <div>
         <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.3em; color: var(--blue); text-transform: uppercase; margin-bottom: 12px;">⚡ Edición Completa disponible</div>
         <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; margin-bottom: 12px; line-height: 1.2;">41 agentes. 7 colecciones. Un solo pago.</div>
@@ -1584,10 +1592,15 @@ function submitFounder() {
       <a href="prompts-brutales.html" class="copy-btn" style="width: 100%; justify-content: center; text-decoration: none; display: flex;">Ver colección →</a>
     </div>
 
+    <div class="prompt-card">
+      <div class="prompt-category">Colección 08 · 6 agentes</div>
+      <div class="prompt-title">Creación de Contenido</div>
+      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 24px;">YouTube, Instagram, TikTok, X y LinkedIn — con la mecánica exacta de cada plataforma. Para quien quiere que su contenido funcione, no solo que se publique.</p>
+      <a href="prompts-brutales.html" class="copy-btn" style="width: 100%; justify-content: center; text-decoration: none; display: flex;">Ver colección →</a>
+    </div>
+
   </div>
 </section>
-
-<!-- RECURSOS / PDFs -->
 <div class="neon-line"></div>
 <section class="recursos-section" id="recursos">
   <div class="section-label">Descargables</div>
@@ -1778,7 +1791,7 @@ function submitFounder() {
     <li><a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank">Instagram</a></li>
     <li><a href="https://www.tiktok.com/@techexplicadasimple" target="_blank">TikTok</a></li>
     <li><a href="#guias">Guías</a></li>
-    <li><a href="#prompts">Prompts Brutales</a></li>
+    <li><a href="#prompts">Agentes Brutales</a></li>
     <li><a href="#recursos">Recursos</a></li>
     <li><a href="#blog">Blog</a></li>
   </ul>
