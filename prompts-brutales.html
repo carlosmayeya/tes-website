@@ -580,6 +580,39 @@ function App() {
   );
 
   // ── COLECCIONES ────────────────────────────────────────────────────────────
+  const UnlockModal = () => modal === "unlock" ? (
+    <div onClick={() => setModal(null)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.85)",backdropFilter:"blur(8px)",zIndex:300,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
+      <div onClick={e => e.stopPropagation()} style={{background:"#0d0d0d",border:"1px solid rgba(255,255,255,0.1)",borderBottom:"none",borderRadius:"20px 20px 0 0",padding:"32px 28px 48px",width:"100%",maxWidth:480,display:"flex",flexDirection:"column",gap:20}}>
+        <div>
+          <div style={{fontSize:22,fontWeight:800,letterSpacing:"-0.03em",marginBottom:8}}>Desbloquea Prompts Brutales</div>
+          <div style={{fontSize:14,color:"rgba(255,255,255,0.45)",lineHeight:1.55}}>41 prompts completos + chat directo con cualquier agente desde la app.</div>
+        </div>
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          {[["⚡","41 prompts desbloqueados"],["💬","Chat con todos los agentes"],["♾️","Sin límite de uso"],["📱","Instalable en iPhone y Android"]].map(([icon,text]) => (
+            <div key={text} style={{display:"flex",alignItems:"center",gap:10,fontSize:14,color:"rgba(255,255,255,0.6)"}}><span>{icon}</span><span>{text}</span></div>
+          ))}
+        </div>
+        <button onClick={() => window.open(GUMROAD_URL,"_blank")} style={{background:"#4FC3F7",color:"#000",border:"none",borderRadius:12,padding:"16px 24px",fontSize:16,fontWeight:800,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          <span>Conseguir acceso — 19€</span>
+          <span style={{fontSize:12,fontWeight:600,opacity:0.7}}>Pago único · acceso permanente</span>
+        </button>
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          <div style={{flex:1,height:1,background:"rgba(255,255,255,0.08)"}}\/>
+          <span style={{fontSize:12,color:"rgba(255,255,255,0.3)",fontWeight:600}}>ya tengo clave de acceso</span>
+          <div style={{flex:1,height:1,background:"rgba(255,255,255,0.08)"}}\/>
+        </div>
+        <div>
+          <div style={{display:"flex",gap:10}}>
+            <input style={{flex:1,background:"rgba(255,255,255,0.05)",border:`1px solid ${keyError?"#ff5252":"rgba(255,255,255,0.1)"}`,borderRadius:10,padding:"12px 16px",color:"#fff",fontSize:14,outline:"none"}} placeholder="Pega tu clave aquí..." value={keyInput} onChange={e => { setKeyInput(e.target.value); setKeyError(false); }} onKeyDown={e => e.key==="Enter" && checkKey()} />
+            <button onClick={checkKey} style={{background:"rgba(255,255,255,0.08)",color:"#fff",border:"1px solid rgba(255,255,255,0.12)",borderRadius:10,padding:"12px 18px",fontSize:14,fontWeight:700,cursor:"pointer"}}>Activar</button>
+          </div>
+          {keyError && <div style={{fontSize:12,color:"#ff5252",marginTop:8}}>Clave incorrecta. Comprueba tu email de confirmación.</div>}
+        </div>
+        <button onClick={() => setModal(null)} style={{background:"none",border:"none",color:"rgba(255,255,255,0.3)",fontSize:14,cursor:"pointer",alignSelf:"center"}}>Cerrar</button>
+      </div>
+    </div>
+  ) : null;
+
   if (view === "cols") return (
     <div>
       <Nav/>
@@ -611,6 +644,7 @@ function App() {
           ))}
         </div>
       </div>
+    <UnlockModal/>
     </div>
   );
 
@@ -646,6 +680,7 @@ function App() {
           })}
         </div>
       </div>
+    <UnlockModal/>
     </div>
   );
 
@@ -690,6 +725,7 @@ function App() {
           )}
         </div>
       </div>
+      <UnlockModal/>
 
       {/* CHAT PANEL */}
       {chatOpen && chatPrompt && (
@@ -733,7 +769,7 @@ function App() {
   );
 
   // ── MODAL DESBLOQUEAR ──────────────────────────────────────────────────────
-  if (modal === "unlock") return (
+  if (false) return (
     <>
       {view !== "intro" && <Nav/>}
       <div onClick={() => setModal(null)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.85)",backdropFilter:"blur(8px)",zIndex:300,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
