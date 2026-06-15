@@ -22,74 +22,7 @@ textarea,input{font-family:inherit}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
 #app{min-height:100vh}
 input,textarea{-webkit-user-select:text;user-select:text;}
-/* Chat - full screen approach for iOS keyboard compatibility */
-.chat-page{
-  position:fixed;
-  top:0;left:0;right:0;bottom:0;
-  background:#080808;
-  z-index:200;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-.chat-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px 18px;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  flex-shrink:0;
-  background:#080808;
-}
-.chat-msgs{
-  flex:1;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  padding:16px;
-  display:flex;
-  flex-direction:column;
-  gap:10;
-}
-.chat-input-row{
-  display:flex;
-  gap:10;
-  align-items:flex-end;
-  padding:12px 14px 12px;
-  border-top:1px solid rgba(255,255,255,0.06);
-  background:#080808;
-  flex-shrink:0;
-}
-.chat-ta{
-  flex:1;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:14px;
-  padding:13px 16px;
-  color:#fff;
-  font-size:16px;
-  resize:none;
-  outline:none;
-  height:50px;
-  line-height:1.4;
-  font-family:inherit;
-  display:block;
-}
-.chat-send{
-  background:#4FC3F7;
-  color:#000;
-  border:none;
-  border-radius:14px;
-  width:58px;
-  height:50px;
-  font-size:22px;
-  font-weight:700;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-}
-.chat-send:disabled{background:rgba(79,195,247,0.2);color:rgba(0,0,0,0.3);cursor:not-allowed;}
+
 </style>
 </head>
 <body>
@@ -528,38 +461,38 @@ function App() {
   function ChatPanel(){
     if(!chatOpen||!chatPrompt) return null;
     return(
-      <div className="chat-page">
-        <div className="chat-header">
-          <div style={{display:'flex',alignItems:'center',gap:10}}>
-            <button onClick={()=>setChatOpen(false)} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer',marginRight:4}}>← Volver</button>
-            <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}/>
-            <span style={{fontSize:15,fontWeight:700}}>{chatPrompt.nombre} <span style={{color:BLU}}>·</span> <span style={{color:T3,fontWeight:500,fontSize:13}}>{chatPrompt.subtitulo}</span></span>
-          </div>
+      <div style={{position:'fixed',top:0,left:0,right:0,bottom:0,background:'#080808',zIndex:200,display:'flex',flexDirection:'column'}}>
+        <div style={{display:'flex',alignItems:'center',gap:12,padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0,background:'#080808'}}>
+          <button onClick={()=>setChatOpen(false)} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer',padding:'4px 0'}}>← Volver</button>
+          <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite',flexShrink:0}}/>
+          <span style={{fontSize:15,fontWeight:700,flex:1,minWidth:0,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{chatPrompt.nombre} · <span style={{color:T3,fontWeight:400,fontSize:13}}>{chatPrompt.subtitulo}</span></span>
         </div>
-        <div className="chat-msgs">
+        <div style={{flex:1,overflowY:'auto',WebkitOverflowScrolling:'touch',padding:16,display:'flex',flexDirection:'column',gap:10}}>
           {chatMsgs.map((m,i)=>(
-            <div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.65,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
+            <div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'12px 15px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.65,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
           ))}
           {chatLoading&&(
-            <div style={{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
+            <div style={{maxWidth:'88%',padding:'14px 15px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
               {[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}
             </div>
           )}
           <div ref={msgsEnd}/>
         </div>
-        <div className="chat-input-row">
+        <div style={{display:'flex',gap:10,alignItems:'flex-end',padding:'12px 14px 28px',borderTop:'1px solid rgba(255,255,255,0.06)',background:'#080808',flexShrink:0}}>
           <textarea
-            className="chat-ta"
+            style={{flex:1,background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:14,padding:'13px 16px',color:'#fff',fontSize:16,resize:'none',outline:'none',height:50,lineHeight:1.4,fontFamily:'inherit'}}
             placeholder={'Escribe a '+chatPrompt.nombre+'...'}
             value={chatInput}
-            autoComplete="off"
-            autoCorrect="on"
             autoCapitalize="sentences"
             enterKeyHint="send"
             onChange={e=>setChatInput(e.target.value)}
             onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}
           />
-          <button className="chat-send" onClick={sendChat} disabled={!chatInput.trim()||chatLoading}>↑</button>
+          <button
+            onClick={sendChat}
+            disabled={!chatInput.trim()||chatLoading}
+            style={{background:(!chatInput.trim()||chatLoading)?'rgba(79,195,247,0.2)':BLU,color:(!chatInput.trim()||chatLoading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:58,height:50,fontSize:22,fontWeight:700,cursor:(!chatInput.trim()||chatLoading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}
+          >↑</button>
         </div>
       </div>
     );
