@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, interactive-widget=resizes-content">
 <meta name="theme-color" content="#000000">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -21,6 +21,8 @@ textarea,input{font-family:inherit}
 @keyframes typing{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
 #app{min-height:100vh}
+.chat-input{-webkit-user-select:text;user-select:text;}
+input,textarea{-webkit-user-select:text;user-select:text;-webkit-tap-highlight-color:transparent;}
 </style>
 </head>
 <body>
@@ -459,7 +461,7 @@ function App() {
   function ChatPanel(){
     if(!chatOpen||!chatPrompt) return null;
     return(
-      <div style={{position:'fixed',bottom:0,right:0,width:'100%',maxWidth:440,height:'70vh',minHeight:520,maxHeight:640,background:'#080808',border:'1px solid rgba(79,195,247,0.2)',borderBottom:'none',borderRadius:'20px 20px 0 0',display:'flex',flexDirection:'column',zIndex:200,boxShadow:'0 -20px 60px rgba(0,0,0,0.7)'}}>
+      <div style={{position:'fixed',bottom:0,right:0,width:'100%',maxWidth:440,height:'65vh',minHeight:480,background:'#080808',border:'1px solid rgba(79,195,247,0.2)',borderBottom:'none',borderRadius:'20px 20px 0 0',display:'flex',flexDirection:'column',zIndex:200,boxShadow:'0 -20px 60px rgba(0,0,0,0.7)'}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0}}>
           <div style={{display:'flex',alignItems:'center',gap:10}}>
             <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}/>
@@ -479,7 +481,7 @@ function App() {
           <div ref={msgsEnd}/>
         </div>
         <div style={{padding:'10px 14px 20px',borderTop:'1px solid rgba(255,255,255,0.06)',display:'flex',gap:10,flexShrink:0,alignItems:'flex-end'}}>
-          <textarea style={{flex:1,background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:14,padding:'13px 16px',color:'#fff',fontSize:15,resize:'none',outline:'none',minHeight:50,maxHeight:140,lineHeight:1.5}} placeholder={'Escribe a '+chatPrompt.nombre+'...'} value={chatInput} rows={1} onChange={e=>setChatInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}/>
+          <textarea style={{flex:1,background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:14,padding:'13px 16px',color:'#fff',fontSize:16,resize:'none',outline:'none',height:50,lineHeight:1.5,WebkitAppearance:'none'}} placeholder={'Escribe a '+chatPrompt.nombre+'...'} value={chatInput} rows={1} onChange={e=>setChatInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}/>
           <button onClick={sendChat} disabled={!chatInput.trim()||chatLoading} style={{background:(!chatInput.trim()||chatLoading)?'rgba(79,195,247,0.2)':BLU,color:(!chatInput.trim()||chatLoading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:58,height:52,fontSize:22,fontWeight:700,cursor:(!chatInput.trim()||chatLoading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>↑</button>
         </div>
       </div>
