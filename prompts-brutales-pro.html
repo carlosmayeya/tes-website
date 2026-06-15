@@ -620,18 +620,35 @@ function App() {
             <div style={{display:'flex',flexDirection:'column',gap:10}}>
               <div style={{fontSize:13,fontWeight:600,color:T2,marginBottom:2}}>Usar {activePrompt.nombre} con tu IA favorita</div>
               {[
-                {name:'Claude',emoji:'🔵',url:'https://claude.ai/new?q=',bg:'rgba(204,120,92,0.12)',border:'rgba(204,120,92,0.35)'},
-                {name:'ChatGPT',emoji:'🟢',url:'https://chatgpt.com/?q=',bg:'rgba(16,163,127,0.1)',border:'rgba(16,163,127,0.35)'},
-                {name:'Grok',emoji:'⚫',url:'https://x.com/i/grok?text=',bg:'rgba(255,255,255,0.04)',border:'rgba(255,255,255,0.15)'},
+                {name:'Claude',emoji:'🔵',appUrl:'claude://new',webUrl:'https://claude.ai/new',bg:'rgba(204,120,92,0.12)',border:'rgba(204,120,92,0.35)'},
+                {name:'ChatGPT',emoji:'🟢',appUrl:'chatgpt://chat',webUrl:'https://chatgpt.com/',bg:'rgba(16,163,127,0.1)',border:'rgba(16,163,127,0.35)'},
+                {name:'Grok',emoji:'⚫',appUrl:'grok://',webUrl:'https://grok.com/',bg:'rgba(255,255,255,0.04)',border:'rgba(255,255,255,0.15)'},
               ].map(ai=>(
-                <button key={ai.name} onClick={()=>window.open(ai.url+encodeURIComponent(activePrompt.texto),'_blank')} style={{display:'flex',alignItems:'center',gap:14,width:'100%',background:ai.bg,border:'1px solid '+ai.border,borderRadius:13,padding:'15px 20px',cursor:'pointer',textAlign:'left',color:'#fff'}}>
+                <a key={ai.name}
+                  href={ai.webUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={e=>{
+                    e.preventDefault();
+                    const prompt = encodeURIComponent(activePrompt.texto);
+                    // Copy prompt to clipboard so user can paste
+                    navigator.clipboard.writeText(activePrompt.texto).catch(()=>{});
+                    // Try app URL first, fallback to web
+                    const appLink = document.createElement('a');
+                    appLink.href = ai.appUrl;
+                    appLink.style.display = 'none';
+                    document.body.appendChild(appLink);
+                    setTimeout(()=>{ document.body.removeChild(appLink); window.open(ai.webUrl,'_blank','noopener'); }, 100);
+                    appLink.click();
+                  }}
+                  style={{display:'flex',alignItems:'center',gap:14,width:'100%',background:ai.bg,border:'1px solid '+ai.border,borderRadius:13,padding:'15px 20px',cursor:'pointer',textAlign:'left',color:'#fff',textDecoration:'none'}}>
                   <span style={{fontSize:20,flexShrink:0}}>{ai.emoji}</span>
                   <div style={{flex:1}}>
                     <div style={{fontSize:15,fontWeight:700}}>Abrir en {ai.name}</div>
-                    <div style={{fontSize:12,color:T2,marginTop:2}}>El agente ya viene configurado</div>
+                    <div style={{fontSize:12,color:T2,marginTop:2}}>El prompt se copia automáticamente</div>
                   </div>
                   <span style={{fontSize:14,color:T3}}>↗</span>
-                </button>
+                </a>
               ))}
             </div>
           ) : (
