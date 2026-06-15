@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000000">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -21,8 +21,14 @@ textarea,input{font-family:inherit}
 @keyframes typing{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
 #app{min-height:100vh}
-.chat-input{-webkit-user-select:text;user-select:text;}
-input,textarea{-webkit-user-select:text;user-select:text;-webkit-tap-highlight-color:transparent;}
+input,textarea{-webkit-user-select:text;user-select:text;}
+.chat-overlay{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;background:rgba(0,0,0,0.5);}
+.chat-sheet{display:flex;flex-direction:column;background:#080808;border-top:1px solid rgba(79,195,247,0.2);border-radius:20px 20px 0 0;height:75%;margin-top:auto;box-shadow:0 -20px 60px rgba(0,0,0,0.7);}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10;}
+.chat-input-row{padding:10px 14px 20px;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:10;align-items:flex-end;flex-shrink:0;}
+.chat-ta{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:13px 16px;color:#fff;font-size:16px;resize:none;outline:none;height:50px;line-height:1.5;font-family:inherit;}
+.chat-send{background:#4FC3F7;color:#000;border:none;border-radius:14px;width:58px;height:50px;font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chat-send:disabled{background:rgba(79,195,247,0.2);color:rgba(0,0,0,0.3);cursor:not-allowed;}
 </style>
 </head>
 <body>
@@ -461,28 +467,44 @@ function App() {
   function ChatPanel(){
     if(!chatOpen||!chatPrompt) return null;
     return(
-      <div style={{position:'fixed',bottom:0,right:0,width:'100%',maxWidth:440,height:'65vh',minHeight:480,background:'#080808',border:'1px solid rgba(79,195,247,0.2)',borderBottom:'none',borderRadius:'20px 20px 0 0',display:'flex',flexDirection:'column',zIndex:200,boxShadow:'0 -20px 60px rgba(0,0,0,0.7)'}}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0}}>
-          <div style={{display:'flex',alignItems:'center',gap:10}}>
-            <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}/>
-            <span style={{fontSize:15,fontWeight:700}}>{chatPrompt.nombre} <span style={{color:BLU}}>·</span> <span style={{color:T3,fontWeight:500,fontSize:13}}>{chatPrompt.subtitulo}</span></span>
-          </div>
-          <button onClick={()=>setChatOpen(false)} style={{background:'rgba(255,255,255,0.06)',border:'none',color:T2,width:28,height:28,borderRadius:8,cursor:'pointer',fontSize:18,display:'flex',alignItems:'center',justifyContent:'center'}}>×</button>
-        </div>
-        <div style={{flex:1,overflowY:'auto',padding:16,display:'flex',flexDirection:'column',gap:10}}>
-          {chatMsgs.map((m,i)=>(
-            <div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.65,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
-          ))}
-          {chatLoading&&(
-            <div style={{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
-              {[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}
+      <div className="chat-overlay" onClick={()=>setChatOpen(false)}>
+        <div className="chat-sheet" onClick={e=>e.stopPropagation()}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0}}>
+            <div style={{display:'flex',alignItems:'center',gap:10}}>
+              <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}/>
+              <span style={{fontSize:15,fontWeight:700}}>{chatPrompt.nombre} <span style={{color:BLU}}>·</span> <span style={{color:T3,fontWeight:500,fontSize:13}}>{chatPrompt.subtitulo}</span></span>
             </div>
-          )}
-          <div ref={msgsEnd}/>
-        </div>
-        <div style={{padding:'10px 14px 20px',borderTop:'1px solid rgba(255,255,255,0.06)',display:'flex',gap:10,flexShrink:0,alignItems:'flex-end'}}>
-          <textarea style={{flex:1,background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:14,padding:'13px 16px',color:'#fff',fontSize:16,resize:'none',outline:'none',height:50,lineHeight:1.5,WebkitAppearance:'none'}} placeholder={'Escribe a '+chatPrompt.nombre+'...'} value={chatInput} rows={1} onChange={e=>setChatInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}/>
-          <button onClick={sendChat} disabled={!chatInput.trim()||chatLoading} style={{background:(!chatInput.trim()||chatLoading)?'rgba(79,195,247,0.2)':BLU,color:(!chatInput.trim()||chatLoading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:58,height:52,fontSize:22,fontWeight:700,cursor:(!chatInput.trim()||chatLoading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>↑</button>
+            <button onClick={()=>setChatOpen(false)} style={{background:'rgba(255,255,255,0.06)',border:'none',color:T2,width:28,height:28,borderRadius:8,cursor:'pointer',fontSize:18,display:'flex',alignItems:'center',justifyContent:'center'}}>×</button>
+          </div>
+          <div className="chat-msgs">
+            {chatMsgs.map((m,i)=>(
+              <div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.65,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
+            ))}
+            {chatLoading&&(
+              <div style={{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
+                {[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}
+              </div>
+            )}
+            <div ref={msgsEnd}/>
+          </div>
+          <div className="chat-input-row">
+            <textarea
+              className="chat-ta"
+              placeholder={'Escribe a '+chatPrompt.nombre+'...'}
+              value={chatInput}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="sentences"
+              spellCheck="false"
+              onChange={e=>setChatInput(e.target.value)}
+              onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}
+            />
+            <button
+              className="chat-send"
+              onClick={sendChat}
+              disabled={!chatInput.trim()||chatLoading}
+            >↑</button>
+          </div>
         </div>
       </div>
     );
