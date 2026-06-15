@@ -652,8 +652,6 @@ Tu tono es preciso y técnico — el director de arte que traduce una idea vaga 
   },
 ];
 
-];
-
 const PRO_KEY = "TES2025PRO"; const FORCE_PRO = true;
 const GUMROAD_URL = "https://gumroad.com"; // ← sustituir por URL real
 
@@ -743,7 +741,7 @@ function App() {
       .replace(/\*\*([^*]+)\*\*/g, '$1')  // Remove **bold**
       .replace(/\*([^*]+)\*/g, '$1')        // Remove *italic*
       .replace(/_{2}([^_]+)_{2}/g, '$1')     // Remove __bold__
-      .replace(/`([^`]+)`/g, '$1')           // Remove `code`
+      .replace(/\x60([^\x60]+)\x60/g, '$1')  // Remove code
       .replace(/---/g, '—')                  // Replace --- with em dash
       .replace(/\n{3,}/g, '\n\n')           // Max 2 newlines
       .trim();
@@ -1064,11 +1062,18 @@ function App() {
   return null;
 }
 
-ReactDOM.createRoot(document.getElementById("app")).render(<App/>);
-setTimeout(() => {
+const root = ReactDOM.createRoot(document.getElementById("app"));
+root.render(<App/>);
+// Hide loading screen after React has painted the first frame
+function hideLoader() {
   const el = document.getElementById("loading");
-  if (el) { el.style.opacity = "0"; el.style.transition = "opacity 0.3s"; setTimeout(() => el.remove(), 300); }
-}, 100);
+  if (!el) return;
+  el.style.opacity = "0";
+  el.style.transition = "opacity 0.4s";
+  setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
+}
+// requestAnimationFrame fires after the browser has painted - reliable indicator
+requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(hideLoader, 200)));
 </script>
 
 <!-- PWA Manifest inline -->

@@ -652,8 +652,6 @@ Tu tono es preciso y técnico — el director de arte que traduce una idea vaga 
   },
 ];
 
-];
-
 const PRO_KEY = "TES2025PRO"; const FORCE_PRO = true;
 const GUMROAD_URL = "https://tecnologiaexplicada.gumroad.com/l/prompts-brutales-pro"; // ← sustituir por URL real
 
@@ -743,7 +741,7 @@ function App() {
       .replace(/\*\*([^*]+)\*\*/g, '$1')  // Remove **bold**
       .replace(/\*([^*]+)\*/g, '$1')        // Remove *italic*
       .replace(/_{2}([^_]+)_{2}/g, '$1')     // Remove __bold__
-      .replace(/`([^`]+)`/g, '$1')           // Remove `code`
+      .replace(/\x60([^\x60]+)\x60/g, '$1')  // Remove code
       .replace(/---/g, '—')                  // Replace --- with em dash
       .replace(/\n{3,}/g, '\n\n')           // Max 2 newlines
       .trim();
@@ -869,7 +867,7 @@ function App() {
             return (
               <div key={p.nombre}
                 onClick={() => { if(locked){ setModal("unlock"); return; } setActivePrompt(p); setView("detail"); }}
-                style={{background:locked?"rgba(255,255,255,0.015)":"rgba(255,255,255,0.03)",border:`1px solid ${locked?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.07)"}`,borderRadius:13,padding:"18px 22px",cursor:"pointer",display:"flex",alignItems:"center",gap:18,opacity:locked?0.7:1,transition:"all 0.15s"}}
+                style={{background:locked?"rgba(255,255,255,0.015)":"rgba(255,255,255,0.03)",border:locked?"1px solid rgba(255,255,255,0.04)":"1px solid rgba(255,255,255,0.07)",borderRadius:13,padding:"18px 22px",cursor:"pointer",display:"flex",alignItems:"center",gap:18,opacity:locked?0.7:1,transition:"all 0.15s"}}
                 onMouseEnter={e=>{ if(!locked){e.currentTarget.style.background="rgba(79,195,247,0.05)";e.currentTarget.style.borderColor="rgba(79,195,247,0.2)"}}}
                 onMouseLeave={e=>{ e.currentTarget.style.background=locked?"rgba(255,255,255,0.015)":"rgba(255,255,255,0.03)";e.currentTarget.style.borderColor=locked?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.07)"}}
               >
@@ -948,7 +946,7 @@ function App() {
             ))}
             {chatLoading && (
               <div style={{maxWidth:"85%",padding:"14px 15px",borderRadius:"4px 14px 14px 14px",background:"rgba(79,195,247,0.07)",border:"1px solid rgba(79,195,247,0.1)",alignSelf:"flex-start",display:"flex",gap:4,alignItems:"center"}}>
-                {[0,1,2].map(i => <div key={i} style={{width:6,height:6,borderRadius:"50%",background:"#4FC3F7",animation:`typing 1.2s ${i*0.2}s infinite`}}/>)}
+                {[0,1,2].map(i => <div key={i} style={{width:6,height:6,borderRadius:"50%",background:"#4FC3F7",animation:i===0?"typing 1.2s 0s infinite":i===1?"typing 1.2s 0.2s infinite":"typing 1.2s 0.4s infinite"}}/>)}
               </div>
             )}
             <div ref={msgsEnd}/>
@@ -1002,7 +1000,7 @@ function App() {
           <div>
             <div style={{display:"flex",gap:10}}>
               <input
-                style={{flex:1,background:"rgba(255,255,255,0.05)",border:`1px solid ${keyError?"#ff5252":"rgba(255,255,255,0.1)"}`,borderRadius:10,padding:"12px 16px",color:"#fff",fontSize:14,outline:"none"}}
+                style={{flex:1,background:"rgba(255,255,255,0.05)",border:keyError?"1px solid #ff5252":"1px solid rgba(255,255,255,0.1)",borderRadius:10,padding:"12px 16px",color:"#fff",fontSize:14,outline:"none"}}
                 placeholder="Pega tu clave aquí..."
                 value={keyInput}
                 onChange={e => { setKeyInput(e.target.value); setKeyError(false); }}
@@ -1064,11 +1062,18 @@ function App() {
   return null;
 }
 
-ReactDOM.createRoot(document.getElementById("app")).render(<App/>);
-setTimeout(() => {
+const root = ReactDOM.createRoot(document.getElementById("app"));
+root.render(<App/>);
+// Hide loading screen after React has painted the first frame
+function hideLoader() {
   const el = document.getElementById("loading");
-  if (el) { el.style.opacity = "0"; el.style.transition = "opacity 0.3s"; setTimeout(() => el.remove(), 300); }
-}, 100);
+  if (!el) return;
+  el.style.opacity = "0";
+  el.style.transition = "opacity 0.4s";
+  setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
+}
+// requestAnimationFrame fires after the browser has painted - reliable indicator
+requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(hideLoader, 200)));
 </script>
 
 <!-- PWA Manifest inline -->
