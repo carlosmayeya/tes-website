@@ -616,22 +616,33 @@ function App() {
             </div>
             <div style={{padding:22,fontSize:14,lineHeight:1.75,color:'rgba(255,255,255,0.72)',whiteSpace:'pre-wrap'}}>{activePrompt.texto}</div>
           </div>
-          {isPro
-            ?<button onClick={()=>openChat(activePrompt,activeCol?activeCol.id:null)} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(79,195,247,0.06)',border:'1px solid rgba(79,195,247,0.2)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:'#fff'}}>
-              <span style={{fontSize:22,flexShrink:0}}>💬</span>
-              <div>
-                <div style={{fontSize:15,fontWeight:700,marginBottom:3}}>Hablar con {activePrompt.nombre}</div>
-                <div style={{fontSize:12,color:T2}}>Chat directo — sin copy-paste ni setup</div>
-              </div>
-            </button>
-            :<button onClick={()=>setModal('unlock')} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:T3}}>
+          {isPro ? (
+            <div style={{display:'flex',flexDirection:'column',gap:10}}>
+              <div style={{fontSize:13,fontWeight:600,color:T2,marginBottom:2}}>Usar {activePrompt.nombre} con tu IA favorita</div>
+              {[
+                {name:'Claude',emoji:'🔵',url:'https://claude.ai/new?q=',bg:'rgba(204,120,92,0.12)',border:'rgba(204,120,92,0.35)'},
+                {name:'ChatGPT',emoji:'🟢',url:'https://chatgpt.com/?q=',bg:'rgba(16,163,127,0.1)',border:'rgba(16,163,127,0.35)'},
+                {name:'Grok',emoji:'⚫',url:'https://x.com/i/grok?text=',bg:'rgba(255,255,255,0.04)',border:'rgba(255,255,255,0.15)'},
+              ].map(ai=>(
+                <button key={ai.name} onClick={()=>window.open(ai.url+encodeURIComponent(activePrompt.texto),'_blank')} style={{display:'flex',alignItems:'center',gap:14,width:'100%',background:ai.bg,border:'1px solid '+ai.border,borderRadius:13,padding:'15px 20px',cursor:'pointer',textAlign:'left',color:'#fff'}}>
+                  <span style={{fontSize:20,flexShrink:0}}>{ai.emoji}</span>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:15,fontWeight:700}}>Abrir en {ai.name}</div>
+                    <div style={{fontSize:12,color:T2,marginTop:2}}>El agente ya viene configurado</div>
+                  </div>
+                  <span style={{fontSize:14,color:T3}}>↗</span>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <button onClick={()=>setModal('unlock')} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:T3}}>
               <span style={{fontSize:22,flexShrink:0}}>🔒</span>
               <div>
-                <div style={{fontSize:15,fontWeight:700,marginBottom:3,color:'rgba(255,255,255,0.6)'}}>Hablar con {activePrompt.nombre}</div>
+                <div style={{fontSize:15,fontWeight:700,marginBottom:3,color:'rgba(255,255,255,0.6)'}}>Usar {activePrompt.nombre} con tu IA</div>
                 <div style={{fontSize:12}}>Disponible en Pro — desbloquea por 19€</div>
               </div>
             </button>
-          }
+          )}
         </div>
       </div>
       <ChatPanel/>
