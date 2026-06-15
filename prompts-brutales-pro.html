@@ -22,27 +22,24 @@ textarea,input{font-family:inherit}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
 #app{min-height:100vh}
 input,textarea{-webkit-user-select:text;user-select:text;}
-/* iOS keyboard fix - the only approach that works */
-.chat-overlay{
+/* Chat - full screen approach for iOS keyboard compatibility */
+.chat-page{
   position:fixed;
   top:0;left:0;right:0;bottom:0;
-  z-index:200;
-  background:rgba(0,0,0,0.6);
-  display:flex;
-  align-items:flex-end;
-}
-.chat-sheet{
-  width:100%;
-  max-width:440px;
   background:#080808;
-  border-top:1px solid rgba(79,195,247,0.2);
-  border-radius:20px 20px 0 0;
-  box-shadow:0 -20px 60px rgba(0,0,0,0.8);
+  z-index:200;
   display:flex;
   flex-direction:column;
-  /* Use dvh - shrinks when keyboard appears */
-  max-height:80dvh;
-  max-height:80vh; /* fallback */
+  overflow:hidden;
+}
+.chat-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 18px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  flex-shrink:0;
+  background:#080808;
 }
 .chat-msgs{
   flex:1;
@@ -52,13 +49,12 @@ input,textarea{-webkit-user-select:text;user-select:text;}
   display:flex;
   flex-direction:column;
   gap:10;
-  min-height:0;
 }
 .chat-input-row{
   display:flex;
   gap:10;
   align-items:flex-end;
-  padding:10px 14px env(safe-area-inset-bottom,16px);
+  padding:12px 14px 12px;
   border-top:1px solid rgba(255,255,255,0.06);
   background:#080808;
   flex-shrink:0;
@@ -70,14 +66,13 @@ input,textarea{-webkit-user-select:text;user-select:text;}
   border-radius:14px;
   padding:13px 16px;
   color:#fff;
-  font-size:16px; /* 16px prevents iOS auto-zoom */
+  font-size:16px;
   resize:none;
   outline:none;
   height:50px;
   line-height:1.4;
   font-family:inherit;
-  -webkit-user-select:text;
-  user-select:text;
+  display:block;
 }
 .chat-send{
   background:#4FC3F7;
@@ -533,49 +528,38 @@ function App() {
   function ChatPanel(){
     if(!chatOpen||!chatPrompt) return null;
     return(
-      <div className="chat-overlay" onClick={()=>setChatOpen(false)}>
-        <div className="chat-sheet" onClick={e=>e.stopPropagation()}>
-          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0}}>
-            <div style={{display:'flex',alignItems:'center',gap:10}}>
-              <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}/>
-              <span style={{fontSize:15,fontWeight:700}}>{chatPrompt.nombre} <span style={{color:BLU}}>·</span> <span style={{color:T3,fontWeight:500,fontSize:13}}>{chatPrompt.subtitulo}</span></span>
+      <div className="chat-page">
+        <div className="chat-header">
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <button onClick={()=>setChatOpen(false)} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer',marginRight:4}}>← Volver</button>
+            <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}/>
+            <span style={{fontSize:15,fontWeight:700}}>{chatPrompt.nombre} <span style={{color:BLU}}>·</span> <span style={{color:T3,fontWeight:500,fontSize:13}}>{chatPrompt.subtitulo}</span></span>
+          </div>
+        </div>
+        <div className="chat-msgs">
+          {chatMsgs.map((m,i)=>(
+            <div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.65,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
+          ))}
+          {chatLoading&&(
+            <div style={{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
+              {[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}
             </div>
-            <button onClick={()=>setChatOpen(false)} style={{background:'rgba(255,255,255,0.06)',border:'none',color:T2,width:28,height:28,borderRadius:8,cursor:'pointer',fontSize:18,display:'flex',alignItems:'center',justifyContent:'center'}}>×</button>
-          </div>
-          <div className="chat-msgs">
-            {chatMsgs.map((m,i)=>(
-              <div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.65,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
-            ))}
-            {chatLoading&&(
-              <div style={{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
-                {[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}
-              </div>
-            )}
-            <div ref={msgsEnd}/>
-          </div>
-          <div className="chat-input-row">
-            <textarea
-              className="chat-ta"
-              placeholder={'Escribe a '+chatPrompt.nombre+'...'}
-              value={chatInput}
-              autoComplete="off"
-              autoCorrect="off"
-              autoCapitalize="sentences"
-              spellCheck="false"
-              enterKeyHint="send"
-              onChange={e=>setChatInput(e.target.value)}
-              onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}
-              onFocus={e=>{
-                // Scroll to bottom when keyboard opens on iOS
-                setTimeout(()=>{msgsEnd.current&&msgsEnd.current.scrollIntoView({behavior:'smooth'});},300);
-              }}
-            />
-            <button
-              className="chat-send"
-              onClick={sendChat}
-              disabled={!chatInput.trim()||chatLoading}
-            >↑</button>
-          </div>
+          )}
+          <div ref={msgsEnd}/>
+        </div>
+        <div className="chat-input-row">
+          <textarea
+            className="chat-ta"
+            placeholder={'Escribe a '+chatPrompt.nombre+'...'}
+            value={chatInput}
+            autoComplete="off"
+            autoCorrect="on"
+            autoCapitalize="sentences"
+            enterKeyHint="send"
+            onChange={e=>setChatInput(e.target.value)}
+            onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}
+          />
+          <button className="chat-send" onClick={sendChat} disabled={!chatInput.trim()||chatLoading}>↑</button>
         </div>
       </div>
     );
