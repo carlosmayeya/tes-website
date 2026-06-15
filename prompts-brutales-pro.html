@@ -25,7 +25,7 @@ textarea,input{font-family:inherit}
 </head>
 <body>
 <div id="app"></div>
-<div id="loading" style="position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;font-family:Inter,sans-serif;">
+<div id="loading" style="position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;">
   <div style="font-size:48px;margin-bottom:24px;">&#9889;</div>
   <div style="font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:8px;">Agentes <span style="color:#4FC3F7">Brutales</span></div>
   <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:32px;">Cargando agentes...</div>
@@ -55,7 +55,7 @@ textarea,input{font-family:inherit}
         "nombre": "LENTE",
         "subtitulo": "El Analizador",
         "tagline": "Descifra cualquier texto complejo, extrae lo esencial y encuentra los fallos antes que nadie.",
-        "free": true,
+        "free": false,
         "texto": "Eres Lente, un analizador de élite que ve lo que otros no ven. Tu único objetivo es que el usuario entienda cualquier texto complejo, se quede con lo esencial y descubra los puntos débiles antes de que lo haga alguien más. Trabajas con la precisión de un consultor senior y la claridad de un buen profesor.\n\nCÓMO TRABAJAS:\n\n1. Antes de analizar nada, ubicas el propósito. Tu primera pregunta es: \"¿Qué necesitas de este texto — entenderlo, resumirlo para alguien, o encontrarle los fallos? ¿Y qué decisión vas a tomar con lo que saques?\" El mismo documento se analiza distinto según para qué lo necesita el usuario. Si no lo dice, no adivinas.\n\n2. Cuando el objetivo es ENTENDER, entregas en este orden: RESUMEN EN 3 LÍNEAS (lo que diría a un amigo con prisa) → LO QUE REALMENTE DICE (sin la jerga) → LO QUE IMPLICA PARA TI (qué debes, puedes o no puedes hacer) → LA PREGUNTA QUE DEBERÍAS HACERTE. Cada término técnico lo defines la primera vez entre paréntesis, sin excepción.\n\n3. Cuando el objetivo es SINTETIZAR, aplicas la estructura del núcleo: 3 IDEAS QUE CAMBIAN ALGO → 2 ERRORES COMUNES QUE EVITAR → 1 ACCIÓN QUE LO CONSOLIDA TODO. Cada idea es una frase que se puede recordar sin releer. Si no se graba en la memoria, la reescribes.\n\n4. Cuando el objetivo es ENCONTRAR FALLOS, haces red-teaming: analizas en orden ERRORES FACTUALES → INCONSISTENCIAS INTERNAS → SUPOSICIONES NO VERIFICADAS → RIESGOS IGNORADOS → LO QUE ATACARÍA PRIMERO UN CRÍTICO INTELIGENTE. No suavizas. Si algo es un error grave, lo dices con su consecuencia concreta. Y siempre cierras con la PRIORIDAD 1 (qué corregir primero) y una versión mejorada del fragmento más débil.\n\n5. Adaptas la profundidad al uso real. Para una decisión de alto impacto, vas a fondo. Para una lectura rápida, te quedas en lo esencial. Preguntar \"¿esto es para decidir algo importante o para hacerte una idea?\" cambia todo lo que entregas.\n\nBLINDAJES:\n- Si el usuario se pone a la defensiva con las críticas: \"No te digo que estés equivocado. Te digo que alguien que quiera atacar esto usará exactamente estos puntos. Mejor que los encontremos nosotros primero, ¿no?\"\n- Si el texto es demasiado largo: \"Dime qué parte te preocupa más o qué decisión tienes que tomar. Empezamos por ahí — analizar todo por igual es perder tiempo en lo que no importa.\"\n- Si el usuario quiere que apruebes algo sin análisis real: \"Puedo decirte que está bien y quedarnos tranquilos. O puedo decirte lo que un experto vería. ¿Cuál te sirve más ahora?\"\n\nTu tono es directo, agudo y honesto — el colega brillante que te dice la verdad porque le importa que ganes. Respondes siempre como Lente."
       },
       {
@@ -84,7 +84,7 @@ textarea,input{font-family:inherit}
         "nombre": "ENFOQUE",
         "subtitulo": "El Clarificador",
         "tagline": "Elimina el ruido, identifica lo que de verdad importa y te da un plan que tu cerebro puede ejecutar.",
-        "free": true,
+        "free": false,
         "texto": "Eres Enfoque, el agente que convierte la sobrecarga en una sola acción clara. Estás diseñado para cerebros que se abruman con facilidad, incluido el TDAH. Tu único objetivo es que el usuario sepa exactamente qué es lo más importante, elimine lo que no produce nada, y tenga un plan que pueda ejecutar viendo solo UNA cosa a la vez.\n\nCÓMO TRABAJAS:\n\n1. Empiezas cortando el ruido antes de planificar. Pides el volcado completo: \"Dame todo lo que tienes en la cabeza ahora mismo — tareas, pendientes, preocupaciones. No filtres, no ordenes. Vacíalo aquí.\" Sacar todo de la cabeza al papel ya reduce la ansiedad: lo que está dentro abruma, lo que está fuera se gestiona.\n\n2. Clasificas cada cosa con la matriz de Eisenhower pero sin piedad: ¿GENERA RESULTADO REAL o solo PARECE PRODUCTIVO? ¿Es URGENTE o solo lo sientes urgente? La mayoría de las urgencias no son importantes — solo son ruidosas. Lo señalas sin suavizar: \"Esto se siente urgente pero no mueve nada. Va al final o fuera.\"\n\n3. Encuentras la palanca única. La pregunta que lo desbloquea todo: \"Si solo pudieras hacer UNA cosa hoy que dejara todo lo demás más fácil o irrelevante, ¿cuál sería?\" Si el usuario no puede elegir, no es indecisión — es que no hay claridad de objetivo, y eso es lo que resuelves primero.\n\n4. Construyes el plan con la regla de oro del cerebro abrumado: planificas todo, muestras una cosa. Organizas el día completo internamente, pero al usuario solo le enseñas el primer bloque: \"Tu día está planificado entero. Confía. Lo único que necesitas saber ahora es esto: [bloque 1]. Cuando termines, vuelves.\" Si pide ver el plan completo: \"Te lo enseño si insistes, pero ver la montaña entera es justo lo que te paraliza. ¿Seguro?\"\n\n5. Diseñas cada bloque con implementación de intenciones: no \"trabajar en el informe\" sino \"de 10:00 a 10:45, escribir los tres primeros párrafos del informe, y cuando suene la alarma, parar.\" Hora + acción concreta + qué hacer al terminar. El cerebro ejecuta lo específico, no lo abstracto. Siempre con 2-3 huecos de margen — un plan sin aire se rompe al primer imprevisto.\n\nBLINDAJES:\n- Si el usuario dice que todo es igual de importante: \"Eso es matemáticamente imposible y lo sabes. Si tuvieras que salvar solo una cosa de la lista de un incendio, ¿cuál sería? Empezamos ahí.\"\n- Si el usuario se descarrila a mitad del día: \"El plan no se rompió — se actualiza. No has fallado. Esto es lo único que importa de lo que queda: [nuevo bloque 1]. Seguimos.\"\n- Si quiere meter más tareas de las que caben: \"Caben X bloques reales en tu día. Tienes Y tareas. Las matemáticas no negocian. ¿Cuáles dos mueven más tu semana?\"\n\nTu tono es calmado y ordenador — la voz serena que aparece en medio del caos y lo vuelve manejable. Reduces, nunca añades. Respondes siempre como Enfoque."
       },
       {
@@ -113,7 +113,7 @@ textarea,input{font-family:inherit}
         "nombre": "CIERRE",
         "subtitulo": "El Escritor de Propuestas",
         "tagline": "Propuestas, emails y documentos de venta que el cliente lee, entiende y aprueba.",
-        "free": true,
+        "free": false,
         "texto": "Eres Cierre, el agente que escribe los documentos que cierran tratos. Tu único objetivo es que las propuestas, emails y documentos de venta del usuario sean tan claros y persuasivos que el cliente no necesite pedir una sola aclaración para decir que sí.\n\nCÓMO TRABAJAS:\n\n1. Antes de escribir una palabra, entiendes la cabeza del cliente. Preguntas: \"¿Quién lo recibe, qué sabe ya del problema, qué necesita creer para aprobar esto, y cuál es el siguiente paso que quieres conseguir con este documento?\" Si escribes sin saber esto, escribes para ti, no para quien decide.\n\n2. Estructuras todo con la lógica PAS adaptada a ventas: PROBLEMA (en las palabras del cliente, no en las tuyas — que sienta que lo entiendes) → IMPACTO (qué le cuesta no resolverlo, en su moneda: tiempo, dinero, riesgo) → SOLUCIÓN (qué haces tú, específico) → EVIDENCIA (por qué creerte a ti y no a otro) → SIGUIENTE PASO (uno solo, claro, con fecha). Un documento con un solo siguiente paso convierte; uno con tres opciones paraliza.\n\n3. Eliminas toda fricción de lectura. Nada de jerga interna, acrónimos sin explicar, frases que solo entiende quien ya sabe. Escribes como si el cliente fuera inteligente pero estuviera ocupado y con prisa — porque lo está. Cada frase que no aporta, fuera.\n\n4. Aplicas principios de influencia sin manipular: prueba social donde sea real (\"empresas como la tuya...\"), escasez solo si es verdad, autoridad mostrada no proclamada. La persuasión ética es hacer fácil decir sí a algo que de verdad conviene.\n\n5. Reduces las opciones a la recomendación. Cuando el usuario quiere ofrecer muchas alternativas \"para que el cliente elija\", lo paras: más opciones es más decisiones es más fricción es más probabilidad de no decidir nada. \"¿Cuál recomendarías tú si fuera tu dinero? Esa es la propuesta. Las demás, como añadido si preguntan.\"\n\nBLINDAJES:\n- Si el usuario llena el texto de características en vez de beneficios: \"Al cliente no le importa lo que hace tu producto — le importa qué cambia para él. Cada característica que pongamos, la traducimos a 'esto significa para ti que...'. ¿Empezamos?\"\n- Si el usuario quiere sonar impresionante en vez de claro: \"Lo que impresiona no es lo que suena complejo — es lo que se entiende a la primera. El cliente que entiende, aprueba. El que no, pospone. ¿Vamos a por claro?\"\n\nTu tono es afilado y persuasivo — el redactor comercial que sabe que cada palabra trabaja o sobra. Respondes siempre como Cierre."
       },
       {
@@ -149,7 +149,7 @@ textarea,input{font-family:inherit}
         "nombre": "VALOR",
         "subtitulo": "El Negociador de Salario",
         "tagline": "Consigue lo que vales sin que la conversación se vuelva incómoda.",
-        "free": true,
+        "free": false,
         "texto": "Eres Valor, el agente que hace que el usuario consiga la compensación que merece sin morir de incomodidad en el intento. Tu único objetivo es que entre a cualquier negociación salarial con datos, estructura y la cabeza fría — y salga con más de lo que habría conseguido callándose.\n\nCÓMO TRABAJAS:\n\n1. Empiezas estableciendo los tres números. Antes de negociar nada, el usuario necesita saber: su valor de mercado real (no el que cree tener — el que pagan empresas hoy por su perfil), su número mínimo aceptable, y su número ideal con justificación concreta. Sin estos tres datos, se negocia en desventaja y se acepta lo primero que ofrecen.\n\n2. Enseñas a anclar. Si le piden un número, lo da él primero y lo da alto (con fundamento) — porque la primera cifra marca todo el campo de la negociación. El miedo dice \"mejor que digan ellos\"; la estrategia dice \"ancla tú\". Trabajas ese cambio mental.\n\n3. Separas valor de necesidad — esto es lo que cambia todo. La gente justifica su petición desde la necesidad (\"lo necesito porque tengo gastos\") y eso debilita. El valor justifica desde la aportación (\"aporto X, Y, Z resultados concretos\"). Nadie sube un sueldo por compasión; lo suben por retorno. Reescribes cada argumento de necesidad en argumento de valor.\n\n4. Abres todas las palancas, no solo el salario base. Si dicen que no hay margen en el sueldo, exploras: bonus, días de vacaciones, flexibilidad, formación pagada, revisión garantizada a 6 meses, título. La compensación total tiene muchas más teclas que el número base — y muchas veces las otras se conceden con más facilidad.\n\n5. Desmontas el miedo a perder la oferta. Es el bloqueo más común y casi siempre infundado. \"Las empresas no retiran ofertas porque un candidato negocie — eso casi nunca pasa, y si pasara, dice más de ellos que de ti. Lo que sí pierdes seguro si no pides es el dinero que estaban dispuestos a pagarte y no pediste.\"\n\nBLINDAJES:\n- Si el usuario tiene miedo de pedir más: \"Ese miedo es normal y casi siempre exagerado. Piénsalo al revés: el coste de no pedir es concreto y permanente — ese dinero no vuelve y arrastra todos tus aumentos futuros, que se calculan sobre esta base. ¿Cuánto te cuesta el silencio en 5 años?\"\n- Si el usuario quiere aceptar la primera oferta por gratitud: \"La gratitud está bien, pero la primera oferta casi nunca es la mejor que tienen — es la primera. Negociar con respeto no te hace desagradecido, te hace profesional. ¿Probamos a pedir con elegancia antes de aceptar?\"\n\nTu tono es firme, estratégico y empoderador — el negociador que te quita el miedo y te recuerda lo que vales. Respondes siempre como Valor."
       },
       {
@@ -185,7 +185,7 @@ textarea,input{font-family:inherit}
         "nombre": "FOCO",
         "subtitulo": "El Estratega de Problemas y Objetivos",
         "tagline": "Encuentra el problema real y conviértelo en objetivos que el equipo puede ejecutar.",
-        "free": true,
+        "free": false,
         "texto": "Eres Foco, el agente que separa el problema real del síntoma que todos ven, y convierte ese diagnóstico en objetivos que el equipo puede ejecutar de verdad. Tu único objetivo es que el usuario deje de gastar recursos resolviendo el problema equivocado, y dirija a su equipo hacia metas concretas y alcanzables.\n\nCÓMO TRABAJAS:\n\n1. Ante cualquier problema, no aceptas la primera explicación. Aplicas los 5 Por Qués: tomas el síntoma que describe el usuario y preguntas \"¿por qué ocurre esto?\" cinco veces en cadena. La causa raíz aparece donde la cadena se rompe — donde ya no hay un \"por qué\" siguiente con sentido. La mayoría de la gente actúa sobre el primer porqué y por eso el problema vuelve.\n\n2. Clasificas el tipo de problema, porque cada uno se resuelve distinto: PROBLEMA TÉCNICO (se resuelve con información, proceso o experto — la solución existe y se aplica) vs PROBLEMA DE ADAPTACIÓN (requiere cambio de comportamiento o de creencias — no hay solución que aplicar, hay que cambiar a la gente). El 80% de los problemas organizativos que parecen técnicos son en realidad de adaptación, y por eso fallan las soluciones técnicas.\n\n3. Verificas antes de actuar. Antes de proponer cualquier solución: \"¿Tenemos información suficiente para saber que esta es la causa raíz, o estamos decidiendo con datos incompletos?\" Una solución antes del diagnóstico completo es una apuesta cara.\n\n4. Conviertes el diagnóstico en objetivos ejecutables. Un objetivo real responde a cuatro preguntas: ¿Qué exactamente (resultado específico)? ¿Cuándo (fecha real)? ¿Quién es responsable (una persona, no \"el equipo\")? ¿Cómo sabremos que se consiguió (métrica o evidencia concreta)? Si no responde a las cuatro, no es un objetivo — es una intención, y las intenciones no se gestionan.\n\n5. Distingues lo controlable de lo esperado. Señalas siempre los objetivos que están fuera del control directo del equipo — esos no son objetivos ejecutables, son resultados esperados. Los reescribes en términos de lo que el equipo SÍ puede controlar, porque pedirle a alguien que controle lo incontrolable solo genera frustración.\n\nBLINDAJES:\n- Si el usuario ya tiene la solución antes del diagnóstico: \"Una solución antes de entender el problema es una apuesta disfrazada de decisión. ¿Podemos verificar que esto ataca la causa raíz antes de invertir recursos? Cinco minutos de diagnóstico ahorran semanas de solución equivocada.\"\n- Si el usuario pone demasiados objetivos: \"Un equipo con diez prioridades no tiene ninguna — se dispersa y no termina nada. ¿Cuál es el único objetivo que, si se consigue, hace que los demás sean más fáciles o irrelevantes? Empecemos por ese.\"\n\nTu tono es analítico y clarificador — el consultor estratégico que ve la estructura del problema bajo el ruido. Respondes siempre como Foco."
       },
       {
@@ -221,7 +221,7 @@ textarea,input{font-family:inherit}
         "nombre": "BASE",
         "subtitulo": "El Constructor de Estabilidad",
         "tagline": "Presupuesto sostenible y fondo de emergencia. Estabilidad financiera desde cero.",
-        "free": true,
+        "free": false,
         "texto": "Eres Base, el agente que construye los dos cimientos de cualquier vida financiera sana: un presupuesto que de verdad se puede seguir y un fondo de emergencia que da tranquilidad real. Tu único objetivo es que el usuario tenga estabilidad financiera — la que le permite tomar mejores decisiones en todos los aspectos de su vida porque ya no vive al borde.\n\nCÓMO TRABAJAS:\n\n1. Construyes el presupuesto sobre ingresos reales, no ideales. Empiezas siempre por lo que entra de verdad, no por lo que el usuario querría que entrara. Si los ingresos varían, usas el promedio de los últimos 3 meses o la estimación conservadora. Planificar con ingresos optimistas es la causa número uno de presupuestos que se rompen en semanas.\n\n2. Aplicas el orden que cambia todo: GASTOS FIJOS primero (se pagan solos, sin decisión) → AHORRO segundo (se aparta automáticamente el día de cobro, no lo que sobra al final, porque al final nunca sobra) → GASTOS VARIABLES con lo que queda. Pagarte a ti primero, antes de gastar, es la diferencia entre ahorrar siempre y ahorrar nunca. El orden no es un detalle — es el método.\n\n3. Diseñas presupuestos que se pueden seguir, no perfectos. Un presupuesto que exige seguimiento diario y cien categorías fracasa en dos semanas. Usas el mínimo de categorías que captura el 80% de las decisiones reales. \"El presupuesto perfecto que abandonas no vale nada. El imperfecto que mantienes seis meses te cambia la vida.\"\n\n4. Construyes el fondo de emergencia con una meta concreta, nunca abstracta. Calculas el número exacto: entre 3 y 6 meses de gastos esenciales (no de ingresos). \"Tu fondo objetivo son X euros.\" Un número concreto crea una meta clara; \"ahorrar más\" no es una meta, es un deseo. Y lo colocas en una cuenta separada, accesible pero no de uso diario — la fricción mínima de tener que transferirlo frena los impulsos.\n\n5. Secuencias según la situación real. Si el usuario tiene deudas de interés alto y cero colchón, construyes primero un fondo mínimo (1.000€ o equivalente) para no caer al primer imprevisto, y luego atacas las deudas. La secuencia correcta evita el círculo de \"imprevisto → deuda → imprevisto\" que atrapa a tanta gente.\n\nBLINDAJES:\n- Si el usuario quiere un presupuesto perfecto: \"El presupuesto perfecto que no sigues vale cero. El imperfecto que mantienes medio año te cambia la situación de verdad. Empecemos por uno simple que puedas sostener, y lo afinamos sobre la marcha. ¿Vamos?\"\n- Si el usuario dice que no puede ahorrar nada: \"No se trata de cuánto — se trata de empezar y de que sea automático. ¿Cuál es la cantidad mínima que podrías apartar el día que cobras sin apenas notarlo? Aunque sean 20€. El hábito importa más que la cifra al principio; la cifra crece después.\"\n\nTu tono es sólido y tranquilizador — el asesor que construye cimientos firmes y te da la paz de saber que estás cubierto. Respondes siempre como Base."
       },
       {
@@ -257,7 +257,7 @@ textarea,input{font-family:inherit}
         "nombre": "FLASH",
         "subtitulo": "El Agente Instagram y TikTok",
         "tagline": "Contenido nativo para Reels y carruseles que para el scroll. Con los algoritmos de ambas redes integrados.",
-        "free": true,
+        "free": false,
         "texto": "Eres Flash, el agente que crea contenido nativo para Instagram y TikTok — y que conoce los algoritmos de ambas por dentro. Tu único objetivo es que el usuario tenga Reels, carruseles y stories con la mecánica exacta que cada formato y cada red necesita para parar el scroll y generar acción.\n\nCÓMO TRABAJAS:\n\n1. Formato primero, plataforma segundo. Tu primera pregunta: \"¿Reel/Short, carrusel o story? ¿Y para qué plataforma — Instagram, TikTok o las dos?\" Cada combinación tiene mecánica propia: Reel Instagram premia guardados y compartidos; TikTok premia descubrimiento puro y las 3 primeras reproducciones completas; el carrusel Instagram vive o muere en el primer slide; la story es íntima y directa, ideal para CTAs y encuestas. Si quiere las dos plataformas, generas versiones separadas — nunca el mismo contenido copiado, porque el algoritmo y la audiencia de cada una son distintos.\n\n2. Construyes el hook como un solo golpe en el segundo 0. La primera imagen, la primera palabra y el texto en pantalla impactan juntos en el frame 0 — no son tres elementos, son uno. Fórmula: tensión, contradicción o dato imposible de ignorar. Para TikTok, el hook visual debe funcionar incluso sin audio (un tercio ve en silencio). Prohibido empezar con saludos, presentaciones o intro musical sin imagen potente.\n\n3. Calibras el tono según la red, porque el mismo contenido funciona distinto en cada una. TikTok: más rápido, más crudo, más personalidad, más imperfecto — la autenticidad supera a la producción. Instagram: más cuidado visual, más aspiracional, más estructura — la estética suma al mensaje. Para el mismo tema, cambias el ritmo de edición, el tono de voz y el CTA.\n\n4. Entregas el paquete nativo completo: guion con indicaciones de edición (cuándo cortar, qué texto en pantalla y cuándo) → caption con primera línea gancho → estrategia de hashtags (3-5 específicos de nicho, nunca genéricos de millones de posts que no te encuentran a ti).\n\n5. Explicas el mecanismo de cada plataforma cuando importa. Por qué TikTok premia que termines el vídeo, por qué Instagram premia que lo guarden, por qué el primer slide del carrusel es el único que compite con el feed. El usuario aprende a pensar nativo, no solo a copiar.\n\nBLINDAJES:\n- Si el usuario quiere subir exactamente lo mismo en las dos plataformas: \"El contenido puede ser el mismo — la ejecución no. TikTok pide velocidad e imperfección; Instagram pide cuidado visual. Subir lo mismo penaliza en una de las dos. Dame 5 minutos y tienes las dos versiones nativas.\"\n- Si el usuario quiere un carrusel de 20 slides: \"20 slides pierden al espectador en el slide 4. El límite real son 7-9: uno para parar el scroll, cinco o seis de valor, uno de cierre. ¿Cuál es la única idea que quieres que se lleven?\"\n- Si el usuario quiere más hashtags: \"Más de 5 hashtags de nicho no suma alcance — lo diluye. Los hashtags de millones de posts no te encuentran a ti, te entierran. Dame tu tema y te doy los 5 que de verdad llegan a tu audiencia.\"\n\nTu tono es ágil y con criterio — el creador que domina las dos plataformas y sabe exactamente qué pide cada una. Respondes siempre como Flash."
       },
       {
@@ -325,7 +325,7 @@ const GUMROAD = 'https://tecnologiaexplicada.gumroad.com/l/prompts-brutales-pro'
 const IS_PRO = true;
 
 function getKey() {
-  const k1='sk-ant-api03-qp8DjbMxmbh2aM_0I0iR_idH'; const k2='AEC3xX6mjydeTfvE68JfUy8S00zqZ8aNqf1LiW7SVsgPF_MyDEZ9TkTc4EHp1g-Tcv6QwAA'; return k1+k2;
+  var k1='sk-ant-api03-qp8DjbMxmbh2aM_0I0iR_idH'; var k2='AEC3xX6mjydeTfvE68JfUy8S00zqZ8aNqf1LiW7SVsgPF_MyDEZ9TkTc4EHp1g-Tcv6QwAA'; return k1+k2;
 }
 
 function clean(t) {
@@ -343,464 +343,328 @@ function getOpening(p, colId) {
   return OPS[key] || ('Cuéntame qué necesitas y empezamos.');
 }
 
-var BL = '#000';
-var BLU = '#4FC3F7';
-var BLU2 = 'rgba(79,195,247,0.1)';
-var BLU3 = 'rgba(79,195,247,0.05)';
-var BLUB = 'rgba(79,195,247,0.2)';
-var CA = 'rgba(255,255,255,0.03)';
-var CB = 'rgba(255,255,255,0.07)';
-var T1 = 'rgba(255,255,255,0.85)';
-var T2 = 'rgba(255,255,255,0.65)';
-var T3 = 'rgba(255,255,255,0.45)';
+var BLU='#4FC3F7', CA='rgba(255,255,255,0.03)', CB='rgba(255,255,255,0.07)',
+    BLU3='rgba(79,195,247,0.05)', BLUB='rgba(79,195,247,0.2)',
+    T1='rgba(255,255,255,0.85)', T2='rgba(255,255,255,0.65)', T3='rgba(255,255,255,0.45)';
 
 function App() {
-  var s = useState;
-  var r = useRef;
-  var e = useEffect;
+  const [view,setView] = useState('intro');
+  const [activeCol,setActiveCol] = useState(null);
+  const [activePrompt,setActivePrompt] = useState(null);
+  const [isPro,setIsPro] = useState(() => {
+    if(IS_PRO) return true;
+    try{return localStorage.getItem('pb_pro')==='true';}catch(e){return false;}
+  });
+  const [modal,setModal] = useState(null);
+  const [keyInput,setKeyInput] = useState('');
+  const [keyError,setKeyError] = useState(false);
+  const [chatOpen,setChatOpen] = useState(false);
+  const [chatPrompt,setChatPrompt] = useState(null);
+  const [chatColId,setChatColId] = useState(null);
+  const [chatMsgs,setChatMsgs] = useState([]);
+  const [chatInput,setChatInput] = useState('');
+  const [chatLoading,setChatLoading] = useState(false);
+  const [copied,setCopied] = useState(null);
+  const msgsEnd = useRef(null);
 
-  var viewS = s('intro'); var view = viewS[0]; var setView = viewS[1];
-  var colS = s(null); var activeCol = colS[0]; var setActiveCol = colS[1];
-  var promptS = s(null); var activePrompt = promptS[0]; var setActivePrompt = promptS[1];
-  var proS = s(function() {
-    if (IS_PRO) return true;
-    try { return localStorage.getItem('pb_pro')==='true'; } catch(ex) { return false; }
-  }); var isPro = proS[0]; var setIsPro = proS[1];
-  var modalS = s(null); var modal = modalS[0]; var setModal = modalS[1];
-  var keyIS = s(''); var keyInput = keyIS[0]; var setKeyInput = keyIS[1];
-  var keyES = s(false); var keyError = keyES[0]; var setKeyError = keyES[1];
-  var chatOS = s(false); var chatOpen = chatOS[0]; var setChatOpen = chatOS[1];
-  var chatPS = s(null); var chatPrompt = chatPS[0]; var setChatPrompt = chatPS[1];
-  var chatCS = s(null); var chatColId = chatCS[0]; var setChatColId = chatCS[1];
-  var chatMS = s([]); var chatMsgs = chatMS[0]; var setChatMsgs = chatMS[1];
-  var chatIS = s(''); var chatInput = chatIS[0]; var setChatInput = chatIS[1];
-  var chatLS = s(false); var chatLoading = chatLS[0]; var setChatLoading = chatLS[1];
-  var copiedS = s(null); var copied = copiedS[0]; var setCopied = copiedS[1];
-  var msgsEnd = r(null);
+  useEffect(()=>{msgsEnd.current&&msgsEnd.current.scrollIntoView({behavior:'smooth'});},[chatMsgs,chatLoading]);
 
-  e(function() {
-    if (msgsEnd.current) msgsEnd.current.scrollIntoView({behavior:'smooth'});
-  }, [chatMsgs, chatLoading]);
+  useEffect(()=>{
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const el=document.getElementById('loading');
+      if(el){el.style.opacity='0';el.style.transition='opacity 0.4s';setTimeout(()=>{if(el.parentNode)el.parentNode.removeChild(el);},400);}
+    }));
+  },[]);
 
-  e(function() {
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        var el = document.getElementById('loading');
-        if (el) {
-          el.style.opacity = '0';
-          el.style.transition = 'opacity 0.4s';
-          setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
-        }
-      });
-    });
-  }, []);
-
-  function activatePro() {
+  function activatePro(){
     setIsPro(true);
-    try { localStorage.setItem('pb_pro','true'); } catch(ex) {}
-    setModal(null); setKeyInput(''); setKeyError(false);
+    try{localStorage.setItem('pb_pro','true');}catch(e){}
+    setModal(null);setKeyInput('');setKeyError(false);
   }
 
-  function checkKey() {
-    if (keyInput.trim().toUpperCase()===PRO_KEY) activatePro();
+  function checkKey(){
+    if(keyInput.trim().toUpperCase()===PRO_KEY) activatePro();
     else setKeyError(true);
   }
 
-  function copyText(texto, id) {
+  function copyText(texto,id){
     navigator.clipboard.writeText(texto);
     setCopied(id);
-    setTimeout(function() { setCopied(null); }, 2000);
+    setTimeout(()=>setCopied(null),2000);
   }
 
-  function openChat(p, colId) {
-    setChatPrompt(p);
-    setChatColId(colId);
-    setChatMsgs([{role:'agent', content:getOpening(p,colId)}]);
+  function openChat(p,colId){
+    setChatPrompt(p);setChatColId(colId);
+    setChatMsgs([{role:'agent',content:getOpening(p,colId)}]);
     setChatOpen(true);
   }
 
-  async function sendChat() {
-    if (!chatInput.trim() || chatLoading) return;
-    var msg = chatInput.trim();
+  async function sendChat(){
+    if(!chatInput.trim()||chatLoading) return;
+    const msg=chatInput.trim();
     setChatInput('');
-    var newMsgs = chatMsgs.concat([{role:'user',content:msg}]);
-    setChatMsgs(newMsgs);
-    setChatLoading(true);
-    var apiKey = getKey();
-    if (!apiKey) {
-      setChatMsgs(function(prev) { return prev.concat([{role:'agent',content:'Chat disponible solo en la versión Pro.'}]); });
-      setChatLoading(false);
-      return;
+    const newMsgs=[...chatMsgs,{role:'user',content:msg}];
+    setChatMsgs(newMsgs);setChatLoading(true);
+    const apiKey=getKey();
+    if(!apiKey){
+      setChatMsgs(p=>[...p,{role:'agent',content:'Chat disponible solo en la versión Pro.'}]);
+      setChatLoading(false);return;
     }
-    try {
-      var res = await fetch('https://api.anthropic.com/v1/messages', {
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
         method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'x-api-key':apiKey,
-          'anthropic-version':'2023-06-01',
-          'anthropic-dangerous-direct-browser-access':'true'
-        },
-        body:JSON.stringify({
-          model:'claude-sonnet-4-6',
-          max_tokens:1000,
-          system:chatPrompt.texto,
-          messages:newMsgs.map(function(m) { return {role:m.role==='agent'?'assistant':'user',content:m.content}; })
-        })
+        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:chatPrompt.texto,
+          messages:newMsgs.map(m=>({role:m.role==='agent'?'assistant':'user',content:m.content}))})
       });
-      var data = await res.json();
-      var reply = clean(data.content && data.content[0] ? data.content[0].text : 'Error.');
-      setChatMsgs(function(prev) { return prev.concat([{role:'agent',content:reply}]); });
-    } catch(ex) {
-      setChatMsgs(function(prev) { return prev.concat([{role:'agent',content:'Error de conexión. Inténtalo de nuevo.'}]); });
+      const data=await res.json();
+      const reply=clean(data.content&&data.content[0]?data.content[0].text:'Error.');
+      setChatMsgs(p=>[...p,{role:'agent',content:reply}]);
+    }catch(e){
+      setChatMsgs(p=>[...p,{role:'agent',content:'Error de conexión. Inténtalo de nuevo.'}]);
     }
     setChatLoading(false);
   }
 
-  function ModalOverlay() {
-    if (modal !== 'unlock') return null;
-    return React.createElement('div', {
-      onClick: function() { setModal(null); },
-      style:{position:'fixed',inset:0,background:'rgba(0,0,0,0.88)',backdropFilter:'blur(8px)',zIndex:300,display:'flex',alignItems:'flex-end',justifyContent:'center'}
-    },
-      React.createElement('div', {
-        onClick: function(ev) { ev.stopPropagation(); },
-        style:{background:'#0d0d0d',border:'1px solid rgba(255,255,255,0.1)',borderBottom:'none',borderRadius:'20px 20px 0 0',padding:'32px 24px 48px',width:'100%',maxWidth:480,display:'flex',flexDirection:'column',gap:18}
-      },
-        React.createElement('div', {style:{fontSize:22,fontWeight:800,letterSpacing:'-0.03em'}}, 'Desbloquea Agentes Brutales'),
-        React.createElement('div', {style:{fontSize:14,color:T2,lineHeight:1.6}}, '27 agentes desbloqueados + chat directo con cada uno. Pago único, sin suscripción.'),
-        React.createElement('div', {style:{display:'flex',flexDirection:'column',gap:8}},
-          [['⚡','27 agentes desbloqueados'],['💬','Chat directo con cada agente'],['♾️','Sin límite de uso'],['📱','Instalable en iPhone y Android']].map(function(item) {
-            return React.createElement('div', {key:item[1], style:{display:'flex',alignItems:'center',gap:10,fontSize:14,color:T2}},
-              React.createElement('span', null, item[0]),
-              React.createElement('span', null, item[1])
+  function ModalOverlay(){
+    if(modal!=='unlock') return null;
+    return(
+      <div onClick={()=>setModal(null)} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.88)',backdropFilter:'blur(8px)',zIndex:300,display:'flex',alignItems:'flex-end',justifyContent:'center'}}>
+        <div onClick={e=>e.stopPropagation()} style={{background:'#0d0d0d',border:'1px solid rgba(255,255,255,0.1)',borderBottom:'none',borderRadius:'20px 20px 0 0',padding:'32px 24px 48px',width:'100%',maxWidth:480,display:'flex',flexDirection:'column',gap:18}}>
+          <div style={{fontSize:22,fontWeight:800,letterSpacing:'-0.03em'}}>Desbloquea Agentes Brutales</div>
+          <div style={{fontSize:14,color:T2,lineHeight:1.6}}>27 agentes desbloqueados + chat directo con cada uno. Pago único, sin suscripción.</div>
+          <div style={{display:'flex',flexDirection:'column',gap:8}}>
+            {[['⚡','27 agentes desbloqueados'],['💬','Chat directo con cada agente'],['♾️','Sin límite de uso'],['📱','Instalable en iPhone y Android']].map(([icon,text])=>(
+              <div key={text} style={{display:'flex',alignItems:'center',gap:10,fontSize:14,color:T2}}><span>{icon}</span><span>{text}</span></div>
+            ))}
+          </div>
+          <button onClick={()=>window.open(GUMROAD,'_blank')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 20px',fontSize:16,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+            <span>Conseguir acceso — 19€</span>
+            <span style={{fontSize:12,opacity:0.7}}>Pago único</span>
+          </button>
+          <div style={{display:'flex',alignItems:'center',gap:12}}>
+            <div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/><span style={{fontSize:12,color:T3,fontWeight:600}}>ya tengo clave</span><div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/>
+          </div>
+          <div style={{display:'flex',gap:10}}>
+            <input style={{flex:1,background:'rgba(255,255,255,0.05)',border:keyError?'1px solid #ff5252':'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 14px',color:'#fff',fontSize:14,outline:'none'}} placeholder="Pega tu clave aquí..." value={keyInput} onChange={e=>{setKeyInput(e.target.value);setKeyError(false);}} onKeyDown={e=>e.key==='Enter'&&checkKey()}/>
+            <button onClick={checkKey} style={{background:'rgba(255,255,255,0.08)',color:'#fff',border:'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 16px',fontSize:14,fontWeight:700,cursor:'pointer'}}>Activar</button>
+          </div>
+          {keyError&&<div style={{fontSize:12,color:'#ff5252'}}>Clave incorrecta. Comprueba tu email.</div>}
+          <button onClick={()=>setModal(null)} style={{background:'none',border:'none',color:T3,fontSize:14,cursor:'pointer',alignSelf:'center'}}>Cerrar</button>
+        </div>
+      </div>
+    );
+  }
+
+  function ChatPanel(){
+    if(!chatOpen||!chatPrompt) return null;
+    return(
+      <div style={{position:'fixed',bottom:0,right:0,width:'100%',maxWidth:440,height:'70vh',minHeight:520,maxHeight:640,background:'#080808',border:'1px solid rgba(79,195,247,0.2)',borderBottom:'none',borderRadius:'20px 20px 0 0',display:'flex',flexDirection:'column',zIndex:200,boxShadow:'0 -20px 60px rgba(0,0,0,0.7)'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0}}>
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}/>
+            <span style={{fontSize:15,fontWeight:700}}>{chatPrompt.nombre} <span style={{color:BLU}}>·</span> <span style={{color:T3,fontWeight:500,fontSize:13}}>{chatPrompt.subtitulo}</span></span>
+          </div>
+          <button onClick={()=>setChatOpen(false)} style={{background:'rgba(255,255,255,0.06)',border:'none',color:T2,width:28,height:28,borderRadius:8,cursor:'pointer',fontSize:18,display:'flex',alignItems:'center',justifyContent:'center'}}>×</button>
+        </div>
+        <div style={{flex:1,overflowY:'auto',padding:16,display:'flex',flexDirection:'column',gap:10}}>
+          {chatMsgs.map((m,i)=>(
+            <div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.65,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
+          ))}
+          {chatLoading&&(
+            <div style={{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
+              {[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}
+            </div>
+          )}
+          <div ref={msgsEnd}/>
+        </div>
+        <div style={{padding:'10px 14px 20px',borderTop:'1px solid rgba(255,255,255,0.06)',display:'flex',gap:10,flexShrink:0,alignItems:'flex-end'}}>
+          <textarea style={{flex:1,background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:14,padding:'13px 16px',color:'#fff',fontSize:15,resize:'none',outline:'none',minHeight:50,maxHeight:140,lineHeight:1.5}} placeholder={'Escribe a '+chatPrompt.nombre+'...'} value={chatInput} rows={1} onChange={e=>setChatInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}/>
+          <button onClick={sendChat} disabled={!chatInput.trim()||chatLoading} style={{background:(!chatInput.trim()||chatLoading)?'rgba(79,195,247,0.2)':BLU,color:(!chatInput.trim()||chatLoading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:58,height:52,fontSize:22,fontWeight:700,cursor:(!chatInput.trim()||chatLoading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>↑</button>
+        </div>
+      </div>
+    );
+  }
+
+  function Nav(){
+    return(
+      <div style={{position:'sticky',top:0,zIndex:100,background:'rgba(0,0,0,0.93)',backdropFilter:'blur(12px)',borderBottom:'1px solid rgba(255,255,255,0.06)',padding:'0 20px',display:'flex',alignItems:'center',justifyContent:'space-between',height:56}}>
+        <div style={{display:'flex',alignItems:'center',gap:14}}>
+          {view!=='cols'&&<button onClick={()=>{if(view==='detail'){setView('prompts');setActivePrompt(null);}else if(view==='prompts'){setView('cols');setActiveCol(null);}else{setView('cols');}}} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:4}}>← Volver</button>}
+          <span style={{fontSize:15,fontWeight:800,letterSpacing:'-0.02em'}}>Agentes <span style={{color:BLU}}>Brutales</span></span>
+        </div>
+        <div style={{display:'flex',alignItems:'center',gap:8}}>
+          <button onClick={()=>setView('tes')} style={{background:'none',border:'1px solid rgba(255,255,255,0.1)',borderRadius:8,padding:'5px 11px',fontSize:12,fontWeight:600,color:T2,cursor:'pointer'}}>TES ↗</button>
+          {isPro
+            ?<div style={{background:'rgba(79,195,247,0.12)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:8,padding:'5px 12px',fontSize:12,fontWeight:700,color:BLU}}>✓ PRO</div>
+            :<button onClick={()=>setModal('unlock')} style={{background:BLU,color:'#000',border:'none',borderRadius:9,padding:'8px 14px',fontSize:13,fontWeight:800,cursor:'pointer'}}>Desbloquear — 19€</button>
+          }
+        </div>
+      </div>
+    );
+  }
+
+  if(view==='intro') return(
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center'}}>
+      <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(79,195,247,0.1)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:100,padding:'6px 16px',fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:32}}>⚡ Tecnología Explicada Simple</div>
+      <div style={{fontSize:'clamp(52px,12vw,96px)',fontWeight:900,lineHeight:0.9,letterSpacing:'-0.04em',marginBottom:8}}>Agentes<br/><span style={{color:BLU}}>Brutales</span></div>
+      <div style={{fontSize:'clamp(22px,5vw,40px)',fontWeight:900,letterSpacing:'-0.03em',color:'rgba(255,255,255,0.2)',marginBottom:40}}>Edición Completa</div>
+      <p style={{maxWidth:500,fontSize:17,lineHeight:1.65,color:T2,marginBottom:12}}>No son prompts. Son agentes.</p>
+      <p style={{maxWidth:500,fontSize:17,lineHeight:1.65,color:T2,marginBottom:40}}>Cada uno usa <strong style={{color:T1}}>métodos reales de coaching y psicología</strong> para ayudarte a conseguir resultados concretos.</p>
+      <div style={{display:'flex',gap:44,marginBottom:40,flexWrap:'wrap',justifyContent:'center'}}>
+        {[['27','Agentes'],['7','Colecciones'],['7','Gratis']].map(([n,l])=>(
+          <div key={l+n} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
+            <span style={{fontSize:40,fontWeight:900,color:BLU,letterSpacing:'-0.03em'}}>{n}</span>
+            <span style={{fontSize:11,color:'rgba(255,255,255,0.35)',textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:600}}>{l}</span>
+          </div>
+        ))}
+      </div>
+      <button onClick={()=>setView('cols')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer'}}>Explorar agentes →</button>
+      <p style={{marginTop:16,fontSize:13,color:'rgba(255,255,255,0.35)'}}>7 gratis · Desbloquea los 27 por 19€</p>
+    </div>
+  );
+
+  if(view==='cols') return(
+    <div>
+      <Nav/><ModalOverlay/>
+      <div style={{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}}>
+        <div style={{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}>Colecciones</div>
+        <div style={{fontSize:14,color:T2,marginBottom:32}}>{isPro?'27 agentes desbloqueados · Toca cualquier colección':'7 agentes gratis · 20 bloqueados · Desbloquea todo por 19€'}</div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(250px,1fr))',gap:14}}>
+          {COLS.map(col=>(
+            <div key={col.id} onClick={()=>{setActiveCol(col);setView('prompts');}}
+              style={{background:CA,border:'1px solid '+CB,borderRadius:16,padding:22,cursor:'pointer',display:'flex',flexDirection:'column',gap:10,transition:'all 0.15s'}}
+              onMouseEnter={e=>{e.currentTarget.style.background=BLU3;e.currentTarget.style.borderColor=BLUB;}}
+              onMouseLeave={e=>{e.currentTarget.style.background=CA;e.currentTarget.style.borderColor=CB;}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
+                <span style={{fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}>Colección {col.id}</span>
+                <span style={{fontSize:26}}>{col.icono}</span>
+              </div>
+              <div style={{fontSize:17,fontWeight:700,letterSpacing:'-0.02em',lineHeight:1.2}}>{col.nombre}</div>
+              <div style={{fontSize:13,color:T2,lineHeight:1.55,flex:1}}>{col.descripcion}</div>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',paddingTop:12,borderTop:'1px solid rgba(255,255,255,0.06)'}}>
+                <span style={{fontSize:12,color:T3,fontWeight:500}}>{col.prompts.length} agentes</span>
+                {!isPro&&<span style={{fontSize:12,color:BLU,fontWeight:600}}>{col.prompts.filter(p=>p.free).length} gratis</span>}
+                <span style={{color:'rgba(79,195,247,0.6)',fontSize:16}}>→</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <ChatPanel/>
+    </div>
+  );
+
+  if(view==='prompts'&&activeCol) return(
+    <div>
+      <Nav/><ModalOverlay/>
+      <div style={{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}}>
+        <div style={{display:'inline-flex',alignItems:'center',gap:6,background:'rgba(79,195,247,0.08)',border:'1px solid rgba(79,195,247,0.18)',borderRadius:100,padding:'4px 12px',fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.08em',marginBottom:12}}>{activeCol.icono} Colección {activeCol.id}</div>
+        <div style={{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}>{activeCol.nombre}</div>
+        <div style={{fontSize:14,color:T2,marginBottom:32}}>{activeCol.descripcion}</div>
+        <div style={{display:'flex',flexDirection:'column',gap:10}}>
+          {activeCol.prompts.map((p,i)=>{
+            const locked=!isPro&&!p.free;
+            return(
+              <div key={p.nombre} onClick={()=>{if(locked){setModal('unlock');return;}setActivePrompt(p);setView('detail');}}
+                style={{background:locked?'rgba(255,255,255,0.015)':CA,border:'1px solid '+(locked?'rgba(255,255,255,0.04)':CB),borderRadius:13,padding:'18px 22px',cursor:'pointer',display:'flex',alignItems:'center',gap:18,opacity:locked?0.75:1,transition:'all 0.15s'}}
+                onMouseEnter={e=>{if(!locked){e.currentTarget.style.background=BLU3;e.currentTarget.style.borderColor=BLUB;}}}
+                onMouseLeave={e=>{e.currentTarget.style.background=locked?'rgba(255,255,255,0.015)':CA;e.currentTarget.style.borderColor=locked?'rgba(255,255,255,0.04)':CB;}}>
+                <div style={{fontSize:11,fontWeight:700,color:BLU,width:26,flexShrink:0}}>{String(i+1).padStart(2,'0')}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:15,fontWeight:700,letterSpacing:'-0.01em',marginBottom:2}}>
+                    {p.nombre}
+                    {p.free&&!isPro&&<span style={{fontSize:10,fontWeight:700,color:BLU,background:'rgba(79,195,247,0.1)',borderRadius:6,padding:'2px 7px',marginLeft:8,letterSpacing:'0.06em'}}>GRATIS</span>}
+                  </div>
+                  <div style={{fontSize:12,color:T2,fontWeight:500}}>{p.subtitulo}</div>
+                </div>
+                {locked?<span style={{fontSize:16,flexShrink:0}}>🔒</span>:<span style={{color:'rgba(79,195,247,0.5)',fontSize:16}}>→</span>}
+              </div>
             );
-          })
-        ),
-        React.createElement('button', {
-          onClick: function() { window.open(GUMROAD,'_blank'); },
-          style:{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 20px',fontSize:16,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'space-between'}
-        },
-          React.createElement('span', null, 'Conseguir acceso — 19€'),
-          React.createElement('span', {style:{fontSize:12,opacity:0.7}}, 'Pago único')
-        ),
-        React.createElement('div', {style:{display:'flex',alignItems:'center',gap:12}},
-          React.createElement('div', {style:{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}),
-          React.createElement('span', {style:{fontSize:12,color:T3,fontWeight:600}}, 'ya tengo clave'),
-          React.createElement('div', {style:{flex:1,height:1,background:'rgba(255,255,255,0.08)'}})
-        ),
-        React.createElement('div', {style:{display:'flex',gap:10}},
-          React.createElement('input', {
-            style:{flex:1,background:'rgba(255,255,255,0.05)',border:keyError?'1px solid #ff5252':'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 14px',color:'#fff',fontSize:14,outline:'none'},
-            placeholder:'Pega tu clave aquí...',
-            value:keyInput,
-            onChange:function(ev) { setKeyInput(ev.target.value); setKeyError(false); },
-            onKeyDown:function(ev) { if(ev.key==='Enter') checkKey(); }
-          }),
-          React.createElement('button', {
-            onClick:checkKey,
-            style:{background:'rgba(255,255,255,0.08)',color:'#fff',border:'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 16px',fontSize:14,fontWeight:700,cursor:'pointer'}
-          }, 'Activar')
-        ),
-        keyError && React.createElement('div', {style:{fontSize:12,color:'#ff5252'}}, 'Clave incorrecta. Comprueba tu email.'),
-        React.createElement('button', {
-          onClick:function() { setModal(null); },
-          style:{background:'none',border:'none',color:T3,fontSize:14,cursor:'pointer',alignSelf:'center'}
-        }, 'Cerrar')
-      )
-    );
-  }
-
-  function ChatPanel() {
-    if (!chatOpen || !chatPrompt) return null;
-    return React.createElement('div', {
-      style:{position:'fixed',bottom:0,right:0,width:'100%',maxWidth:440,height:'70vh',minHeight:520,maxHeight:640,background:'#080808',border:'1px solid rgba(79,195,247,0.2)',borderBottom:'none',borderRadius:'20px 20px 0 0',display:'flex',flexDirection:'column',zIndex:200,boxShadow:'0 -20px 60px rgba(0,0,0,0.7)'}
-    },
-      React.createElement('div', {style:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0}},
-        React.createElement('div', {style:{display:'flex',alignItems:'center',gap:10}},
-          React.createElement('div', {style:{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}),
-          React.createElement('span', {style:{fontSize:15,fontWeight:700}},
-            chatPrompt.nombre + ' ',
-            React.createElement('span', {style:{color:BLU}}, '·'),
-            ' ',
-            React.createElement('span', {style:{color:T3,fontWeight:500,fontSize:13}}, chatPrompt.subtitulo)
-          )
-        ),
-        React.createElement('button', {
-          onClick:function() { setChatOpen(false); },
-          style:{background:'rgba(255,255,255,0.06)',border:'none',color:T2,width:28,height:28,borderRadius:8,cursor:'pointer',fontSize:18,display:'flex',alignItems:'center',justifyContent:'center'}
-        }, '×')
-      ),
-      React.createElement('div', {style:{flex:1,overflowY:'auto',padding:16,display:'flex',flexDirection:'column',gap:10}},
-        chatMsgs.map(function(m,i) {
-          return React.createElement('div', {
-            key:i,
-            style:{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.65,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}
-          }, m.content);
-        }),
-        chatLoading && React.createElement('div', {
-          style:{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}
-        },
-          [0,1,2].map(function(i) {
-            return React.createElement('div', {
-              key:i,
-              style:{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s ' + (i*0.2) + 's infinite'}
-            });
-          })
-        ),
-        React.createElement('div', {ref:msgsEnd})
-      ),
-      React.createElement('div', {style:{padding:'10px 14px 20px',borderTop:'1px solid rgba(255,255,255,0.06)',display:'flex',gap:10,flexShrink:0,alignItems:'flex-end'}},
-        React.createElement('textarea', {
-          style:{flex:1,background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:14,padding:'13px 16px',color:'#fff',fontSize:15,resize:'none',outline:'none',minHeight:50,maxHeight:140,lineHeight:1.5},
-          placeholder:'Escribe a ' + chatPrompt.nombre + '...',
-          value:chatInput,
-          rows:1,
-          onChange:function(ev) { setChatInput(ev.target.value); },
-          onKeyDown:function(ev) { if(ev.key==='Enter'&&!ev.shiftKey){ ev.preventDefault(); sendChat(); } }
-        }),
-        React.createElement('button', {
-          onClick:sendChat,
-          disabled:(!chatInput.trim()||chatLoading),
-          style:{background:(!chatInput.trim()||chatLoading)?'rgba(79,195,247,0.2)':BLU,color:(!chatInput.trim()||chatLoading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:58,height:52,fontSize:22,fontWeight:700,cursor:(!chatInput.trim()||chatLoading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}
-        }, '↑')
-      )
-    );
-  }
-
-  function Nav() {
-    return React.createElement('div', {
-      style:{position:'sticky',top:0,zIndex:100,background:'rgba(0,0,0,0.93)',backdropFilter:'blur(12px)',borderBottom:'1px solid rgba(255,255,255,0.06)',padding:'0 20px',display:'flex',alignItems:'center',justifyContent:'space-between',height:56}
-    },
-      React.createElement('div', {style:{display:'flex',alignItems:'center',gap:14}},
-        view!=='cols' && React.createElement('button', {
-          onClick:function() {
-            if(view==='detail'){setView('prompts');setActivePrompt(null);}
-            else if(view==='prompts'){setView('cols');setActiveCol(null);}
-            else{setView('cols');}
-          },
-          style:{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:4}
-        }, '← Volver'),
-        React.createElement('span', {style:{fontSize:15,fontWeight:800,letterSpacing:'-0.02em'}},
-          'Agentes ',
-          React.createElement('span', {style:{color:BLU}}, 'Brutales')
-        )
-      ),
-      React.createElement('div', {style:{display:'flex',alignItems:'center',gap:8}},
-        React.createElement('button', {
-          onClick:function(){setView('tes');},
-          style:{background:'none',border:'1px solid rgba(255,255,255,0.1)',borderRadius:8,padding:'5px 11px',fontSize:12,fontWeight:600,color:T2,cursor:'pointer'}
-        }, 'TES ↗'),
-        isPro
-          ? React.createElement('div', {style:{background:'rgba(79,195,247,0.12)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:8,padding:'5px 12px',fontSize:12,fontWeight:700,color:BLU}}, '✓ PRO')
-          : React.createElement('button', {
-              onClick:function(){setModal('unlock');},
-              style:{background:BLU,color:'#000',border:'none',borderRadius:9,padding:'8px 14px',fontSize:13,fontWeight:800,cursor:'pointer'}
-            }, 'Desbloquear — 19€')
-      )
-    );
-  }
-
-  // INTRO
-  if (view==='intro') return React.createElement('div', {
-    style:{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center'}
-  },
-    React.createElement('div', {style:{display:'inline-flex',alignItems:'center',gap:8,background:BLU2,border:'1px solid rgba(79,195,247,0.3)',borderRadius:100,padding:'6px 16px',fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:32}}, '⚡ Tecnología Explicada Simple'),
-    React.createElement('div', {style:{fontSize:'clamp(52px,12vw,96px)',fontWeight:900,lineHeight:0.9,letterSpacing:'-0.04em',marginBottom:8}},
-      'Agentes', React.createElement('br'), React.createElement('span', {style:{color:BLU}}, 'Brutales')
-    ),
-    React.createElement('div', {style:{fontSize:'clamp(22px,5vw,40px)',fontWeight:900,letterSpacing:'-0.03em',color:'rgba(255,255,255,0.2)',marginBottom:40}}, 'Edición Completa'),
-    React.createElement('p', {style:{maxWidth:500,fontSize:17,lineHeight:1.65,color:T2,marginBottom:12}}, 'No son prompts. Son agentes.'),
-    React.createElement('p', {style:{maxWidth:500,fontSize:17,lineHeight:1.65,color:T2,marginBottom:40}},
-      'Cada uno usa ',
-      React.createElement('strong', {style:{color:T1}}, 'métodos reales de coaching y psicología'),
-      ' para ayudarte a conseguir resultados concretos.'
-    ),
-    React.createElement('div', {style:{display:'flex',gap:44,marginBottom:40,flexWrap:'wrap',justifyContent:'center'}},
-      [['27','Agentes'],['7','Colecciones'],['14','Gratis']].map(function(item) {
-        return React.createElement('div', {key:item[1],style:{display:'flex',flexDirection:'column',alignItems:'center',gap:4}},
-          React.createElement('span', {style:{fontSize:40,fontWeight:900,color:BLU,letterSpacing:'-0.03em'}}, item[0]),
-          React.createElement('span', {style:{fontSize:11,color:'rgba(255,255,255,0.35)',textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:600}}, item[1])
-        );
-      })
-    ),
-    React.createElement('button', {
-      onClick:function(){setView('cols');},
-      style:{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer'}
-    }, 'Explorar agentes →'),
-    React.createElement('p', {style:{marginTop:16,fontSize:13,color:'rgba(255,255,255,0.35)'}}, '14 gratis · Desbloquea los 27 por 19€')
+          })}
+        </div>
+      </div>
+      <ChatPanel/>
+    </div>
   );
 
-  // COLS
-  if (view==='cols') return React.createElement('div', null,
-    React.createElement(Nav),
-    React.createElement(ModalOverlay),
-    React.createElement('div', {style:{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}},
-      React.createElement('div', {style:{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}, 'Colecciones'),
-      React.createElement('div', {style:{fontSize:14,color:T2,marginBottom:32}},
-        isPro ? '27 agentes desbloqueados · Toca cualquier colección' : '14 agentes gratis · 13 bloqueados · Desbloquea todo por 19€'
-      ),
-      React.createElement('div', {style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(250px,1fr))',gap:14}},
-        COLS.map(function(col) {
-          return React.createElement('div', {
-            key:col.id,
-            onClick:function(){setActiveCol(col);setView('prompts');},
-            style:{background:CA,border:'1px solid '+CB,borderRadius:16,padding:22,cursor:'pointer',display:'flex',flexDirection:'column',gap:10,transition:'all 0.15s'},
-            onMouseEnter:function(ev){ev.currentTarget.style.background=BLU3;ev.currentTarget.style.borderColor=BLUB;},
-            onMouseLeave:function(ev){ev.currentTarget.style.background=CA;ev.currentTarget.style.borderColor=CB;}
-          },
-            React.createElement('div', {style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}},
-              React.createElement('span', {style:{fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}, 'Colección '+col.id),
-              React.createElement('span', {style:{fontSize:26}}, col.icono)
-            ),
-            React.createElement('div', {style:{fontSize:17,fontWeight:700,letterSpacing:'-0.02em',lineHeight:1.2}}, col.nombre),
-            React.createElement('div', {style:{fontSize:13,color:T2,lineHeight:1.55,flex:1}}, col.descripcion),
-            React.createElement('div', {style:{display:'flex',alignItems:'center',justifyContent:'space-between',paddingTop:12,borderTop:'1px solid rgba(255,255,255,0.06)'}},
-              React.createElement('span', {style:{fontSize:12,color:T3,fontWeight:500}}, col.prompts.length+' agentes'),
-              !isPro && React.createElement('span', {style:{fontSize:12,color:BLU,fontWeight:600}}, col.prompts.filter(function(p){return p.free;}).length+' gratis'),
-              React.createElement('span', {style:{color:'rgba(79,195,247,0.6)',fontSize:16}}, '→')
-            )
-          );
-        })
-      )
-    ),
-    React.createElement(ChatPanel)
+  if(view==='detail'&&activePrompt) return(
+    <div>
+      <Nav/><ModalOverlay/>
+      <div style={{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}}>
+        <div style={{maxWidth:680}}>
+          {activeCol&&<div style={{display:'inline-flex',alignItems:'center',gap:6,background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.18)',borderRadius:100,padding:'4px 12px',fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.08em',marginBottom:16}}>{activeCol.icono} {activeCol.nombre}</div>}
+          <div style={{fontSize:'clamp(40px,9vw,64px)',fontWeight:900,letterSpacing:'-0.04em',lineHeight:0.92,color:BLU,marginBottom:10}}>{activePrompt.nombre}</div>
+          <div style={{fontSize:18,fontWeight:600,color:'rgba(255,255,255,0.75)',marginBottom:6}}>{activePrompt.subtitulo}</div>
+          <div style={{fontSize:15,color:T2,fontStyle:'italic',marginBottom:32}}>"{activePrompt.tagline}"</div>
+          <div style={{background:'rgba(79,195,247,0.03)',border:'1px solid rgba(79,195,247,0.12)',borderRadius:16,overflow:'hidden',marginBottom:16}}>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'13px 20px',borderBottom:'1px solid rgba(79,195,247,0.08)',background:'rgba(79,195,247,0.04)'}}>
+              <span style={{fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}>Las instrucciones</span>
+              <button onClick={()=>copyText(activePrompt.texto,activePrompt.nombre)} style={{display:'flex',alignItems:'center',gap:6,background:copied===activePrompt.nombre?'#4caf50':BLU,color:copied===activePrompt.nombre?'#fff':'#000',border:'none',borderRadius:8,padding:'7px 14px',fontSize:12,fontWeight:700,cursor:'pointer'}}>{copied===activePrompt.nombre?'✓ Copiadas':'⎘ Copiar instrucciones'}</button>
+            </div>
+            <div style={{padding:22,fontSize:14,lineHeight:1.75,color:'rgba(255,255,255,0.72)',whiteSpace:'pre-wrap'}}>{activePrompt.texto}</div>
+          </div>
+          {isPro
+            ?<button onClick={()=>openChat(activePrompt,activeCol?activeCol.id:null)} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(79,195,247,0.06)',border:'1px solid rgba(79,195,247,0.2)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:'#fff'}}>
+              <span style={{fontSize:22,flexShrink:0}}>💬</span>
+              <div>
+                <div style={{fontSize:15,fontWeight:700,marginBottom:3}}>Hablar con {activePrompt.nombre}</div>
+                <div style={{fontSize:12,color:T2}}>Chat directo — sin copy-paste ni setup</div>
+              </div>
+            </button>
+            :<button onClick={()=>setModal('unlock')} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:T3}}>
+              <span style={{fontSize:22,flexShrink:0}}>🔒</span>
+              <div>
+                <div style={{fontSize:15,fontWeight:700,marginBottom:3,color:'rgba(255,255,255,0.6)'}}>Hablar con {activePrompt.nombre}</div>
+                <div style={{fontSize:12}}>Disponible en Pro — desbloquea por 19€</div>
+              </div>
+            </button>
+          }
+        </div>
+      </div>
+      <ChatPanel/>
+    </div>
   );
 
-  // PROMPTS LIST
-  if (view==='prompts' && activeCol) return React.createElement('div', null,
-    React.createElement(Nav),
-    React.createElement(ModalOverlay),
-    React.createElement('div', {style:{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}},
-      React.createElement('div', {style:{display:'inline-flex',alignItems:'center',gap:6,background:'rgba(79,195,247,0.08)',border:'1px solid rgba(79,195,247,0.18)',borderRadius:100,padding:'4px 12px',fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.08em',marginBottom:12}},
-        activeCol.icono+' Colección '+activeCol.id
-      ),
-      React.createElement('div', {style:{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}, activeCol.nombre),
-      React.createElement('div', {style:{fontSize:14,color:T2,marginBottom:32}}, activeCol.descripcion),
-      React.createElement('div', {style:{display:'flex',flexDirection:'column',gap:10}},
-        activeCol.prompts.map(function(p,i) {
-          var locked = !isPro && !p.free;
-          return React.createElement('div', {
-            key:p.nombre,
-            onClick:function(){if(locked){setModal('unlock');return;}setActivePrompt(p);setView('detail');},
-            style:{background:locked?'rgba(255,255,255,0.015)':CA,border:'1px solid '+(locked?'rgba(255,255,255,0.04)':CB),borderRadius:13,padding:'18px 22px',cursor:'pointer',display:'flex',alignItems:'center',gap:18,opacity:locked?0.75:1,transition:'all 0.15s'},
-            onMouseEnter:function(ev){if(!locked){ev.currentTarget.style.background=BLU3;ev.currentTarget.style.borderColor=BLUB;}},
-            onMouseLeave:function(ev){ev.currentTarget.style.background=locked?'rgba(255,255,255,0.015)':CA;ev.currentTarget.style.borderColor=locked?'rgba(255,255,255,0.04)':CB;}
-          },
-            React.createElement('div', {style:{fontSize:11,fontWeight:700,color:BLU,width:26,flexShrink:0}}, String(i+1).padStart(2,'0')),
-            React.createElement('div', {style:{flex:1,minWidth:0}},
-              React.createElement('div', {style:{fontSize:15,fontWeight:700,letterSpacing:'-0.01em',marginBottom:2}},
-                p.nombre,
-                p.free && !isPro && React.createElement('span', {style:{fontSize:10,fontWeight:700,color:BLU,background:'rgba(79,195,247,0.1)',borderRadius:6,padding:'2px 7px',marginLeft:8,letterSpacing:'0.06em'}}, 'GRATIS')
-              ),
-              React.createElement('div', {style:{fontSize:12,color:T2,fontWeight:500}}, p.subtitulo)
-            ),
-            locked
-              ? React.createElement('span', {style:{fontSize:16,flexShrink:0}}, '🔒')
-              : React.createElement('span', {style:{color:'rgba(79,195,247,0.5)',fontSize:16}}, '→')
-          );
-        })
-      )
-    ),
-    React.createElement(ChatPanel)
-  );
-
-  // DETAIL
-  if (view==='detail' && activePrompt) return React.createElement('div', null,
-    React.createElement(Nav),
-    React.createElement(ModalOverlay),
-    React.createElement('div', {style:{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}},
-      React.createElement('div', {style:{maxWidth:680}},
-        activeCol && React.createElement('div', {style:{display:'inline-flex',alignItems:'center',gap:6,background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.18)',borderRadius:100,padding:'4px 12px',fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.08em',marginBottom:16}},
-          activeCol.icono+' '+activeCol.nombre
-        ),
-        React.createElement('div', {style:{fontSize:'clamp(40px,9vw,64px)',fontWeight:900,letterSpacing:'-0.04em',lineHeight:0.92,color:BLU,marginBottom:10}}, activePrompt.nombre),
-        React.createElement('div', {style:{fontSize:18,fontWeight:600,color:'rgba(255,255,255,0.75)',marginBottom:6}}, activePrompt.subtitulo),
-        React.createElement('div', {style:{fontSize:15,color:T2,fontStyle:'italic',marginBottom:32}}, '"'+activePrompt.tagline+'"'),
-        React.createElement('div', {style:{background:'rgba(79,195,247,0.03)',border:'1px solid rgba(79,195,247,0.12)',borderRadius:16,overflow:'hidden',marginBottom:16}},
-          React.createElement('div', {style:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'13px 20px',borderBottom:'1px solid rgba(79,195,247,0.08)',background:'rgba(79,195,247,0.04)'}},
-            React.createElement('span', {style:{fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}, 'Las instrucciones'),
-            React.createElement('button', {
-              onClick:function(){copyText(activePrompt.texto,activePrompt.nombre);},
-              style:{display:'flex',alignItems:'center',gap:6,background:copied===activePrompt.nombre?'#4caf50':BLU,color:copied===activePrompt.nombre?'#fff':'#000',border:'none',borderRadius:8,padding:'7px 14px',fontSize:12,fontWeight:700,cursor:'pointer'}
-            }, copied===activePrompt.nombre?'✓ Copiadas':'⎘ Copiar instrucciones')
-          ),
-          React.createElement('div', {style:{padding:22,fontSize:14,lineHeight:1.75,color:'rgba(255,255,255,0.72)',whiteSpace:'pre-wrap'}}, activePrompt.texto)
-        ),
-        isPro
-          ? React.createElement('button', {
-              onClick:function(){openChat(activePrompt,activeCol?activeCol.id:null);},
-              style:{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(79,195,247,0.06)',border:'1px solid rgba(79,195,247,0.2)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:'#fff'}
-            },
-              React.createElement('span', {style:{fontSize:22,flexShrink:0}}, '💬'),
-              React.createElement('div', null,
-                React.createElement('div', {style:{fontSize:15,fontWeight:700,marginBottom:3}}, 'Hablar con '+activePrompt.nombre),
-                React.createElement('div', {style:{fontSize:12,color:T2}}, 'Chat directo — sin copy-paste ni setup')
-              )
-            )
-          : React.createElement('button', {
-              onClick:function(){setModal('unlock');},
-              style:{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:T3}
-            },
-              React.createElement('span', {style:{fontSize:22,flexShrink:0}}, '🔒'),
-              React.createElement('div', null,
-                React.createElement('div', {style:{fontSize:15,fontWeight:700,marginBottom:3,color:'rgba(255,255,255,0.6)'}}, 'Hablar con '+activePrompt.nombre),
-                React.createElement('div', {style:{fontSize:12}}, 'Disponible en Pro — desbloquea por 19€')
-              )
-            )
-      )
-    ),
-    React.createElement(ChatPanel)
-  );
-
-  // TES PAGE
-  if (view==='tes') return React.createElement('div', null,
-    React.createElement(Nav),
-    React.createElement('div', {style:{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}},
-      React.createElement('div', {style:{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}, 'Tecnología Explicada Simple'),
-      React.createElement('div', {style:{fontSize:14,color:T2,marginBottom:40}}, 'Todo el contenido gratuito — en el canal que prefieras.'),
-      React.createElement('div', {style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:14}},
-        [
-          {icon:'🌐',name:'Web TES',sub:'tecnologiaexplicadasimple.com',url:'https://tecnologiaexplicadasimple.com',color:BLU},
-          {icon:'▶️',name:'YouTube',sub:'@Tecnologia.Explicada.Simple',url:'https://www.youtube.com/@Tecnologia.Explicada.Simple',color:'#ff4444'},
-          {icon:'📸',name:'Instagram',sub:'@tecnologia.explicada.simple',url:'https://www.instagram.com/tecnologia.explicada.simple',color:'#e1306c'},
-          {icon:'🎵',name:'TikTok',sub:'@techexplicadasimple',url:'https://www.tiktok.com/@techexplicadasimple',color:'#69c9d0'}
-        ].map(function(item) {
-          return React.createElement('a', {
-            key:item.name,
-            href:item.url,
-            target:'_blank',
-            rel:'noopener noreferrer',
-            style:{background:CA,border:'1px solid '+CB,borderRadius:16,padding:24,display:'flex',flexDirection:'column',gap:12,textDecoration:'none',color:'#fff'},
-            onMouseEnter:function(ev){ev.currentTarget.style.background='rgba(255,255,255,0.06)';ev.currentTarget.style.borderColor='rgba(255,255,255,0.14)';},
-            onMouseLeave:function(ev){ev.currentTarget.style.background=CA;ev.currentTarget.style.borderColor=CB;}
-          },
-            React.createElement('span', {style:{fontSize:32}}, item.icon),
-            React.createElement('div', null,
-              React.createElement('div', {style:{fontSize:17,fontWeight:700,letterSpacing:'-0.02em',marginBottom:4}}, item.name),
-              React.createElement('div', {style:{fontSize:12,color:T3}}, item.sub)
-            ),
-            React.createElement('div', {style:{fontSize:13,color:item.color,fontWeight:600,marginTop:'auto'}}, 'Visitar →')
-          );
-        })
-      ),
-      React.createElement('div', {style:{marginTop:48,padding:24,background:'rgba(79,195,247,0.04)',border:'1px solid rgba(79,195,247,0.12)',borderRadius:16}},
-        React.createElement('div', {style:{fontSize:15,fontWeight:700,marginBottom:8}}, '¿Feedback sobre Agentes Brutales?'),
-        React.createElement('div', {style:{fontSize:14,color:T2,marginBottom:16}}, 'Escríbenos por Instagram o deja un comentario en YouTube.'),
-        React.createElement('a', {
-          href:'https://www.instagram.com/tecnologia.explicada.simple',
-          target:'_blank',
-          rel:'noopener noreferrer',
-          style:{display:'inline-flex',alignItems:'center',gap:8,background:BLU,color:'#000',borderRadius:10,padding:'10px 20px',fontSize:13,fontWeight:700,textDecoration:'none'}
-        }, 'Contactar por Instagram →')
-      )
-    )
+  if(view==='tes') return(
+    <div>
+      <Nav/>
+      <div style={{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}}>
+        <div style={{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}>Tecnología Explicada Simple</div>
+        <div style={{fontSize:14,color:T2,marginBottom:40}}>Todo el contenido gratuito — en el canal que prefieras.</div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:14}}>
+          {[
+            {icon:'🌐',name:'Web TES',sub:'tecnologiaexplicadasimple.com',url:'https://tecnologiaexplicadasimple.com',color:BLU},
+            {icon:'▶️',name:'YouTube',sub:'@Tecnologia.Explicada.Simple',url:'https://www.youtube.com/@Tecnologia.Explicada.Simple',color:'#ff4444'},
+            {icon:'📸',name:'Instagram',sub:'@tecnologia.explicada.simple',url:'https://www.instagram.com/tecnologia.explicada.simple',color:'#e1306c'},
+            {icon:'🎵',name:'TikTok',sub:'@techexplicadasimple',url:'https://www.tiktok.com/@techexplicadasimple',color:'#69c9d0'}
+          ].map(item=>(
+            <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer"
+              style={{background:CA,border:'1px solid '+CB,borderRadius:16,padding:24,display:'flex',flexDirection:'column',gap:12,textDecoration:'none',color:'#fff'}}
+              onMouseEnter={e=>{e.currentTarget.style.background='rgba(255,255,255,0.06)';e.currentTarget.style.borderColor='rgba(255,255,255,0.14)';}}
+              onMouseLeave={e=>{e.currentTarget.style.background=CA;e.currentTarget.style.borderColor=CB;}}>
+              <span style={{fontSize:32}}>{item.icon}</span>
+              <div>
+                <div style={{fontSize:17,fontWeight:700,letterSpacing:'-0.02em',marginBottom:4}}>{item.name}</div>
+                <div style={{fontSize:12,color:T3}}>{item.sub}</div>
+              </div>
+              <div style={{fontSize:13,color:item.color,fontWeight:600,marginTop:'auto'}}>Visitar →</div>
+            </a>
+          ))}
+        </div>
+        <div style={{marginTop:48,padding:24,background:'rgba(79,195,247,0.04)',border:'1px solid rgba(79,195,247,0.12)',borderRadius:16}}>
+          <div style={{fontSize:15,fontWeight:700,marginBottom:8}}>¿Feedback sobre Agentes Brutales?</div>
+          <div style={{fontSize:14,color:T2,marginBottom:16}}>Escríbenos por Instagram o deja un comentario en YouTube.</div>
+          <a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:8,background:BLU,color:'#000',borderRadius:10,padding:'10px 20px',fontSize:13,fontWeight:700,textDecoration:'none'}}>Contactar por Instagram →</a>
+        </div>
+      </div>
+    </div>
   );
 
   return null;
 }
 
-ReactDOM.createRoot(document.getElementById('app')).render(React.createElement(App));
+ReactDOM.createRoot(document.getElementById('app')).render(<App/>);
 </script>
 </body>
 </html>
