@@ -458,9 +458,8 @@ function App() {
     );
   }
 
-  function ChatPanel(){
-    if(!chatOpen||!chatPrompt) return null;
-    return(
+  const chatPanelEl = (chatOpen && chatPrompt) ? (
+
       <div style={{position:'fixed',bottom:0,right:0,width:'100%',maxWidth:480,height:580,background:'#080808',border:'1px solid rgba(79,195,247,0.18)',borderBottom:'none',borderRadius:'20px 20px 0 0',display:'flex',flexDirection:'column',zIndex:200,boxShadow:'0 -20px 60px rgba(0,0,0,0.7)'}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0}}>
           <div style={{display:'flex',alignItems:'center',gap:10}}>
@@ -495,8 +494,9 @@ function App() {
           >↑</button>
         </div>
       </div>
-    );
-  }
+  ) : null;
+
+
 
   function Nav(){
     return(
@@ -563,7 +563,7 @@ function App() {
           ))}
         </div>
       </div>
-      <ChatPanel/>
+      {chatPanelEl}
     </div>
   );
 
@@ -596,7 +596,7 @@ function App() {
           })}
         </div>
       </div>
-      <ChatPanel/>
+      {chatPanelEl}
     </div>
   );
 
@@ -617,40 +617,13 @@ function App() {
             <div style={{padding:22,fontSize:14,lineHeight:1.75,color:'rgba(255,255,255,0.72)',whiteSpace:'pre-wrap'}}>{activePrompt.texto}</div>
           </div>
           {isPro ? (
-            <div style={{display:'flex',flexDirection:'column',gap:10}}>
-              <div style={{fontSize:13,fontWeight:600,color:T2,marginBottom:2}}>Usar {activePrompt.nombre} con tu IA favorita</div>
-              {[
-                {name:'Claude',emoji:'🔵',appUrl:'claude://new',webUrl:'https://claude.ai/new',bg:'rgba(204,120,92,0.12)',border:'rgba(204,120,92,0.35)'},
-                {name:'ChatGPT',emoji:'🟢',appUrl:'chatgpt://chat',webUrl:'https://chatgpt.com/',bg:'rgba(16,163,127,0.1)',border:'rgba(16,163,127,0.35)'},
-                {name:'Grok',emoji:'⚫',appUrl:'grok://',webUrl:'https://grok.com/',bg:'rgba(255,255,255,0.04)',border:'rgba(255,255,255,0.15)'},
-              ].map(ai=>(
-                <a key={ai.name}
-                  href={ai.webUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={e=>{
-                    e.preventDefault();
-                    const prompt = encodeURIComponent(activePrompt.texto);
-                    // Copy prompt to clipboard so user can paste
-                    navigator.clipboard.writeText(activePrompt.texto).catch(()=>{});
-                    // Try app URL first, fallback to web
-                    const appLink = document.createElement('a');
-                    appLink.href = ai.appUrl;
-                    appLink.style.display = 'none';
-                    document.body.appendChild(appLink);
-                    setTimeout(()=>{ document.body.removeChild(appLink); window.open(ai.webUrl,'_blank','noopener'); }, 100);
-                    appLink.click();
-                  }}
-                  style={{display:'flex',alignItems:'center',gap:14,width:'100%',background:ai.bg,border:'1px solid '+ai.border,borderRadius:13,padding:'15px 20px',cursor:'pointer',textAlign:'left',color:'#fff',textDecoration:'none'}}>
-                  <span style={{fontSize:20,flexShrink:0}}>{ai.emoji}</span>
-                  <div style={{flex:1}}>
-                    <div style={{fontSize:15,fontWeight:700}}>Abrir en {ai.name}</div>
-                    <div style={{fontSize:12,color:T2,marginTop:2}}>El prompt se copia automáticamente</div>
-                  </div>
-                  <span style={{fontSize:14,color:T3}}>↗</span>
-                </a>
-              ))}
-            </div>
+            <button onClick={()=>openChat(activePrompt,activeCol?activeCol.id:null)} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(79,195,247,0.06)',border:'1px solid rgba(79,195,247,0.2)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:'#fff'}}>
+              <span style={{fontSize:22,flexShrink:0}}>💬</span>
+              <div>
+                <div style={{fontSize:15,fontWeight:700,marginBottom:3}}>Hablar con {activePrompt.nombre}</div>
+                <div style={{fontSize:12,color:T2}}>Chat directo — sin copy-paste ni setup</div>
+              </div>
+            </button>
           ) : (
             <button onClick={()=>setModal('unlock')} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:T3}}>
               <span style={{fontSize:22,flexShrink:0}}>🔒</span>
@@ -662,7 +635,7 @@ function App() {
           )}
         </div>
       </div>
-      <ChatPanel/>
+      {chatPanelEl}
     </div>
   );
 
