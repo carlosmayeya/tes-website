@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Agentes Brutales">
@@ -20,7 +21,6 @@ textarea,input{font-family:inherit}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 @keyframes typing{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 #app{min-height:100vh}
 </style>
 </head>
@@ -103,7 +103,7 @@ function clean(t) {
 function getCount(pro) {
   try { return parseInt(localStorage.getItem(pro?'axon_pro_count':'axon_free_count')||'0'); } catch(e) { return 0; }
 }
-function setCount(pro, n) {
+function saveCount(pro, n) {
   try { localStorage.setItem(pro?'axon_pro_count':'axon_free_count', String(n)); } catch(e) {}
 }
 
@@ -163,14 +163,11 @@ function App() {
     setInput('');
     const newCount = convCount+1;
     setConvCount(newCount);
-    setCount(isPro, newCount);
-
+    saveCount(isPro, newCount);
     if(newCount > limit) { setModal('limit'); return; }
-
     const newMsgs = [...msgs, {role:'user', content:msg}];
     setMsgs(newMsgs);
     setLoading(true);
-
     const apiKey = getKey();
     if(!apiKey) {
       setMsgs(p=>[...p,{role:'agent',content:'El chat est\u00e1 disponible en la versi\u00f3n completa. Desbloquea el acceso por 17\u20ac o copia mis instrucciones para usarme en tu LLM favorito.'}]);
@@ -211,34 +208,28 @@ function App() {
             <div style={{fontWeight:700,color:'#fff',marginBottom:4}}>Copiar instrucciones de AXON</div>
             <div style={{fontSize:12,color:T3}}>Súscame en Claude, ChatGPT o Grok — con tu LLM el agente te recuerda y mejora contigo</div>
           </button>
-          {!isLimit&&(
-            <div style={{display:'flex',alignItems:'center',gap:12}}>
-              <div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/>
-              <span style={{fontSize:12,color:T3,fontWeight:600}}>ya tengo clave</span>
-              <div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/>
-            </div>
-          )}
-          {!isLimit&&(
-            <div style={{display:'flex',gap:10}}>
-              <input style={{flex:1,background:'rgba(255,255,255,0.05)',border:keyError?'1px solid #ff5252':'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 14px',color:'#fff',fontSize:14,outline:'none'}} placeholder="Pega tu clave aquí..." value={keyInput} onChange={e=>{setKeyInput(e.target.value);setKeyError(false);}} onKeyDown={e=>e.key==='Enter'&&checkKey()}/>
-              <button onClick={checkKey} style={{background:'rgba(255,255,255,0.08)',color:'#fff',border:'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 16px',fontSize:14,fontWeight:700,cursor:'pointer'}}>Activar</button>
-            </div>
-          )}
-          {keyError&&<div style={{fontSize:12,color:'#ff5252'}}>Clave incorrecta. Comprueba tu email de confirmación.</div>}
+          {!isLimit&&<div style={{display:'flex',alignItems:'center',gap:12}}><div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/><span style={{fontSize:12,color:T3,fontWeight:600}}>ya tengo clave</span><div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/></div>}
+          {!isLimit&&<div style={{display:'flex',gap:10}}>
+            <input style={{flex:1,background:'rgba(255,255,255,0.05)',border:keyError?'1px solid #ff5252':'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 14px',color:'#fff',fontSize:14,outline:'none'}} placeholder="Pega tu clave aquí..." value={keyInput} onChange={e=>{setKeyInput(e.target.value);setKeyError(false);}} onKeyDown={e=>e.key==='Enter'&&checkKey()}/>
+            <button onClick={checkKey} style={{background:'rgba(255,255,255,0.08)',color:'#fff',border:'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 16px',fontSize:14,fontWeight:700,cursor:'pointer'}}>Activar</button>
+          </div>}
+          {keyError&&<div style={{fontSize:12,color:'#ff5252'}}>Clave incorrecta.</div>}
           <button onClick={()=>setModal(null)} style={{background:'none',border:'none',color:T3,fontSize:14,cursor:'pointer',alignSelf:'center'}}>Cerrar</button>
         </div>
       </div>
     );
   }
 
-  const chatEl = (view==='chat') ? (
-    <div style={{position:'fixed',inset:0,background:'#080808',display:'flex',flexDirection:'column',zIndex:100}}>
+  // CHAT VIEW
+  if(view==='chat') return(
+    <div style={{position:'fixed',inset:0,background:'#080808',display:'flex',flexDirection:'column'}}>
+      <ModalOverlay/>
       <div style={{display:'flex',alignItems:'center',gap:12,padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0,background:'#080808'}}>
-        <button onClick={()=>setView('home')} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer'}}>← Volver</button>
+        <button onClick={()=>setView('intro')} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer'}}>&#8592; Volver</button>
         <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite',flexShrink:0}}/>
         <div style={{flex:1}}>
           <div style={{fontSize:15,fontWeight:700}}>AXON</div>
-          <div style={{fontSize:11,color:T3}}>{isPro?(remaining<=20?'Quedan '+remaining+' conversaciones · ':'')+'Acceso completo':remaining+' conversaciones gratis restantes'}</div>
+          <div style={{fontSize:11,color:T3}}>{isPro?(remaining<=20?'Quedan '+remaining+' · ':'')+'Acceso completo':remaining+' conversaciones gratis'}</div>
         </div>
         {!isPro&&<button onClick={()=>setModal('unlock')} style={{background:BLU,color:'#000',border:'none',borderRadius:8,padding:'7px 14px',fontSize:12,fontWeight:800,cursor:'pointer'}}>Desbloquear</button>}
       </div>
@@ -255,7 +246,7 @@ function App() {
       </div>
       {nearLimit&&!loading&&(
         <div style={{margin:'0 16px 8px',padding:'10px 14px',background:'rgba(79,195,247,0.06)',border:'1px solid rgba(79,195,247,0.15)',borderRadius:10,fontSize:12,color:T2,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
-          <span>{isPro?'Quedan '+remaining+' conversaciones. ¿Continuar en tu LLM?':'Quedan '+(FREE_LIMIT-convCount)+' conversaciones gratis.'}</span>
+          <span>{isPro?'Quedan '+remaining+' conversaciones':remaining+' gratis restantes'}</span>
           <button onClick={()=>setModal('unlock')} style={{background:'none',border:'none',color:BLU,fontSize:12,fontWeight:700,cursor:'pointer',flexShrink:0}}>{isPro?'Copiar instrucciones →':'Desbloquear →'}</button>
         </div>
       )}
@@ -267,22 +258,20 @@ function App() {
           onChange={e=>setInput(e.target.value)}
           onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}}
         ></textarea>
-        <button onClick={sendMsg} disabled={!input.trim()||loading} style={{background:(!input.trim()||loading)?'rgba(79,195,247,0.2)':BLU,color:(!input.trim()||loading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:50,height:50,fontSize:22,fontWeight:700,cursor:(!input.trim()||loading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>↑</button>
+        <button onClick={sendMsg} disabled={!input.trim()||loading} style={{background:(!input.trim()||loading)?'rgba(79,195,247,0.2)':BLU,color:(!input.trim()||loading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:50,height:50,fontSize:22,fontWeight:700,cursor:(!input.trim()||loading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>&#8593;</button>
       </div>
     </div>
-  ) : null;
+  );
 
+  // INTRO VIEW - PUBLIC
   if(view==='intro') return(
-    <>
     <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center'}}>
       <ModalOverlay/>
       <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(79,195,247,0.1)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:100,padding:'6px 16px',fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:32}}>⚡ Agentes Brutales</div>
       <div style={{fontSize:'clamp(48px,11vw,88px)',fontWeight:900,lineHeight:0.88,letterSpacing:'-0.04em',marginBottom:16}}>
         Empieza<br/><span style={{color:BLU}}>Aquí</span>
       </div>
-      <div style={{fontSize:'clamp(16px,4vw,20px)',color:T2,lineHeight:1.6,maxWidth:460,marginBottom:40}}>
-        AXON es tu guía personal de IA. Te lleva de no saber nada a usar la IA con soltura y criterio — con un plan hecho exactamente para ti.
-      </div>
+      <div style={{fontSize:'clamp(16px,4vw,20px)',color:T2,lineHeight:1.6,maxWidth:460,marginBottom:40}}>AXON es tu guía personal de IA. Te lleva de no saber nada a usar la IA con soltura y criterio — con un plan hecho exactamente para ti.</div>
       <div style={{display:'flex',gap:32,marginBottom:40,flexWrap:'wrap',justifyContent:'center'}}>
         {[['4','Superpoderes'],['17€','Acceso completo'],['10','Gratis para empezar']].map(([n,l])=>(
           <div key={l+n} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
@@ -291,79 +280,8 @@ function App() {
           </div>
         ))}
       </div>
-      <button onClick={()=>setView('home')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer',marginBottom:12}}>Conocer a AXON →</button>
+      <button onClick={()=>setView('chat')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer',marginBottom:12}}>Hablar con AXON →</button>
       <p style={{fontSize:13,color:T3}}>10 conversaciones gratis · Sin tarjeta</p>
-    </div>
-    {chatEl}
-    </>
-  );
-
-  if(view==='home') return(
-    <div style={{minHeight:'100vh',background:'#000'}}>
-      <ModalOverlay/>
-      {chatEl}
-      <div style={{position:'sticky',top:0,zIndex:50,background:'rgba(0,0,0,0.93)',backdropFilter:'blur(12px)',borderBottom:'1px solid rgba(255,255,255,0.06)',padding:'0 20px',display:'flex',alignItems:'center',justifyContent:'space-between',height:56}}>
-        <span style={{fontSize:15,fontWeight:800,letterSpacing:'-0.02em'}}>Agentes <span style={{color:BLU}}>Brutales</span></span>
-        {isPro
-          ?<div style={{background:'rgba(79,195,247,0.12)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:8,padding:'5px 12px',fontSize:12,fontWeight:700,color:BLU}}>✓ Acceso Completo</div>
-          :<button onClick={()=>setModal('unlock')} style={{background:BLU,color:'#000',border:'none',borderRadius:9,padding:'8px 14px',fontSize:13,fontWeight:800,cursor:'pointer'}}>Desbloquear — 17€</button>
-        }
-      </div>
-      <div style={{maxWidth:640,margin:'0 auto',padding:'40px 20px 100px'}}>
-        <div style={{marginBottom:8,fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}>De Cero a Competente</div>
-        <div style={{fontSize:36,fontWeight:900,letterSpacing:'-0.03em',lineHeight:1.1,marginBottom:8}}>AXON</div>
-        <div style={{fontSize:16,color:T2,lineHeight:1.6,marginBottom:32}}>Tu guía personal de IA. Cuatro superpoderes para llevarte de principiante a competente — con un plan hecho exactamente para ti.</div>
-
-        <button onClick={()=>setView('chat')} style={{display:'flex',alignItems:'center',gap:16,width:'100%',background:'linear-gradient(135deg,rgba(79,195,247,0.12),rgba(79,195,247,0.04))',border:'1px solid rgba(79,195,247,0.3)',borderRadius:16,padding:'20px 24px',cursor:'pointer',textAlign:'left',color:'#fff',marginBottom:32}}>
-          <div style={{width:44,height:44,borderRadius:12,background:BLU,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>⚡</div>
-          <div style={{flex:1}}>
-            <div style={{fontSize:17,fontWeight:800,marginBottom:3}}>Hablar con AXON</div>
-            <div style={{fontSize:13,color:T2}}>{isPro?'Acceso completo · '+remaining+' conversaciones restantes':'Chat gratuito · '+remaining+' conversaciones disponibles'}</div>
-          </div>
-          <span style={{color:BLU,fontSize:20}}>→</span>
-        </button>
-
-        <div style={{fontSize:13,fontWeight:700,color:T3,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:16}}>Los 4 superpoderes de AXON</div>
-        <div style={{display:'flex',flexDirection:'column',gap:12}}>
-          {SUPERPODERES.map((sp,i)=>{
-            const locked = !isPro && i>0;
-            return(
-              <div key={sp.id} onClick={()=>locked?setModal('unlock'):setActiveSP(activeSP===sp.id?null:sp.id)}
-                style={{background:locked?'rgba(255,255,255,0.01)':CA,border:'1px solid '+(locked?'rgba(255,255,255,0.04)':activeSP===sp.id?'rgba(79,195,247,0.3)':CB),borderRadius:14,padding:'18px 20px',cursor:'pointer',opacity:locked?0.6:1,transition:'all 0.15s'}}>
-                <div style={{display:'flex',alignItems:'center',gap:12}}>
-                  <span style={{fontSize:22,flexShrink:0}}>{sp.emoji}</span>
-                  <div style={{flex:1}}>
-                    <div style={{fontSize:15,fontWeight:700,marginBottom:2}}>
-                      {sp.nombre}
-                      {i===0&&!isPro&&<span style={{fontSize:10,fontWeight:700,color:BLU,background:'rgba(79,195,247,0.1)',borderRadius:6,padding:'2px 7px',marginLeft:8}}>GRATIS</span>}
-                      {locked&&<span style={{fontSize:14,marginLeft:8}}>🔒</span>}
-                    </div>
-                    <div style={{fontSize:12,color:T2}}>{sp.titulo}</div>
-                  </div>
-                  {!locked&&<span style={{color:'rgba(79,195,247,0.5)',fontSize:18,transform:activeSP===sp.id?'rotate(90deg)':'none',transition:'transform 0.2s'}}>›</span>}
-                </div>
-                {activeSP===sp.id&&(
-                  <div style={{marginTop:14,paddingTop:14,borderTop:'1px solid rgba(255,255,255,0.06)'}}>
-                    <div style={{fontSize:14,color:T2,lineHeight:1.65,marginBottom:12}}>{sp.descripcion}</div>
-                    <div style={{background:'rgba(79,195,247,0.05)',border:'1px solid rgba(79,195,247,0.1)',borderRadius:8,padding:'10px 14px',fontSize:13,color:T2}}>
-                      <span style={{color:BLU,fontWeight:600}}>Ejemplo: </span>{sp.ejemplo}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {!isPro&&(
-          <div style={{marginTop:32,padding:24,background:'rgba(79,195,247,0.04)',border:'1px solid rgba(79,195,247,0.12)',borderRadius:16,textAlign:'center'}}>
-            <div style={{fontSize:18,fontWeight:800,marginBottom:8}}>Desbloquea los 4 superpoderes</div>
-            <div style={{fontSize:14,color:T2,marginBottom:20,lineHeight:1.6}}>Acceso completo a AXON + los 4 superpoderes + 100 conversaciones. Un solo pago, sin suscripción.</div>
-            <button onClick={()=>setModal('unlock')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'14px 28px',fontSize:15,fontWeight:800,cursor:'pointer',marginBottom:12,width:'100%'}}>Conseguir acceso completo — 17€</button>
-            <div style={{fontSize:12,color:T3}}>O usa AXON gratis en tu LLM favorito copiando sus instrucciones</div>
-          </div>
-        )}
-      </div>
     </div>
   );
 
