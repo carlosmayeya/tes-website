@@ -273,6 +273,7 @@ function App() {
   ) : null;
 
   if(view==='intro') return(
+    <>
     <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center'}}>
       <ModalOverlay/>
       <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(79,195,247,0.1)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:100,padding:'6px 16px',fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:32}}>⚡ Agentes Brutales</div>
@@ -294,6 +295,7 @@ function App() {
       <p style={{fontSize:13,color:T3}}>10 conversaciones gratis · Sin tarjeta</p>
     </div>
     {chatEl}
+    </>
   );
 
   if(view==='home') return(
