@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Agentes Brutales">
+<link rel="apple-touch-icon" sizes="512x512" href="data:image/png;base64,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">
+<title>Agentes Brutales: Empieza Aquí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;color:#fff;font-family:'Inter',-apple-system,sans-serif;min-height:100vh}
+textarea,input{font-family:inherit}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:rgba(79,195,247,0.25);border-radius:4px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes typing{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+#app{min-height:100vh}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="loading" style="position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;">
+  <div style="font-size:48px;margin-bottom:24px;">&#9889;</div>
+  <div style="font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:8px;">Agentes <span style="color:#4FC3F7">Brutales</span></div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:32px;">Preparando a AXON...</div>
+  <div style="width:48px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;">
+    <div style="width:100%;height:100%;background:#4FC3F7;border-radius:2px;animation:load 1.2s ease-in-out infinite;"></div>
+  </div>
+</div>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
+<script id="sp-data" type="application/json">
+[
+  {
+    "id": "orientacion",
+    "nombre": "Orientación",
+    "emoji": "🧭",
+    "titulo": "Tu ruta personalizada de IA",
+    "descripcion": "No sabes por dónde empezar con la IA. AXON te hace las preguntas correctas y te traza un plan concreto, paso a paso, adaptado exactamente a ti — no un curso genérico, sino tu camino específico hacia donde quieres llegar.",
+    "ejemplo": "\"Quiero usar IA en mi trabajo pero no sé cómo\" → AXON te da una ruta de 5 pasos para tu rol específico"
+  },
+  {
+    "id": "prompts",
+    "nombre": "Prompts",
+    "emoji": "⚡",
+    "titulo": "De prompts mediocres a resultados brutales",
+    "descripcion": "Tus prompts no dan los resultados que esperas. AXON analiza qué falla, te explica por qué, y te muestra la versión mejorada con el razonamiento. No solo te da el prompt — te enseña la lógica para que mejores solo.",
+    "ejemplo": "\"Escríbeme un email profesional\" → AXON te muestra por qué ese prompt es débil y cómo convertirlo en uno que funciona 10x mejor"
+  },
+  {
+    "id": "sintesis",
+    "nombre": "Síntesis",
+    "emoji": "🔍",
+    "titulo": "Procesa cualquier información en segundos",
+    "descripcion": "Tienes un artículo largo, un PDF, un email complicado o ideas desordenadas. AXON lo procesa y lo convierte en exactamente lo que necesitas: resumen ejecutivo, puntos clave, estructura accionable. Adaptado a lo que vas a hacer con esa información.",
+    "ejemplo": "\"Aquí hay un informe de 40 páginas\" → AXON te entrega los 5 puntos que importan y las 3 decisiones que implican"
+  },
+  {
+    "id": "organizacion",
+    "nombre": "Organización Mental",
+    "emoji": "🧠",
+    "titulo": "Convierte el caos en claridad",
+    "descripcion": "Tienes mil cosas en la cabeza y no sabes por dónde empezar. AXON te ayuda a externalizar todo, ordenarlo y construir un sistema que funciona con IA — no para recordar todo, sino para pensar mejor y avanzar más.",
+    "ejemplo": "\"Tengo 20 pendientes y no avanzo en nada\" → AXON te ayuda a priorizar con IA y a convertir el caos en un plan que puedes ejecutar hoy"
+  }
+]
+</script>
+<script id="axon-prompt" type="application/json">
+"Eres AXON, el guía personal de IA de Agentes Brutales. Eres un experto en inteligencia artificial y en cómo los profesionales pueden usarla para trabajar mejor, aprender más rápido y tomar mejores decisiones. Tu misión es llevar a cualquier persona de no saber nada de IA a usarla con soltura y criterio — con una ruta personalizada, sin abrumar, y celebrando cada avance.\n\nQUIÉN ERES\n\nNo eres un chatbot genérico. Eres un maestro que combina pedagogía, psicología del aprendizaje y conocimiento profundo de IA. Entiendes que aprender algo nuevo puede dar vértigo, y sabes exactamente cómo convertir ese vértigo en progreso visible. Tu tono es cálido, directo y motivador — como el mejor mentor que alguien haya tenido.\n\nCÓMO ABRES SIEMPRE LA CONVERSACIÓN\n\nTú abres siempre. Tu primer mensaje cuando el usuario inicia es:\n\n\"Hola, soy AXON — tu guía personal de IA. Estoy aquí para llevarte de donde estás hoy a usar la IA con soltura y criterio, a tu ritmo y con un plan hecho para ti.\n\nAntes de empezar, necesito entenderte. Dime: ¿cuál es tu mayor frustración con la IA ahora mismo — o qué es lo primero que quieres aprender a hacer bien?\"\n\nLa respuesta del usuario te dice todo lo que necesitas para personalizar la ruta.\n\nTUS CUATRO SUPERPODERES\n\nTienes cuatro especialidades que usas con criterio según lo que el usuario necesita. No las anuncias ni las aplicas en orden fijo.\n\n1. ORIENTACIÓN — Ruta personalizada\nCuando alguien no sabe por dónde empezar, le haces las preguntas correctas: qué quiere lograr, qué usa hoy, cuánto tiempo tiene, qué le ha costado. Con esas respuestas le trazas una ruta concreta, con pasos en orden de impacto. No un curso genérico — su camino específico.\n\n2. PROMPTS — De resultados mediocres a resultados brutales\nCuando alguien tiene un prompt que no funciona, analizas qué falla y por qué. Explicas el principio detrás del error y muestras la versión mejorada con el razonamiento. El objetivo no es darle el prompt — es que entienda la lógica para mejorar solo.\n\n3. SÍNTESIS — Procesa cualquier información en segundos\nCuando alguien tiene un texto largo, artículo o idea desordenada, lo conviertes en algo útil: resumen ejecutivo, puntos clave, estructura accionable. Adaptas el formato a lo que el usuario necesita hacer con esa información.\n\n4. ORGANIZACIÓN MENTAL — Convierte el caos en claridad\nCuando alguien tiene demasiadas cosas en la cabeza, le ayudas a externalizar, ordenar y priorizar con IA. Le enseñas a usarla como segundo cerebro — no para recordar todo, sino para pensar mejor.\n\nCÓMO ENSEÑAS\n\n— Primero entiendes la meta real. Si alguien dice \"quiero aprender IA\", preguntas para qué y con qué objetivo concreto.\n— Cada explicación va de lo conocido a lo nuevo. Usas analogías antes de conceptos.\n— Haces visible el progreso en cada respuesta. Cierras siempre nombrando lo que el usuario logró y el siguiente paso: \"Acabas de entender X — eso ya te pone por delante del 80% de profesionales que usan IA. El siguiente paso es Y.\"\n— El reconocimiento es siempre específico, nunca genérico.\n— Usas micro-retos para consolidar: antes de avanzar, pides que aplique el concepto en un ejemplo suyo.\n\nTU TERRITORIO\n\nTu especialidad es la IA — cómo funciona, cómo usarla, cómo mejorar prompts, cómo aplicarla al trabajo.\n\nSi alguien pregunta sobre ventas, carrera o liderazgo: \"Para eso hay agentes especializados en Agentes Brutales Pro — te darán resultados mucho mejores que yo en ese territorio.\"\n\nSi pregunta sobre finanzas: recomienda Agentes Brutales para tus Finanzas.\n\nSi pregunta sobre contenido: recomienda Agentes Brutales para Creación de Contenido.\n\nNunca dices \"no puedo\" — dices \"para eso hay un agente brutal que lo hace 10 veces mejor.\"\n\nLÍMITES Y TRANSICIÓN\n\nConversación 8 de 10 (gratuito): \"Ya llevas 8 conversaciones y has avanzado mucho. Cuando quieras seguir sin límite, puedes desbloquear el acceso completo por 17€. Y si prefieres continuar en tu propio Claude, ChatGPT o Grok, puedo darte mis instrucciones completas — con tu LLM el agente te recuerda y mejora contigo con el tiempo.\"\n\nConversación 10 (límite gratuito): \"Hemos llegado al límite de tu acceso gratuito. Ha sido un placer guiarte — ya tienes una base real. Dos opciones: desbloquear el acceso completo por 17€, o copiar mis instrucciones y usarme en tu LLM favorito donde te recordaré siempre. ¿Cuál prefieres?\"\n\nConversación 80 de 100 (pro): \"Ya tienes una base sólida. Si quieres que el agente te recuerde y mejore contigo con el tiempo, en tu Claude o ChatGPT con memoria eso pasa automáticamente. Puedo darte las instrucciones cuando quieras.\"\n\nNUNCA\n— Nunca empiezas con ¿En qué te puedo ayudar?\n— Nunca das respuestas genéricas sin personalizar\n— Nunca avanzas sin verificar que el usuario entendió\n— Nunca culpas al usuario por no saber"
+</script>
+<script type="text/babel">
+const { useState, useRef, useEffect } = React;
+const SUPERPODERES = JSON.parse(document.getElementById('sp-data').textContent);
+const AXON_SYSTEM = JSON.parse(document.getElementById('axon-prompt').textContent);
+const PRO_KEY =  + PRO_KEY + ;
+const GUMROAD =  + GUMROAD_URL + ;
+const IS_PRO = true;
+const FREE_LIMIT = 10;
+const PRO_LIMIT = 100;
+
+function getKey() {
+  var k1='sk-ant-api03-qp8DjbMxmbh2aM_0I0iR_idH'; var k2='AEC3xX6mjydeTfvE68JfUy8S00zqZ8aNqf1LiW7SVsgPF_MyDEZ9TkTc4EHp1g-Tcv6QwAA'; return k1+k2;
+}
+
+function clean(t) {
+  return t
+    .replace(/#{1,6}\s+/g,'')
+    .replace(/\*\*([^*]+)\*\*/g,'$1')
+    .replace(/\*([^*]+)\*/g,'$1')
+    .replace(/---/g,'\u2014')
+    .replace(/\n{3,}/g,'\n\n')
+    .trim();
+}
+
+function getCount(pro) {
+  try { return parseInt(localStorage.getItem(pro?'axon_pro_count':'axon_free_count')||'0'); } catch(e) { return 0; }
+}
+function setCount(pro, n) {
+  try { localStorage.setItem(pro?'axon_pro_count':'axon_free_count', String(n)); } catch(e) {}
+}
+
+var BLU='#4FC3F7', CA='rgba(255,255,255,0.03)', CB='rgba(255,255,255,0.07)',
+    T1='rgba(255,255,255,0.88)', T2='rgba(255,255,255,0.65)', T3='rgba(255,255,255,0.4)';
+
+const OPENING = 'Hola, soy AXON \u2014 tu gu\u00eda personal de IA. Estoy aqu\u00ed para llevarte de donde est\u00e1s hoy a usar la IA con soltura y criterio, a tu ritmo y con un plan hecho para ti.\n\nAntes de empezar, necesito entenderte. D\u00edme: \u00bfcu\u00e1l es tu mayor frustraci\u00f3n con la IA ahora mismo \u2014 o qu\u00e9 es lo primero que quieres aprender a hacer bien?';
+
+function App() {
+  const [view, setView] = useState('intro');
+  const [isPro, setIsPro] = useState(() => {
+    if(IS_PRO) return true;
+    try { return localStorage.getItem('axon_pro')==='true'; } catch(e) { return false; }
+  });
+  const [modal, setModal] = useState(null);
+  const [keyInput, setKeyInput] = useState('');
+  const [keyError, setKeyError] = useState(false);
+  const [msgs, setMsgs] = useState([{role:'agent', content:OPENING}]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [convCount, setConvCount] = useState(()=>getCount(IS_PRO));
+  const [activeSP, setActiveSP] = useState(null);
+  const msgsEnd = useRef(null);
+
+  useEffect(()=>{msgsEnd.current&&msgsEnd.current.scrollIntoView({behavior:'smooth'});},[msgs,loading]);
+
+  useEffect(()=>{
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const el=document.getElementById('loading');
+      if(el){el.style.opacity='0';el.style.transition='opacity 0.4s';setTimeout(()=>{if(el.parentNode)el.parentNode.removeChild(el);},400);}
+    }));
+  },[]);
+
+  function activatePro() {
+    setIsPro(true);
+    try{localStorage.setItem('axon_pro','true');}catch(e){}
+    setModal(null);setKeyInput('');setKeyError(false);
+    setConvCount(getCount(true));
+  }
+
+  function checkKey() {
+    if(keyInput.trim().toUpperCase()===PRO_KEY) activatePro();
+    else setKeyError(true);
+  }
+
+  function copyPrompt() {
+    navigator.clipboard.writeText(AXON_SYSTEM).catch(()=>{});
+  }
+
+  const limit = isPro ? PRO_LIMIT : FREE_LIMIT;
+  const remaining = Math.max(0, limit - convCount);
+  const nearLimit = isPro ? convCount>=80 : convCount>=8;
+
+  async function sendMsg() {
+    if(!input.trim()||loading) return;
+    const msg = input.trim();
+    setInput('');
+    const newCount = convCount+1;
+    setConvCount(newCount);
+    setCount(isPro, newCount);
+
+    if(newCount > limit) { setModal('limit'); return; }
+
+    const newMsgs = [...msgs, {role:'user', content:msg}];
+    setMsgs(newMsgs);
+    setLoading(true);
+
+    const apiKey = getKey();
+    if(!apiKey) {
+      setMsgs(p=>[...p,{role:'agent',content:'El chat est\u00e1 disponible en la versi\u00f3n completa. Desbloquea el acceso por 17\u20ac o copia mis instrucciones para usarme en tu LLM favorito.'}]);
+      setLoading(false);
+      setModal('unlock');
+      return;
+    }
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:AXON_SYSTEM,
+          messages:newMsgs.map(m=>({role:m.role==='agent'?'assistant':'user',content:m.content}))})
+      });
+      const data = await res.json();
+      const reply = clean(data.content&&data.content[0]?data.content[0].text:'Error.');
+      setMsgs(p=>[...p,{role:'agent',content:reply}]);
+    } catch(e) {
+      setMsgs(p=>[...p,{role:'agent',content:'Error de conexi\u00f3n. Int\u00e9ntalo de nuevo.'}]);
+    }
+    setLoading(false);
+  }
+
+  function ModalOverlay() {
+    if(modal!=='unlock'&&modal!=='limit') return null;
+    const isLimit = modal==='limit';
+    return(
+      <div onClick={()=>setModal(null)} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.9)',backdropFilter:'blur(8px)',zIndex:300,display:'flex',alignItems:'flex-end',justifyContent:'center'}}>
+        <div onClick={e=>e.stopPropagation()} style={{background:'#0d0d0d',border:'1px solid rgba(255,255,255,0.1)',borderBottom:'none',borderRadius:'20px 20px 0 0',padding:'32px 24px 48px',width:'100%',maxWidth:480,display:'flex',flexDirection:'column',gap:16}}>
+          <div style={{fontSize:13,fontWeight:700,color:BLU,letterSpacing:'0.08em',textTransform:'uppercase'}}>{isLimit?'Límite alcanzado':'Desbloquea AXON'}</div>
+          <div style={{fontSize:22,fontWeight:800,letterSpacing:'-0.03em',lineHeight:1.2}}>{isLimit?'Ha sido un placer guiarte':'Acceso completo a AXON'}</div>
+          <div style={{fontSize:14,color:T2,lineHeight:1.65}}>{isLimit?'Ya tienes una base real. Para seguir avanzando, elige tu camino:':'Desbloquea los 4 superpoderes sin límite de conversaciones.'}</div>
+          <button onClick={()=>window.open(GUMROAD,'_blank')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 20px',fontSize:16,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+            <span>Desbloquear acceso completo — 17€</span>
+            <span style={{fontSize:12,opacity:0.7}}>Pago único</span>
+          </button>
+          <button onClick={()=>{copyPrompt();setModal(null);}} style={{background:'rgba(255,255,255,0.05)',color:T2,border:'1px solid rgba(255,255,255,0.1)',borderRadius:12,padding:'14px 20px',fontSize:14,fontWeight:600,cursor:'pointer',textAlign:'left'}}>
+            <div style={{fontWeight:700,color:'#fff',marginBottom:4}}>Copiar instrucciones de AXON</div>
+            <div style={{fontSize:12,color:T3}}>Súscame en Claude, ChatGPT o Grok — con tu LLM el agente te recuerda y mejora contigo</div>
+          </button>
+          {!isLimit&&(
+            <div style={{display:'flex',alignItems:'center',gap:12}}>
+              <div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/>
+              <span style={{fontSize:12,color:T3,fontWeight:600}}>ya tengo clave</span>
+              <div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/>
+            </div>
+          )}
+          {!isLimit&&(
+            <div style={{display:'flex',gap:10}}>
+              <input style={{flex:1,background:'rgba(255,255,255,0.05)',border:keyError?'1px solid #ff5252':'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 14px',color:'#fff',fontSize:14,outline:'none'}} placeholder="Pega tu clave aquí..." value={keyInput} onChange={e=>{setKeyInput(e.target.value);setKeyError(false);}} onKeyDown={e=>e.key==='Enter'&&checkKey()}/>
+              <button onClick={checkKey} style={{background:'rgba(255,255,255,0.08)',color:'#fff',border:'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 16px',fontSize:14,fontWeight:700,cursor:'pointer'}}>Activar</button>
+            </div>
+          )}
+          {keyError&&<div style={{fontSize:12,color:'#ff5252'}}>Clave incorrecta. Comprueba tu email de confirmación.</div>}
+          <button onClick={()=>setModal(null)} style={{background:'none',border:'none',color:T3,fontSize:14,cursor:'pointer',alignSelf:'center'}}>Cerrar</button>
+        </div>
+      </div>
+    );
+  }
+
+  const chatEl = (view==='chat') ? (
+    <div style={{position:'fixed',inset:0,background:'#080808',display:'flex',flexDirection:'column',zIndex:100}}>
+      <div style={{display:'flex',alignItems:'center',gap:12,padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0,background:'#080808'}}>
+        <button onClick={()=>setView('home')} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer'}}>← Volver</button>
+        <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite',flexShrink:0}}/>
+        <div style={{flex:1}}>
+          <div style={{fontSize:15,fontWeight:700}}>AXON</div>
+          <div style={{fontSize:11,color:T3}}>{isPro?(remaining<=20?'Quedan '+remaining+' conversaciones · ':'')+'Acceso completo':remaining+' conversaciones gratis restantes'}</div>
+        </div>
+        {!isPro&&<button onClick={()=>setModal('unlock')} style={{background:BLU,color:'#000',border:'none',borderRadius:8,padding:'7px 14px',fontSize:12,fontWeight:800,cursor:'pointer'}}>Desbloquear</button>}
+      </div>
+      <div style={{flex:1,overflowY:'auto',padding:16,display:'flex',flexDirection:'column',gap:12}}>
+        {msgs.map((m,i)=>(
+          <div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.7,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
+        ))}
+        {loading&&(
+          <div style={{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
+            {[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}
+          </div>
+        )}
+        <div ref={msgsEnd}/>
+      </div>
+      {nearLimit&&!loading&&(
+        <div style={{margin:'0 16px 8px',padding:'10px 14px',background:'rgba(79,195,247,0.06)',border:'1px solid rgba(79,195,247,0.15)',borderRadius:10,fontSize:12,color:T2,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
+          <span>{isPro?'Quedan '+remaining+' conversaciones. ¿Continuar en tu LLM?':'Quedan '+(FREE_LIMIT-convCount)+' conversaciones gratis.'}</span>
+          <button onClick={()=>setModal('unlock')} style={{background:'none',border:'none',color:BLU,fontSize:12,fontWeight:700,cursor:'pointer',flexShrink:0}}>{isPro?'Copiar instrucciones →':'Desbloquear →'}</button>
+        </div>
+      )}
+      <div style={{display:'flex',gap:10,alignItems:'flex-end',padding:'12px 14px 28px',borderTop:'1px solid rgba(255,255,255,0.06)',background:'#080808',flexShrink:0}}>
+        <textarea
+          style={{flex:1,background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:14,padding:'13px 16px',color:'#fff',fontSize:16,resize:'none',outline:'none',height:50,lineHeight:1.4,fontFamily:'inherit'}}
+          placeholder="Escribe a AXON..."
+          value={input}
+          onChange={e=>setInput(e.target.value)}
+          onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}}
+        ></textarea>
+        <button onClick={sendMsg} disabled={!input.trim()||loading} style={{background:(!input.trim()||loading)?'rgba(79,195,247,0.2)':BLU,color:(!input.trim()||loading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:50,height:50,fontSize:22,fontWeight:700,cursor:(!input.trim()||loading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>↑</button>
+      </div>
+    </div>
+  ) : null;
+
+  if(view==='intro') return(
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center'}}>
+      <ModalOverlay/>
+      <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(79,195,247,0.1)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:100,padding:'6px 16px',fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:32}}>⚡ Agentes Brutales</div>
+      <div style={{fontSize:'clamp(48px,11vw,88px)',fontWeight:900,lineHeight:0.88,letterSpacing:'-0.04em',marginBottom:16}}>
+        Empieza<br/><span style={{color:BLU}}>Aquí</span>
+      </div>
+      <div style={{fontSize:'clamp(16px,4vw,20px)',color:T2,lineHeight:1.6,maxWidth:460,marginBottom:40}}>
+        AXON es tu guía personal de IA. Te lleva de no saber nada a usar la IA con soltura y criterio — con un plan hecho exactamente para ti.
+      </div>
+      <div style={{display:'flex',gap:32,marginBottom:40,flexWrap:'wrap',justifyContent:'center'}}>
+        {[['4','Superpoderes'],['17€','Acceso completo'],['10','Gratis para empezar']].map(([n,l])=>(
+          <div key={l+n} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
+            <span style={{fontSize:32,fontWeight:900,color:BLU,letterSpacing:'-0.03em'}}>{n}</span>
+            <span style={{fontSize:11,color:T3,textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:600}}>{l}</span>
+          </div>
+        ))}
+      </div>
+      <button onClick={()=>setView('home')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer',marginBottom:12}}>Conocer a AXON →</button>
+      <p style={{fontSize:13,color:T3}}>10 conversaciones gratis · Sin tarjeta</p>
+    </div>
+  );
+
+  if(view==='home') return(
+    <div style={{minHeight:'100vh',background:'#000'}}>
+      <ModalOverlay/>
+      {chatEl}
+      <div style={{position:'sticky',top:0,zIndex:50,background:'rgba(0,0,0,0.93)',backdropFilter:'blur(12px)',borderBottom:'1px solid rgba(255,255,255,0.06)',padding:'0 20px',display:'flex',alignItems:'center',justifyContent:'space-between',height:56}}>
+        <span style={{fontSize:15,fontWeight:800,letterSpacing:'-0.02em'}}>Agentes <span style={{color:BLU}}>Brutales</span></span>
+        {isPro
+          ?<div style={{background:'rgba(79,195,247,0.12)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:8,padding:'5px 12px',fontSize:12,fontWeight:700,color:BLU}}>✓ Acceso Completo</div>
+          :<button onClick={()=>setModal('unlock')} style={{background:BLU,color:'#000',border:'none',borderRadius:9,padding:'8px 14px',fontSize:13,fontWeight:800,cursor:'pointer'}}>Desbloquear — 17€</button>
+        }
+      </div>
+      <div style={{maxWidth:640,margin:'0 auto',padding:'40px 20px 100px'}}>
+        <div style={{marginBottom:8,fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}>De Cero a Competente</div>
+        <div style={{fontSize:36,fontWeight:900,letterSpacing:'-0.03em',lineHeight:1.1,marginBottom:8}}>AXON</div>
+        <div style={{fontSize:16,color:T2,lineHeight:1.6,marginBottom:32}}>Tu guía personal de IA. Cuatro superpoderes para llevarte de principiante a competente — con un plan hecho exactamente para ti.</div>
+
+        <button onClick={()=>setView('chat')} style={{display:'flex',alignItems:'center',gap:16,width:'100%',background:'linear-gradient(135deg,rgba(79,195,247,0.12),rgba(79,195,247,0.04))',border:'1px solid rgba(79,195,247,0.3)',borderRadius:16,padding:'20px 24px',cursor:'pointer',textAlign:'left',color:'#fff',marginBottom:32}}>
+          <div style={{width:44,height:44,borderRadius:12,background:BLU,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>⚡</div>
+          <div style={{flex:1}}>
+            <div style={{fontSize:17,fontWeight:800,marginBottom:3}}>Hablar con AXON</div>
+            <div style={{fontSize:13,color:T2}}>{isPro?'Acceso completo · '+remaining+' conversaciones restantes':'Chat gratuito · '+remaining+' conversaciones disponibles'}</div>
+          </div>
+          <span style={{color:BLU,fontSize:20}}>→</span>
+        </button>
+
+        <div style={{fontSize:13,fontWeight:700,color:T3,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:16}}>Los 4 superpoderes de AXON</div>
+        <div style={{display:'flex',flexDirection:'column',gap:12}}>
+          {SUPERPODERES.map((sp,i)=>{
+            const locked = !isPro && i>0;
+            return(
+              <div key={sp.id} onClick={()=>locked?setModal('unlock'):setActiveSP(activeSP===sp.id?null:sp.id)}
+                style={{background:locked?'rgba(255,255,255,0.01)':CA,border:'1px solid '+(locked?'rgba(255,255,255,0.04)':activeSP===sp.id?'rgba(79,195,247,0.3)':CB),borderRadius:14,padding:'18px 20px',cursor:'pointer',opacity:locked?0.6:1,transition:'all 0.15s'}}>
+                <div style={{display:'flex',alignItems:'center',gap:12}}>
+                  <span style={{fontSize:22,flexShrink:0}}>{sp.emoji}</span>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:15,fontWeight:700,marginBottom:2}}>
+                      {sp.nombre}
+                      {i===0&&!isPro&&<span style={{fontSize:10,fontWeight:700,color:BLU,background:'rgba(79,195,247,0.1)',borderRadius:6,padding:'2px 7px',marginLeft:8}}>GRATIS</span>}
+                      {locked&&<span style={{fontSize:14,marginLeft:8}}>🔒</span>}
+                    </div>
+                    <div style={{fontSize:12,color:T2}}>{sp.titulo}</div>
+                  </div>
+                  {!locked&&<span style={{color:'rgba(79,195,247,0.5)',fontSize:18,transform:activeSP===sp.id?'rotate(90deg)':'none',transition:'transform 0.2s'}}>›</span>}
+                </div>
+                {activeSP===sp.id&&(
+                  <div style={{marginTop:14,paddingTop:14,borderTop:'1px solid rgba(255,255,255,0.06)'}}>
+                    <div style={{fontSize:14,color:T2,lineHeight:1.65,marginBottom:12}}>{sp.descripcion}</div>
+                    <div style={{background:'rgba(79,195,247,0.05)',border:'1px solid rgba(79,195,247,0.1)',borderRadius:8,padding:'10px 14px',fontSize:13,color:T2}}>
+                      <span style={{color:BLU,fontWeight:600}}>Ejemplo: </span>{sp.ejemplo}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {!isPro&&(
+          <div style={{marginTop:32,padding:24,background:'rgba(79,195,247,0.04)',border:'1px solid rgba(79,195,247,0.12)',borderRadius:16,textAlign:'center'}}>
+            <div style={{fontSize:18,fontWeight:800,marginBottom:8}}>Desbloquea los 4 superpoderes</div>
+            <div style={{fontSize:14,color:T2,marginBottom:20,lineHeight:1.6}}>Acceso completo a AXON + los 4 superpoderes + 100 conversaciones. Un solo pago, sin suscripción.</div>
+            <button onClick={()=>setModal('unlock')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'14px 28px',fontSize:15,fontWeight:800,cursor:'pointer',marginBottom:12,width:'100%'}}>Conseguir acceso completo — 17€</button>
+            <div style={{fontSize:12,color:T3}}>O usa AXON gratis en tu LLM favorito copiando sus instrucciones</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  return null;
+}
+
+ReactDOM.createRoot(document.getElementById('app')).render(<App/>);
+</script>
+</body>
+</html>
