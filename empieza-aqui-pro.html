@@ -285,8 +285,9 @@ function App() {
       <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(79,195,247,0.08)',border:'1px solid rgba(79,195,247,0.25)',borderRadius:100,padding:'8px 20px',fontSize:14,fontWeight:700,color:BLU,marginBottom:40}}>
         ✓ Acceso completo · 100 conversaciones disponibles
       </div>
-      <button onClick={()=>setView('home')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer'}}>Hablar con AXON →</button>
+      <button onClick={()=>setView('chat')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer'}}>Hablar con AXON →</button>
     </div>
+    {chatEl}
   );
 
   if(view==='home') return(
