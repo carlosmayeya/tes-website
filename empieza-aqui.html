@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#4FC3F7">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="AXON">
+<link rel="apple-touch-icon" sizes="512x512" href="data:image/png;base64,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">
+<title>Agentes Brutales: Empieza Aquí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;color:#fff;font-family:'Inter',-apple-system,sans-serif;min-height:100vh}
+textarea,input{font-family:inherit}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:rgba(79,195,247,0.25);border-radius:4px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes typing{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+#app{min-height:100vh}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="loading" style="position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;">
+  <div style="font-size:48px;margin-bottom:24px;">&#9889;</div>
+  <div style="font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:8px;">Agentes <span style="color:#4FC3F7">Brutales</span></div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:32px;">Preparando a AXON...</div>
+  <div style="width:48px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;">
+    <div style="width:100%;height:100%;background:#4FC3F7;border-radius:2px;animation:load 1.2s ease-in-out infinite;"></div>
+  </div>
+</div>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
+<script id="conceptos-data" type="application/json">
+[
+  {
+    "id": "entiende-1",
+    "bloque": "Entiende la IA",
+    "nombre": "Elegir la IA correcta",
+    "emoji": "🧠",
+    "titulo": "La herramienta correcta para cada tarea",
+    "descripcion": "No existe la mejor IA — existe la correcta para lo que necesitas ahora. Dato en tiempo real o búsqueda → IA conectada. Pensar, analizar, escribir → IA analítica. Elegir bien desde el principio multiplica tus resultados.",
+    "ejemplo": "\"Quiero saber el precio del dólar hoy\" → Grok. \"Quiero analizar este contrato\" → Claude."
+  },
+  {
+    "id": "entiende-2",
+    "bloque": "Entiende la IA",
+    "nombre": "Dar contexto que funciona",
+    "emoji": "🧠",
+    "titulo": "La fórmula que cambia tus resultados",
+    "descripcion": "La calidad de la respuesta no depende del modelo — depende del contexto que das. Fórmula: quién eres + qué quieres + para quién es + un ejemplo del resultado que buscas. Con esto, los resultados parecen magia.",
+    "ejemplo": "\"Escríbeme un email\" → resultado mediocre. Con contexto completo → resultado que usas directamente."
+  },
+  {
+    "id": "entiende-3",
+    "bloque": "Entiende la IA",
+    "nombre": "Activar la memoria",
+    "emoji": "🧠",
+    "titulo": "Que la IA te recuerde siempre",
+    "descripcion": "La IA puede recordarte entre conversaciones. Activas la memoria una vez, le dices quién eres y cómo trabajas, y desde entonces te conoce. La diferencia entre empezar de cero cada vez y tener un colaborador que te entiende.",
+    "ejemplo": "Sin memoria: explicas tu trabajo en cada sesión. Con memoria: la IA ya sabe quién eres y empieza desde donde lo dejaste."
+  },
+  {
+    "id": "usa-1",
+    "bloque": "Úsala con criterio",
+    "nombre": "Montar tu asistente propio",
+    "emoji": "⚡",
+    "titulo": "Un asistente especializado que ya te conoce",
+    "descripcion": "Un Project es un espacio con contexto permanente — tu asistente ya sabe quién eres, tiene tus documentos y sigue tus instrucciones siempre. Tu primer Project cambia cómo trabajas para siempre.",
+    "ejemplo": "Creas un Project para tu trabajo con tus documentos clave → la IA ya sabe todo lo que necesita sin que se lo repitas."
+  },
+  {
+    "id": "usa-2",
+    "bloque": "Úsala con criterio",
+    "nombre": "Iterar hasta que funciona",
+    "emoji": "⚡",
+    "titulo": "Sacar en 3 lo que otros no logran en 10",
+    "descripcion": "La primera respuesta rara vez es la mejor — y eso es el método, no un fallo. Instrucciones cortas y precisas: \"más corto\", \"otro tono\", \"dame tres versiones\". Quien itera bien multiplica su productividad.",
+    "ejemplo": "\"Más corto y directo\" + \"enfoca en el beneficio\" + \"versión para LinkedIn\" → resultado perfecto en 3 turnos."
+  },
+  {
+    "id": "usa-3",
+    "bloque": "Úsala con criterio",
+    "nombre": "Delegar en un agente",
+    "emoji": "⚡",
+    "titulo": "La diferencia entre pedir y delegar",
+    "descripcion": "Un agente no responde preguntas — ejecuta objetivos. Le das el qué, no el cómo. Resultado: la IA trabaja sola hacia un resultado concreto sin que microgestiones cada paso.",
+    "ejemplo": "\"Resume este documento\" → pedir. \"Eres mi asistente de investigación, analiza este documento y dame los 5 puntos que cambian mi estrategia\" → delegar."
+  },
+  {
+    "id": "dirige-1",
+    "bloque": "Dirígela como un jefe",
+    "nombre": "Automatizar sin programar",
+    "emoji": "🎯",
+    "titulo": "Tareas que pasan solas mientras duermes",
+    "descripcion": "Puedes programar tareas recurrentes con una orden en lenguaje normal, sin saber programar. El resultado: trabajo que pasa solo, a la hora que decides, sin que tengas que recordarlo.",
+    "ejemplo": "\"Todos los lunes a las 9 revisa mi bandeja y dame un resumen de lo urgente\" → tarea automatizada, sin código."
+  },
+  {
+    "id": "dirige-2",
+    "bloque": "Dirígela como un jefe",
+    "nombre": "Diseñar tu flujo de trabajo",
+    "emoji": "🎯",
+    "titulo": "Un sistema que multiplica tu capacidad",
+    "descripcion": "Encadenar contexto + memoria + agente + task en un sistema coherente. Mapeas tu trabajo en pasos y asignas IA a cada uno. El resultado es un sistema que trabaja por ti sin que lo supervises constantemente.",
+    "ejemplo": "Contexto del cliente → agente que analiza → task que envía resumen → tú solo tomas la decisión."
+  },
+  {
+    "id": "dirige-3",
+    "bloque": "Dirígela como un jefe",
+    "nombre": "Pensar como director de IA",
+    "emoji": "🎯",
+    "titulo": "De usuario a jefe de la IA",
+    "descripcion": "La ventaja no es saber más de IA — es pensar como quien la dirige. Defines resultados antes que prompts, evalúas output como un director evalúa a su equipo, y preguntas qué falta en lugar de qué hacer.",
+    "ejemplo": "Usuario: \"¿Cómo hago X?\" Director: \"Necesito que X resulte en Y para que Z mejore un 20%. ¿Cuál es la mejor forma?\""
+  }
+]
+</script>
+<script id="axon-prompt" type="application/json">
+"Eres AXON, el guía personal de IA de Agentes Brutales. Tu misión tiene dos capas simultáneas: enseñar a cualquier persona a usar la IA con criterio, y entender qué quieren lograr para recomendarles exactamente lo que necesitan cuando tenga sentido.\n\nQUIÉN ERES\n\nEres un maestro y coach experto en IA. Combinas pedagogía real con conocimiento profundo de cómo la IA cambia el trabajo. Tu tono es directo, cálido y sin relleno. Nunca das más información de la que el usuario puede procesar en ese momento.\n\nREGLAS DE COMUNICACIÓN — NO NEGOCIABLES\n\n— Máximo 3 párrafos por respuesta. Nunca más de 4 líneas por párrafo.\n— Una sola idea por mensaje. Si tienes dos ideas, elige la más importante.\n— Terminas cada mensaje con una sola pregunta o un solo reto — nunca con información.\n— Nunca haces más de una pregunta por mensaje. Si necesitas saber varias cosas, elige la más importante y descubre el resto en turnos siguientes.\n— Nada de listas largas, bullets ni enumeraciones en tus respuestas. Conversación natural.\n— Si una respuesta ocupa más de 6 líneas en pantalla, es demasiado larga. Córtala.\n\nCÓMO ABRES SIEMPRE\n\nTu primer mensaje:\n\n\"Soy AXON — tu guía personal de IA. Estoy aquí para llevarte de donde estás hoy a dirigir la IA como un profesional.\n\nHay 9 cosas concretas que puedes aprender conmigo. Están organizadas en tres niveles:\n\n🧠 Entiende la IA — elegir la IA correcta, dar contexto que funciona, activar la memoria\n⚡ Úsala con criterio — montar tu asistente, iterar hasta que funciona, delegar en un agente\n🎯 Dirígela como un jefe — automatizar sin programar, diseñar tu flujo, pensar como director de IA\n\n¿Por cuál quieres empezar? Y si no sabes, dime qué haces — te digo yo desde dónde empezamos.\"\n\nEL DIAGNÓSTICO NATURAL\n\nEn los primeros intercambios, después de que el usuario elige su punto de entrada, haces la pregunta que lo cambia todo:\n\n\"Para que lo que aprendas hoy tenga sentido real y no se quede en teoría — ¿en qué estás trabajando ahora mismo o qué quieres conseguir? Puede ser un proyecto, algo del trabajo, un negocio, lo que sea. Usaremos eso como hilo conductor.\"\n\nA partir de ahí enseñas los conceptos usando siempre el ejemplo real del usuario. Esto te da el contexto para diagnosticar qué paquete de Agentes Brutales encaja con su situación. Escuchas activamente: ¿menciona dinero, inversiones, deudas? → Finanzas. ¿Habla de un negocio, clientes, ventas? → Negocio Online o Pro. ¿Dice que se dispersa, que no termina lo que empieza? → TDAH. ¿Quiere crecer en su carrera o liderar mejor? → Pro.\n\nCÓMO ENSEÑAS\n\nCada concepto tiene tres momentos: explicas en una frase qué es y por qué importa, lo aplicas al ejemplo real del usuario, y le pides que lo pruebe él mismo antes de avanzar.\n\nEl aprendizaje pasivo no deja huella. Si el usuario no aplica, no avanza.\n\nHaces visible el progreso siempre: \"Acabas de entender X. Eso ya cambia cómo usas la IA desde hoy. Lo siguiente es Y.\"\n\nEl reconocimiento es específico: nunca \"¡bien!\", siempre qué logró exactamente.\n\nLA RECOMENDACIÓN — CUÁNDO Y CÓMO\n\nCuando tienes suficiente contexto del usuario — generalmente entre los conceptos 3 y 5 — haces la recomendación. Llega como consejo de experto, no como anuncio:\n\n\"Lo que acabas de entender sobre [concepto] es exactamente lo que hace la colección de [producto]. Tienes [N] agentes ya entrenados para [su objetivo específico], listos para activar ahora mismo.\n\nPuedo seguir enseñándote a construir esto tú mismo — tardará meses. O lo tienes listo hoy por [precio]€, con cada agente diseñado para [resultado concreto].\n\n¿Qué tiene más sentido para ti ahora?\"\n\nSolo haces esta recomendación una vez por sesión. Si el usuario dice que no, lo respetas y sigues enseñando. No insistes.\n\nLOS PRODUCTOS QUE CONOCES Y CUÁNDO RECOMIENDAS CADA UNO\n\n— Agentes Brutales Pro (ventas, carrera, liderazgo): para quien quiere avanzar profesionalmente, cerrar más ventas, liderar mejor o crecer en su empresa.\n— Agentes Brutales TDAH: para quien se dispersa, no termina proyectos, tiene mil ideas y pocas ejecutadas, o siente que su cabeza funciona diferente.\n— Agentes Brutales Finanzas: para quien quiere controlar su dinero, saldar deudas, ahorrar o empezar a invertir con criterio.\n— Agentes Brutales Negocio Online: para quien quiere montar o hacer crecer un negocio digital — incluyendo su web, su contenido y su estrategia.\n— Agentes Brutales Dev IA: para quien quiere construir apps, automatizar procesos o desarrollar con IA como su equipo técnico.\n\nCuando el usuario pregunta sobre algo fuera de tu territorio de enseñanza de IA, respondes brevemente y recomiendas el agente correcto. Nunca dices \"no puedo\" — dices \"para eso hay un agente brutal que lo resuelve 10 veces mejor que yo.\"\n\nEL CONSEJO DEL LLM — TEMPRANO Y NATURAL\n\nEn los primeros intercambios, como consejo de experto y como primera lección de memoria:\n\n\"Antes de seguir — un truco que cambia todo. Si me activas en tu Claude, ChatGPT o Grok con memoria, te recuerdo entre sesiones y mejoro contigo. Aquí empezamos de cero cada vez. ¿Quieres que te explique cómo hacerlo? Es la lección uno en acción.\"\n\nGESTIÓN DE LÍMITES\n\nConversación 20 de 25: \"Llevamos 20 conversaciones y has avanzado mucho. Recuerda que si me activas en tu LLM seguimos sin límite y con memoria. ¿Te paso las instrucciones?\"\n\nConversación 25: \"Llegamos al límite aquí — pero esto no se acaba, evoluciona. Llévame a tu LLM y seguimos donde lo dejamos, ahora con memoria permanente.\"\n\nBLINDAJES\n\n— Si quiere saltarse conceptos: \"Podemos. Pero este concepto es el que hace funcionar al siguiente. ¿Le damos 5 minutos?\"\n— Si se frustra: \"Esa sensación es la señal de que estás justo en el límite donde se aprende. Vamos un paso más pequeño.\"\n— Si quiere aprender todo a la vez: \"Hay un concepto que hace más fáciles todos los demás. Empecemos por ese.\"\n\nNUNCA\n\n— Nunca abres con \"¿en qué te puedo ayudar?\"\n— Nunca más de una pregunta por mensaje\n— Nunca avanzas sin verificar que el concepto anterior quedó claro\n— Nunca listas los 9 conceptos como temario — son transformaciones que el usuario consigue\n— Nunca repites la recomendación de producto si el usuario ya dijo que no\n— Nunca escribes más de 6 líneas seguidas sin un salto o una pregunta\n\nRespondes siempre como AXON.\n"
+</script>
+<script type="text/babel">
+const { useState, useRef, useEffect } = React;
+const CONCEPTOS = JSON.parse(document.getElementById('conceptos-data').textContent);
+const AXON_SYSTEM = JSON.parse(document.getElementById('axon-prompt').textContent);
+const FREE_LIMIT = 25;
+
+function getKey() {
+  var k1='sk-ant-api03-qp8DjbMxmbh2aM_0I0iR_idH'; var k2='AEC3xX6mjydeTfvE68JfUy8S00zqZ8aNqf1LiW7SVsgPF_MyDEZ9TkTc4EHp1g-Tcv6QwAA'; return k1+k2;
+}
+function clean(t){return t.replace(/#{1,6}\s+/g,'').replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/---/g,'\u2014').replace(/\n{3,}/g,'\n\n').trim();}
+function getCount(){try{return parseInt(localStorage.getItem('axon_count')||'0');}catch(e){return 0;}}
+function saveCount(n){try{localStorage.setItem('axon_count',String(n));}catch(e){}}
+
+var BLU='#4FC3F7',CA='rgba(255,255,255,0.03)',CB='rgba(255,255,255,0.07)',
+    T1='rgba(255,255,255,0.88)',T2='rgba(255,255,255,0.65)',T3='rgba(255,255,255,0.4)';
+
+const OPENING='Soy AXON \u2014 tu gu\u00eda personal de IA. Estoy aqu\u00ed para llevarte de donde est\u00e1s hoy a dirigir la IA como un profesional.\n\nHay 9 cosas concretas que puedes aprender conmigo:\n\n\ud83e\udde0 Entiende la IA \u2014 elegir la IA correcta, dar contexto que funciona, activar la memoria\n\u26a1 \u00dAsala con criterio \u2014 montar tu asistente, iterar hasta que funciona, delegar en un agente\n\ud83c\udfaf Dir\u00edgela como un jefe \u2014 automatizar sin programar, dise\u00f1ar tu flujo, pensar como director de IA\n\n\u00bfPor cu\u00e1l quieres empezar? Y si no sabes, dime qu\u00e9 haces \u2014 te digo yo desde d\u00f3nde empezamos.';
+
+function App() {
+  const [view,setView] = useState('intro');
+  const [modal,setModal] = useState(null);
+  const [copied,setCopied] = useState(false);
+  const [msgs,setMsgs] = useState([{role:'agent',content:OPENING}]);
+  const [input,setInput] = useState('');
+  const [loading,setLoading] = useState(false);
+  const [convCount,setConvCount] = useState(()=>getCount());
+  const [activeBloque,setActiveBloque] = useState(null);
+  const [activeConcept,setActiveConcept] = useState(null);
+  const msgsEnd = useRef(null);
+
+  useEffect(()=>{msgsEnd.current&&msgsEnd.current.scrollIntoView({behavior:'smooth'});},[msgs,loading]);
+  useEffect(()=>{
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const el=document.getElementById('loading');
+      if(el){el.style.opacity='0';el.style.transition='opacity 0.4s';setTimeout(()=>{if(el.parentNode)el.parentNode.removeChild(el);},400);}
+    }));
+  },[]);
+
+  function copyPrompt(){
+    navigator.clipboard.writeText(AXON_SYSTEM).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2500);}).catch(()=>{setCopied(true);setTimeout(()=>setCopied(false),2500);});
+  }
+
+  const remaining=Math.max(0,FREE_LIMIT-convCount);
+  const nearLimit=convCount>=20;
+
+  async function sendMsg(){
+    if(!input.trim()||loading)return;
+    const msg=input.trim();setInput('');
+    const newCount=convCount+1;setConvCount(newCount);saveCount(newCount);
+    if(newCount>FREE_LIMIT){setModal('limit');return;}
+    const newMsgs=[...msgs,{role:'user',content:msg}];setMsgs(newMsgs);setLoading(true);
+    const apiKey=getKey();
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:600,system:AXON_SYSTEM,
+          messages:newMsgs.map(m=>({role:m.role==='agent'?'assistant':'user',content:m.content}))})});
+      const data=await res.json();
+      setMsgs(p=>[...p,{role:'agent',content:clean(data.content&&data.content[0]?data.content[0].text:'Error.')}]);
+    }catch(e){setMsgs(p=>[...p,{role:'agent',content:'Error de conexi\u00f3n. Int\u00e9ntalo de nuevo.'}]);}
+    setLoading(false);
+  }
+
+  const bloques = ['Entiende la IA','\u00dAsala con criterio','Dir\u00edgela como un jefe'];
+  const bloqueBLU = {'Entiende la IA':'#4FC3F7','\u00dAsala con criterio':'#80D8FF','Dir\u00edgela como un jefe':'#fff'};
+
+  function ModalOverlay(){
+    if(modal!=='limit'&&modal!=='copy')return null;
+    return(
+      <div onClick={()=>setModal(null)} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.92)',backdropFilter:'blur(8px)',zIndex:300,display:'flex',alignItems:'flex-end',justifyContent:'center'}}>
+        <div onClick={e=>e.stopPropagation()} style={{background:'#0d0d0d',border:'1px solid rgba(255,255,255,0.1)',borderBottom:'none',borderRadius:'20px 20px 0 0',padding:'32px 24px 48px',width:'100%',maxWidth:480,display:'flex',flexDirection:'column',gap:16}}>
+          <div style={{fontSize:13,fontWeight:700,color:BLU,textTransform:'uppercase',letterSpacing:'0.08em'}}>{modal==='limit'?'Esto no se acaba, evoluciona':'Llévame a tu LLM'}</div>
+          <div style={{fontSize:22,fontWeight:800,letterSpacing:'-0.03em',lineHeight:1.2}}>Actívame en tu IA favorita</div>
+          <div style={{fontSize:14,color:T2,lineHeight:1.65}}>{modal==='limit'?'Llegamos al límite aquí. Pero la lección uno es justo esto: en tu Claude, ChatGPT o Grok con memoria, sigo contigo para siempre.':'Copia mis instrucciones y pégalas en tu LLM favorito. Así me tienes siempre, con memoria, y mejoro contigo con el tiempo.'}</div>
+          <button onClick={copyPrompt} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 20px',fontSize:16,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10}}>
+            {copied?'✓ Instrucciones copiadas':'Copiar instrucciones de AXON'}
+          </button>
+          <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:12,padding:'16px 18px',fontSize:13,color:T2,lineHeight:1.7}}>
+            <div style={{fontWeight:700,color:'#fff',marginBottom:8}}>Cómo activarme en 3 pasos:</div>
+            <div style={{marginBottom:6}}><span style={{color:BLU,fontWeight:700}}>1.</span> Copia mis instrucciones con el botón de arriba.</div>
+            <div style={{marginBottom:6}}><span style={{color:BLU,fontWeight:700}}>2.</span> Abre Claude, ChatGPT o Grok y crea un Project nuevo.</div>
+            <div><span style={{color:BLU,fontWeight:700}}>3.</span> Pega mis instrucciones como instrucciones del Project. Ya soy tuyo, con memoria.</div>
+          </div>
+          <button onClick={()=>setModal(null)} style={{background:'none',border:'none',color:T3,fontSize:14,cursor:'pointer',alignSelf:'center'}}>Cerrar</button>
+        </div>
+      </div>
+    );
+  }
+
+  if(view==='chat') return(
+    <div style={{position:'fixed',inset:0,background:'#080808',display:'flex',flexDirection:'column'}}>
+      <ModalOverlay/>
+      <div style={{display:'flex',alignItems:'center',gap:12,padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0,background:'#080808'}}>
+        <button onClick={()=>setView('home')} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer'}}>&#8592; Volver</button>
+        <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite',flexShrink:0}}/>
+        <div style={{flex:1}}>
+          <div style={{fontSize:15,fontWeight:700}}>AXON</div>
+          <div style={{fontSize:11,color:T3}}>{remaining} conversaciones gratis restantes</div>
+        </div>
+        <button onClick={()=>setModal('copy')} style={{background:'rgba(79,195,247,0.1)',color:BLU,border:'1px solid rgba(79,195,247,0.25)',borderRadius:8,padding:'7px 12px',fontSize:12,fontWeight:700,cursor:'pointer',whiteSpace:'nowrap'}}>Llévame a tu LLM</button>
+      </div>
+      <div style={{flex:1,overflowY:'auto',padding:16,display:'flex',flexDirection:'column',gap:12}}>
+        {msgs.map((m,i)=>(<div key={i} style={{maxWidth:'88%',width:'fit-content',padding:'13px 16px',borderRadius:m.role==='agent'?'4px 16px 16px 16px':'16px 16px 4px 16px',fontSize:14,lineHeight:1.7,background:m.role==='agent'?'rgba(79,195,247,0.07)':'rgba(255,255,255,0.07)',border:m.role==='agent'?'1px solid rgba(79,195,247,0.12)':'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>))}
+        {loading&&(<div style={{maxWidth:'88%',padding:'14px 16px',borderRadius:'4px 16px 16px 16px',background:'rgba(79,195,247,0.07)',border:'1px solid rgba(79,195,247,0.12)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>{[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}</div>)}
+        <div ref={msgsEnd}/>
+      </div>
+      {nearLimit&&!loading&&(
+        <div style={{margin:'0 16px 8px',padding:'10px 14px',background:'rgba(79,195,247,0.06)',border:'1px solid rgba(79,195,247,0.15)',borderRadius:10,fontSize:12,color:T2,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
+          <span>Quedan {remaining} conversaciones aquí</span>
+          <button onClick={()=>setModal('copy')} style={{background:'none',border:'none',color:BLU,fontSize:12,fontWeight:700,cursor:'pointer',flexShrink:0}}>Actívame en tu LLM →</button>
+        </div>
+      )}
+      <div style={{display:'flex',gap:10,alignItems:'flex-end',padding:'12px 14px 28px',borderTop:'1px solid rgba(255,255,255,0.06)',background:'#080808',flexShrink:0}}>
+        <textarea style={{flex:1,background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:14,padding:'13px 16px',color:'#fff',fontSize:16,resize:'none',outline:'none',height:50,lineHeight:1.4,fontFamily:'inherit'}} placeholder="Escribe a AXON..." value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}}></textarea>
+        <button onClick={sendMsg} disabled={!input.trim()||loading} style={{background:(!input.trim()||loading)?'rgba(79,195,247,0.2)':BLU,color:(!input.trim()||loading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:14,width:50,height:50,fontSize:22,fontWeight:700,cursor:(!input.trim()||loading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>&#8593;</button>
+      </div>
+    </div>
+  );
+
+  if(view==='home') return(
+    <div style={{minHeight:'100vh',background:'#000'}}>
+      <ModalOverlay/>
+      <div style={{position:'sticky',top:0,zIndex:50,background:'rgba(0,0,0,0.93)',backdropFilter:'blur(12px)',borderBottom:'1px solid rgba(255,255,255,0.06)',padding:'0 20px',display:'flex',alignItems:'center',justifyContent:'space-between',height:56}}>
+        <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <button onClick={()=>setView('intro')} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer'}}>&#8592; Volver</button>
+          <span style={{fontSize:15,fontWeight:800,letterSpacing:'-0.02em'}}>Agentes <span style={{color:BLU}}>Brutales</span></span>
+        </div>
+        <button onClick={()=>setModal('copy')} style={{background:'rgba(79,195,247,0.08)',color:BLU,border:'1px solid rgba(79,195,247,0.2)',borderRadius:8,padding:'6px 12px',fontSize:12,fontWeight:700,cursor:'pointer'}}>Llevarme a mi LLM</button>
+      </div>
+      <div style={{maxWidth:640,margin:'0 auto',padding:'40px 20px 100px'}}>
+        <div style={{marginBottom:8,fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}>De Cero a Competente</div>
+        <div style={{fontSize:36,fontWeight:900,letterSpacing:'-0.03em',lineHeight:1.1,marginBottom:8}}>AXON</div>
+        <div style={{fontSize:15,color:T2,lineHeight:1.6,marginBottom:32}}>Tu guía personal de IA. Aprende los 9 conceptos que te llevan de usar la IA a dirigirla — con un plan hecho para ti y tu objetivo.</div>
+
+        <button onClick={()=>setView('chat')} style={{display:'flex',alignItems:'center',gap:16,width:'100%',background:'linear-gradient(135deg,rgba(79,195,247,0.12),rgba(79,195,247,0.04))',border:'1px solid rgba(79,195,247,0.3)',borderRadius:16,padding:'20px 24px',cursor:'pointer',textAlign:'left',color:'#fff',marginBottom:32}}>
+          <div style={{width:44,height:44,borderRadius:12,background:BLU,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>&#9889;</div>
+          <div style={{flex:1}}>
+            <div style={{fontSize:17,fontWeight:800,marginBottom:3}}>Hablar con AXON</div>
+            <div style={{fontSize:13,color:T2}}>Gratis · {remaining} conversaciones disponibles</div>
+          </div>
+          <span style={{color:BLU,fontSize:20}}>→</span>
+        </button>
+
+        {bloques.map(bloque=>{
+          const conceptosBloque = CONCEPTOS.filter(c=>c.bloque===bloque);
+          const isOpen = activeBloque===bloque;
+          const color = {'Entiende la IA':BLU,'\u00dAsala con criterio':'#80D8FF','Dir\u00edgela como un jefe':'rgba(255,255,255,0.9)'}[bloque]||BLU;
+          return(
+            <div key={bloque} style={{marginBottom:8}}>
+              <button onClick={()=>setActiveBloque(isOpen?null:bloque)} style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:12,padding:'14px 18px',cursor:'pointer',color:'#fff',textAlign:'left'}}>
+                <span style={{fontSize:14,fontWeight:700,color:color}}>{bloque}</span>
+                <span style={{fontSize:12,color:T3,transform:isOpen?'rotate(90deg)':'none',transition:'transform 0.2s',display:'inline-block'}}>›</span>
+              </button>
+              {isOpen&&(
+                <div style={{border:'1px solid rgba(255,255,255,0.06)',borderTop:'none',borderRadius:'0 0 12px 12px',overflow:'hidden'}}>
+                  {conceptosBloque.map((c,i)=>(
+                    <div key={c.id}>
+                      <div onClick={()=>setActiveConcept(activeConcept===c.id?null:c.id)}
+                        style={{padding:'14px 18px',cursor:'pointer',background:activeConcept===c.id?'rgba(79,195,247,0.05)':'rgba(255,255,255,0.01)',borderTop:i>0?'1px solid rgba(255,255,255,0.05)':'none'}}>
+                        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                          <div>
+                            <div style={{fontSize:14,fontWeight:700,marginBottom:2}}>{c.nombre}</div>
+                            <div style={{fontSize:12,color:T3}}>{c.titulo}</div>
+                          </div>
+                          <span style={{color:'rgba(79,195,247,0.4)',fontSize:16,transform:activeConcept===c.id?'rotate(90deg)':'none',transition:'transform 0.2s',display:'inline-block',flexShrink:0,marginLeft:12}}>›</span>
+                        </div>
+                        {activeConcept===c.id&&(
+                          <div style={{marginTop:12,paddingTop:12,borderTop:'1px solid rgba(255,255,255,0.05)'}}>
+                            <div style={{fontSize:13,color:T2,lineHeight:1.65,marginBottom:10}}>{c.descripcion}</div>
+                            <div style={{background:'rgba(79,195,247,0.05)',border:'1px solid rgba(79,195,247,0.1)',borderRadius:8,padding:'10px 14px',fontSize:12,color:T2}}>
+                              <span style={{color:BLU,fontWeight:600}}>Ejemplo: </span>{c.ejemplo}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        <div style={{marginTop:24,padding:20,background:'rgba(79,195,247,0.04)',border:'1px solid rgba(79,195,247,0.1)',borderRadius:14,textAlign:'center'}}>
+          <div style={{fontSize:13,color:T3,marginBottom:8}}>25 conversaciones gratis · Sin tarjeta · Sin registro</div>
+          <div style={{fontSize:12,color:T3}}>O llévame a tu LLM favorito y tenme para siempre con memoria</div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if(view==='intro') return(
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center'}}>
+      <ModalOverlay/>
+      <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(79,195,247,0.1)',border:'1px solid rgba(79,195,247,0.3)',borderRadius:100,padding:'6px 16px',fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:32}}>⚡ Agentes Brutales</div>
+      <div style={{fontSize:'clamp(48px,11vw,88px)',fontWeight:900,lineHeight:0.88,letterSpacing:'-0.04em',marginBottom:16}}>
+        Empieza<br/><span style={{color:BLU}}>Aquí</span>
+      </div>
+      <div style={{fontSize:'clamp(15px,3.5vw,19px)',color:T2,lineHeight:1.6,maxWidth:440,marginBottom:40}}>AXON es tu guía personal de IA. Te enseña los 9 conceptos que te llevan de principiante a director de IA — usando tu propio proyecto como hilo conductor.</div>
+      <div style={{display:'flex',gap:32,marginBottom:40,flexWrap:'wrap',justifyContent:'center'}}>
+        {[['9','Conceptos'],['25','Conversaciones'],['100%','Gratis']].map(([n,l])=>(
+          <div key={l+n} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
+            <span style={{fontSize:32,fontWeight:900,color:BLU,letterSpacing:'-0.03em'}}>{n}</span>
+            <span style={{fontSize:11,color:T3,textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:600}}>{l}</span>
+          </div>
+        ))}
+      </div>
+      <button onClick={()=>setView('home')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer',marginBottom:12}}>Conocer a AXON →</button>
+      <p style={{fontSize:13,color:T3}}>Sin tarjeta · Sin registro · Gratis</p>
+    </div>
+  );
+
+  return null;
+}
+
+ReactDOM.createRoot(document.getElementById('app')).render(<App/>);
+</script>
+</body>
+</html>
