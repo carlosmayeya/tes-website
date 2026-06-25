@@ -1144,6 +1144,10 @@
       grid-template-columns: 1fr !important;
       gap: 24px !important;
     }
+    /* Grid de diferenciación — columna única en móvil */
+    #prompts > div:first-of-type > div:last-child {
+      grid-template-columns: 1fr !important;
+    }
     section { padding: 60px 20px; }
     .hero { padding: 90px 20px 60px; }
     .hero-scroll { left: 20px; }
@@ -1247,93 +1251,138 @@
   <h2 class="section-title">Agentes Brutales</h2>
   <p class="section-subtitle">Una suite de agentes especializados. Cada uno construido para conseguir un resultado concreto — con métodos reales de coaching y psicología integrados.</p>
 
-  <!-- PRODUCTO 1 — AXON (disponible) -->
-  <div style="background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid)); border: 1px solid rgba(79,195,247,0.4); padding: 40px; margin-bottom: 32px; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 65%); pointer-events: none;"></div>
+  <!-- BLOQUE 1 — DIFERENCIACIÓN -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 24px; color: var(--white);">¿No es lo mismo que preguntarle a ChatGPT?</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
+
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 28px;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 14px;">Un LLM sin configurar</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 12px;">Un genio que puede ser cualquier cosa</div>
+        <p style="font-size: 13px; color: var(--grey); line-height: 1.75;">Médico, abogado, coach — si sabes exactamente cómo pedírselo. El problema: la mayoría no sabe qué preguntar ni por dónde empezar. Empieza de cero en cada conversación.</p>
+      </div>
+
+      <div style="background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.3); border-left: 3px solid var(--blue); padding: 28px;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 14px;">Un Agente Brutal</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 12px;">Un especialista ya configurado</div>
+        <p style="font-size: 13px; color: var(--white-dim); line-height: 1.75;">Con métodos reales de coaching y psicología. Sabe exactamente qué preguntarte, cómo guiarte y adónde llevarte. No necesitas saber qué pedirle — él te lleva al resultado aunque no sepas por dónde empezar.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BLOQUE 2 — TRANSPARENCIA -->
+  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 32px; margin-bottom: 48px;">
+    <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px;">Lo que necesitas saber antes de comprar</div>
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; gap: 16px; align-items: flex-start;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">01</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Necesitas un LLM con plan de pago</strong> — Claude, ChatGPT o Grok (~20€/mes). Si ya lo tienes, estos agentes son lo que le faltaba. Si no, son la razón para activarlo.</p>
+      </div>
+      <div style="display: flex; gap: 16px; align-items: flex-start;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">02</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Tus conversaciones son completamente privadas.</strong> Los agentes viven en tu LLM — nosotros nunca vemos lo que hablas con ellos.</p>
+      </div>
+      <div style="display: flex; gap: 16px; align-items: flex-start;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">03</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Para TDAH: COMPA está diseñado para usarse en voz con Grok.</strong> No es un agente de texto — es un compañero que te acompaña en tiempo real mientras trabajas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 3 — AXON GRATIS -->
+  <div style="background: linear-gradient(135deg, #0a1a0a, #0d2a1a); border: 1px solid rgba(52,211,153,0.3); border-left: 3px solid #34D399; padding: 40px; margin-bottom: 48px; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(52,211,153,0.08) 0%, transparent 65%); pointer-events: none;"></div>
     <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
       <div>
-        <div style="display: inline-block; background: var(--blue); color: var(--black); font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; padding: 4px 12px; text-transform: uppercase; margin-bottom: 16px;">⚡ GRATIS</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; margin-bottom: 10px; line-height: 1.2;">AXON — Tu guía personal de IA</div>
-        <p style="font-size: 15px; color: var(--white-dim); line-height: 1.75; margin-bottom: 24px; max-width: 520px;">Aprende los 9 conceptos que transforman a alguien que usa la IA en alguien que la dirige. 25 conversaciones gratuitas, sin tarjeta.</p>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--white-dim);">
-            <span style="color: var(--blue); font-weight: 700; flex-shrink: 0;">✓</span>
-            <span>Empieza en segundos — sin registro, sin tarjeta de crédito</span>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--white-dim);">
-            <span style="color: var(--blue); font-weight: 700; flex-shrink: 0;">✓</span>
-            <span>25 conversaciones gratuitas para aprender a tu ritmo</span>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--white-dim);">
-            <span style="color: var(--blue); font-weight: 700; flex-shrink: 0;">✓</span>
-            <span>El punto de entrada a toda la suite de Agentes Brutales</span>
-          </div>
-        </div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">⚡ Empieza aquí · Completamente gratis</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 10px; line-height: 1.2;">Antes de comprar cualquier cosa —<br>prueba AXON gratis</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 500px;">AXON es tu guía personal de IA. 25 conversaciones gratuitas, sin tarjeta, sin registro. Si después de usarlo no confías en la calidad, no compres nada. Es nuestra garantía real.</p>
       </div>
       <div style="flex-shrink: 0; text-align: center; min-width: 160px;">
-        <a href="empieza-aqui.html" class="btn-primary" style="display: block; text-decoration: none; text-align: center; font-size: 14px; padding: 16px 28px;">Hablar con AXON →</a>
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); margin-top: 10px; line-height: 1.6;">Sin tarjeta · Sin registro<br>25 conversaciones gratis</div>
+        <a href="empieza-aqui.html" style="display: block; background: #34D399; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 24px; text-decoration: none; text-align: center; transition: opacity 0.2s; margin-bottom: 10px;">Hablar con AXON gratis →</a>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); line-height: 1.6;">Sin tarjeta · Sin registro<br>25 conversaciones gratis</div>
       </div>
     </div>
   </div>
 
-  <!-- PRODUCTOS 2-7 — COMING SOON -->
+  <!-- BLOQUE 4 — 5 PRODUCTOS -->
   <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.3em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
     <span style="display: block; width: 20px; height: 1px; background: var(--grey);"></span>
-    Próximamente en la suite
+    Los 5 productos de la suite
   </div>
 
-  <div class="prompts-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px;">
 
-    <div class="prompt-card" style="opacity: 0.6; position: relative;">
-      <div style="position: absolute; top: 16px; right: 16px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: var(--grey); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 3px 8px; text-transform: uppercase;">Próximamente</div>
-      <div class="prompt-category">Agentes Brutales</div>
-      <div class="prompt-title">Pro</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 24px;">Ventas, carrera y liderazgo. Para profesionales que quieren resultados reales en lo que más importa en su trabajo.</p>
-      <button disabled style="width: 100%; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 10px; cursor: not-allowed;">🔒 Lista de espera</button>
+    <!-- PRO — violeta -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(192,132,252,0.25); border-top: 3px solid #C084FC; padding: 28px; position: relative;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #C084FC; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Pro</div>
+      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Vende más, crece más rápido y lidera con criterio — con 12 agentes especializados en ventas, carrera y liderazgo.</p>
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
+        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #C084FC;">57€</span>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">12 agentes · Pago único</span>
+      </div>
+      <a href="prompts-brutales-pro.html" style="display: block; background: #C084FC; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
     </div>
 
-    <div class="prompt-card" style="opacity: 0.6; position: relative;">
-      <div style="position: absolute; top: 16px; right: 16px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: var(--grey); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 3px 8px; text-transform: uppercase;">Próximamente</div>
-      <div class="prompt-category">Agentes Brutales</div>
-      <div class="prompt-title">para tu TDAH</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 24px;">Foco, claridad y ejecución diseñados para cerebros que funcionan diferente. Sin culpa. Con sistema.</p>
-      <button disabled style="width: 100%; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 10px; cursor: not-allowed;">🔒 Lista de espera</button>
+    <!-- TDAH — rosa -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(244,114,182,0.25); border-top: 3px solid #F472B6; padding: 28px; position: relative;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #F472B6; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">TDAH</div>
+      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Foco, claridad y ejecución para cerebros que funcionan diferente. Diseñado con psicología real del TDAH — no con consejos genéricos.</p>
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
+        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #F472B6;">27€</span>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">3 agentes · Pago único</span>
+      </div>
+      <a href="tdah.html" style="display: block; background: #F472B6; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
     </div>
 
-    <div class="prompt-card" style="opacity: 0.6; position: relative;">
-      <div style="position: absolute; top: 16px; right: 16px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: var(--grey); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 3px 8px; text-transform: uppercase;">Próximamente</div>
-      <div class="prompt-category">Agentes Brutales</div>
-      <div class="prompt-title">para tus Finanzas</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 24px;">Decisiones financieras con números reales. Presupuesto, deudas, imprevistos y hábitos que no dependen de la fuerza de voluntad.</p>
-      <button disabled style="width: 100%; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 10px; cursor: not-allowed;">🔒 Lista de espera</button>
+    <!-- FINANZAS — verde -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(52,211,153,0.25); border-top: 3px solid #34D399; padding: 28px; position: relative;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #34D399; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Finanzas</div>
+      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Presupuesto, deudas, ahorro e inversión. Decisiones financieras con números reales — no con teoría que no se puede aplicar.</p>
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
+        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #34D399;">47€</span>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">4 agentes · Pago único</span>
+      </div>
+      <a href="finanzas.html" style="display: block; background: #34D399; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
     </div>
 
-    <div class="prompt-card" style="opacity: 0.6; position: relative;">
-      <div style="position: absolute; top: 16px; right: 16px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: var(--grey); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 3px 8px; text-transform: uppercase;">Próximamente</div>
-      <div class="prompt-category">Agentes Brutales</div>
-      <div class="prompt-title">para Creación de Contenido</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 24px;">YouTube, Instagram, TikTok, X y LinkedIn — con la mecánica exacta de cada plataforma y algoritmo.</p>
-      <button disabled style="width: 100%; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 10px; cursor: not-allowed;">🔒 Lista de espera</button>
+    <!-- NEGOCIO ONLINE — dorado -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(251,191,36,0.25); border-top: 3px solid #FBBF24; padding: 28px; position: relative;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FBBF24; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Negocio Online</div>
+      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">De la idea al negocio funcionando. Estrategia, producto, captación y monetización — con 8 agentes que cubren todo el proceso.</p>
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
+        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #FBBF24;">57€</span>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">8 agentes · Pago único</span>
+      </div>
+      <a href="negocio.html" style="display: block; background: #FBBF24; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
     </div>
 
-    <div class="prompt-card" style="opacity: 0.6; position: relative;">
-      <div style="position: absolute; top: 16px; right: 16px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: var(--grey); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 3px 8px; text-transform: uppercase;">Próximamente</div>
-      <div class="prompt-category">Agentes Brutales</div>
-      <div class="prompt-title">para tu Negocio Online</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 24px;">Estrategia, producto, captación y monetización. Para quien construye un negocio digital desde cero o quiere escalarlo.</p>
-      <button disabled style="width: 100%; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 10px; cursor: not-allowed;">🔒 Lista de espera</button>
-    </div>
-
-    <div class="prompt-card" style="opacity: 0.6; position: relative;">
-      <div style="position: absolute; top: 16px; right: 16px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: var(--grey); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 3px 8px; text-transform: uppercase;">Próximamente</div>
-      <div class="prompt-category">Agentes Brutales</div>
-      <div class="prompt-title">Desarrollador IA</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 24px;">Para quien quiere construir sus propios agentes, automatizaciones y productos con IA — sin necesitar saber programar.</p>
-      <button disabled style="width: 100%; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 10px; cursor: not-allowed;">🔒 Lista de espera</button>
+    <!-- DEV IA — rojo coral -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(255,107,107,0.25); border-top: 3px solid #FF6B6B; padding: 28px; position: relative;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FF6B6B; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Dev IA</div>
+      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Construye apps con IA como si tuvieras un equipo. 4 agentes para diseñar, codificar, revisar y desplegar — sin saber programar.</p>
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
+        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #FF6B6B;">47€</span>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">4 agentes · Pago único</span>
+      </div>
+      <a href="devai.html" style="display: block; background: #FF6B6B; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
     </div>
 
   </div>
+
+  <!-- BLOQUE 5 — POLÍTICA HONESTA -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px;">
+    <p style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); line-height: 1.8; max-width: 680px;">
+      <strong style="color: rgba(255,255,255,0.4);">Sin reembolsos.</strong> Una vez que activas los agentes en tu LLM, son tuyos para siempre — no podemos revertirlo. Por eso AXON es gratis: para que compruebes la calidad antes de decidir.
+    </p>
+  </div>
+
 </section>
 <div class="neon-line"></div>
 <section class="recursos-section" id="recursos">
