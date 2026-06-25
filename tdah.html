@@ -324,7 +324,7 @@ function App() {
               onMouseEnter={e=>{e.currentTarget.style.background=BLU3;e.currentTarget.style.borderColor=BLUB;}}
               onMouseLeave={e=>{e.currentTarget.style.background=CA;e.currentTarget.style.borderColor=CB;}}>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
-                <span style={{fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}>{col.id==='01'?'Empieza Aquí':col.nombre}</span>
+                <span style={{fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}>{col.id==='01'?'Empieza Aquí':col.nombre}</span>
                 <span style={{fontSize:26}}>{col.icono}</span>
               </div>
               <div style={{fontSize:17,fontWeight:700,letterSpacing:'-0.02em',lineHeight:1.2}}>{col.nombre}{col.id==='01'&&<span style={{marginLeft:8,fontSize:10,fontWeight:700,color:'#F472B6',background:'rgba(244,114,182,0.15)',borderRadius:6,padding:'2px 8px'}}>EMPIEZA AQUÍ</span>}</div>
