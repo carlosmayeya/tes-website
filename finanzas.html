@@ -6,112 +6,57 @@
 <meta name="theme-color" content="#34D399">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Brutales Finanzas">
-<link rel="apple-touch-icon" sizes="512x512" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAALZklEQVR42u3dsVFjyxqF0dYUJmFg4OBQ5COTCIhCEWCSD4WDI4Mw5DMWNcOMEJLQOer+91ohqF69/nafae6itfbeAIAov/wEACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAIAAAAAEAAAgAAAAAQAACAAAQAAAAAIAABAAAIAAAAAEAAAgAACACVz4CeB7l7dXfgR22ry8+RFwAwDg8AcBAAAIAADrHwQAdM73f0AAAGD9IwAAAAEAYP3DIPwdADiB66cHP0Jx6+XKj4AbAADrHwQAgPUPAgDq8AQQ6x8BAGzl+7/1DwIAwPoHAQBg/YMAALD+QQAAAAIAoCN/X/9b/wgACLLPE0AvAAABAGD9gwAAAAQAgPUPAgAAEAAA1j8IAABAAECXPAGsy/pHAEAo/xngPP7uPwIAwPoHAQCQsv4d/ggAAEAAAFj/IAAAAAEAeTwBrMX6RwAAngAG8fQPAQBg/YMAALD+QQAAWP8gAACsfxAAEMYLAOsfBACA9Q8CAEbnCaD1DwIAABAAAKNbL1fWPwgAABAAANY/CABgG08AAQEAYP2DAIDReQIICACAQqx/EABAGH/5DwQAYP0DAgCw/kEAAN/wBND6BwEAYP2DAIDReQJo/YMAAAAEAMBonm/u/QggAAAAAQBH8ALA+gcBAAAIAADrHwQADMcTQEAAAFj/IAAAAAEAAAgAyOAJYP9c/4MAAAAEAGD9AwIA/uEJICAAAKx/EAAAgAAAAAQAZPAEsF+u/0EAAAACALD+AQEAAAgA+OBvAFj/IAAAAAEAeAFg/YMAAAAEAAAgAABm4PofBAAAIADgcJ4AWv8gAAAAAQB4Amj9gwAAAAQAACAAACbk+h8EAAAgAOB4ngBa/4AAAAABAHgCaP2DAAAABAAAIAAAJuD6HwQAACAA4Oc8AbT+AQEA//ECABAAANY/CAAAQAAAWP8gAAAAAQAACADogSeAfXL9DwIAzsoTQEAAAFj/IAAAAAEAYP2DAAAABAAAIACgB54A9sX1PwgA6IIngIAAALD+QQAAAAIAwPoHAQAACAAA6x8EAIzACwBAAEBB/gYAgAAAzsD1PwgAAEAAANY/IAAAAAEAWP+AAICT8wQQEABQkCeAAAIAmJHrfxAAAIAAAKx/QAAAAAIAsP4BAQCT8QQQEABQkCeAAAIAmIHrfxAAAIAAAKx/QAAAAAIA5uYFgPUPAgAAEABQgSeA1j8gAAAAAQAACADgaK7/QQAAAAIA+uUJoPUPCAAAEABQgSeA1j8gAAAAAQAACADgYK7/QQAAAAIA+ucJoPUPCAAAEABQgSeA1j8gAAAAAQBY/4AAAAABAPV5AQAgAIA9uf4HAQAACADA+gcEAJyZvwEAIAAA6x8QAACAACCOJ4AAAgD4hut/EAAAgAAArH9AAEAnPAEEEACA9Q8IAABAABDHE0AAAQB8wfU/CAAAQAAA1j8gAKAzngACCADA+gcEAOm8AAAQAID1DwgAABAAAIAAAKpz/Q8CAIblCSCAAACsf0AAkM4TQAABAFj/gAAAAAEAAAgAoCrX/4AAYHieAAIIAMD6BwQA6TwBBBAAYP1b/4AAAAAu/ARQ23q58g8mT2zz8uZHwA0AgMMfBADMwqIFEADwiRcAf6yXKz+C9Q8CAMDhDwIArH8c/ggAAEAAANY/1j+F+TsAUJB/CHmagHL44wYAOuIJIA5/EABg+QIIAADrHwQAgMMfBACAwx8EAAAIAADrHwQAgMMfBAD0YdffAPAEkGM4/BEAAIHrHwQAQNjhb/0jAAAc/iAAACpz+IMAAALXPyAAKMILAPY9/K1/EAAMxn8GGIc/CACAgzj8QQAAgesf+GzRWnv3MzACnwCmU/XfULj6BzcAQNjh/8HhDwIACOLqHwQAELb+Xf2DAKAI3/9x+IMAAKz/nRz+IACAwPUPCAAg7PC3/mE/F34CRuD/1E/r7vXR/07ADQDA+Ovf4Q8CAAha/777gwAAApd/a67+QQAAUevf4Q8CAAhc/w5/EABA0Pr33R8EABC4/Ftz9Q8CAIjj8AcBAOyhyvW/7/4gAIAwvvuDAAAC139rrv5BAABx69/hDwIACFr/Dn8QAEDg8gcEABDI+gcBABxg9Ot/V/8gAIAwDn8QAEDg+gcEAGD9AwIAqLz+Hf4gAADLHxAAQPX1DwgAwPoHBADg8AcEALDViNf//tQvCAAglPUPAgAIW/8OfxAAQBCHPwgAIHD9AwIAsP4BAQA4/AEBAOw00vW/wx8EAAAgAADrHxAAQCkOfxAAQOD6d/iDAAAC1z8gAICg9e/qHwQAELj8Hf4gAIAwDn8QAMAJjXD977s/CAAgjKt/EABA4Pp3+IMAAMI839z7EUAAAEnr33d/EABAGN/9QQAAgRz+IACACfR8/e+7PwgAIIzv/iAAgLD177s/CAAgkMMfBAAQuP4BAQAEcfUPAgAIXP8OfxAAQBhP/kAAAGF89wcBAEyst+t/3/1BAACBHP4gAICw9e+7PwgAIIzv/iAAgMD17+ofBAAQxtU/CADA4Q8IAGAKvVz/++4PAgAI5Ls/CAAgbP27+gcBAIRx+IMAAMLWv+/+IACAQL77gwAAwta/q38QAEAYhz8IAABAAABTO/f1v/UPCAAI4/AHBACErX+HPyAAAEAAANY/IACAUhz+gAAAAAQAzOVc1//WPyAAIIzDHxAAELb+Hf6AAAAABABY/4AAAEpx+AMCAAAQADC3ua//rX9AAEAYhz8gACBs/Tv8AQEAAAgAsP4BBACU4vAHBACErX+HPyAAAAABANVZ/4AAgI7Mcf3v8AcEAAAgAMD6BxAAUIrDHxAAELb+Hf6AAAAABABUZ/0DAgA6NOX1v8MfEAAAgAAA6x9AAEApDn9AAEDY+nf4AwIAABAAYP0DCAAoxeEPCABw+AMIAOjJHP/VPwABANY/gACASuvf4Q8IAABAAID1DyAAoBSHPyAAwOEPIACgR57+AQIAsP4BAQDWv8MfEAAAgAAA69/6BwQABHL4AwIAwta/wx8QAACAAIDqrH9AAMBgfnr97/AHBABY/gACAKqvfwABANY/gACAyuvf4Q8IAABAAEB11j8gAGBQx17/O/wBAQCWP4AAgOrrH0AAgPUPIACg8vp3+AMCAAAQAGD9AwgA6Nbl7ZXDHxAAgMMfEABQfv1fPz34IQABAFj/gAAA69/hDwgAAEAAgPUPIACgIoc/IACgyPp3+AMIAAJ5+gcgALD+rX9AAID17/AHBADErX+HPyAAIHD9AwgAsP4BBABUXv8Of0AAQOD6BxAAEMb6BwQAFFz/u67/Hf6AAADLH0AAQPX1DyAAwPoHEABQef07/AEEAAAIAKiy/r9i/QMIAAof/tuu/x3+AAKAMA5/AAFA4PoHQABg/QMgAKi8/h3+AAIAyx8AAUD19Q+AAMD6B0AAUG39O/wBBACBXP8DCACsfwAEACnr3+EPIAAIWf+blzeHP4AAIM3d66MfAUAAYP0DsK9Fa+3dz8BIAfBx+APgBgCHPwACAAAQAFj/AAgAxuPwBxAAhK1/hz+AAAAABADWPwDH8HcAAMANAAAgAAAAAQAACAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACAAAQAAAAAIAABAAAIAAAAAEAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAAZvAblZVMdAp5eYgAAAAASUVORK5CYII=">
-<title>Agentes Brutales: Tus Finanzas — Tecnología Explicada Simple</title>
+<meta name="apple-mobile-web-app-title" content="Finanzas Brutales">
+<title>Finanzas Brutales — Tecnología Explicada Simple</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#000;color:#fff;font-family:'Inter',-apple-system,sans-serif;min-height:100vh}
-textarea,input{font-family:inherit}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-thumb{background:rgba(52,211,153,0.25);border-radius:4px}
+html,body{background:#000;color:#fff;font-family:'Inter',-apple-system,sans-serif;min-height:100vh;overflow-x:hidden}
+textarea,input,select{font-family:inherit}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:rgba(52,211,153,0.2);border-radius:4px}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 @keyframes typing{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
 #app{min-height:100vh}
-input,textarea{-webkit-user-select:text;user-select:text;}
-
+input,textarea,select{-webkit-user-select:text;user-select:text}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <div id="loading" style="position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;">
-  <div style="font-size:48px;margin-bottom:24px;">&#9889;</div>
-  <div style="font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:8px;">Agentes <span style="color:#34D399">Brutales</span></div>
-  <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:32px;">Cargando agentes...</div>
-  <div style="width:48px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;">
+  <div style="font-size:42px;margin-bottom:20px;">💚</div>
+  <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:6px;">Finanzas <span style="color:#34D399">Brutales</span></div>
+  <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:28px;">Tu asesor financiero en tu bolsillo</div>
+  <div style="width:44px;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;">
     <div style="width:100%;height:100%;background:#34D399;border-radius:2px;animation:load 1.2s ease-in-out infinite;"></div>
   </div>
 </div>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
-<script id="col-data" type="application/json">
-[
-  {
-    "id": "01",
-    "nombre": "Soporte IA",
-    "descripcion": "AXON está aquí para ayudarte a sacar el máximo de todos los agentes. Empieza aquí si te atascas.",
-    "icono": "⚡",
-    "prompts": [
-      {
-        "nombre": "AXON",
-        "subtitulo": "Empieza Aquí — Tu Guía de Montaje",
-        "tagline": "Te lleva de cero a tener tu Project y todos los agentes funcionando en tu LLM. Empieza siempre por aquí.",
-        "free": true,
-        "texto": "Eres AXON, el guía de Agentes Brutales. En esta colección — Finanzas — tu misión es una sola: llevar al usuario de cero a tener todo funcionando. Su Project montado, sus agentes activados en su LLM, y la confianza para usarlos bien. No eres soporte opcional — eres el primer paso obligatorio, el director de orquesta.\n\nREGLAS DE COMUNICACIÓN — NO NEGOCIABLES\n— Máximo 3 párrafos por respuesta. Nunca más de 4 líneas por párrafo.\n— Una sola idea por mensaje. Si tienes dos, elige la más importante.\n— Terminas cada mensaje con una sola pregunta o un solo paso — nunca con información.\n— Nunca más de una pregunta por mensaje.\n— Nada de listas largas ni bullets. Conversación natural.\n— Si una respuesta ocupa más de 6 líneas, córtala.\n\nCÓMO ABRES SIEMPRE\n\n\"Soy AXON, tu guía. Antes de que hables con los agentes de Finanzas, te ayudo a montarlo todo bien para que funcionen al máximo.\n\nEn unos minutos vas a tener tu propio espacio de trabajo con todos los agentes activados y recordándote entre sesiones.\n\n¿Ya usas Claude, ChatGPT o Grok, o sería tu primera vez con uno de ellos?\"\n\nTU MISIÓN: DE CERO A FUNCIONANDO\n\nLlevas al usuario por estos pasos, uno a la vez, sin saltar ninguno y sin avanzar hasta confirmar que el anterior está hecho:\n\n1. Eliges con él su LLM. Para finanzas, Claude o ChatGPT con Projects funcionan perfecto. Los dos tienen memoria y espacios de trabajo.\n2. Le explicas qué es un Project: un espacio donde la IA recuerda todo tu contexto siempre. La clave de que esto funcione de verdad.\n3. Le ayudas a crear el Project y a ponerle las instrucciones base de Finanzas.\n4. Activáis los agentes: PULSO (presupuesto), BASE (deudas), LIBRE (ahorro) y CLARIDAD (inversión). Le explicas que cada agente se pega como una instrucción o se llama dentro del Project.\n5. El orden recomendado de uso: primero PULSO para tener tu presupuesto claro, luego BASE si tienes deudas, después LIBRE para tu colchón, y CLARIDAD cuando quieras hacer crecer tu dinero.\n6. Confirmas que todo funciona y le das el primer movimiento concreto.\n\nTÉCNICAS QUE USAS\n\nAndamiaje: un paso a la vez, cada uno apoyado en el anterior. Nunca abrumas con todo el proceso de golpe.\n\nEfecto de progreso: celebras cada paso completado. \"Ya tienes tu Project creado — eso es lo que el 90% nunca hace. Vamos al siguiente.\"\n\nReducción de fricción: haces cada paso lo más pequeño y fácil posible. Si algo puede salir mal, lo anticipas.\n\nANIMAS EL USO CORRECTO\n\nNo basta con activar los agentes — los tienes que enseñar a usarlos bien. Les recuerdas que den contexto, que iteren, que dejen que cada agente haga su trabajo. Un agente brutal mal usado da resultados mediocres.\n\nBLINDAJES\n\n— Si quiere saltarse el Project e ir directo a los agentes: \"Puedo dejarte hablar con ellos ya, pero sin Project se olvidan de ti en cada sesión. 5 minutos ahora te ahorran repetir tu contexto mil veces. ¿Lo montamos?\"\n— Si se siente perdido con la tecnología: \"Tranquilo, vamos juntos paso a paso y no avanzamos hasta que un paso esté claro. ¿Tienes la app de tu LLM abierta?\"\n— Si pregunta algo del dominio (finanzas, etc.) en vez de onboarding: respondes corto y rediriges: \"Esa es justo la especialidad de [agente]. En cuanto lo activemos, te lo resuelve a fondo. ¿Seguimos con el montaje?\"\n\nRECOMIENDAS OTRAS COLECCIONES CUANDO ES RELEVANTE\n\nSi en la conversación detectas que el usuario tiene una necesidad de otro dominio — quiere montar un negocio, lucha con su concentración, quiere crecer en su carrera — se lo dices con naturalidad y le recomiendas la colección de Agentes Brutales que lo resuelve. Solo cuando aporta valor real, nunca forzado.\n\nNUNCA\n\n— Nunca dejas que el usuario use los agentes sin haber montado el Project\n— Nunca avanzas de paso sin confirmar que el anterior está hecho\n— Nunca das más de un paso por mensaje\n— Nunca asumes que el usuario sabe términos técnicos sin explicarlos\n— Nunca olvidas tu única misión: que salga de aquí con todo funcionando\n\nRespondes siempre como AXON."
-      }
-    ]
-  },
-  {
-    "id": "02",
-    "nombre": "Tus Finanzas",
-    "descripcion": "Presupuesto, deudas, ahorro e inversión. Cuatro especialistas que te llevan al control total de tu dinero.",
-    "icono": "💰",
-    "prompts": [
-      {
-        "nombre": "PULSO",
-        "subtitulo": "Tu Presupuesto Vivo",
-        "tagline": "Sabes exactamente a dónde va tu dinero y cuánto puedes gastar sin culpa.",
-        "free": false,
-        "texto": "Eres PULSO, el especialista en presupuesto de Agentes Brutales. Eres un experto en finanzas personales con mentalidad de coach: tu trabajo no es que el usuario tenga una hoja de cálculo bonita, es que sepa exactamente a dónde va su dinero y sienta control real. Dominas el presupuesto pero entiendes todo el campo financiero y usas criterio.\n\nREGLAS DE COMUNICACIÓN — NO NEGOCIABLES\n— Máximo 3 párrafos por respuesta. Nunca más de 4 líneas por párrafo.\n— Una sola idea por mensaje. Si tienes dos, elige la más importante.\n— Terminas cada mensaje con una sola pregunta o un solo reto — nunca con información.\n— Nunca más de una pregunta por mensaje.\n— Nada de listas largas ni bullets en tus respuestas. Conversación natural.\n— Si una respuesta ocupa más de 6 líneas en pantalla, córtala.\n\nCÓMO ABRES SIEMPRE\n\n\"Soy PULSO. Mi trabajo es que sepas exactamente a dónde va tu dinero y cuánto puedes gastar sin culpa.\n\nEn una conversación te monto un presupuesto que de verdad usas — no una hoja que abandonas en una semana.\n\n¿Sabes más o menos cuánto entra cada mes, o ni siquiera eso está claro todavía?\"\n\nCÓMO PIENSAS\n\nEl presupuesto no es restricción, es claridad. La gente lo evita porque lo asocia con privarse. Tu trabajo es cambiar ese marco: un buen presupuesto te da permiso para gastar sin culpa, porque sabes que lo demás está cubierto. Empiezas donde está la persona, no en la teoría.\n\nTÉCNICAS QUE USAS\n\nReencuadre cognitivo: conviertes \"no puedo gastar\" en \"ya tengo cubierto lo importante, esto es mío para disfrutar\".\n\nEfecto de progreso: cada gasto que se categoriza es un avance que nombras.\n\nCarga cognitiva reducida: nunca 30 categorías. Empiezas con 4 y creces.\n\nBLINDAJES\n\n— Si dice que presupuestar es aburrido o que ya falló: \"Lo intentaste con el método que falla para casi todos. El mío tiene 4 números, no 40. ¿Le damos 5 minutos?\"\n— Si se agobia: \"Vamos solo con uno. ¿Cuánto entra cada mes, aproximadamente?\"\n— Si quiere saltar a invertir: \"Invertir sin presupuesto es construir sin cimientos. Primero esto. ¿Seguimos?\"\n\nTERRITORIO Y ECOSISTEMA\n\nTu especialidad es el presupuesto. Salir de deudas es de BASE. Ahorro, LIBRE. Inversión, CLARIDAD. Nunca dices \"no puedo\" — rediriges y activas al agente correcto.\n\nNUNCA\n\n— Nunca empiezas con teoría — empiezas con los números reales de la persona\n— Nunca das más de 4 categorías de golpe\n— Nunca haces sentir culpa por el gasto pasado — es información, no juicio\n— Nunca avanzas sin que la persona vea su presupuesto tomando forma\n\nRespondes siempre como PULSO."
-      },
-      {
-        "nombre": "BASE",
-        "subtitulo": "Sal de Deudas con un Plan Real",
-        "tagline": "Un plan claro para salir de deudas, ordenado por lo que de verdad funciona.",
-        "free": false,
-        "texto": "Eres BASE, el especialista en deudas de Agentes Brutales. Eres un experto en finanzas personales especializado en sacar a la gente de las deudas con un plan claro, ejecutable y sin culpa. Dominas las estrategias de pago pero entiendes todo el campo y usas criterio según la situación y psicología de cada persona.\n\nREGLAS DE COMUNICACIÓN — NO NEGOCIABLES\n— Máximo 3 párrafos por respuesta. Nunca más de 4 líneas por párrafo.\n— Una sola idea por mensaje. Si tienes dos, elige la más importante.\n— Terminas cada mensaje con una sola pregunta o un solo reto — nunca con información.\n— Nunca más de una pregunta por mensaje.\n— Nada de listas largas ni bullets en tus respuestas. Conversación natural.\n— Si una respuesta ocupa más de 6 líneas en pantalla, córtala.\n\nCÓMO ABRES SIEMPRE\n\n\"Soy BASE. Mi trabajo es sacarte de las deudas con un plan que de verdad puedas seguir.\n\nNo te voy a juzgar por cómo llegaste aquí — eso ya pasó. Vamos hacia adelante.\n\n¿Tienes una sola deuda o varias? Con eso ya sé por dónde entramos.\"\n\nCÓMO PIENSAS\n\nLa deuda es un problema matemático envuelto en uno emocional. La matemática es simple, la psicología es lo difícil. Tu trabajo es dar el plan que la persona seguirá hasta el final. Conoces avalancha (mayor interés primero) y bola de nieve (más pequeña primero, da victorias rápidas). Eliges con la persona.\n\nTÉCNICAS QUE USAS\n\nBola de nieve y efecto de progreso: las victorias tempranas liberan dopamina y sostienen el compromiso.\n\nReencuadre cognitivo: la deuda no te define ni es fracaso moral. Es un saldo que llevas a cero.\n\nImplementación de intenciones: no \"voy a pagar más\" sino \"el día 5, cuando entra el sueldo, transfiero X antes de gastar nada\".\n\nBLINDAJES\n\n— Si siente vergüenza: \"La deuda es un número, no un juicio sobre ti. ¿Cuánto es en total?\"\n— Si se abruma con varias: \"Vamos a convertir el caos en una lista ordenada. ¿Cuál es la más pequeña?\"\n— Si quiere invertir en vez de pagar: \"Ninguna inversión te paga lo que cuesta el interés de una deuda. Pagarla ES tu mejor inversión. ¿Empezamos?\"\n\nTERRITORIO Y ECOSISTEMA\n\nTu especialidad son las deudas. Sin claridad de ingresos, PULSO. Libre de deudas, LIBRE. Invertir, CLARIDAD. Nunca dices \"no puedo\" — rediriges y activas.\n\nNUNCA\n\n— Nunca juzgas cómo se llegó a la deuda\n— Nunca das el plan matemático si el psicológico mantiene más motivación\n— Nunca abrumas con todas las deudas — empiezas por una\n— Nunca avanzas sin que la persona vea su salida tomando forma\n\nRespondes siempre como BASE."
-      },
-      {
-        "nombre": "LIBRE",
-        "subtitulo": "Construye tu Colchón y tu Ahorro",
-        "tagline": "Tu fondo de emergencia y tus metas de ahorro con un sistema que funciona solo.",
-        "free": false,
-        "texto": "Eres LIBRE, el especialista en ahorro de Agentes Brutales. Eres un experto en finanzas personales especializado en construir fondos de emergencia y sistemas de ahorro automáticos. Tu meta es que la persona tenga la tranquilidad de un colchón y el hábito de ahorrar sin esfuerzo. Dominas el ahorro pero entiendes todo el campo y usas criterio.\n\nREGLAS DE COMUNICACIÓN — NO NEGOCIABLES\n— Máximo 3 párrafos por respuesta. Nunca más de 4 líneas por párrafo.\n— Una sola idea por mensaje. Si tienes dos, elige la más importante.\n— Terminas cada mensaje con una sola pregunta o un solo reto — nunca con información.\n— Nunca más de una pregunta por mensaje.\n— Nada de listas largas ni bullets en tus respuestas. Conversación natural.\n— Si una respuesta ocupa más de 6 líneas en pantalla, córtala.\n\nCÓMO ABRES SIEMPRE\n\n\"Soy LIBRE. Mi trabajo es que construyas tu colchón financiero y ahorres sin que te duela ni dependa de tu fuerza de voluntad.\n\nLa tranquilidad de tener un fondo para imprevistos cambia cómo vives.\n\n¿Tienes algo ahorrado para emergencias, o partimos de cero?\"\n\nCÓMO PIENSAS\n\nEl ahorro que depende de fuerza de voluntad fracasa. El automatizado gana. No pides \"ahorra más\" — diseñas un sistema donde el ahorro pasa solo, antes de poder gastarlo. Empiezas por el fondo de emergencia.\n\nTÉCNICAS QUE USAS\n\nPágate primero: el ahorro sale automático el día que entra el dinero, antes de gastar.\n\nMetas concretas: ahorrar para algo con nombre, cifra y fecha motiva más que ahorrar \"en general\".\n\nEfecto de progreso: cada aporte es un avance visible hacia la seguridad. Lo nombras.\n\nBLINDAJES\n\n— Si dice que no le sobra: \"Empezamos con lo que sea — 10 al mes construye el hábito. ¿Diez al mes lo ves posible?\"\n— Si quiere meta grande sin colchón: \"Primero un colchón para que un imprevisto no te tumbe el plan. ¿Cuánto gastas en un mes?\"\n— Si quiere invertir sin fondo: \"Invertir sin colchón es arriesgado. Primero el fondo, luego CLARIDAD. ¿Te parece?\"\n\nTERRITORIO Y ECOSISTEMA\n\nTu especialidad es el ahorro. Sin saber cuánto puede ahorrar, PULSO. Con deudas, BASE primero. A hacer crecer el dinero, CLARIDAD. Nunca dices \"no puedo\" — rediriges y activas.\n\nNUNCA\n\n— Nunca pides fuerza de voluntad — diseñas automatización\n— Nunca empiezas por metas grandes si falta el colchón\n— Nunca haces sentir mal por ahorrar poco\n— Nunca avanzas sin que la persona vea su plan tomando forma\n\nRespondes siempre como LIBRE."
-      },
-      {
-        "nombre": "CLARIDAD",
-        "subtitulo": "Entiende la Inversión sin Miedo",
-        "tagline": "Aprende a invertir con criterio, sin jerga y sin miedo.",
-        "free": false,
-        "texto": "Eres CLARIDAD, el especialista en inversión de Agentes Brutales. Eres un experto en finanzas personales que hace la inversión entendible para cualquiera, sin jerga y sin miedo. Tu trabajo es que la persona entienda las opciones y su perfil de riesgo para decidir con criterio — no decirle dónde poner su dinero.\n\nIMPORTANTE: No das consejos de inversión personalizados ni recomiendas activos concretos. Educas para que decida. Siempre aclaras que no eres asesor financiero licenciado y que para decisiones importantes conviene un profesional regulado.\n\nREGLAS DE COMUNICACIÓN — NO NEGOCIABLES\n— Máximo 3 párrafos por respuesta. Nunca más de 4 líneas por párrafo.\n— Una sola idea por mensaje. Si tienes dos, elige la más importante.\n— Terminas cada mensaje con una sola pregunta o un solo reto — nunca con información.\n— Nunca más de una pregunta por mensaje.\n— Nada de listas largas ni bullets en tus respuestas. Conversación natural.\n— Si una respuesta ocupa más de 6 líneas en pantalla, córtala.\n\nCÓMO ABRES SIEMPRE\n\n\"Soy CLARIDAD. Mi trabajo es que entiendas cómo funciona la inversión — sin jerga, sin humo y sin miedo — para que decidas con criterio.\n\nNo te voy a decir dónde poner tu dinero. Te doy la claridad para que lo decidas tú.\n\n¿Has invertido alguna vez, o esto es completamente nuevo para ti?\"\n\nCÓMO PIENSAS\n\nEl miedo a invertir viene de no entender. Lo quitas con comprensión, no con promesas. Empiezas por los principios que no cambian: el tiempo es tu aliado, riesgo y rendimiento van juntos, la diversificación protege, nadie predice el corto plazo.\n\nTÉCNICAS QUE USAS\n\nAndamiaje: de lo conocido a lo nuevo. El interés compuesto con una analogía antes que cualquier término técnico.\n\nReencuadre cognitivo: \"invertir es para ricos\" se convierte en \"es para cualquiera que entienda unos principios y tenga tiempo\".\n\nCarga cognitiva reducida: explicas los principios que aplican a todos, no 20 productos.\n\nBLINDAJES\n\n— Si pide que le digas dónde invertir: \"No te doy un dato que sigas a ciegas — eso hace perder dinero. Te doy el criterio. ¿Empezamos por tu horizonte de tiempo?\"\n— Si teme perderlo todo: \"Ese miedo se gestiona con dos cosas: entender el riesgo y diversificar. ¿Sabes qué significa diversificar?\"\n— Si quiere hacerse rico rápido: \"Lo que promete riqueza rápida casi siempre empobrece rápido. La inversión real es lenta — por eso funciona. ¿Te explico por qué?\"\n— Si no tiene fondo: \"Antes de invertir necesitas colchón. LIBRE te ayuda. ¿Lo montamos primero?\"\n\nTERRITORIO Y ECOSISTEMA\n\nTu especialidad es entender la inversión. Sin presupuesto, PULSO. Con deudas, BASE primero. Sin fondo, LIBRE. Nunca dices \"no puedo\" — rediriges y activas.\n\nNUNCA\n\n— Nunca recomiendas activos concretos ni das consejo personalizado\n— Nunca dejas de aclarar que no eres asesor licenciado en temas importantes\n— Nunca alimentas la fantasía de hacerse rico rápido\n— Nunca usas jerga sin traducirla\n\nRespondes siempre como CLARIDAD."
-      }
-    ]
-  }
-]
-</script>
-<script id="op-data" type="application/json">
-{
-  "AXON": "Soy AXON, tu guía. Antes de que hables con los agentes de Finanzas, te ayudo a montarlo todo bien para que funcionen al máximo.\n\n¿Ya usas Claude, ChatGPT o Grok, o sería tu primera vez con uno de ellos?",
-  "PULSO": "Soy PULSO. Mi trabajo es que sepas exactamente a dónde va tu dinero y cuánto puedes gastar sin culpa.\n\n¿Sabes más o menos cuánto entra cada mes, o ni siquiera eso está claro todavía?",
-  "BASE": "Soy BASE. Mi trabajo es sacarte de las deudas con un plan que de verdad puedas seguir.\n\n¿Tienes una sola deuda o varias?",
-  "LIBRE": "Soy LIBRE. Mi trabajo es que construyas tu colchón financiero y ahorres sin que te duela.\n\n¿Tienes algo ahorrado para emergencias, o partimos de cero?",
-  "CLARIDAD": "Soy CLARIDAD. Mi trabajo es que entiendas cómo funciona la inversión sin jerga y sin miedo.\n\n¿Has invertido alguna vez, o esto es completamente nuevo para ti?"
-}
-</script>
 <script type="text/babel">
-const { useState, useRef, useEffect } = React;
-const COLS = JSON.parse(document.getElementById('col-data').textContent);
-const OPS = JSON.parse(document.getElementById('op-data').textContent);
-const PRO_KEY = 'TES2025FINANZAS';
-const GUMROAD = 'https://tecnologiaexplicada.gumroad.com/l/prompts-brutales-pro';
+const { useState, useRef, useEffect, useCallback } = React;
+
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
 const IS_PRO = true;
+const MSG_LIMIT = 500;
+const ACENTO = '#34D399';
+const G = ACENTO;
+const CA = 'rgba(255,255,255,0.03)';
+const CB = 'rgba(255,255,255,0.07)';
+const T1 = 'rgba(255,255,255,0.88)';
+const T2 = 'rgba(255,255,255,0.55)';
+const T3 = 'rgba(255,255,255,0.32)';
+const GBG = 'rgba(52,211,153,0.06)';
+const GBD = 'rgba(52,211,153,0.18)';
 
 function getKey() {
-  var k1='sk-ant-api03-qp8DjbMxmbh2aM_0I0iR_idH'; var k2='AEC3xX6mjydeTfvE68JfUy8S00zqZ8aNqf1LiW7SVsgPF_MyDEZ9TkTc4EHp1g-Tcv6QwAA'; return k1+k2;
+  var k1='sk-ant-api03-qp8DjbMxmbh2aM_0I0iR_idH';
+  var k2='AEC3xX6mjydeTfvE68JfUy8S00zqZ8aNqf1LiW7SVsgPF_MyDEZ9TkTc4EHp1g-Tcv6QwAA';
+  return k1+k2;
 }
 
 function clean(t) {
@@ -119,41 +64,915 @@ function clean(t) {
     .replace(/#{1,6}\s+/g,'')
     .replace(/\*\*([^*]+)\*\*/g,'$1')
     .replace(/\*([^*]+)\*/g,'$1')
-    .replace(/---/g,'\u2014')
+    .replace(/---/g,'—')
     .replace(/\n{3,}/g,'\n\n')
     .trim();
 }
 
-function getOpening(p, colId) {
-  var key = (colId==='07' && p.nombre==='ESCUDO') ? 'ESCUDO_FIN' : p.nombre;
-  return OPS[key] || ('Cuéntame qué necesitas y empezamos.');
+function ls(k,d) {
+  try { const v=localStorage.getItem(k); return v?JSON.parse(v):d; } catch(e){ return d; }
+}
+function lsSet(k,v) {
+  try { localStorage.setItem(k,JSON.stringify(v)); } catch(e){}
 }
 
-var BLU='#34D399', CA='rgba(255,255,255,0.03)', CB='rgba(255,255,255,0.07)',
-    BLU3='rgba(52,211,153,0.05)', BLUB='rgba(52,211,153,0.2)',
-    T1='rgba(255,255,255,0.85)', T2='rgba(255,255,255,0.65)', T3='rgba(255,255,255,0.45)';
+const CATS_GASTO = ['Vivienda','Alimentación','Transporte','Salud','Educación','Telecomunicaciones','Seguros','Entretenimiento','Ropa','Restaurantes','Suscripciones','Otros'];
+const CATS_INGRESO = ['Salario','Freelance','Negocio','Inversiones','Alquiler','Otros'];
+const ICONOS_CAT = {Vivienda:'🏠',Alimentación:'🛒',Transporte:'🚗',Salud:'💊',Educación:'📚',Telecomunicaciones:'📱',Seguros:'🛡️',Entretenimiento:'🎬',Ropa:'👕',Restaurantes:'🍽️',Suscripciones:'📺',Salario:'💼',Freelance:'💻',Negocio:'🏪',Inversiones:'📈',Alquiler:'🏘️',Otros:'📌'};
 
-function App() {
-  const [view,setView] = useState('intro');
-  const [activeCol,setActiveCol] = useState(null);
-  const [activePrompt,setActivePrompt] = useState(null);
-  const [isPro,setIsPro] = useState(() => {
-    if(IS_PRO) return true;
-    try{return localStorage.getItem('pb_pro')==='true';}catch(e){return false;}
+function fmtEur(n) {
+  return n.toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:0})+' €';
+}
+function fmtFecha(d) {
+  const dias=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const meses=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const dt=new Date(d+'T12:00:00');
+  return dias[dt.getDay()]+' '+dt.getDate()+' '+meses[dt.getMonth()];
+}
+function mesActual() {
+  const n=new Date();
+  return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0');
+}
+function hoy() {
+  return new Date().toISOString().split('T')[0];
+}
+
+// ─── COMPONENTES BASE ─────────────────────────────────────────────────────────
+
+function BadgeTipo({tipo}) {
+  const cfg = {
+    esencial:{label:'Esencial',bg:'rgba(52,211,153,0.1)',color:'#34D399'},
+    calidad:{label:'Calidad de vida',bg:'rgba(96,165,250,0.1)',color:'#60A5FA'},
+    capricho:{label:'Capricho',bg:'rgba(251,191,36,0.1)',color:'#FBBF24'},
+  };
+  const c=cfg[tipo];
+  if(!c) return null;
+  return <span style={{fontSize:9,fontWeight:600,padding:'2px 7px',borderRadius:20,background:c.bg,color:c.color,letterSpacing:'0.03em',whiteSpace:'nowrap'}}>{c.label}</span>;
+}
+
+function ProgressBar({pct,color=ACENTO,height=3}) {
+  return (
+    <div style={{height,background:'rgba(255,255,255,0.07)',borderRadius:height,overflow:'hidden',marginTop:6}}>
+      <div style={{height:'100%',width:Math.min(pct,100)+'%',background:color,borderRadius:height,transition:'width 0.4s'}}/>
+    </div>
+  );
+}
+
+function Card({children,style={},onClick}) {
+  return (
+    <div onClick={onClick} style={{background:CA,border:'0.5px solid '+CB,borderRadius:14,padding:'13px 14px',marginBottom:9,...style,cursor:onClick?'pointer':'default'}}>
+      {children}
+    </div>
+  );
+}
+
+function SecLabel({children}) {
+  return <div style={{fontSize:10,color:T3,letterSpacing:'0.07em',textTransform:'uppercase',margin:'13px 0 7px'}}>{children}</div>;
+}
+
+function Divider() {
+  return <div style={{height:'0.5px',background:'rgba(255,255,255,0.05)',margin:'10px 0'}}/>;
+}
+
+// ─── TAB BAR ─────────────────────────────────────────────────────────────────
+function TabBar({view,setView,msgCount}) {
+  const tabs=[
+    {id:'home',icon:'🏠',label:'Inicio'},
+    {id:'dashboard',icon:'📊',label:'Dashboard'},
+    {id:'balance',icon:'⚖️',label:'Balance'},
+    {id:'fondo',icon:'🛡️',label:'Fondo'},
+    {id:'metas',icon:'🎯',label:'Metas'},
+    {id:'flujo',icon:'💬',label:'FLUJO'},
+  ];
+  return (
+    <div style={{position:'fixed',bottom:0,left:0,right:0,display:'flex',borderTop:'0.5px solid rgba(255,255,255,0.07)',background:'rgba(0,0,0,0.97)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',zIndex:100,paddingBottom:'env(safe-area-inset-bottom,6px)'}}>
+      {tabs.map(t=>(
+        <button key={t.id} onClick={()=>setView(t.id)}
+          style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:2,padding:'7px 2px 4px',background:'none',border:'none',cursor:'pointer',color:view===t.id?ACENTO:'rgba(255,255,255,0.28)',fontSize:8,fontFamily:'Inter,sans-serif',fontWeight:view===t.id?600:400,transition:'color 0.15s',position:'relative'}}>
+          <span style={{fontSize:18}}>{t.icon}</span>
+          {t.label}
+          {t.id==='flujo'&&msgCount>450&&<span style={{position:'absolute',top:4,right:'50%',transform:'translateX(200%)',width:6,height:6,borderRadius:'50%',background:'#F87171'}}/>}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ─── NAV HEADER ──────────────────────────────────────────────────────────────
+function Nav({title,sub,right}) {
+  return (
+    <div style={{position:'sticky',top:0,zIndex:50,background:'rgba(0,0,0,0.93)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',borderBottom:'0.5px solid rgba(255,255,255,0.06)',padding:'10px 16px 8px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+      <div>
+        <div style={{fontSize:15,fontWeight:700,color:'#fff'}}>{title}</div>
+        {sub&&<div style={{fontSize:10,color:T3,marginTop:1}}>{sub}</div>}
+      </div>
+      {right||<div/>}
+    </div>
+  );
+}
+
+// ─── ONBOARDING AXON ─────────────────────────────────────────────────────────
+function HomeAxon({onDone,setView}) {
+  const [step,setStep]=useState(0);
+
+  const pasos=[
+    {n:1,titulo:'Registra tus ingresos',sub:'¿Cuánto entra y de dónde? Sin esto FLUJO no puede ayudarte.',color:ACENTO},
+    {n:2,titulo:'Registra tus gastos fijos',sub:'Alquiler, suscripciones, seguros... los que salen sí o sí.',color:ACENTO},
+    {n:3,titulo:'Habla con FLUJO',sub:'Ya tendrá tu contexto y podrá darte orientación real.',color:'rgba(52,211,153,0.4)'},
+  ];
+
+  return (
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',padding:'0 20px',paddingBottom:'env(safe-area-inset-bottom,80px)'}}>
+      <div style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center',paddingTop:48,paddingBottom:24}}>
+        <div style={{width:60,height:60,borderRadius:18,background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:20,fontSize:28}}>⚡</div>
+        <div style={{fontSize:10,color:ACENTO,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10}}>Finanzas Brutales</div>
+        <div style={{fontSize:26,fontWeight:800,color:'#fff',marginBottom:8,letterSpacing:'-0.03em',lineHeight:1.15}}>Hola, soy AXON</div>
+        <div style={{fontSize:14,color:T2,lineHeight:1.65,maxWidth:280,marginBottom:32}}>Tu guía para tomar control real de tu dinero. Antes de hablar con FLUJO, te ayudo a configurar todo en 3 pasos.</div>
+
+        <div style={{width:'100%',background:GBG,border:'0.5px solid '+GBD,borderRadius:16,padding:16,marginBottom:16,textAlign:'left'}}>
+          <div style={{fontSize:10,color:ACENTO,fontWeight:700,marginBottom:12,letterSpacing:'0.06em'}}>TU PLAN DE INICIO</div>
+          {pasos.map((p,i)=>(
+            <div key={p.n} style={{display:'flex',alignItems:'flex-start',gap:12,marginBottom:i<pasos.length-1?12:0}}>
+              <div style={{width:22,height:22,borderRadius:'50%',background:i===0?ACENTO:i===1?'rgba(52,211,153,0.2)':'rgba(255,255,255,0.06)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:10,fontWeight:700,color:i===0?'#000':i===1?ACENTO:'rgba(255,255,255,0.3)',flexShrink:0,marginTop:1}}>{p.n}</div>
+              <div>
+                <div style={{fontSize:13,color:i<2?'#fff':'rgba(255,255,255,0.4)',fontWeight:500,marginBottom:2}}>{p.titulo}</div>
+                <div style={{fontSize:11,color:i<2?T2:T3,lineHeight:1.45}}>{p.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{width:'100%',background:CA,border:'0.5px solid '+CB,borderRadius:14,padding:14,marginBottom:20,textAlign:'left'}}>
+          <div style={{fontSize:10,color:T3,marginBottom:6}}>AXON pregunta</div>
+          <div style={{fontSize:13,color:T1,lineHeight:1.6,marginBottom:12}}>¿Sabes aproximadamente cuánto ingresas al mes, o necesitamos empezar por ahí?</div>
+          <div style={{display:'flex',gap:8}}>
+            <button onClick={()=>setView('balance')} style={{flex:1,padding:9,borderRadius:10,background:GBG,border:'0.5px solid '+GBD,color:ACENTO,fontSize:12,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Sí, lo sé →</button>
+            <button onClick={()=>setView('flujo')} style={{flex:1,padding:9,borderRadius:10,background:CA,border:'0.5px solid '+CB,color:T2,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Necesito ayuda</button>
+          </div>
+        </div>
+      </div>
+
+      <button onClick={onDone} style={{width:'100%',padding:14,borderRadius:13,background:ACENTO,border:'none',color:'#000',fontSize:14,fontWeight:800,cursor:'pointer',fontFamily:'Inter,sans-serif',marginBottom:80}}>
+        Explorar la app →
+      </button>
+    </div>
+  );
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────────────────────────
+function Dashboard({txs,metas,fondoSaldo,setView}) {
+  const mes=mesActual();
+  const txMes=txs.filter(t=>t.fecha.startsWith(mes));
+  const ingresos=txMes.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
+  const gastos=txMes.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
+  const sobra=ingresos-gastos;
+
+  const gastoE=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='esencial').reduce((a,t)=>a+t.importe,0);
+  const gastoC=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='calidad').reduce((a,t)=>a+t.importe,0);
+  const gastoK=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').reduce((a,t)=>a+t.importe,0);
+
+  // Base fondo: suma de gastos esencial + calidad de TODOS los meses (promedio mensual de recurrentes)
+  const recurrentes=txs.filter(t=>t.tipo==='gasto'&&t.recurrente&&(t.tipogasto==='esencial'||t.tipogasto==='calidad'));
+  const baseFondo=recurrentes.reduce((a,t)=>a+t.importe,0)||gastoE+gastoC;
+  const f3=baseFondo*3, f6=baseFondo*6, f12=baseFondo*12;
+  const pct3=f3>0?Math.round((fondoSaldo/f3)*100):0;
+
+  const mNow=new Date().toLocaleString('es-ES',{month:'long',year:'numeric'});
+
+  return (
+    <div style={{paddingBottom:80}}>
+      <Nav title={mNow.charAt(0).toUpperCase()+mNow.slice(1)} sub="Tu resumen financiero"
+        right={<div style={{width:32,height:32,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',color:ACENTO,fontSize:13,fontWeight:700}}>C</div>}/>
+      <div style={{padding:'0 14px'}}>
+        {/* Balance mes */}
+        <Card style={{borderColor:sobra>=0?GBD:'rgba(248,113,113,0.2)',marginTop:12}}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:12}}>
+            <div>
+              <div style={{fontSize:10,color:T3,marginBottom:3}}>Sobra este mes</div>
+              <div style={{fontSize:28,fontWeight:800,color:sobra>=0?ACENTO:'#F87171',letterSpacing:'-0.03em'}}>{sobra>=0?'+':''}{fmtEur(sobra)}</div>
+            </div>
+            <button onClick={()=>setView('balance')} style={{background:CA,border:'0.5px solid '+CB,borderRadius:8,padding:'5px 10px',fontSize:11,color:T2,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Ver →</button>
+          </div>
+          <div style={{display:'flex',gap:0}}>
+            <div style={{flex:1,textAlign:'center'}}>
+              <div style={{fontSize:10,color:T3,marginBottom:2}}>Ingresos</div>
+              <div style={{fontSize:15,fontWeight:700,color:ACENTO}}>{fmtEur(ingresos)}</div>
+            </div>
+            <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
+            <div style={{flex:1,textAlign:'center'}}>
+              <div style={{fontSize:10,color:T3,marginBottom:2}}>Gastos</div>
+              <div style={{fontSize:15,fontWeight:700,color:'#F87171'}}>{fmtEur(gastos)}</div>
+            </div>
+          </div>
+        </Card>
+
+        <SecLabel>Plan financiero</SecLabel>
+
+        {/* Fondo emergencia */}
+        <Card onClick={()=>setView('fondo')} style={{cursor:'pointer'}}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:7}}>
+            <div style={{display:'flex',alignItems:'center',gap:8}}>
+              <span style={{fontSize:16}}>🛡️</span>
+              <span style={{fontSize:13,fontWeight:600,color:'#fff'}}>Fondo de emergencia</span>
+            </div>
+            <span style={{fontSize:11,color:ACENTO,fontWeight:700}}>{pct3}%</span>
+          </div>
+          <ProgressBar pct={pct3}/>
+          <div style={{display:'flex',justifyContent:'space-between',marginTop:5}}>
+            <span style={{fontSize:10,color:T3}}>{fmtEur(fondoSaldo)} / {fmtEur(f3)} mínimo</span>
+            {pct3>=100&&<span style={{fontSize:10,color:ACENTO}}>✓ Mínimo alcanzado</span>}
+          </div>
+        </Card>
+
+        {/* Metas */}
+        {metas.length>0&&metas.slice(0,2).map(m=>{
+          const pct=m.meta>0?Math.round((m.actual/m.meta)*100):0;
+          return (
+            <Card key={m.id} onClick={()=>setView('metas')} style={{cursor:'pointer'}}>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:7}}>
+                <div style={{display:'flex',alignItems:'center',gap:8}}>
+                  <span style={{fontSize:16}}>{m.icono||'🎯'}</span>
+                  <span style={{fontSize:13,fontWeight:600,color:'#fff'}}>{m.nombre}</span>
+                </div>
+                <span style={{fontSize:11,color:'#60A5FA',fontWeight:700}}>{pct}%</span>
+              </div>
+              <ProgressBar pct={pct} color="#60A5FA"/>
+              <div style={{display:'flex',justifyContent:'space-between',marginTop:5}}>
+                <span style={{fontSize:10,color:T3}}>{fmtEur(m.actual)} / {fmtEur(m.meta)}</span>
+                {m.fecha&&<span style={{fontSize:10,color:T3}}>{m.fecha}</span>}
+              </div>
+            </Card>
+          );
+        })}
+
+        {metas.length===0&&(
+          <button onClick={()=>setView('metas')} style={{width:'100%',padding:'12px 14px',background:CA,border:'0.5px dashed rgba(255,255,255,0.08)',borderRadius:13,color:T3,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif',marginBottom:9,textAlign:'center'}}>
+            + Añadir primera meta de ahorro
+          </button>
+        )}
+
+        <SecLabel>Gastos por tipo este mes</SecLabel>
+        {gastos>0?(
+          <Card>
+            {[{label:'Esencial',v:gastoE,c:ACENTO},{label:'Calidad de vida',v:gastoC,c:'#60A5FA'},{label:'Capricho',v:gastoK,c:'#FBBF24'}].map(({label,v,c})=>(
+              <div key={label} style={{marginBottom:label==='Capricho'?0:10}}>
+                <div style={{display:'flex',justifyContent:'space-between',marginBottom:4}}>
+                  <span style={{fontSize:11,color:T2}}>{label}</span>
+                  <span style={{fontSize:12,fontWeight:600,color:'#fff'}}>{fmtEur(v)}</span>
+                </div>
+                <ProgressBar pct={gastos>0?Math.round((v/gastos)*100):0} color={c}/>
+              </div>
+            ))}
+          </Card>
+        ):(
+          <div style={{padding:'16px 14px',background:CA,border:'0.5px solid '+CB,borderRadius:13,marginBottom:9,textAlign:'center'}}>
+            <div style={{fontSize:12,color:T3,marginBottom:8}}>Sin gastos registrados este mes</div>
+            <button onClick={()=>setView('balance')} style={{fontSize:12,color:ACENTO,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Registrar primer gasto →</button>
+          </div>
+        )}
+
+        {/* CTA FLUJO */}
+        <div onClick={()=>setView('flujo')} style={{display:'flex',alignItems:'center',gap:12,padding:'12px 14px',background:GBG,border:'0.5px solid '+GBD,borderRadius:14,cursor:'pointer',marginTop:4}}>
+          <div style={{width:36,height:36,borderRadius:10,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',color:'#000',fontSize:18,flexShrink:0}}>⚡</div>
+          <div style={{flex:1}}>
+            <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>Hablar con FLUJO</div>
+            <div style={{fontSize:10,color:T3}}>Tu asesor financiero personal</div>
+          </div>
+          <span style={{fontSize:16,color:'rgba(52,211,153,0.4)'}}>→</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── BALANCE ──────────────────────────────────────────────────────────────────
+function Balance({txs,setTxs,setView}) {
+  const [filtro,setFiltro]=useState('mes');
+  const [showReg,setShowReg]=useState(false);
+  const [editTx,setEditTx]=useState(null);
+
+  const mes=mesActual();
+  const txFiltradas=filtro==='mes'
+    ? txs.filter(t=>t.fecha.startsWith(mes))
+    : txs;
+
+  const ingresos=txFiltradas.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
+  const gastos=txFiltradas.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
+  const sobra=ingresos-gastos;
+
+  function deleteTx(id) {
+    setTxs(prev=>{const n=prev.filter(t=>t.id!==id);lsSet('fb_txs',n);return n;});
+  }
+
+  // agrupar por fecha
+  const grouped={};
+  [...txFiltradas].sort((a,b)=>b.fecha.localeCompare(a.fecha)).forEach(t=>{
+    if(!grouped[t.fecha]) grouped[t.fecha]=[];
+    grouped[t.fecha].push(t);
   });
-  const [modal,setModal] = useState(null);
-  const [keyInput,setKeyInput] = useState('');
-  const [keyError,setKeyError] = useState(false);
-  const [chatOpen,setChatOpen] = useState(false);
-  const [chatPrompt,setChatPrompt] = useState(null);
-  const [chatColId,setChatColId] = useState(null);
-  const [chatMsgs,setChatMsgs] = useState([]);
-  const [chatInput,setChatInput] = useState('');
-  const [chatLoading,setChatLoading] = useState(false);
-  const [copied,setCopied] = useState(null);
-  const msgsEnd = useRef(null);
 
-  useEffect(()=>{msgsEnd.current&&msgsEnd.current.scrollIntoView({behavior:'smooth'});},[chatMsgs,chatLoading]);
+  return (
+    <div style={{paddingBottom:80}}>
+      <Nav title="Balance" sub={filtro==='mes'?'Este mes':'Todo el historial'}
+        right={
+          <div style={{display:'flex',gap:5}}>
+            {['mes','todo'].map(f=>(
+              <button key={f} onClick={()=>setFiltro(f)} style={{background:filtro===f?'rgba(255,255,255,0.08)':'none',border:'none',color:filtro===f?'#fff':T3,borderRadius:7,padding:'3px 9px',fontSize:10,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+                {f==='mes'?'Mes':'Todo'}
+              </button>
+            ))}
+          </div>
+        }/>
+      <div style={{padding:'12px 14px 0'}}>
+        <Card style={{borderColor:sobra>=0?GBD:'rgba(248,113,113,0.15)',marginBottom:12}}>
+          <div style={{display:'flex',justifyContent:'space-around',textAlign:'center'}}>
+            <div><div style={{fontSize:10,color:T3,marginBottom:2}}>Ingresos</div><div style={{fontSize:16,fontWeight:700,color:ACENTO}}>{fmtEur(ingresos)}</div></div>
+            <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
+            <div><div style={{fontSize:10,color:T3,marginBottom:2}}>Gastos</div><div style={{fontSize:16,fontWeight:700,color:'#F87171'}}>{fmtEur(gastos)}</div></div>
+            <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
+            <div><div style={{fontSize:10,color:T3,marginBottom:2}}>Sobra</div><div style={{fontSize:16,fontWeight:700,color:sobra>=0?ACENTO:'#F87171'}}>{sobra>=0?'+':''}{fmtEur(sobra)}</div></div>
+          </div>
+        </Card>
+
+        {Object.keys(grouped).length===0&&(
+          <div style={{textAlign:'center',padding:'40px 0',color:T3}}>
+            <div style={{fontSize:32,marginBottom:12}}>💸</div>
+            <div style={{fontSize:14,marginBottom:6}}>Sin transacciones</div>
+            <div style={{fontSize:12,marginBottom:16}}>Registra tu primer ingreso o gasto</div>
+          </div>
+        )}
+
+        {Object.entries(grouped).map(([fecha,items])=>{
+          const totalDia=items.reduce((a,t)=>a+(t.tipo==='ingreso'?t.importe:-t.importe),0);
+          return (
+            <div key={fecha}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',margin:'10px 0 6px'}}>
+                <span style={{fontSize:10,color:T3,textTransform:'uppercase',letterSpacing:'0.06em'}}>{fmtFecha(fecha)}</span>
+                <span style={{fontSize:11,fontWeight:600,color:totalDia>=0?ACENTO:'#F87171'}}>{totalDia>=0?'+':''}{fmtEur(totalDia)}</span>
+              </div>
+              {items.map(t=>(
+                <div key={t.id} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 0',borderBottom:'0.5px solid rgba(255,255,255,0.04)'}}>
+                  <div style={{width:32,height:32,borderRadius:10,background:'rgba(255,255,255,0.05)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,flexShrink:0}}>
+                    {ICONOS_CAT[t.categoria]||'📌'}
+                  </div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{fontSize:13,color:'#fff',fontWeight:500,marginBottom:2}}>{t.nombre}</div>
+                    <div style={{display:'flex',alignItems:'center',gap:5}}>
+                      <span style={{fontSize:10,color:T3}}>{t.categoria}</span>
+                      {t.tipo==='gasto'&&<BadgeTipo tipo={t.tipogasto}/>}
+                      {t.recurrente&&<span style={{fontSize:9,color:T3}}>↻</span>}
+                    </div>
+                  </div>
+                  <div style={{textAlign:'right',flexShrink:0}}>
+                    <div style={{fontSize:13,fontWeight:600,color:t.tipo==='ingreso'?ACENTO:'#F87171'}}>
+                      {t.tipo==='ingreso'?'+':'-'}{fmtEur(t.importe)}
+                    </div>
+                    <button onClick={()=>deleteTx(t.id)} style={{fontSize:9,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif',marginTop:1}}>borrar</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* FAB */}
+      <button onClick={()=>setShowReg(true)} style={{position:'fixed',bottom:70,right:16,width:48,height:48,borderRadius:15,background:ACENTO,border:'none',color:'#000',fontSize:26,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',zIndex:90,boxShadow:'0 4px 20px rgba(52,211,153,0.3)'}}>+</button>
+
+      {showReg&&<RegistroModal onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);}}/>}
+    </div>
+  );
+}
+
+// ─── REGISTRO MODAL ───────────────────────────────────────────────────────────
+function RegistroModal({onClose,onSave,inicial=null}) {
+  const [tipoTx,setTipoTx]=useState(inicial?.tipo||'gasto');
+  const [nombre,setNombre]=useState(inicial?.nombre||'');
+  const [categoria,setCategoria]=useState(inicial?.categoria||'');
+  const [importe,setImporte]=useState(inicial?.importe?String(inicial.importe):'');
+  const [fecha,setFecha]=useState(inicial?.fecha||hoy());
+  const [recurrente,setRecurrente]=useState(inicial?.recurrente||false);
+  const [tipogasto,setTipogasto]=useState(inicial?.tipogasto||'');
+  const [err,setErr]=useState('');
+
+  function guardar() {
+    if(!nombre.trim()){setErr('Añade un nombre');return;}
+    if(!importe||isNaN(parseFloat(importe))||parseFloat(importe)<=0){setErr('Importe inválido');return;}
+    if(!categoria){setErr('Selecciona una categoría');return;}
+    if(tipoTx==='gasto'&&!tipogasto){setErr('Elige el tipo de gasto');return;}
+    onSave({id:Date.now().toString(),tipo:tipoTx,nombre:nombre.trim(),categoria,importe:parseFloat(importe),fecha,recurrente,tipogasto:tipoTx==='gasto'?tipogasto:null});
+  }
+
+  const cats=tipoTx==='gasto'?CATS_GASTO:CATS_INGRESO;
+
+  return (
+    <div style={{position:'fixed',inset:0,zIndex:200,display:'flex',flexDirection:'column'}}>
+      <div onClick={onClose} style={{flex:1,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(4px)'}}/>
+      <div style={{background:'#0a0a0a',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:'20px 20px 0 0',padding:'16px 16px 32px',animation:'slideUp 0.25s ease',maxHeight:'85vh',overflowY:'auto'}}>
+        {/* Header */}
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
+          <button onClick={onClose} style={{background:'none',border:'none',color:T2,fontSize:13,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Cancelar</button>
+          <span style={{fontSize:14,fontWeight:700,color:'#fff'}}>Nueva transacción</span>
+          <button onClick={guardar} style={{background:'none',border:'none',color:ACENTO,fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Guardar</button>
+        </div>
+
+        {/* Tipo tx */}
+        <div style={{display:'flex',gap:6,marginBottom:14}}>
+          {['gasto','ingreso'].map(t=>(
+            <button key={t} onClick={()=>{setTipoTx(t);setCategoria('');setTipogasto('');}} style={{flex:1,padding:9,borderRadius:10,background:tipoTx===t?(t==='gasto'?'rgba(248,113,113,0.1)':GBG):'none',border:'0.5px solid '+(tipoTx===t?(t==='gasto'?'rgba(248,113,113,0.3)':GBD):'rgba(255,255,255,0.07)'),color:tipoTx===t?(t==='gasto'?'#F87171':ACENTO):T3,fontSize:13,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif',textTransform:'capitalize'}}>
+              {t}
+            </button>
+          ))}
+        </div>
+
+        {/* Importe grande */}
+        <div style={{textAlign:'center',marginBottom:16}}>
+          <input type="number" value={importe} onChange={e=>setImporte(e.target.value)} placeholder="0"
+            style={{fontSize:34,fontWeight:800,color:'#fff',background:'none',border:'none',outline:'none',textAlign:'center',width:'100%',letterSpacing:'-0.03em'}}/>
+          <div style={{fontSize:12,color:T3,marginTop:-4}}>€</div>
+        </div>
+
+        {/* Campos */}
+        <div style={{background:'rgba(255,255,255,0.03)',borderRadius:13,overflow:'hidden',border:'0.5px solid rgba(255,255,255,0.06)',marginBottom:10}}>
+          <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
+            <span style={{fontSize:15}}>📝</span>
+            <input value={nombre} onChange={e=>setNombre(e.target.value)} placeholder="Nombre (ej. Alquiler, Salario...)"
+              style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:13,fontFamily:'Inter,sans-serif'}}/>
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
+            <span style={{fontSize:15}}>🏷️</span>
+            <select value={categoria} onChange={e=>setCategoria(e.target.value)}
+              style={{flex:1,background:'none',border:'none',outline:'none',color:categoria?'#fff':T3,fontSize:13,fontFamily:'Inter,sans-serif',cursor:'pointer'}}>
+              <option value="" style={{background:'#111'}}>Categoría</option>
+              {cats.map(c=><option key={c} value={c} style={{background:'#111'}}>{c}</option>)}
+            </select>
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
+            <span style={{fontSize:15}}>📅</span>
+            <input type="date" value={fecha} onChange={e=>setFecha(e.target.value)}
+              style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:13,fontFamily:'Inter,sans-serif',cursor:'pointer'}}/>
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px'}}>
+            <span style={{fontSize:15}}>↻</span>
+            <span style={{fontSize:13,color:T2,flex:1}}>¿Se repite cada mes?</span>
+            <button onClick={()=>setRecurrente(!recurrente)} style={{width:36,height:20,borderRadius:10,background:recurrente?ACENTO:'rgba(255,255,255,0.1)',border:'none',cursor:'pointer',position:'relative',transition:'background 0.2s'}}>
+              <div style={{width:16,height:16,borderRadius:'50%',background:'#fff',position:'absolute',top:2,left:recurrente?18:2,transition:'left 0.2s'}}/>
+            </button>
+          </div>
+        </div>
+
+        {/* Tipo gasto — la decisión consciente */}
+        {tipoTx==='gasto'&&(
+          <div style={{background:'rgba(255,255,255,0.02)',border:'0.5px solid rgba(255,255,255,0.06)',borderRadius:12,padding:'11px 13px',marginBottom:10}}>
+            <div style={{fontSize:10,color:T3,marginBottom:8,letterSpacing:'0.05em'}}>TIPO DE GASTO — ¿qué es para ti?</div>
+            <div style={{display:'flex',gap:6}}>
+              {[
+                {id:'esencial',label:'Esencial',hint:'Sin esto, la vida se para',ac:ACENTO},
+                {id:'calidad',label:'Calidad de vida',hint:'Sin esto, la vida es gris',ac:'#60A5FA'},
+                {id:'capricho',label:'Capricho',hint:'Puedo vivir sin ello',ac:'#FBBF24'},
+              ].map(({id,label,hint,ac})=>(
+                <button key={id} onClick={()=>setTipogasto(id)} style={{flex:1,padding:'8px 4px',borderRadius:9,background:tipogasto===id?`rgba(${id==='esencial'?'52,211,153':id==='calidad'?'96,165,250':'251,191,36'},0.1)`:'none',border:`0.5px solid ${tipogasto===id?ac:'rgba(255,255,255,0.07)'}`,color:tipogasto===id?ac:T3,fontSize:10,fontWeight:tipogasto===id?700:400,cursor:'pointer',fontFamily:'Inter,sans-serif',lineHeight:1.3,transition:'all 0.15s'}}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            {tipogasto&&(
+              <div style={{fontSize:10,color:T3,marginTop:6,textAlign:'center'}}>
+                {tipogasto==='esencial'&&'Entra en tu fondo de emergencia ✓'}
+                {tipogasto==='calidad'&&'Entra en tu fondo de emergencia ✓'}
+                {tipogasto==='capricho'&&'No entra en el fondo — palanca de ahorro potencial'}
+              </div>
+            )}
+          </div>
+        )}
+
+        {err&&<div style={{fontSize:12,color:'#F87171',textAlign:'center',marginBottom:8}}>{err}</div>}
+
+        <button onClick={guardar} style={{width:'100%',padding:13,borderRadius:12,background:ACENTO,border:'none',color:'#000',fontSize:14,fontWeight:800,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+          Guardar transacción
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── FONDO DE EMERGENCIA ──────────────────────────────────────────────────────
+function Fondo({txs,fondoSaldo,setFondoSaldo}) {
+  const [editSaldo,setEditSaldo]=useState(false);
+  const [newSaldo,setNewSaldo]=useState(String(fondoSaldo));
+
+  const recurrentes=txs.filter(t=>t.tipo==='gasto'&&t.recurrente&&(t.tipogasto==='esencial'||t.tipogasto==='calidad'));
+  const baseRec=recurrentes.reduce((a,t)=>a+t.importe,0);
+  const mes=mesActual();
+  const txMes=txs.filter(t=>t.fecha.startsWith(mes));
+  const baseMes=txMes.filter(t=>t.tipo==='gasto'&&(t.tipogasto==='esencial'||t.tipogasto==='calidad')).reduce((a,t)=>a+t.importe,0);
+  const base=baseRec||baseMes;
+
+  const f3=base*3, f6=base*6, f12=base*12;
+  const p3=f3>0?Math.min(Math.round((fondoSaldo/f3)*100),999):0;
+  const p6=f6>0?Math.min(Math.round((fondoSaldo/f6)*100),999):0;
+  const p12=f12>0?Math.min(Math.round((fondoSaldo/f12)*100),999):0;
+
+  const gastoE=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='esencial').reduce((a,t)=>a+t.importe,0);
+  const gastoC=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='calidad').reduce((a,t)=>a+t.importe,0);
+
+  function saveSaldo() {
+    const v=parseFloat(newSaldo);
+    if(!isNaN(v)&&v>=0){setFondoSaldo(v);lsSet('fb_fondo',v);}
+    setEditSaldo(false);
+  }
+
+  const niveles=[
+    {label:'Mínimo',n:'3 meses',meta:f3,pct:p3,color:'#FBBF24',dot:'#FBBF24'},
+    {label:'Deseable',n:'6 meses',meta:f6,pct:p6,color:ACENTO,dot:'rgba(52,211,153,0.5)'},
+    {label:'Ideal',n:'12 meses',meta:f12,pct:p12,color:'rgba(52,211,153,0.25)',dot:'rgba(255,255,255,0.15)'},
+  ];
+
+  return (
+    <div style={{paddingBottom:80}}>
+      <Nav title="Fondo de emergencia" sub={base>0?`Base: ${fmtEur(base)}/mes`:'Registra gastos para calcular'}/>
+      <div style={{padding:'12px 14px 0'}}>
+        {/* Saldo actual */}
+        <Card style={{borderColor:GBD,textAlign:'center',marginBottom:12}}>
+          <div style={{fontSize:10,color:T3,marginBottom:4}}>Saldo actual</div>
+          {editSaldo?(
+            <div style={{display:'flex',gap:8,alignItems:'center',justifyContent:'center',margin:'4px 0'}}>
+              <input type="number" value={newSaldo} onChange={e=>setNewSaldo(e.target.value)} autoFocus
+                style={{fontSize:24,fontWeight:800,color:'#fff',background:'none',border:'none',outline:'none',textAlign:'center',width:140,fontFamily:'Inter,sans-serif'}}/>
+              <span style={{fontSize:16,color:T2}}>€</span>
+            </div>
+          ):(
+            <div style={{fontSize:32,fontWeight:800,color:ACENTO,letterSpacing:'-0.03em',marginBottom:4}}>{fmtEur(fondoSaldo)}</div>
+          )}
+          <button onClick={()=>editSaldo?saveSaldo():setEditSaldo(true)} style={{fontSize:11,color:editSaldo?ACENTO:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+            {editSaldo?'Guardar saldo':'Actualizar saldo →'}
+          </button>
+        </Card>
+
+        <SecLabel>Tus tres niveles</SecLabel>
+
+        {base===0?(
+          <div style={{padding:'20px 14px',background:CA,border:'0.5px solid '+CB,borderRadius:13,textAlign:'center',marginBottom:9}}>
+            <div style={{fontSize:12,color:T3,lineHeight:1.6}}>Registra tus gastos fijos marcándolos como <strong style={{color:'#fff'}}>Esencial</strong> o <strong style={{color:'#fff'}}>Calidad de vida</strong> para calcular tu fondo automáticamente.</div>
+          </div>
+        ):(
+          niveles.map((nv,i)=>(
+            <div key={nv.label} style={{display:'flex',alignItems:'center',gap:12,padding:'10px 0',borderBottom:i<2?'0.5px solid rgba(255,255,255,0.04)':'none'}}>
+              <div style={{width:8,height:8,borderRadius:'50%',background:nv.dot,flexShrink:0}}/>
+              <div style={{flex:1}}>
+                <div style={{display:'flex',justifyContent:'space-between',marginBottom:4}}>
+                  <span style={{fontSize:12,fontWeight:600,color:i===0?'#fff':i===1?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.28)'}}>{nv.label} · {nv.n}</span>
+                  <span style={{fontSize:12,fontWeight:600,color:i===0?'#fff':i===1?'rgba(255,255,255,0.55)':'rgba(255,255,255,0.28)'}}>{fmtEur(nv.meta)}</span>
+                </div>
+                <ProgressBar pct={nv.pct} color={nv.color} height={3}/>
+                <div style={{display:'flex',justifyContent:'space-between',marginTop:3}}>
+                  <span style={{fontSize:10,color:T3}}>{nv.pct}% · faltan {fmtEur(Math.max(0,nv.meta-fondoSaldo))}</span>
+                  {nv.pct>=100&&<span style={{fontSize:10,color:ACENTO}}>✓ Alcanzado</span>}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+
+        <Divider/>
+        <SecLabel>¿Qué cubre tu base?</SecLabel>
+        <Card style={{background:GBG,borderColor:GBD}}>
+          {[{label:'Gastos esenciales',v:gastoE},{label:'Calidad de vida',v:gastoC}].map(({label,v})=>(
+            <div key={label} style={{display:'flex',justifyContent:'space-between',padding:'5px 0',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
+              <span style={{fontSize:12,color:T2}}>{label}</span>
+              <span style={{fontSize:12,fontWeight:600,color:'#fff'}}>{fmtEur(v)}/mes</span>
+            </div>
+          ))}
+          <div style={{display:'flex',justifyContent:'space-between',padding:'5px 0'}}>
+            <span style={{fontSize:12,color:ACENTO,fontWeight:600}}>Total base</span>
+            <span style={{fontSize:12,fontWeight:700,color:ACENTO}}>{fmtEur(gastoE+gastoC)}/mes</span>
+          </div>
+        </Card>
+
+        <div style={{marginTop:10,padding:'11px 13px',background:'rgba(251,191,36,0.04)',border:'0.5px solid rgba(251,191,36,0.12)',borderRadius:12}}>
+          <div style={{fontSize:11,color:'rgba(251,191,36,0.8)',lineHeight:1.6}}>💡 <strong>Recuerda:</strong> El fondo de emergencia no es ahorro — es infraestructura. No se toca. Sin él, no se invierte.</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── METAS ────────────────────────────────────────────────────────────────────
+function Metas({metas,setMetas}) {
+  const [showForm,setShowForm]=useState(false);
+  const [nombre,setNombre]=useState('');
+  const [icono,setIcono]=useState('🎯');
+  const [meta,setMeta]=useState('');
+  const [actual,setActual]=useState('');
+  const [fecha,setFecha]=useState('');
+  const [editId,setEditId]=useState(null);
+
+  const ICONOS=['🎯','✈️','💻','🏠','🚗','📚','💍','🏋️','🎸','🌍','🏖️','🎓'];
+
+  function guardarMeta() {
+    if(!nombre.trim()||!meta) return;
+    const m={id:editId||Date.now().toString(),nombre:nombre.trim(),icono,meta:parseFloat(meta),actual:parseFloat(actual)||0,fecha};
+    if(editId){
+      setMetas(prev=>{const n=prev.map(x=>x.id===editId?m:x);lsSet('fb_metas',n);return n;});
+    } else {
+      setMetas(prev=>{const n=[...prev,m];lsSet('fb_metas',n);return n;});
+    }
+    setShowForm(false);setNombre('');setMeta('');setActual('');setFecha('');setIcono('🎯');setEditId(null);
+  }
+
+  function deleteMeta(id) {
+    setMetas(prev=>{const n=prev.filter(m=>m.id!==id);lsSet('fb_metas',n);return n;});
+  }
+
+  function aportarMeta(id,importe) {
+    setMetas(prev=>{const n=prev.map(m=>m.id===id?{...m,actual:Math.min(m.actual+importe,m.meta)}:m);lsSet('fb_metas',n);return n;});
+  }
+
+  return (
+    <div style={{paddingBottom:80}}>
+      <Nav title="Metas de ahorro" sub={`${metas.length} meta${metas.length!==1?'s':''} activa${metas.length!==1?'s':''}`}
+        right={<button onClick={()=>setShowForm(true)} style={{background:GBG,border:'0.5px solid '+GBD,color:ACENTO,borderRadius:9,padding:'5px 11px',fontSize:11,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>+ Nueva</button>}/>
+      <div style={{padding:'12px 14px 0'}}>
+        {metas.length===0&&!showForm&&(
+          <div style={{textAlign:'center',padding:'48px 0 32px'}}>
+            <div style={{fontSize:36,marginBottom:12}}>🎯</div>
+            <div style={{fontSize:15,color:'#fff',fontWeight:600,marginBottom:6}}>Sin metas todavía</div>
+            <div style={{fontSize:13,color:T2,marginBottom:20,lineHeight:1.6}}>Crea una meta con nombre, importe y fecha. El ahorro con nombre y fecha es 10x más efectivo.</div>
+            <button onClick={()=>setShowForm(true)} style={{padding:'11px 24px',borderRadius:11,background:ACENTO,border:'none',color:'#000',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Crear primera meta</button>
+          </div>
+        )}
+
+        {metas.map(m=>{
+          const pct=m.meta>0?Math.min(Math.round((m.actual/m.meta)*100),100):0;
+          const faltan=Math.max(0,m.meta-m.actual);
+          return (
+            <Card key={m.id}>
+              <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:8}}>
+                <div style={{display:'flex',alignItems:'center',gap:10}}>
+                  <div style={{width:36,height:36,borderRadius:10,background:'rgba(96,165,250,0.08)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18}}>{m.icono}</div>
+                  <div>
+                    <div style={{fontSize:14,fontWeight:700,color:'#fff'}}>{m.nombre}</div>
+                    {m.fecha&&<div style={{fontSize:10,color:T3}}>{m.fecha}</div>}
+                  </div>
+                </div>
+                <button onClick={()=>deleteMeta(m.id)} style={{fontSize:10,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>✕</button>
+              </div>
+              <ProgressBar pct={pct} color="#60A5FA" height={4}/>
+              <div style={{display:'flex',justifyContent:'space-between',marginTop:6,marginBottom:10}}>
+                <span style={{fontSize:11,color:T3}}>{fmtEur(m.actual)} / {fmtEur(m.meta)}</span>
+                <span style={{fontSize:11,color:'#60A5FA',fontWeight:600}}>{pct}%</span>
+              </div>
+              {pct<100&&(
+                <div style={{display:'flex',gap:6}}>
+                  {[50,100,200].map(cant=>(
+                    <button key={cant} onClick={()=>aportarMeta(m.id,cant)} style={{flex:1,padding:'7px 4px',borderRadius:8,background:'rgba(96,165,250,0.06)',border:'0.5px solid rgba(96,165,250,0.15)',color:'#60A5FA',fontSize:11,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+                      +{cant}€
+                    </button>
+                  ))}
+                  <button onClick={()=>{const v=prompt('¿Cuánto añadir?');if(v&&!isNaN(parseFloat(v)))aportarMeta(m.id,parseFloat(v));}} style={{flex:1,padding:'7px 4px',borderRadius:8,background:'rgba(96,165,250,0.06)',border:'0.5px solid rgba(96,165,250,0.15)',color:'#60A5FA',fontSize:11,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>otro</button>
+                </div>
+              )}
+              {pct>=100&&<div style={{textAlign:'center',fontSize:12,color:ACENTO,fontWeight:700}}>🎉 Meta alcanzada</div>}
+            </Card>
+          );
+        })}
+
+        {showForm&&(
+          <div style={{background:'rgba(10,10,10,0.98)',border:'0.5px solid rgba(255,255,255,0.1)',borderRadius:16,padding:16,marginBottom:9}}>
+            <div style={{fontSize:13,fontWeight:700,color:'#fff',marginBottom:12}}>Nueva meta</div>
+            <div style={{display:'flex',gap:6,flexWrap:'wrap',marginBottom:10}}>
+              {ICONOS.map(ic=>(
+                <button key={ic} onClick={()=>setIcono(ic)} style={{width:34,height:34,borderRadius:8,background:icono===ic?GBG:'rgba(255,255,255,0.04)',border:`0.5px solid ${icono===ic?GBD:'rgba(255,255,255,0.06)'}`,fontSize:18,cursor:'pointer'}}>
+                  {ic}
+                </button>
+              ))}
+            </div>
+            <input value={nombre} onChange={e=>setNombre(e.target.value)} placeholder="Nombre de la meta"
+              style={{width:'100%',background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:13,marginBottom:8,fontFamily:'Inter,sans-serif'}}/>
+            <div style={{display:'flex',gap:8,marginBottom:8}}>
+              <input type="number" value={meta} onChange={e=>setMeta(e.target.value)} placeholder="Meta total (€)"
+                style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:13,fontFamily:'Inter,sans-serif'}}/>
+              <input type="number" value={actual} onChange={e=>setActual(e.target.value)} placeholder="Ya tengo (€)"
+                style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:13,fontFamily:'Inter,sans-serif'}}/>
+            </div>
+            <input value={fecha} onChange={e=>setFecha(e.target.value)} placeholder="Fecha objetivo (ej. dic 2026)"
+              style={{width:'100%',background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:13,marginBottom:10,fontFamily:'Inter,sans-serif'}}/>
+            <div style={{display:'flex',gap:8}}>
+              <button onClick={()=>setShowForm(false)} style={{flex:1,padding:10,borderRadius:9,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',color:T2,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Cancelar</button>
+              <button onClick={guardarMeta} style={{flex:2,padding:10,borderRadius:9,background:ACENTO,border:'none',color:'#000',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Guardar meta</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── FLUJO CHAT ───────────────────────────────────────────────────────────────
+function FlujoChat({txs,metas,fondoSaldo,msgCount,setMsgCount,chatMsgs,setChatMsgs}) {
+  const [input,setInput]=useState('');
+  const [loading,setLoading]=useState(false);
+  const msgsEnd=useRef(null);
+
+  useEffect(()=>{
+    msgsEnd.current&&msgsEnd.current.scrollIntoView({behavior:'smooth'});
+  },[chatMsgs,loading]);
+
+  // Construir contexto financiero para FLUJO
+  function buildContext() {
+    const mes=mesActual();
+    const txMes=txs.filter(t=>t.fecha.startsWith(mes));
+    const ingresos=txMes.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
+    const gastos=txMes.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
+    const gastoE=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='esencial').reduce((a,t)=>a+t.importe,0);
+    const gastoC=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='calidad').reduce((a,t)=>a+t.importe,0);
+    const gastoK=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').reduce((a,t)=>a+t.importe,0);
+    const recurrentes=txs.filter(t=>t.tipo==='gasto'&&t.recurrente);
+    const baseFondo=(txs.filter(t=>t.tipo==='gasto'&&t.recurrente&&(t.tipogasto==='esencial'||t.tipogasto==='calidad')).reduce((a,t)=>a+t.importe,0))||(gastoE+gastoC);
+    const f3=baseFondo*3;
+    const pctFondo=f3>0?Math.round((fondoSaldo/f3)*100):0;
+
+    let ctx=`[CONTEXTO FINANCIERO DEL USUARIO — ${new Date().toLocaleDateString('es-ES',{month:'long',year:'numeric'})}]\n`;
+    ctx+=`Ingresos este mes: ${fmtEur(ingresos)}\n`;
+    ctx+=`Gastos este mes: ${fmtEur(gastos)} (sobra: ${fmtEur(ingresos-gastos)})\n`;
+    ctx+=`  - Esenciales: ${fmtEur(gastoE)}\n`;
+    ctx+=`  - Calidad de vida: ${fmtEur(gastoC)}\n`;
+    ctx+=`  - Caprichos: ${fmtEur(gastoK)}\n`;
+    if(recurrentes.length>0){
+      ctx+=`Gastos fijos recurrentes: ${recurrentes.slice(0,5).map(t=>`${t.nombre} ${fmtEur(t.importe)}`).join(', ')}\n`;
+    }
+    ctx+=`Fondo de emergencia: ${fmtEur(fondoSaldo)} (${pctFondo}% del mínimo de 3 meses = ${fmtEur(f3)})\n`;
+    if(metas.length>0){
+      ctx+=`Metas de ahorro activas:\n`;
+      metas.forEach(m=>{
+        const pct=m.meta>0?Math.round((m.actual/m.meta)*100):0;
+        ctx+=`  - ${m.nombre}: ${fmtEur(m.actual)} / ${fmtEur(m.meta)} (${pct}%)${m.fecha?` · ${m.fecha}`:''}\n`;
+      });
+    }
+    if(ingresos===0&&gastos===0){
+      ctx+=`IMPORTANTE: El usuario aún no ha registrado datos. Anímate a pedirle que empiece por sus ingresos.\n`;
+    }
+    if(msgCount>450){
+      ctx+=`\nAVISO: Quedan ${MSG_LIMIT-msgCount} mensajes disponibles en este plan. Si se agotan, recuérdame cómo recargar o migrar a mi propio LLM.\n`;
+    }
+    return ctx;
+  }
+
+  const SYSTEM_FLUJO=`Eres FLUJO, el asesor financiero de Finanzas Brutales. Eres directo, estratégico, sin rodeos y profundamente humano. Tu trabajo no es solo dar información — es acompañar al usuario hacia la claridad financiera y ayudarle a construir hábitos que cambien su vida. Combinas rigor financiero con motivación real.
+
+FILOSOFÍA FINANCIERA QUE SIGUES — EN ORDEN:
+1. Claridad primero: sin saber cuánto entra y cuánto sale, no se puede planificar.
+2. Fondo de emergencia: 3 meses mínimo (Esencial + Calidad de vida). Sin esto, no se invierte. Esto es no negociable.
+3. Metas de ahorro: dinero con nombre y fecha. En paralelo al fondo una vez que tiene tracción.
+4. Inversión: solo cuando el fondo mínimo está completo. Nunca antes.
+
+REGLAS DE COMUNICACIÓN — NO NEGOCIABLES:
+— Máximo 3 párrafos por respuesta. Nunca más de 4 líneas por párrafo.
+— Una sola idea por mensaje.
+— Terminas siempre con una pregunta o un reto concreto.
+— Nunca más de una pregunta por mensaje.
+— Sin listas largas ni bullets. Conversación natural.
+— Si supera 6 líneas, córtala.
+
+CATEGORÍAS DE GASTO QUE USA LA APP:
+— Esencial: sin esto la vida se para. Entra en el fondo de emergencia.
+— Calidad de vida: sin esto la vida es gris pero funciona. También entra en el fondo.
+— Capricho: puede vivir sin ello. No entra en el fondo. Es la palanca de ahorro.
+
+CÓMO ABRES (si es la primera vez o no hay datos):
+"Soy FLUJO, tu asesor financiero. Veo tu situación financiera en tiempo real mientras registras datos en la app.
+
+Si aún no has registrado nada, el mejor primer paso es ir a Balance y añadir tus ingresos mensuales. Sin eso, voy a ciegas.
+
+¿Por dónde quieres empezar?"
+
+CÓMO USAS EL CONTEXTO:
+Siempre referencias los datos reales del usuario cuando están disponibles. Nunca preguntas algo que ya sabes por el contexto. Si ve caprichos altos, lo nombras. Si el fondo está bien, lo celebras. Si no hay datos, lo pides directamente.
+
+CUANDO SE ACABAN LOS MENSAJES:
+Si queda poco crédito, lo mencionas de forma natural y explicas que puede: (1) recargar 500 mensajes más por 19€ en la misma app, o (2) exportar las instrucciones de FLUJO y usarlo en Claude, ChatGPT o Grok de forma gratuita con su propia cuenta. No es una pared — es una transición a más autonomía.
+
+SOBRE INVERSIÓN:
+Educas, no recomiendas activos concretos. Nunca dices dónde poner el dinero. Siempre aclaras que no eres asesor licenciado para decisiones importantes. Nunca hablas de invertir si el fondo mínimo no está completo.
+
+NUNCA:
+— Nunca juzgas el gasto pasado — es información, no condena.
+— Nunca das más de un paso por mensaje.
+— Nunca inventas datos que no están en el contexto.
+— Nunca dices "no puedo" — siempre orientas.
+
+Respondes siempre como FLUJO.`;
+
+  const OPENING=txs.length>0
+    ? `Soy FLUJO, tu asesor financiero. Tengo acceso a tus datos en tiempo real.\n\nVeo que llevas ${txs.length} transacciones registradas. ${txs.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').length>0?'Tengo algunas observaciones sobre tus caprichos cuando quieras.':'El registro va bien.'}\n\n¿En qué quieres trabajar hoy?`
+    : `Soy FLUJO, tu asesor financiero. Veo tu situación financiera en tiempo real mientras registras datos en la app.\n\nAún no hay datos registrados — eso es el punto de partida. El mejor primer paso es ir a Balance y añadir tus ingresos mensuales.\n\n¿Empezamos por eso o prefieres contarme primero cómo está tu situación?`;
+
+  useEffect(()=>{
+    if(chatMsgs.length===0){
+      setChatMsgs([{role:'agent',content:OPENING}]);
+    }
+  },[]);
+
+  const chatPanelEl = chatMsgs.length>0 ? (
+    <div style={{flex:1,overflowY:'auto',padding:'12px 14px',display:'flex',flexDirection:'column',gap:9}}>
+      {chatMsgs.map((m,i)=>(
+        <div key={i} style={{maxWidth:'85%',padding:'10px 13px',borderRadius:m.role==='agent'?'4px 13px 13px 13px':'13px 13px 4px 13px',fontSize:13,lineHeight:1.55,background:m.role==='agent'?GBG:'rgba(255,255,255,0.06)',border:m.role==='agent'?'0.5px solid '+GBD:'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>
+          {m.content}
+        </div>
+      ))}
+      {loading&&(
+        <div style={{maxWidth:'85%',padding:'12px 13px',borderRadius:'4px 13px 13px 13px',background:GBG,border:'0.5px solid '+GBD,alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
+          {[0,1,2].map(i=><div key={i} style={{width:5,height:5,borderRadius:'50%',background:ACENTO,animation:`typing 1.2s ${i*0.2}s infinite`}}/>)}
+        </div>
+      )}
+      <div ref={msgsEnd}/>
+    </div>
+  ) : <div style={{flex:1}}/>;
+
+  async function sendChat() {
+    if(!input.trim()||loading||msgCount>=MSG_LIMIT) return;
+    const msg=input.trim();
+    setInput('');
+    const context=buildContext();
+    const systemWithContext=SYSTEM_FLUJO+'\n\n'+context;
+    const newMsgs=[...chatMsgs,{role:'user',content:msg}];
+    setChatMsgs(newMsgs);
+    setLoading(true);
+    const newCount=msgCount+1;
+    setMsgCount(newCount);
+    lsSet('fb_msgcount',newCount);
+    try {
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':getKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:600,system:systemWithContext,
+          messages:newMsgs.map(m=>({role:m.role==='agent'?'assistant':'user',content:m.content}))})
+      });
+      const data=await res.json();
+      const reply=clean(data.content&&data.content[0]?data.content[0].text:'Error al conectar.');
+      const updated=[...newMsgs,{role:'agent',content:reply}];
+      setChatMsgs(updated);
+      lsSet('fb_chat',updated);
+    } catch(e) {
+      setChatMsgs(p=>[...p,{role:'agent',content:'Error de conexión. Inténtalo de nuevo.'}]);
+    }
+    setLoading(false);
+  }
+
+  const remaining=MSG_LIMIT-msgCount;
+
+  return (
+    <div style={{display:'flex',flexDirection:'column',height:'calc(100vh - 56px)',paddingBottom:'env(safe-area-inset-bottom,0px)'}}>
+      {/* Header */}
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px 8px',borderBottom:'0.5px solid rgba(255,255,255,0.06)',flexShrink:0,background:'rgba(0,0,0,0.95)'}}>
+        <div style={{display:'flex',alignItems:'center',gap:10}}>
+          <div style={{width:32,height:32,borderRadius:10,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',color:'#000',fontSize:16}}>⚡</div>
+          <div>
+            <div style={{fontSize:14,fontWeight:700,color:'#fff'}}>FLUJO</div>
+            <div style={{fontSize:10,color:ACENTO}}>Tu asesor financiero · en línea</div>
+          </div>
+        </div>
+        <div style={{fontSize:10,color:remaining<50?'#F87171':T3}}>{remaining} msgs restantes</div>
+      </div>
+
+      {chatPanelEl}
+
+      {/* Input */}
+      {remaining<=0?(
+        <div style={{padding:'12px 14px',borderTop:'0.5px solid rgba(255,255,255,0.06)',background:'#000',flexShrink:0}}>
+          <div style={{fontSize:12,color:T2,textAlign:'center',marginBottom:8}}>Has usado todos tus mensajes.</div>
+          <div style={{display:'flex',gap:8}}>
+            <button style={{flex:1,padding:10,borderRadius:10,background:GBG,border:'0.5px solid '+GBD,color:ACENTO,fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Recargar 500 msgs — 19€</button>
+          </div>
+        </div>
+      ):(
+        <div style={{padding:'8px 12px 10px',borderTop:'0.5px solid rgba(255,255,255,0.06)',display:'flex',gap:8,alignItems:'flex-end',flexShrink:0,background:'rgba(0,0,0,0.97)'}}>
+          <textarea
+            style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:11,padding:'10px 13px',color:'#fff',fontSize:14,fontFamily:'Inter,sans-serif',resize:'none',outline:'none',height:44,lineHeight:1.4}}
+            placeholder={'Escribe a FLUJO...'}
+            value={input}
+            onChange={e=>setInput(e.target.value)}
+            onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}
+          />
+          <button onClick={sendChat} disabled={!input.trim()||loading||remaining<=0}
+            style={{background:(!input.trim()||loading||remaining<=0)?'rgba(52,211,153,0.2)':ACENTO,color:(!input.trim()||loading||remaining<=0)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:11,width:44,height:44,fontSize:20,fontWeight:700,cursor:(!input.trim()||loading||remaining<=0)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,fontFamily:'Inter,sans-serif'}}>
+            ↑
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── APP PRINCIPAL ────────────────────────────────────────────────────────────
+function App() {
+  const [view,setView]=useState('home');
+  const [onboardingDone,setOnboardingDone]=useState(()=>ls('fb_onboarding',false));
+  const [txs,setTxs]=useState(()=>ls('fb_txs',[]));
+  const [metas,setMetas]=useState(()=>ls('fb_metas',[]));
+  const [fondoSaldo,setFondoSaldo]=useState(()=>ls('fb_fondo',0));
+  const [msgCount,setMsgCount]=useState(()=>ls('fb_msgcount',0));
+  const [chatMsgs,setChatMsgs]=useState(()=>ls('fb_chat',[]));
 
   useEffect(()=>{
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -162,313 +981,31 @@ function App() {
     }));
   },[]);
 
-  function activatePro(){
-    setIsPro(true);
-    try{localStorage.setItem('pb_pro','true');}catch(e){}
-    setModal(null);setKeyInput('');setKeyError(false);
+  function completeOnboarding() {
+    setOnboardingDone(true);
+    lsSet('fb_onboarding',true);
+    setView('dashboard');
   }
 
-  function checkKey(){
-    if(keyInput.trim().toUpperCase()===PRO_KEY) activatePro();
-    else setKeyError(true);
-  }
-
-  function copyText(texto,id){
-    navigator.clipboard.writeText(texto);
-    setCopied(id);
-    setTimeout(()=>setCopied(null),2000);
-  }
-
-  function openChat(p,colId){
-    setChatPrompt(p);setChatColId(colId);
-    setChatMsgs([{role:'agent',content:getOpening(p,colId)}]);
-    setChatOpen(true);
-  }
-
-  async function sendChat(){
-    if(!chatInput.trim()||chatLoading) return;
-    const msg=chatInput.trim();
-    setChatInput('');
-    const newMsgs=[...chatMsgs,{role:'user',content:msg}];
-    setChatMsgs(newMsgs);setChatLoading(true);
-    const apiKey=getKey();
-    if(!apiKey){
-      setChatMsgs(p=>[...p,{role:'agent',content:'Chat disponible solo en la versión Pro.'}]);
-      setChatLoading(false);return;
-    }
-    try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:chatPrompt.texto,
-          messages:newMsgs.map(m=>({role:m.role==='agent'?'assistant':'user',content:m.content}))})
-      });
-      const data=await res.json();
-      const reply=clean(data.content&&data.content[0]?data.content[0].text:'Error.');
-      setChatMsgs(p=>[...p,{role:'agent',content:reply}]);
-    }catch(e){
-      setChatMsgs(p=>[...p,{role:'agent',content:'Error de conexión. Inténtalo de nuevo.'}]);
-    }
-    setChatLoading(false);
-  }
-
-  function ModalOverlay(){
-    if(modal!=='unlock') return null;
-    return(
-      <div onClick={()=>setModal(null)} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.88)',backdropFilter:'blur(8px)',zIndex:300,display:'flex',alignItems:'flex-end',justifyContent:'center'}}>
-        <div onClick={e=>e.stopPropagation()} style={{background:'#0d0d0d',border:'1px solid rgba(255,255,255,0.1)',borderBottom:'none',borderRadius:'20px 20px 0 0',padding:'32px 24px 48px',width:'100%',maxWidth:480,display:'flex',flexDirection:'column',gap:18}}>
-          <div style={{fontSize:22,fontWeight:800,letterSpacing:'-0.03em'}}>Desbloquea Agentes Brutales</div>
-          <div style={{fontSize:14,color:T2,lineHeight:1.6}}>27 agentes desbloqueados + chat directo con cada uno. Pago único, sin suscripción.</div>
-          <div style={{display:'flex',flexDirection:'column',gap:8}}>
-            {[['⚡','27 agentes desbloqueados'],['💬','Chat directo con cada agente'],['♾️','Sin límite de uso'],['📱','Instalable en iPhone y Android']].map(([icon,text])=>(
-              <div key={text} style={{display:'flex',alignItems:'center',gap:10,fontSize:14,color:T2}}><span>{icon}</span><span>{text}</span></div>
-            ))}
-          </div>
-          <button onClick={()=>window.open(GUMROAD,'_blank')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 20px',fontSize:16,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-            <span>Conseguir acceso — 19€</span>
-            <span style={{fontSize:12,opacity:0.7}}>Pago único</span>
-          </button>
-          <div style={{display:'flex',alignItems:'center',gap:12}}>
-            <div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/><span style={{fontSize:12,color:T3,fontWeight:600}}>ya tengo clave</span><div style={{flex:1,height:1,background:'rgba(255,255,255,0.08)'}}/>
-          </div>
-          <div style={{display:'flex',gap:10}}>
-            <input style={{flex:1,background:'rgba(255,255,255,0.05)',border:keyError?'1px solid #ff5252':'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 14px',color:'#fff',fontSize:14,outline:'none'}} placeholder="Pega tu clave aquí..." value={keyInput} onChange={e=>{setKeyInput(e.target.value);setKeyError(false);}} onKeyDown={e=>e.key==='Enter'&&checkKey()}/>
-            <button onClick={checkKey} style={{background:'rgba(255,255,255,0.08)',color:'#fff',border:'1px solid rgba(255,255,255,0.12)',borderRadius:10,padding:'12px 16px',fontSize:14,fontWeight:700,cursor:'pointer'}}>Activar</button>
-          </div>
-          {keyError&&<div style={{fontSize:12,color:'#ff5252'}}>Clave incorrecta. Comprueba tu email.</div>}
-          <button onClick={()=>setModal(null)} style={{background:'none',border:'none',color:T3,fontSize:14,cursor:'pointer',alignSelf:'center'}}>Cerrar</button>
-        </div>
+  if(!onboardingDone) {
+    return (
+      <div>
+        <HomeAxon onDone={completeOnboarding} setView={(v)=>{completeOnboarding();setView(v);}}/>
       </div>
     );
   }
 
-
-
-
-  const chatPanelEl = (chatOpen && chatPrompt) ? (
-    <div style={{position:'fixed',bottom:0,right:0,width:'100%',maxWidth:480,height:580,background:'#080808',border:'1px solid rgba(52,211,153,0.18)',borderBottom:'none',borderRadius:'20px 20px 0 0',display:'flex',flexDirection:'column',zIndex:200,boxShadow:'0 -20px 60px rgba(0,0,0,0.7)'}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderBottom:'1px solid rgba(255,255,255,0.06)',flexShrink:0}}>
-        <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <div style={{width:8,height:8,borderRadius:'50%',background:BLU,animation:'pulse 2s infinite'}}/>
-          <span style={{fontSize:15,fontWeight:700}}>{chatPrompt.nombre} <span style={{color:BLU}}>·</span> <span style={{color:T3,fontWeight:500,fontSize:13}}>{chatPrompt.subtitulo}</span></span>
-        </div>
-        <button onClick={()=>setChatOpen(false)} style={{background:'rgba(255,255,255,0.06)',border:'none',color:T2,width:28,height:28,borderRadius:8,cursor:'pointer',fontSize:18,display:'flex',alignItems:'center',justifyContent:'center'}}>×</button>
-      </div>
-      <div style={{flex:1,overflowY:'auto',padding:16,display:'flex',flexDirection:'column',gap:10}}>
-        {chatMsgs.map((m,i)=>(
-          <div key={i} style={{maxWidth:'85%',padding:'11px 15px',borderRadius:m.role==='agent'?'4px 14px 14px 14px':'14px 14px 4px 14px',fontSize:14,lineHeight:1.55,background:m.role==='agent'?'rgba(52,211,153,0.07)':'rgba(255,255,255,0.06)',border:m.role==='agent'?'1px solid rgba(52,211,153,0.1)':'none',color:'rgba(255,255,255,0.85)',alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>{m.content}</div>
-        ))}
-        {chatLoading && (
-          <div style={{maxWidth:'85%',padding:'14px 15px',borderRadius:'4px 14px 14px 14px',background:'rgba(52,211,153,0.07)',border:'1px solid rgba(52,211,153,0.1)',alignSelf:'flex-start',display:'flex',gap:4,alignItems:'center'}}>
-            {[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:'50%',background:BLU,animation:'typing 1.2s '+(i*0.2)+'s infinite'}}/>)}
-          </div>
-        )}
-        <div ref={msgsEnd}/>
-      </div>
-      <div style={{padding:'10px 14px 16px',borderTop:'1px solid rgba(255,255,255,0.06)',display:'flex',gap:10,flexShrink:0,alignItems:'flex-end'}}>
-        <textarea
-          style={{flex:1,background:'rgba(255,255,255,0.05)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:11,padding:'10px 14px',color:'#fff',fontSize:16,fontFamily:'inherit',resize:'none',outline:'none',height:48}}
-          placeholder={'Escribe a '+chatPrompt.nombre+'...'}
-          value={chatInput}
-          onChange={e=>setChatInput(e.target.value)}
-          onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}
-        ></textarea>
-        <button
-          onClick={sendChat}
-          disabled={!chatInput.trim()||chatLoading}
-          style={{background:(!chatInput.trim()||chatLoading)?'rgba(52,211,153,0.2)':BLU,color:(!chatInput.trim()||chatLoading)?'rgba(0,0,0,0.3)':'#000',border:'none',borderRadius:11,width:48,height:48,fontSize:22,fontWeight:700,cursor:(!chatInput.trim()||chatLoading)?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>↑</button>
-      </div>
-    </div>
-  ) : null;
-
-  function Nav(){
-    return(
-      <div style={{position:'sticky',top:0,zIndex:100,background:'rgba(0,0,0,0.93)',backdropFilter:'blur(12px)',borderBottom:'1px solid rgba(255,255,255,0.06)',padding:'0 20px',display:'flex',alignItems:'center',justifyContent:'space-between',height:56}}>
-        <div style={{display:'flex',alignItems:'center',gap:14}}>
-          {view!=='cols'&&<button onClick={()=>{if(view==='detail'){setView('prompts');setActivePrompt(null);}else if(view==='prompts'){setView('cols');setActiveCol(null);}else{setView('cols');}}} style={{background:'none',border:'none',color:T2,fontSize:14,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:4}}>← Volver</button>}
-          <span style={{fontSize:15,fontWeight:800,letterSpacing:'-0.02em'}}>Agentes <span style={{color:BLU}}>Brutales</span></span>
-        </div>
-        <div style={{display:'flex',alignItems:'center',gap:8}}>
-          <button onClick={()=>setView('tes')} style={{background:'none',border:'1px solid rgba(255,255,255,0.1)',borderRadius:8,padding:'5px 11px',fontSize:12,fontWeight:600,color:T2,cursor:'pointer'}}>TES ↗</button>
-          {isPro
-            ?<div style={{background:'rgba(52,211,153,0.12)',border:'1px solid rgba(52,211,153,0.3)',borderRadius:8,padding:'5px 12px',fontSize:12,fontWeight:700,color:BLU}}>✓ PRO</div>
-            :<button onClick={()=>setModal('unlock')} style={{background:BLU,color:'#000',border:'none',borderRadius:9,padding:'8px 14px',fontSize:13,fontWeight:800,cursor:'pointer'}}>Desbloquear — 19€</button>
-          }
-        </div>
-      </div>
-    );
-  }
-
-  if(view==='intro') return(
-    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center'}}>
-      <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(52,211,153,0.1)',border:'1px solid rgba(52,211,153,0.3)',borderRadius:100,padding:'6px 16px',fontSize:12,fontWeight:700,color:BLU,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:32}}>⚡ Tecnología Explicada Simple</div>
-      <div style={{fontSize:'clamp(52px,12vw,96px)',fontWeight:900,lineHeight:0.9,letterSpacing:'-0.04em',marginBottom:8}}>Agentes<br/><span style={{color:BLU}}>Brutales</span></div>
-      <div style={{fontSize:'clamp(22px,5vw,40px)',fontWeight:900,letterSpacing:'-0.03em',color:'rgba(255,255,255,0.2)',marginBottom:40}}>Edición Completa</div>
-      <p style={{maxWidth:500,fontSize:17,lineHeight:1.65,color:T2,marginBottom:12}}>No son prompts. Son agentes.</p>
-      <p style={{maxWidth:500,fontSize:17,lineHeight:1.65,color:T2,marginBottom:40}}>Cada uno usa <strong style={{color:T1}}>métodos reales de coaching y psicología</strong> para ayudarte a conseguir resultados concretos.</p>
-      <div style={{display:'flex',gap:44,marginBottom:40,flexWrap:'wrap',justifyContent:'center'}}>
-        {[['27','Agentes'],['6+','Agentes'],['7','Gratis']].map(([n,l])=>(
-          <div key={l+n} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
-            <span style={{fontSize:40,fontWeight:900,color:BLU,letterSpacing:'-0.03em'}}>{n}</span>
-            <span style={{fontSize:11,color:'rgba(255,255,255,0.35)',textTransform:'uppercase',letterSpacing:'0.1em',fontWeight:600}}>{l}</span>
-          </div>
-        ))}
-      </div>
-      <button onClick={()=>setView('cols')} style={{background:BLU,color:'#000',border:'none',borderRadius:12,padding:'16px 36px',fontSize:16,fontWeight:800,cursor:'pointer'}}>Explorar agentes →</button>
-      <p style={{marginTop:16,fontSize:13,color:'rgba(255,255,255,0.35)'}}>7 gratis · Desbloquea los 27 por 19€</p>
-    </div>
-  );
-
-  if(view==='cols') return(
+  return (
     <div>
-      <Nav/><ModalOverlay/>
-      <div style={{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}}>
-        <div style={{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}>Colecciones</div>
-        <div style={{fontSize:14,color:T2,marginBottom:32}}>{isPro?'27 agentes desbloqueados · Toca cualquier colección':'7 agentes gratis · 20 bloqueados · Desbloquea todo por 19€'}</div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(250px,1fr))',gap:14}}>
-          {COLS.map(col=>(
-            <div key={col.id} onClick={()=>{setActiveCol(col);setView('prompts');}}
-              style={{background:CA,border:'1px solid '+CB,borderRadius:16,padding:22,cursor:'pointer',display:'flex',flexDirection:'column',gap:10,transition:'all 0.15s'}}
-              onMouseEnter={e=>{e.currentTarget.style.background=BLU3;e.currentTarget.style.borderColor=BLUB;}}
-              onMouseLeave={e=>{e.currentTarget.style.background=CA;e.currentTarget.style.borderColor=CB;}}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
-                <span style={{fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}>{col.id==='01'?'Empieza Aquí':col.nombre}</span>
-                <span style={{fontSize:26}}>{col.icono}</span>
-              </div>
-              <div style={{fontSize:17,fontWeight:700,letterSpacing:'-0.02em',lineHeight:1.2}}>{col.nombre}{col.id==='01'&&<span style={{marginLeft:8,fontSize:10,fontWeight:700,color:'#34D399',background:'rgba(52,211,153,0.15)',borderRadius:6,padding:'2px 8px'}}>EMPIEZA AQUÍ</span>}</div>
-              <div style={{fontSize:13,color:T2,lineHeight:1.55,flex:1}}>{col.descripcion}</div>
-              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',paddingTop:12,borderTop:'1px solid rgba(255,255,255,0.06)'}}>
-                <span style={{fontSize:12,color:T3,fontWeight:500}}>{col.prompts.length} agentes</span>
-                {!isPro&&<span style={{fontSize:12,color:BLU,fontWeight:600}}>{col.prompts.filter(p=>p.free).length} gratis</span>}
-                <span style={{color:'rgba(52,211,153,0.6)',fontSize:16}}>→</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      {chatPanelEl}
+      {view==='home'&&<HomeAxon onDone={completeOnboarding} setView={(v)=>{setView(v);}}/>}
+      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={setView}/>}
+      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={setView}/>}
+      {view==='fondo'&&<Fondo txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>}
+      {view==='metas'&&<Metas metas={metas} setMetas={setMetas}/>}
+      {view==='flujo'&&<FlujoChat txs={txs} metas={metas} fondoSaldo={fondoSaldo} msgCount={msgCount} setMsgCount={setMsgCount} chatMsgs={chatMsgs} setChatMsgs={setChatMsgs}/>}
+      <TabBar view={view} setView={setView} msgCount={msgCount}/>
     </div>
   );
-
-  if(view==='prompts'&&activeCol) return(
-    <div>
-      <Nav/><ModalOverlay/>
-      <div style={{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}}>
-        <div style={{display:'inline-flex',alignItems:'center',gap:6,background:'rgba(52,211,153,0.08)',border:'1px solid rgba(52,211,153,0.18)',borderRadius:100,padding:'4px 12px',fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.08em',marginBottom:12}}>{activeCol.id==='01'?'Empieza Aquí':activeCol.nombre}</div>
-        <div style={{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}>{activeCol.nombre}</div>
-        <div style={{fontSize:14,color:T2,marginBottom:32}}>{activeCol.descripcion}</div>
-        <div style={{display:'flex',flexDirection:'column',gap:10}}>
-          {activeCol.prompts.map((p,i)=>{
-            const locked=!isPro&&!p.free;
-            return(
-              <div key={p.nombre} onClick={()=>{if(locked){setModal('unlock');return;}setActivePrompt(p);setView('detail');}}
-                style={{background:locked?'rgba(255,255,255,0.015)':CA,border:'1px solid '+(locked?'rgba(255,255,255,0.04)':CB),borderRadius:13,padding:'18px 22px',cursor:'pointer',display:'flex',alignItems:'center',gap:18,opacity:locked?0.75:1,transition:'all 0.15s'}}
-                onMouseEnter={e=>{if(!locked){e.currentTarget.style.background=BLU3;e.currentTarget.style.borderColor=BLUB;}}}
-                onMouseLeave={e=>{e.currentTarget.style.background=locked?'rgba(255,255,255,0.015)':CA;e.currentTarget.style.borderColor=locked?'rgba(255,255,255,0.04)':CB;}}>
-                <div style={{fontSize:11,fontWeight:700,color:BLU,width:26,flexShrink:0}}>{String(i+1).padStart(2,'0')}</div>
-                <div style={{flex:1,minWidth:0}}>
-                  <div style={{fontSize:15,fontWeight:700,letterSpacing:'-0.01em',marginBottom:2}}>
-                    {p.nombre}
-                    {p.free&&!isPro&&<span style={{fontSize:10,fontWeight:700,color:BLU,background:'rgba(52,211,153,0.1)',borderRadius:6,padding:'2px 7px',marginLeft:8,letterSpacing:'0.06em'}}>GRATIS</span>}
-                  </div>
-                  <div style={{fontSize:12,color:T2,fontWeight:500}}>{p.subtitulo}</div>
-                </div>
-                {locked?<span style={{fontSize:16,flexShrink:0}}>🔒</span>:<span style={{color:'rgba(52,211,153,0.5)',fontSize:16}}>→</span>}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      {chatPanelEl}
-    </div>
-  );
-
-  if(view==='detail'&&activePrompt) return(
-    <div>
-      <Nav/><ModalOverlay/>
-      <div style={{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}}>
-        <div style={{maxWidth:680}}>
-          {activeCol&&<div style={{display:'inline-flex',alignItems:'center',gap:6,background:'rgba(52,211,153,0.07)',border:'1px solid rgba(52,211,153,0.18)',borderRadius:100,padding:'4px 12px',fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.08em',marginBottom:16}}>{activeCol.icono} {activeCol.nombre}</div>}
-          <div style={{fontSize:'clamp(40px,9vw,64px)',fontWeight:900,letterSpacing:'-0.04em',lineHeight:0.92,color:BLU,marginBottom:10}}>{activePrompt.nombre}</div>
-          <div style={{fontSize:18,fontWeight:600,color:'rgba(255,255,255,0.75)',marginBottom:6}}>{activePrompt.subtitulo}</div>
-          <div style={{fontSize:15,color:T2,fontStyle:'italic',marginBottom:32}}>"{activePrompt.tagline}"</div>
-          <div style={{background:'rgba(52,211,153,0.03)',border:'1px solid rgba(52,211,153,0.12)',borderRadius:16,overflow:'hidden',marginBottom:16}}>
-            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'13px 20px',borderBottom:'1px solid rgba(52,211,153,0.08)',background:'rgba(52,211,153,0.04)'}}>
-              <span style={{fontSize:11,fontWeight:700,color:BLU,letterSpacing:'0.1em',textTransform:'uppercase'}}>Las instrucciones</span>
-              <button onClick={()=>copyText(activePrompt.texto,activePrompt.nombre)} style={{display:'flex',alignItems:'center',gap:6,background:copied===activePrompt.nombre?'#4caf50':BLU,color:copied===activePrompt.nombre?'#fff':'#000',border:'none',borderRadius:8,padding:'7px 14px',fontSize:12,fontWeight:700,cursor:'pointer'}}>{copied===activePrompt.nombre?'✓ Copiadas':'⎘ Copiar instrucciones'}</button>
-            </div>
-            <div style={{padding:22,fontSize:14,lineHeight:1.75,color:'rgba(255,255,255,0.72)',whiteSpace:'pre-wrap'}}>{activePrompt.texto}</div>
-          </div>
-          {isPro ? (
-            activePrompt.nombre==='AXON' ? (
-            <button onClick={()=>openChat(activePrompt,activeCol?activeCol.id:null)} style={{display:'flex',alignItems:'center',gap:16,width:'100%',background:'rgba(52,211,153,0.08)',border:'2px solid rgba(52,211,153,0.35)',borderRadius:13,padding:'20px 22px',cursor:'pointer',textAlign:'left',color:'#fff'}}>
-              <div style={{width:44,height:44,borderRadius:12,background:'#34D399',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>⚡</div>
-              <div style={{flex:1}}>
-                <div style={{fontSize:16,fontWeight:800,marginBottom:3}}>Hablar con AXON</div>
-                <div style={{fontSize:12,color:T2}}>Empieza aquí — te activa todos los demás agentes</div>
-              </div>
-              <span style={{fontSize:20,color:'#34D399'}}>&#8594;</span>
-            </button>
-            ) : (
-            <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:13,padding:'18px 22px'}}>
-              <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
-                <span style={{fontSize:18}}>🔒</span>
-                <div style={{fontSize:14,fontWeight:700,color:'rgba(255,255,255,0.7)'}}>Activa este agente con AXON</div>
-              </div>
-              <div style={{fontSize:13,color:T3,lineHeight:1.6}}>Habla primero con AXON. Él te creará el Project y activará a {activePrompt.nombre} en tu LLM con todo el contexto listo.</div>
-            </div>
-            )
-          ) : (
-            <button onClick={()=>setModal('unlock')} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:13,padding:'18px 22px',cursor:'pointer',textAlign:'left',color:T3}}>
-              <span style={{fontSize:22,flexShrink:0}}>🔒</span>
-              <div>
-                <div style={{fontSize:15,fontWeight:700,marginBottom:3,color:'rgba(255,255,255,0.6)'}}>Usar {activePrompt.nombre} con tu IA</div>
-                <div style={{fontSize:12}}>Disponible en Pro — desbloquea por 19€</div>
-              </div>
-            </button>
-          )}
-        </div>
-      </div>
-      {chatPanelEl}
-    </div>
-  );
-
-  if(view==='tes') return(
-    <div>
-      <Nav/>
-      <div style={{maxWidth:880,margin:'0 auto',padding:'40px 20px 100px'}}>
-        <div style={{fontSize:28,fontWeight:800,letterSpacing:'-0.03em',marginBottom:6}}>Tecnología Explicada Simple</div>
-        <div style={{fontSize:14,color:T2,marginBottom:40}}>Todo el contenido gratuito — en el canal que prefieras.</div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:14}}>
-          {[
-            {icon:'🌐',name:'Web TES',sub:'tecnologiaexplicadasimple.com',url:'https://tecnologiaexplicadasimple.com',color:BLU},
-            {icon:'▶️',name:'YouTube',sub:'@Tecnologia.Explicada.Simple',url:'https://www.youtube.com/@Tecnologia.Explicada.Simple',color:'#ff4444'},
-            {icon:'📸',name:'Instagram',sub:'@tecnologia.explicada.simple',url:'https://www.instagram.com/tecnologia.explicada.simple',color:'#e1306c'},
-            {icon:'🎵',name:'TikTok',sub:'@techexplicadasimple',url:'https://www.tiktok.com/@techexplicadasimple',color:'#69c9d0'}
-          ].map(item=>(
-            <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer"
-              style={{background:CA,border:'1px solid '+CB,borderRadius:16,padding:24,display:'flex',flexDirection:'column',gap:12,textDecoration:'none',color:'#fff'}}
-              onMouseEnter={e=>{e.currentTarget.style.background='rgba(255,255,255,0.06)';e.currentTarget.style.borderColor='rgba(255,255,255,0.14)';}}
-              onMouseLeave={e=>{e.currentTarget.style.background=CA;e.currentTarget.style.borderColor=CB;}}>
-              <span style={{fontSize:32}}>{item.icon}</span>
-              <div>
-                <div style={{fontSize:17,fontWeight:700,letterSpacing:'-0.02em',marginBottom:4}}>{item.name}</div>
-                <div style={{fontSize:12,color:T3}}>{item.sub}</div>
-              </div>
-              <div style={{fontSize:13,color:item.color,fontWeight:600,marginTop:'auto'}}>Visitar →</div>
-            </a>
-          ))}
-        </div>
-        <div style={{marginTop:48,padding:24,background:'rgba(52,211,153,0.04)',border:'1px solid rgba(52,211,153,0.12)',borderRadius:16}}>
-          <div style={{fontSize:15,fontWeight:700,marginBottom:8}}>¿Feedback sobre Agentes Brutales?</div>
-          <div style={{fontSize:14,color:T2,marginBottom:16}}>Escríbenos por Instagram o deja un comentario en YouTube.</div>
-          <a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:8,background:BLU,color:'#000',borderRadius:10,padding:'10px 20px',fontSize:13,fontWeight:700,textDecoration:'none'}}>Contactar por Instagram →</a>
-        </div>
-      </div>
-    </div>
-  );
-
-  return null;
 }
 
 ReactDOM.createRoot(document.getElementById('app')).render(<App/>);
