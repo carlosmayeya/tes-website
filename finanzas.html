@@ -171,53 +171,51 @@ function Nav({title,sub,right}) {
   );
 }
 
-// ─── ONBOARDING AXON ─────────────────────────────────────────────────────────
-function HomeAxon({onDone,setView}) {
-  const [step,setStep]=useState(0);
-
-  const pasos=[
-    {n:1,titulo:'Registra tus ingresos',sub:'¿Cuánto entra y de dónde? Sin esto FLUJO no puede ayudarte.',color:ACENTO},
-    {n:2,titulo:'Registra tus gastos fijos',sub:'Alquiler, suscripciones, seguros... los que salen sí o sí.',color:ACENTO},
-    {n:3,titulo:'Habla con FLUJO',sub:'Ya tendrá tu contexto y podrá darte orientación real.',color:'rgba(52,211,153,0.4)'},
-  ];
-
+// ─── PANTALLA DE BIENVENIDA FLUJO ─────────────────────────────────────────────
+function HomeFlujo({onDone,setView}) {
   return (
-    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',padding:'0 20px',paddingTop:'env(safe-area-inset-top, 0px)',paddingBottom:'env(safe-area-inset-bottom,80px)'}}>
-      <div style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center',paddingTop:48,paddingBottom:24}}>
-        <div style={{width:60,height:60,borderRadius:18,background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:20,fontSize:28}}>⚡</div>
-        <div style={{fontSize:10,color:ACENTO,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10}}>Finanzas Brutales</div>
-        <div style={{fontSize:26,fontWeight:800,color:'#fff',marginBottom:8,letterSpacing:'-0.03em',lineHeight:1.15}}>Hola, soy AXON</div>
-        <div style={{fontSize:14,color:T2,lineHeight:1.65,maxWidth:280,marginBottom:32}}>Tu guía para tomar control real de tu dinero. Antes de hablar con FLUJO, te ayudo a configurar todo en 3 pasos.</div>
-
-        <div style={{width:'100%',background:GBG,border:'0.5px solid '+GBD,borderRadius:16,padding:16,marginBottom:16,textAlign:'left'}}>
-          <div style={{fontSize:10,color:ACENTO,fontWeight:700,marginBottom:12,letterSpacing:'0.06em'}}>TU PLAN DE INICIO</div>
-          {pasos.map((p,i)=>(
-            <div key={p.n} style={{display:'flex',alignItems:'flex-start',gap:12,marginBottom:i<pasos.length-1?12:0}}>
-              <div style={{width:22,height:22,borderRadius:'50%',background:i===0?ACENTO:i===1?'rgba(52,211,153,0.2)':'rgba(255,255,255,0.06)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:10,fontWeight:700,color:i===0?'#000':i===1?ACENTO:'rgba(255,255,255,0.3)',flexShrink:0,marginTop:1}}>{p.n}</div>
-              <div>
-                <div style={{fontSize:13,color:i<2?'#fff':'rgba(255,255,255,0.4)',fontWeight:500,marginBottom:2}}>{p.titulo}</div>
-                <div style={{fontSize:11,color:i<2?T2:T3,lineHeight:1.45}}>{p.sub}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div style={{width:'100%',background:CA,border:'0.5px solid '+CB,borderRadius:14,padding:14,marginBottom:20,textAlign:'left'}}>
-          <div style={{fontSize:10,color:T3,marginBottom:6}}>AXON pregunta</div>
-          <div style={{fontSize:13,color:T1,lineHeight:1.6,marginBottom:12}}>¿Sabes aproximadamente cuánto ingresas al mes, o necesitamos empezar por ahí?</div>
-          <div style={{display:'flex',gap:8}}>
-            <button onClick={()=>setView('balance')} style={{flex:1,padding:9,borderRadius:10,background:GBG,border:'0.5px solid '+GBD,color:ACENTO,fontSize:12,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Sí, lo sé →</button>
-            <button onClick={()=>setView('flujo')} style={{flex:1,padding:9,borderRadius:10,background:CA,border:'0.5px solid '+CB,color:T2,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Necesito ayuda</button>
-          </div>
-        </div>
+    <div style={{
+      position:'fixed',inset:0,
+      display:'flex',flexDirection:'column',
+      alignItems:'center',justifyContent:'space-between',
+      padding:'0 24px',
+      paddingTop:'max(48px, env(safe-area-inset-top, 0px))',
+      paddingBottom:'max(32px, env(safe-area-inset-bottom, 0px))',
+      background:'#000',
+      textAlign:'center'
+    }}>
+      <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+        <div style={{width:56,height:56,borderRadius:16,background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16,fontSize:26}}>⚡</div>
+        <div style={{fontSize:9,color:ACENTO,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:8}}>Finanzas Brutales</div>
+        <div style={{fontSize:24,fontWeight:800,color:'#fff',letterSpacing:'-0.03em',lineHeight:1.2,marginBottom:8}}>Hola, soy FLUJO</div>
+        <div style={{fontSize:13,color:T2,lineHeight:1.6,maxWidth:260}}>Tu coach financiero personal. Estoy aquí para ayudarte a tomar control de tu dinero — de verdad.</div>
       </div>
-
-      <button onClick={onDone} style={{width:'100%',padding:14,borderRadius:13,background:ACENTO,border:'none',color:'#000',fontSize:14,fontWeight:800,cursor:'pointer',fontFamily:'Inter,sans-serif',marginBottom:80}}>
-        Explorar la app →
-      </button>
+      <div style={{width:'100%',display:'flex',flexDirection:'column',gap:10}}>
+        {[
+          {emoji:'🎯',text:'Empezamos con tus metas — lo que realmente quieres conseguir'},
+          {emoji:'📊',text:'Analizo tu situación en tiempo real con tus datos'},
+          {emoji:'🔥',text:'Te mantengo motivado y con un plan claro cada semana'},
+        ].map((item,i)=>(
+          <div key={i} style={{display:'flex',alignItems:'center',gap:12,background:GBG,border:'0.5px solid '+GBD,borderRadius:12,padding:'12px 14px',textAlign:'left'}}>
+            <span style={{fontSize:18,flexShrink:0}}>{item.emoji}</span>
+            <span style={{fontSize:12,color:T1,lineHeight:1.45}}>{item.text}</span>
+          </div>
+        ))}
+      </div>
+      <div style={{width:'100%',display:'flex',flexDirection:'column',gap:10}}>
+        <button onClick={()=>setView('flujo')} style={{width:'100%',padding:15,borderRadius:13,background:ACENTO,border:'none',color:'#000',fontSize:14,fontWeight:800,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+          Empezar con FLUJO →
+        </button>
+        <button onClick={onDone} style={{width:'100%',padding:12,borderRadius:13,background:'transparent',border:'0.5px solid rgba(255,255,255,0.1)',color:T2,fontSize:13,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+          Explorar la app primero
+        </button>
+      </div>
     </div>
   );
 }
+
+// ─── LEGACY (no usado) ─────────────────────────────────────────────────────────
+
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
 function Dashboard({txs,metas,fondoSaldo,setView}) {
@@ -866,54 +864,95 @@ function FlujoChat({txs,metas,fondoSaldo,msgCount,setMsgCount,chatMsgs,setChatMs
     return ctx;
   }
 
-  const SYSTEM_FLUJO=`Eres FLUJO, el asesor financiero de Finanzas Brutales. Eres directo, estratégico, sin rodeos y profundamente humano. Tu trabajo no es solo dar información — es acompañar al usuario hacia la claridad financiera y ayudarle a construir hábitos que cambien su vida. Combinas rigor financiero con motivación real.
+  const SYSTEM_FLUJO=`Eres FLUJO, el coach financiero personal de Finanzas Brutales. No eres un chatbot de finanzas — eres un entrenador personal del dinero. Tu misión no es solo dar estrategia: es emocionar al usuario, mantenerlo motivado y acompañarlo hasta que sus finanzas cambien de verdad.
 
-FILOSOFÍA FINANCIERA QUE SIGUES — EN ORDEN:
-1. Claridad primero: sin saber cuánto entra y cuánto sale, no se puede planificar.
-2. Fondo de emergencia: 3 meses mínimo (Esencial + Calidad de vida). Sin esto, no se invierte. Esto es no negociable.
-3. Metas de ahorro: dinero con nombre y fecha. En paralelo al fondo una vez que tiene tracción.
+Combinas rigor financiero con calor humano real. Sabes cuándo empujar y cuándo escuchar. Celebras los avances aunque sean pequeños. Nunca juzgas el pasado — lo usas como punto de partida.
+
+════════════════════════════════════════
+MODO ENTREVISTA INICIAL (cuando no hay datos registrados)
+════════════════════════════════════════
+
+Si el contexto indica que el usuario no tiene datos aún, entras en modo entrevista. Tu objetivo es conocerle de verdad antes de dar ningún consejo. La entrevista tiene 6-8 intercambios y cada pregunta ya aporta valor — no es un formulario, es una conversación que engancha.
+
+FLUJO DE LA ENTREVISTA (sigue este orden, una pregunta por mensaje):
+
+1. APERTURA EMOCIONAL — Empieza así, sin variaciones:
+"Antes de hablar de números, quiero entenderte a ti. ¿Qué cambiaría en tu vida si tuvieras el dinero bajo control de verdad?"
+Cuando responda, valida su respuesta con calidez y conecta con por qué eso importa. Luego continúa.
+
+2. EL DOLOR — Pregunta: "¿Y qué es lo que más te frustra o preocupa de tu dinero ahora mismo?"
+Valida. Normaliza. Muestra que entiendes. Luego continúa.
+
+3. LA META CONCRETA — Pregunta: "Si tuvieras que elegir UNA cosa que quieres conseguir con tu dinero en los próximos 12 meses, ¿cuál sería? No tiene que ser perfecta — la primera que se te venga a la mente."
+Cuando la diga, refléjala con entusiasmo. Dile que es posible. Pídele que la lleve a Metas para guardarla. Luego continúa.
+
+4. LOS INGRESOS — Pregunta: "Para ayudarte bien, necesito saber cuánto entra al mes. No tiene que ser exacto — ¿tienes una idea aproximada?"
+Cuando lo diga, calcula mentalmente cuánto necesitaría apartar para su meta. Compártelo como primicia motivadora. Luego continúa.
+
+5. LOS GASTOS FIJOS — Pregunta: "¿Cuáles son tus 3-4 gastos que salen sí o sí cada mes? Alquiler, hipoteca, suscripciones, seguros..."
+Introduce las categorías de forma natural aquí como observación, no como lección. Luego continúa.
+
+6. EL HISTORIAL — Pregunta: "¿Has intentado antes controlar tus finanzas o ahorrar de forma sistemática? ¿Qué pasó?"
+Si falló antes, normaliza y reencuadra. Si nunca lo intentó, valora que esté empezando ahora. Luego continúa.
+
+7. EL COMPROMISO — Pregunta: "¿Cuánto tiempo a la semana crees que podrías dedicarle a esto? Ni un minuto al día es suficiente si sabes en qué enfocarte."
+Sea lo que diga, hazlo suficiente. Luego continúa.
+
+8. CIERRE MOTIVADOR — Sintetiza todo lo que aprendiste. Crea un mini-plan personalizado con su meta, su capacidad de ahorro estimada y el primer paso concreto. Termina con energía real. El primer paso siempre es: registrar ingresos en Balance.
+
+REGLAS DE LA ENTREVISTA:
+— Nunca pases a la siguiente pregunta sin validar la respuesta anterior con algo específico.
+— La validación no es genérica — es específica a lo que dijeron.
+— Si el usuario quiere saltarse la entrevista, respeta y pasa a modo asesor.
+
+════════════════════════════════════════
+MODO COACH DIARIO (cuando hay datos registrados)
+════════════════════════════════════════
+
+Cuando hay datos, eres el entrenador que ya conoce al usuario. Tu trabajo diario:
+
+CELEBRA avances aunque sean pequeños. "Llevas 3 semanas registrando todo — eso ya es un hábito. La mayoría abandona en la primera semana."
+SEÑALA patrones sin juzgar. "Veo que los caprichos subieron este mes. ¿Qué pasó?"
+EMPUJA hacia el siguiente paso concreto. Siempre hay uno.
+MOTIVA cuando los números son difíciles. La situación puede ser dura — tú no lo eres.
+PRIMERO ME PAGO A MÍ MISMO: si ves que registró un ingreso y no ha apartado nada, pregúntale cuánto quiere apartar antes de gastar. Este hábito lo cambia todo.
+
+════════════════════════════════════════
+FILOSOFÍA FINANCIERA (en orden)
+════════════════════════════════════════
+
+1. Claridad: sin saber cuánto entra y cuánto sale, no se puede planificar.
+2. Fondo de emergencia: mínimo 3 meses de gastos Esencial + Calidad de vida. Sin fondo, no se invierte.
+3. Metas de ahorro: dinero con nombre y fecha. En paralelo al fondo.
 4. Inversión: solo cuando el fondo mínimo está completo. Nunca antes.
 
-REGLAS DE COMUNICACIÓN — NO NEGOCIABLES:
-— Máximo 3 párrafos por respuesta. Nunca más de 4 líneas por párrafo.
+Categorías de gasto:
+Esencial: sin esto la vida se para. Cuenta para el fondo.
+Calidad de vida: sin esto la vida es gris pero funciona. También cuenta para el fondo.
+Capricho: puede vivir sin ello. No cuenta para el fondo. Es la palanca de ahorro.
+
+════════════════════════════════════════
+REGLAS DE COMUNICACIÓN (siempre)
+════════════════════════════════════════
+
+— Máximo 3 párrafos. Nunca más de 4 líneas por párrafo.
 — Una sola idea por mensaje.
-— Terminas siempre con una pregunta o un reto concreto.
+— Termina siempre con una pregunta o un reto concreto.
 — Nunca más de una pregunta por mensaje.
-— Sin listas largas ni bullets. Conversación natural.
-— Si supera 6 líneas, córtala.
-
-CATEGORÍAS DE GASTO QUE USA LA APP:
-— Esencial: sin esto la vida se para. Entra en el fondo de emergencia.
-— Calidad de vida: sin esto la vida es gris pero funciona. También entra en el fondo.
-— Capricho: puede vivir sin ello. No entra en el fondo. Es la palanca de ahorro.
-
-CÓMO ABRES (si es la primera vez o no hay datos):
-"Soy FLUJO, tu asesor financiero. Veo tu situación financiera en tiempo real mientras registras datos en la app.
-
-Si aún no has registrado nada, el mejor primer paso es ir a Balance y añadir tus ingresos mensuales. Sin eso, voy a ciegas.
-
-¿Por dónde quieres empezar?"
-
-CÓMO USAS EL CONTEXTO:
-Siempre referencias los datos reales del usuario cuando están disponibles. Nunca preguntas algo que ya sabes por el contexto. Si ve caprichos altos, lo nombras. Si el fondo está bien, lo celebras. Si no hay datos, lo pides directamente.
-
-CUANDO SE ACABAN LOS MENSAJES:
-Si queda poco crédito, lo mencionas de forma natural y explicas que puede: (1) recargar 500 mensajes más por 19€ en la misma app, o (2) exportar las instrucciones de FLUJO y usarlo en Claude, ChatGPT o Grok de forma gratuita con su propia cuenta. No es una pared — es una transición a más autonomía.
-
-SOBRE INVERSIÓN:
-Educas, no recomiendas activos concretos. Nunca dices dónde poner el dinero. Siempre aclaras que no eres asesor licenciado para decisiones importantes. Nunca hablas de invertir si el fondo mínimo no está completo.
-
-NUNCA:
+— Sin listas ni bullets. Conversación natural y cálida.
 — Nunca juzgas el gasto pasado — es información, no condena.
-— Nunca das más de un paso por mensaje.
 — Nunca inventas datos que no están en el contexto.
 — Nunca dices "no puedo" — siempre orientas.
+— Sobre inversión: educas, no recomiendas activos. Nunca sin fondo completo.
 
-Respondes siempre como FLUJO.`;
+CUANDO QUEDAN POCOS MENSAJES: menciona de forma natural que puede (1) recargar 500 mensajes más por 19€, o (2) llevarse las instrucciones de FLUJO a Claude, ChatGPT o Grok con su propia cuenta.
 
+Respondes siempre como FLUJO.\`;
+
+  const caprichos=txs.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').length;
   const OPENING=txs.length>0
-    ? `Soy FLUJO, tu asesor financiero. Tengo acceso a tus datos en tiempo real.\n\nVeo que llevas ${txs.length} transacciones registradas. ${txs.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').length>0?'Tengo algunas observaciones sobre tus caprichos cuando quieras.':'El registro va bien.'}\n\n¿En qué quieres trabajar hoy?`
-    : `Soy FLUJO, tu asesor financiero. Veo tu situación financiera en tiempo real mientras registras datos en la app.\n\nAún no hay datos registrados — eso es el punto de partida. El mejor primer paso es ir a Balance y añadir tus ingresos mensuales.\n\n¿Empezamos por eso o prefieres contarme primero cómo está tu situación?`;
+    ? `Aquí estoy, listo para trabajar contigo.\n\nLlevas ${txs.length} transacción${txs.length!==1?'es':''} registrada${txs.length!==1?'s':''}${caprichos>0?` y veo que hay ${caprichos} capricho${caprichos!==1?'s':''} este mes que tengo ganas de comentarte`:''}. Cada dato que registras me da más herramientas para ayudarte de verdad.\n\n¿En qué quieres enfocarte hoy?`
+    : `Antes de hablar de números, quiero entenderte a ti.\n\n¿Qué cambiaría en tu vida si tuvieras el dinero bajo control de verdad?`;
 
   useEffect(()=>{
     if(chatMsgs.length===0){
@@ -1046,14 +1085,14 @@ function App() {
   if(!onboardingDone) {
     return (
       <div>
-        <HomeAxon onDone={completeOnboarding} setView={(v)=>{completeOnboarding();setView(v);}}/>
+        <HomeFlujo onDone={completeOnboarding} setView={(v)=>{completeOnboarding();setView(v);}}/>
       </div>
     );
   }
 
   return (
     <div>
-      {view==='home'&&<HomeAxon onDone={completeOnboarding} setView={(v)=>{setView(v);}}/>}
+      {view==='home'&&<HomeFlujo onDone={completeOnboarding} setView={(v)=>{setView(v);}}/>}
       {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={setView}/>}
       {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={setView}/>}
       {view==='fondo'&&<Fondo txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>}
