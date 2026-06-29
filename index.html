@@ -3,1191 +3,801 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tecnología Explicada Simple</title>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1WSKFYBEN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-Z1WSKFYBEN');
-</script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<title>CallFlow AI — El recepcionista que nunca descansa y siempre vende</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+  /* ─── TOKENS ─── */
   :root {
-    --blue: #4FC3F7;
-    --blue-ice: #80D8FF;
-    --blue-dark: #0D2233;
-    --blue-mid: #0A3A5C;
-    --black: #000000;
-    --black-soft: #080808;
-    --grey: #4A6070;
-    --white: #FFFFFF;
-    --white-dim: rgba(255,255,255,0.75);
+    --ink:         #0D1B2A;
+    --ink-mid:     #1A2E42;
+    --surface:     #F7F4EF;
+    --surface-alt: #FFFFFF;
+    --coral:       #E8705A;
+    --coral-light: #FBE8E3;
+    --mint:        #4ECDC4;
+    --text:        #1A1A2E;
+    --text-muted:  #5A6578;
+    --border:      #E2DDD6;
+    --ff-display:  'Fraunces', Georgia, serif;
+    --ff-body:     'DM Sans', system-ui, sans-serif;
+    --ff-mono:     'JetBrains Mono', monospace;
+    --r-sm:        8px;
+    --r-md:        14px;
+    --r-lg:        24px;
+    --shadow:      0 4px 24px rgba(13,27,42,0.10);
+    --shadow-lg:   0 12px 48px rgba(13,27,42,0.18);
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  /* ─── RESET ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-
   body {
-    background: var(--black);
-    color: var(--white);
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
+    font-family: var(--ff-body);
+    background: var(--surface);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; color: inherit; }
 
-  /* NOISE TEXTURE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
+  /* ─── UTILS ─── */
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  .tag {
+    display: inline-block;
+    font-family: var(--ff-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--coral);
+    background: var(--coral-light);
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 18px;
   }
+  .tag-mint {
+    color: #2a8f89;
+    background: #e0f7f6;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--coral);
+    color: #fff;
+    font-family: var(--ff-body);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: var(--r-sm);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: #d45f49; transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #fff;
+    font-family: var(--ff-body);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: var(--r-sm);
+    border: 1.5px solid rgba(255,255,255,0.35);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
 
-  /* NAV */
+  /* ─── NAV ─── */
   nav {
     position: fixed;
-    top: 0;
-    width: 100%;
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 20px 48px;
+    background: rgba(13,27,42,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 62px;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .logo {
+    font-family: var(--ff-display);
+    font-size: 21px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--coral); }
+  .nav-cta { display: flex; align-items: center; gap: 12px; }
+  .nav-link {
+    color: rgba(255,255,255,0.65);
+    font-size: 14px;
+    font-weight: 500;
+    display: none;
+  }
+  @media(min-width:768px){ .nav-link { display: block; } }
+
+  /* ─── HERO ─── */
+  #hero {
+    background: var(--ink);
+    padding: 140px 0 80px;
+    overflow: hidden;
+    position: relative;
+  }
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -180px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(232,112,90,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 52px;
+    align-items: center;
+  }
+  @media(min-width:900px){
+    .hero-inner { grid-template-columns: 1fr 1fr; gap: 64px; }
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 22px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--mint);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:0.4; transform:scale(1.4); }
+  }
+  .hero-h1 {
+    font-family: var(--ff-display);
+    font-size: clamp(36px, 5.5vw, 58px);
+    font-weight: 700;
+    line-height: 1.08;
+    color: #fff;
+    letter-spacing: -1.5px;
+    margin-bottom: 22px;
+  }
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--coral);
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.65;
+    max-width: 480px;
+    margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .hero-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.38);
+    margin-top: 16px;
+  }
+
+  /* ─── CHAT DEMO ─── */
+  .chat-demo {
+    background: #fff;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    max-width: 380px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .chat-header {
+    background: #075E54;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .chat-avatar {
+    width: 40px; height: 40px;
+    background: var(--mint);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .chat-info { flex: 1; }
+  .chat-name { color: #fff; font-size: 15px; font-weight: 600; }
+  .chat-status { color: rgba(255,255,255,0.65); font-size: 11px; display: flex; align-items: center; gap: 5px; }
+  .chat-status::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #25D366;
+    border-radius: 50%;
+  }
+  .chat-body {
+    background: #ECE5DD url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c5bdb3' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    padding: 16px;
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .chat-body::-webkit-scrollbar { display: none; }
+  .chat-body { -ms-overflow-style: none; scrollbar-width: none; }
+  .msg {
+    max-width: 82%;
+    padding: 9px 13px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    position: relative;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .msg.visible { opacity: 1; transform: translateY(0); }
+  .msg-user {
+    background: #fff;
+    border-radius: 12px 12px 12px 2px;
+    align-self: flex-start;
+    color: #1a1a1a;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .msg-bot {
+    background: #DCF8C6;
+    border-radius: 12px 12px 2px 12px;
+    align-self: flex-end;
+    color: #1a1a1a;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .msg-time {
+    font-size: 10px;
+    color: rgba(0,0,0,0.4);
+    text-align: right;
+    margin-top: 3px;
+  }
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 12px 16px;
+    background: #DCF8C6;
+    border-radius: 12px 12px 2px 12px;
+    align-self: flex-end;
+    opacity: 0;
+    transition: opacity 0.3s;
+    width: 56px;
+  }
+  .typing-indicator.visible { opacity: 1; }
+  .typing-dot {
+    width: 7px; height: 7px;
+    background: #888;
+    border-radius: 50%;
+    animation: typing 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2){ animation-delay: 0.2s; }
+  .typing-dot:nth-child(3){ animation-delay: 0.4s; }
+  @keyframes typing {
+    0%,60%,100%{ transform:translateY(0); }
+    30%{ transform:translateY(-5px); }
+  }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 88px 0; }
+  .section-dark { background: var(--ink); color: #fff; }
+  .section-white { background: var(--surface-alt); }
+  .section-surface { background: var(--surface); }
+  .section-coral { background: var(--coral-light); }
+
+  .s-header { text-align: center; margin-bottom: 56px; }
+  .s-title {
+    font-family: var(--ff-display);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .s-title em { font-style: italic; color: var(--coral); }
+  .s-sub {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+  .section-dark .s-sub { color: rgba(255,255,255,0.55); }
+  .section-dark .s-title { color: #fff; }
+
+  /* ─── PROBLEMA ─── */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  @media(min-width:640px){ .pain-grid { grid-template-columns: 1fr 1fr; } }
+  @media(min-width:900px){ .pain-grid { grid-template-columns: repeat(3, 1fr); } }
+  .pain-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--r-md);
+    padding: 32px 28px;
+  }
+  .pain-icon {
+    font-size: 34px;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .pain-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .pain-card p { font-size: 14.5px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+  .pain-stat {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    color: var(--coral);
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ─── QUÉ HACE ─── */
+  .features-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media(min-width:640px){ .features-wrap { grid-template-columns: 1fr 1fr; } }
+  @media(min-width:900px){ .features-wrap { grid-template-columns: repeat(3, 1fr); } }
+  .feat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 28px 24px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .feat-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .feat-icon {
+    width: 44px; height: 44px;
+    background: var(--coral-light);
+    border-radius: var(--r-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .feat-icon.mint { background: #e0f7f6; }
+  .feat-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .feat-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ─── COMPARATIVA ─── */
+  .compare-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  @media(min-width:700px){ .compare-wrap { grid-template-columns: 1fr 1fr; } }
+  .compare-card {
+    border-radius: var(--r-md);
+    padding: 36px 30px;
+  }
+  .compare-human {
+    background: #fff;
+    border: 2px solid var(--border);
+  }
+  .compare-agent {
+    background: var(--ink);
+    border: 2px solid var(--coral);
+    position: relative;
+    overflow: hidden;
+  }
+  .compare-agent::before {
+    content: '✦ Recomendado';
+    position: absolute;
+    top: 16px; right: -28px;
+    background: var(--coral);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 40px;
+    transform: rotate(35deg);
+    letter-spacing: 0.05em;
+  }
+  .compare-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .compare-agent .compare-label { color: rgba(255,255,255,0.45); }
+  .compare-title { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+  .compare-agent .compare-title { color: #fff; }
+  .compare-price {
+    font-family: var(--ff-mono);
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .compare-agent .compare-price { color: var(--coral); }
+  .compare-period { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+  .compare-agent .compare-period { color: rgba(255,255,255,0.45); }
+  .compare-rows { display: flex; flex-direction: column; gap: 0; }
+  .compare-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
-    backdrop-filter: blur(8px);
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
   }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 15px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--blue);
+  .compare-agent .compare-row { border-bottom-color: rgba(255,255,255,0.08); }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row-label { color: var(--text-muted); }
+  .compare-agent .compare-row-label { color: rgba(255,255,255,0.5); }
+  .compare-row-val { font-weight: 600; }
+  .compare-agent .compare-row-val { color: #fff; }
+  .val-bad { color: #c0392b; }
+  .val-good { color: #27ae60; }
+  .compare-saving {
+    margin-top: 24px;
+    padding: 14px 18px;
+    background: rgba(232,112,90,0.12);
+    border-radius: var(--r-sm);
+    border-left: 3px solid var(--coral);
   }
-
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--white-dim);
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--blue); }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 120px 48px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(79,195,247,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(79,195,247,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: -200px;
-    right: -200px;
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, rgba(79,195,247,0.08) 0%, transparent 65%);
-    pointer-events: none;
-  }
-
-  .hero-glow-2 {
-    position: absolute;
-    bottom: -300px;
-    left: -100px;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(79,195,247,0.05) 0%, transparent 65%);
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-  }
-
-  .hero-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--blue);
-    text-transform: uppercase;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .hero-eyebrow::before {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 1px;
-    background: var(--blue);
-  }
-
-  .hero-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(52px, 7vw, 88px);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    margin-bottom: 32px;
-  }
-
-  .hero-title .highlight {
-    color: var(--blue);
-    display: block;
-  }
-
-  .hero-subtitle {
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--white-dim);
-    max-width: 520px;
-    margin-bottom: 48px;
-    font-weight: 300;
-  }
-
-  .hero-stat {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--blue);
-    background: rgba(79,195,247,0.08);
-    border: 1px solid rgba(79,195,247,0.2);
-    padding: 8px 16px;
-    margin-bottom: 40px;
-  }
-
-  .hero-ctas {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    background: var(--blue);
-    color: var(--black);
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 16px 32px;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: white;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .btn-primary:hover::after { opacity: 0.15; }
-
-  .btn-secondary {
-    border: 1px solid rgba(79,195,247,0.4);
-    color: var(--blue);
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 16px 32px;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s;
-  }
-
-  .btn-secondary:hover {
-    background: rgba(79,195,247,0.08);
-    border-color: var(--blue);
-  }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 40px;
-    left: 48px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--grey);
-    text-transform: uppercase;
-  }
-
-  .scroll-line {
-    width: 40px;
-    height: 1px;
-    background: var(--grey);
-  }
-
-  /* SECTION BASE */
-  section {
-    padding: 100px 48px;
-  }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.35em;
-    color: var(--blue);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 1px;
-    background: var(--blue);
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(36px, 4vw, 54px);
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-  }
-
-  .section-subtitle {
-    font-size: 16px;
-    color: var(--white-dim);
-    font-weight: 300;
-    max-width: 480px;
-    line-height: 1.6;
-    margin-bottom: 60px;
-  }
-
-  /* SERIES SECTION */
-  .series-section {
-    background: var(--black-soft);
-    border-top: 1px solid rgba(79,195,247,0.08);
-    border-bottom: 1px solid rgba(79,195,247,0.08);
-  }
-
-  .series-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2px;
-  }
-
-  .serie-card {
-    background: var(--black);
-    border: 1px solid rgba(79,195,247,0.08);
-    padding: 32px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-    cursor: default;
-  }
-
-  .serie-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--blue);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .serie-card:hover {
-    background: var(--blue-dark);
-    border-color: rgba(79,195,247,0.25);
-  }
-
-  .serie-card:hover::before { opacity: 1; }
-
-  .serie-number {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--blue);
-    margin-bottom: 16px;
-    opacity: 0.7;
-  }
-
-  .serie-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    margin-bottom: 10px;
-    line-height: 1.2;
-  }
-
-  .serie-desc {
-    font-size: 13px;
-    color: var(--white-dim);
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-
-  .serie-badge {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-  }
-
-  .badge-live {
-    background: rgba(79,195,247,0.15);
-    color: var(--blue);
-    border: 1px solid rgba(79,195,247,0.3);
-  }
-
-  .badge-soon {
-    background: rgba(255,255,255,0.05);
-    color: var(--grey);
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .serie-count {
-    font-size: 12px;
-    color: var(--grey);
+  .compare-saving p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .compare-saving strong { color: var(--coral); }
+  .compare-fiscal {
     margin-top: 12px;
+    padding: 12px 16px;
+    background: rgba(78,205,196,0.1);
+    border-radius: var(--r-sm);
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
   }
+  .compare-fiscal strong { color: var(--mint); }
 
-  /* BLOG SECTION */
-  .blog-section {
-    background: var(--black);
-  }
-
-  .blog-grid {
+  /* ─── CÓMO FUNCIONA ─── */
+  .steps-wrap {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 24px;
-  }
-
-  .blog-card {
-    border: 1px solid rgba(79,195,247,0.1);
-    padding: 36px;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
     position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-    cursor: pointer;
-    text-decoration: none;
-    display: block;
-    color: inherit;
   }
-
-  .blog-card:hover {
-    border-color: rgba(79,195,247,0.3);
-    background: rgba(79,195,247,0.03);
+  @media(min-width:700px){
+    .steps-wrap { grid-template-columns: 1fr 1fr; }
   }
-
-  .blog-card::after {
-    content: '→';
-    position: absolute;
-    top: 36px;
-    right: 36px;
-    color: var(--blue);
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: all 0.3s;
-    font-size: 18px;
-  }
-
-  .blog-card:hover::after {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .blog-meta {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--grey);
-    text-transform: uppercase;
-    margin-bottom: 16px;
+  .step-card {
     display: flex;
-    gap: 16px;
+    gap: 20px;
+    align-items: flex-start;
   }
-
-  .blog-category {
-    color: var(--blue);
-  }
-
-  .blog-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 1.2;
-    margin-bottom: 14px;
-    letter-spacing: -0.01em;
-  }
-
-  .blog-excerpt {
-    font-size: 14px;
-    color: var(--white-dim);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  .blog-divider {
-    width: 32px;
-    height: 1px;
-    background: var(--blue);
-    margin: 20px 0;
-    opacity: 0.5;
-  }
-
-  /* PRODUCT SECTION */
-  .product-section {
-    background: var(--blue-dark);
-    border-top: 1px solid rgba(79,195,247,0.15);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .product-section::before {
-    content: '';
-    position: absolute;
-    top: -200px;
-    right: -100px;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 65%);
-    pointer-events: none;
-  }
-
-  .product-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-  }
-
-  .product-tag {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    color: var(--blue);
-    background: rgba(79,195,247,0.1);
-    border: 1px solid rgba(79,195,247,0.25);
-    padding: 6px 14px;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-
-  .product-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(36px, 4vw, 52px);
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-  }
-
-  .product-desc {
-    font-size: 16px;
-    color: var(--white-dim);
-    line-height: 1.7;
-    font-weight: 300;
-    margin-bottom: 36px;
-  }
-
-  .product-includes {
-    list-style: none;
-    margin-bottom: 40px;
-  }
-
-  .product-includes li {
-    font-size: 14px;
-    color: var(--white-dim);
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(79,195,247,0.1);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .product-includes li::before {
-    content: '✓';
-    color: var(--blue);
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    flex-shrink: 0;
-  }
-
-  .product-form {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(79,195,247,0.2);
-    padding: 40px;
-  }
-
-  .form-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-
-  .form-subtitle {
-    font-size: 13px;
-    color: var(--grey);
-    margin-bottom: 28px;
-    font-family: 'Space Mono', monospace;
+  .step-num {
+    font-family: var(--ff-mono);
     font-size: 11px;
+    font-weight: 500;
+    color: var(--coral);
+    background: var(--coral-light);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
     letter-spacing: 0.05em;
   }
-
-  .form-group {
-    margin-bottom: 16px;
+  .step-body h3 { font-size: 16px; font-weight: 600; margin-bottom: 7px; }
+  .step-body p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .step-timeline {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    color: var(--mint);
+    margin-top: 8px;
   }
 
-  .form-input {
-    width: 100%;
-    background: rgba(0,0,0,0.5);
-    border: 1px solid rgba(79,195,247,0.2);
-    color: var(--white);
-    padding: 14px 16px;
+  /* ─── PRECIOS ─── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  @media(min-width:700px){ .pricing-grid { grid-template-columns: 1fr 1fr; } }
+  @media(min-width:960px){ .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+  .price-card {
+    background: var(--surface-alt);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 32px 28px;
+    position: relative;
+  }
+  .price-card.featured {
+    background: var(--ink);
+    border-color: var(--coral);
+    box-shadow: 0 0 0 4px rgba(232,112,90,0.1);
+  }
+  .price-badge {
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--coral);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 100px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .price-card-name { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px; }
+  .price-card.featured .price-card-name { color: rgba(255,255,255,0.5); }
+  .price-amount {
+    font-family: var(--ff-mono);
+    font-size: 44px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+  .price-amount span { font-size: 20px; vertical-align: super; }
+  .price-card.featured .price-amount { color: #fff; }
+  .price-period { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .price-card.featured .price-period { color: rgba(255,255,255,0.45); }
+  .price-setup { font-size: 13px; color: var(--text-muted); padding: 10px 0; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
+  .price-card.featured .price-setup { color: rgba(255,255,255,0.45); border-bottom-color: rgba(255,255,255,0.1); }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .price-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
     font-size: 14px;
-    font-family: 'Inter', sans-serif;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.65); }
+  .price-features li::before {
+    content: '✓';
+    color: var(--mint);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .price-cta {
+    display: block;
+    text-align: center;
+    padding: 13px;
+    border-radius: var(--r-sm);
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: var(--ff-body);
+  }
+  .price-cta-outline {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text);
+  }
+  .price-cta-outline:hover { border-color: var(--coral); color: var(--coral); }
+  .price-cta-fill {
+    background: var(--coral);
+    color: #fff;
+  }
+  .price-cta-fill:hover { background: #d45f49; }
+
+  /* ─── NOSOTROS ─── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  @media(min-width:640px){ .team-grid { grid-template-columns: 1fr 1fr; } }
+  .team-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 36px 30px;
+  }
+  .team-initial {
+    width: 56px; height: 56px;
+    background: var(--ink);
+    color: var(--coral);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ff-display);
+    font-size: 24px;
+    font-weight: 700;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  .team-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+  .team-role { font-size: 12px; font-weight: 600; color: var(--coral); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .team-card p { font-size: 14.5px; color: var(--text-muted); line-height: 1.65; }
+  .team-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .team-tag {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  /* ─── CTA FINAL ─── */
+  #cta-final {
+    background: var(--ink);
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta-final::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 300px;
+    background: radial-gradient(ellipse, rgba(232,112,90,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #cta-final h2 {
+    font-family: var(--ff-display);
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  #cta-final h2 em { font-style: italic; color: var(--coral); }
+  #cta-final p { font-size: 17px; color: rgba(255,255,255,0.55); max-width: 520px; margin: 0 auto 40px; line-height: 1.6; }
+  .cta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 36px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--r-lg);
+  }
+  .cta-form input, .cta-form select {
+    padding: 13px 16px;
+    border-radius: var(--r-sm);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    font-family: var(--ff-body);
+    font-size: 14px;
     outline: none;
     transition: border-color 0.2s;
   }
-
-  .form-input::placeholder { color: var(--grey); }
-
-  .form-input:focus {
-    border-color: var(--blue);
-    background: rgba(79,195,247,0.04);
-  }
-
-  .form-note {
-    font-size: 11px;
-    color: var(--grey);
-    margin-top: 12px;
-    line-height: 1.5;
-  }
-
-  .price-badge {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin: 24px 0;
-  }
-
-  .price-amount {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 42px;
-    color: var(--blue);
-  }
-
-  .price-label {
-    font-size: 13px;
-    color: var(--grey);
-    line-height: 1.4;
-  }
-
-  .price-strike {
-    font-size: 18px;
-    color: var(--grey);
-    text-decoration: line-through;
-  }
-
-  a.serie-card {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+  .cta-form input::placeholder { color: rgba(255,255,255,0.35); }
+  .cta-form input:focus, .cta-form select:focus { border-color: var(--coral); }
+  .cta-form select { color: rgba(255,255,255,0.55); }
+  .cta-form select option { background: var(--ink); color: #fff; }
+  .cta-submit {
+    background: var(--coral);
+    color: #fff;
+    font-family: var(--ff-body);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 15px;
+    border: none;
+    border-radius: var(--r-sm);
     cursor: pointer;
-  }
-
-  a.serie-card:hover {
-    background: var(--blue-dark);
-    border-color: rgba(79,195,247,0.25);
-  }
-
-  a.serie-card:hover::before { opacity: 1; }
-
-  /* GUÍAS EXTENDIDAS */
-  .guias-section {
-    background: var(--black-soft);
-    border-top: 1px solid rgba(79,195,247,0.08);
-    border-bottom: 1px solid rgba(79,195,247,0.08);
-  }
-
-  .guias-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
-  }
-
-  .guia-card {
-    background: var(--black);
-    border: 1px solid rgba(79,195,247,0.1);
-    padding: 36px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-    text-decoration: none;
-    display: block;
-    color: inherit;
-  }
-
-  .guia-card:hover {
-    border-color: rgba(79,195,247,0.3);
-    background: var(--blue-dark);
-  }
-
-  .guia-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--blue);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .guia-card:hover::before { opacity: 1; }
-
-  .guia-serie-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: var(--blue);
-    text-transform: uppercase;
-    background: rgba(79,195,247,0.08);
-    border: 1px solid rgba(79,195,247,0.2);
-    padding: 4px 10px;
-    display: inline-block;
-    margin-bottom: 18px;
-  }
-
-  .guia-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 1.2;
-    margin-bottom: 12px;
-  }
-
-  .guia-desc {
-    font-size: 13px;
-    color: var(--white-dim);
-    line-height: 1.6;
-    margin-bottom: 20px;
-    font-weight: 300;
-  }
-
-  .guia-meta {
+    transition: background 0.2s;
     display: flex;
-    gap: 16px;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--grey);
-    letter-spacing: 0.1em;
-  }
-
-  .guia-arrow {
-    position: absolute;
-    bottom: 36px;
-    right: 36px;
-    color: var(--blue);
-    font-size: 18px;
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: all 0.3s;
-  }
-
-  .guia-card:hover .guia-arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  /* BIBLIOTECA DE PROMPTS */
-  .prompts-section {
-    background: var(--black);
-  }
-
-  .prompts-filters {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-  }
-
-  .filter-btn {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 8px 16px;
-    border: 1px solid rgba(79,195,247,0.2);
-    background: transparent;
-    color: var(--grey);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .filter-btn:hover,
-  .filter-btn.active {
-    background: rgba(79,195,247,0.1);
-    border-color: var(--blue);
-    color: var(--blue);
-  }
-
-  .prompts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 16px;
-  }
-
-  .prompt-card {
-    background: var(--blue-dark);
-    border: 1px solid rgba(79,195,247,0.12);
-    padding: 28px;
-    transition: all 0.2s;
-  }
-
-  .prompt-card:hover {
-    border-color: rgba(79,195,247,0.3);
-  }
-
-  .prompt-category {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: var(--blue);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .prompt-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 14px;
-    line-height: 1.3;
-  }
-
-  .prompt-box {
-    background: rgba(0,0,0,0.5);
-    border: 1px solid rgba(79,195,247,0.15);
-    border-left: 3px solid var(--blue);
-    padding: 14px 16px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--white-dim);
-    line-height: 1.6;
-    margin-bottom: 14px;
-    position: relative;
-  }
-
-  .copy-btn {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--blue);
-    background: transparent;
-    border: 1px solid rgba(79,195,247,0.3);
-    padding: 6px 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .copy-btn:hover {
-    background: rgba(79,195,247,0.1);
-  }
-
-  .copy-btn.copied {
-    color: #4ade80;
-    border-color: #4ade80;
-  }
-
-  /* RECURSOS / PDFs */
-  .recursos-section {
-    background: var(--black-soft);
-    border-top: 1px solid rgba(79,195,247,0.08);
-  }
-
-  .recursos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 24px;
-  }
-
-  .recurso-card {
-    background: var(--black);
-    border: 1px solid rgba(79,195,247,0.1);
-    padding: 36px;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .recurso-card:hover {
-    border-color: rgba(79,195,247,0.3);
-    background: var(--blue-dark);
-  }
-
-  .recurso-icon {
-    font-size: 32px;
-    margin-bottom: 20px;
-    display: block;
-  }
-
-  .recurso-serie {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: var(--grey);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .recurso-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 19px;
-    line-height: 1.2;
-    margin-bottom: 12px;
-  }
-
-  .recurso-desc {
-    font-size: 13px;
-    color: var(--white-dim);
-    line-height: 1.6;
-    margin-bottom: 24px;
-    font-weight: 300;
-  }
-
-  .recurso-includes {
-    list-style: none;
-    margin-bottom: 28px;
-  }
-
-  .recurso-includes li {
-    font-size: 12px;
-    color: var(--white-dim);
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(79,195,247,0.07);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .recurso-includes li::before {
-    content: '→';
-    color: var(--blue);
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    flex-shrink: 0;
-  }
-
-  /* MODAL EMAIL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 500;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(4px);
+    gap: 8px;
   }
+  .cta-submit:hover { background: #d45f49; }
+  .cta-disclaimer { font-size: 12px; color: rgba(255,255,255,0.3); text-align: center; margin-top: 8px; }
 
-  .modal-overlay.open {
-    display: flex;
-  }
-
-  .modal-box {
-    background: var(--black);
-    border: 1px solid rgba(79,195,247,0.25);
-    padding: 48px;
-    max-width: 480px;
-    width: 90%;
-    position: relative;
-    animation: fadeUp 0.3s ease;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 20px;
-    right: 24px;
-    background: none;
-    border: none;
-    color: var(--grey);
-    font-size: 22px;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-
-  .modal-close:hover { color: var(--white); }
-
-  .modal-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    color: var(--blue);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .modal-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 24px;
-    margin-bottom: 8px;
-    line-height: 1.2;
-  }
-
-  .modal-subtitle {
-    font-size: 13px;
-    color: var(--white-dim);
-    margin-bottom: 28px;
-    line-height: 1.5;
-  }
-
-  /* FOOTER */
+  /* ─── FOOTER ─── */
   footer {
-    background: var(--black);
-    border-top: 1px solid rgba(79,195,247,0.08);
-    padding: 60px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 32px;
-  }
-
-  .footer-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin-bottom: 12px;
-  }
-
-  .footer-tagline {
+    background: #060f18;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 32px 24px;
     font-size: 13px;
-    color: var(--grey);
-    font-weight: 300;
+    line-height: 1.8;
   }
+  footer strong { color: rgba(255,255,255,0.7); }
+  footer a { color: var(--coral); }
 
-  .footer-links {
+  /* ─── TRUST BAR ─── */
+  .trust-bar {
+    background: var(--ink-mid);
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .trust-inner {
     display: flex;
-    gap: 32px;
-    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px 48px;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
   }
-
-  .footer-links a {
-    font-size: 12px;
-    color: var(--grey);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
   }
+  .trust-item span { color: var(--mint); font-size: 15px; }
 
-  .footer-links a:hover { color: var(--blue); }
-
-  .footer-copy {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--grey);
-    opacity: 0.5;
-    letter-spacing: 0.1em;
-  }
-
-  /* ANIMATIONS */
+  /* ─── ANIMATIONS ─── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity:0; transform:translateY(20px); }
+    to { opacity:1; transform:translateY(0); }
   }
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
 
-  .hero-eyebrow { animation: fadeUp 0.6s ease forwards; }
-  .hero-title { animation: fadeUp 0.6s 0.1s ease both; }
-  .hero-subtitle { animation: fadeUp 0.6s 0.2s ease both; }
-  .hero-stat { animation: fadeUp 0.6s 0.25s ease both; }
-  .hero-ctas { animation: fadeUp 0.6s 0.3s ease both; }
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity:0; transform:translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.in { opacity:1; transform:translateY(0); }
 
-  /* NEON LINE */
-  .neon-line {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--blue), transparent);
-    opacity: 0.3;
-    margin: 0;
-  }
-
-  /* RESPONSIVE */
-  /* HAMBURGER */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    z-index: 200;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--blue);
-    transition: all 0.3s;
-  }
-
-  .hamburger.open span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-
-  .hamburger.open span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.open span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
-  @media (max-width: 768px) {
-    .hamburger { display: flex; }
-
-    .nav-links {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: #000000;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      z-index: 150;
-      list-style: none;
-      padding: 40px 20px;
-      overflow-y: auto;
-    }
-
-    .nav-links.open { display: flex; }
-
-    .nav-links a {
-      font-size: 16px;
-      letter-spacing: 0.08em;
-      color: var(--white);
-      text-decoration: none;
-      text-transform: uppercase;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--blue); }
-
-    /* Banner Agentes Brutales — columna única en móvil */
-    .banner-inner-grid {
-      grid-template-columns: 1fr !important;
-      gap: 24px !important;
-    }
-    /* Grid de diferenciación — columna única en móvil */
-    #prompts > div:first-of-type > div:last-child {
-      grid-template-columns: 1fr !important;
-    }
-    section { padding: 60px 20px; }
-    .hero { padding: 90px 20px 60px; }
-    .hero-scroll { left: 20px; }
-    .hero-logo { width: 72px !important; height: 72px !important; }
-    .hero-title { font-size: 28px; line-height: 1.05; }
-    .hero-eyebrow { font-size: 9px; }
-    .hero-subtitle { font-size: 16px; line-height: 1.7; }
-    .hero-stat { font-size: 13px; line-height: 1.6; }
-    .hero-ctas { flex-direction: column; gap: 12px; }
-    .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 14px 20px; }
-    .section-title { font-size: 28px; }
-    .section-subtitle { font-size: 15px; line-height: 1.7; }
-    .series-grid { grid-template-columns: 1fr; gap: 2px; }
-    .serie-name { font-size: 18px; }
-    .serie-desc { font-size: 14px; line-height: 1.6; }
-    .blog-grid { grid-template-columns: 1fr; gap: 16px; }
-    .blog-title { font-size: 19px; }
-    .blog-excerpt { font-size: 14px; line-height: 1.7; }
-    .guias-grid { grid-template-columns: 1fr; gap: 16px; }
-    .guia-title { font-size: 18px; }
-    .guia-desc { font-size: 14px; line-height: 1.7; }
-    .prompts-grid { grid-template-columns: 1fr; gap: 16px; }
-    .prompt-title { font-size: 15px; }
-    .prompt-box { font-size: 12px; line-height: 1.7; }
-    .recursos-grid { grid-template-columns: 1fr; gap: 16px; }
-    .recurso-title { font-size: 17px; }
-    .recurso-desc { font-size: 14px; line-height: 1.7; }
-    .recurso-includes li { font-size: 13px; }
-    .product-inner { grid-template-columns: 1fr; gap: 40px; }
-    .product-title { font-size: 28px; }
-    .product-desc { font-size: 15px; line-height: 1.7; }
-    .product-includes li { font-size: 14px; }
-    .price-amount { font-size: 36px; }
-    .modal-box { padding: 32px 24px; }
-    .modal-title { font-size: 20px; }
-    .modal-subtitle { font-size: 14px; }
-    footer { padding: 40px 20px; flex-direction: column; align-items: flex-start; gap: 24px; }
-    .footer-links { flex-wrap: wrap; gap: 16px; }
-    .prompts-filters { gap: 6px; }
-    .filter-btn { font-size: 9px; padding: 6px 12px; }
+  @media(prefers-reduced-motion: reduce){
+    .reveal, .msg, .typing-indicator { transition: none; animation: none; opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -1195,674 +805,525 @@
 
 <!-- NAV -->
 <nav>
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <img src="logo.jpg" alt="TES" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(79,195,247,0.3);">
-    <div class="nav-logo">TES</div>
+  <div class="nav-inner">
+    <div class="logo">CallFlow<span>AI</span></div>
+    <div class="nav-cta">
+      <a href="#cta-final" class="nav-link">Precios</a>
+      <a href="#cta-final" class="nav-link">Quiénes somos</a>
+      <a href="#cta-final" class="btn-ghost">Solicita tu demo →</a>
+    </div>
   </div>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="#series" onclick="closeMenu()">Series</a></li>
-    <li><a href="#guias" onclick="closeMenu()">Guías</a></li>
-    <li><a href="#prompts" onclick="closeMenu()">Agentes Brutales</a></li>
-    <li><a href="#recursos" onclick="closeMenu()">Recursos</a></li>
-    <li><a href="#blog" onclick="closeMenu()">Blog</a></li>
-    <li><a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" onclick="closeMenu()">YouTube →</a></li>
-    <li><a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" onclick="closeMenu()">Instagram →</a></li>
-    <li><a href="https://www.tiktok.com/@techexplicadasimple" target="_blank" onclick="closeMenu()">TikTok →</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow-2"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Series 1–3 publicadas · Serie 4 en curso</div>
-    <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 8px;">
-      <img src="logo.jpg" alt="TES Logo" style="width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(79,195,247,0.3); flex-shrink: 0;" class="hero-logo">
-      <h1 class="hero-title" style="margin-bottom: 0;">Tecnología <span class="highlight">Explicada Simple</span></h1>
-    </div>
-    <p class="hero-subtitle">
-      Entiende la IA, las redes y la nube de verdad. Sin jerga. Sin humo.<br>Con ejemplos que puedes explicarle a otro mañana.
-    </p>
-    <div class="hero-stat">⚡ El que entiende la tecnología no solo la usa mejor.<br><span style="color: var(--white-dim); font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.05em;">Decide mejor, negocia mejor y avanza más rápido.</span></div>
-    <div class="hero-ctas">
-      <a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" class="btn-primary">Ver el canal →</a>
-      <a href="#prompts" class="btn-secondary">Ver los agentes →</a>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    Scroll
-  </div>
-</section>
-
-<div class="neon-line"></div>
-
-<!-- AGENTES BRUTALES -->
-<div class="neon-line"></div>
-<section class="prompts-section" id="prompts">
-  <div class="section-label">Ecosistema de productos</div>
-  <h2 class="section-title">Agentes Brutales</h2>
-  <p class="section-subtitle">Una suite de agentes especializados. Cada uno construido para conseguir un resultado concreto — con métodos reales de coaching y psicología integrados.</p>
-
-  <!-- BLOQUE 1 — DIFERENCIACIÓN -->
-  <div style="margin-bottom: 48px;">
-    <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 24px; color: var(--white);">¿No es lo mismo que preguntarle a ChatGPT?</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
-
-      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 28px;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 14px;">Un LLM sin configurar</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 12px;">Un genio que puede ser cualquier cosa</div>
-        <p style="font-size: 13px; color: var(--grey); line-height: 1.75;">Médico, abogado, coach — si sabes exactamente cómo pedírselo. El problema: la mayoría no sabe qué preguntar ni por dónde empezar. Empieza de cero en cada conversación.</p>
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-copy fade-up">
+        <div class="hero-eyebrow">Disponible ahora · España · WhatsApp · Voz · TidyCal</div>
+        <h1 class="hero-h1">El recepcionista que nunca descansa<br><em>y siempre vende.</em></h1>
+        <p class="hero-sub">Mientras tu equipo atiende pacientes, nuestro agente IA responde 24/7, califica, agenda y vende — y solo te pasa lo que importa.</p>
+        <div class="hero-actions">
+          <a href="#cta-final" class="btn-primary">Solicita una demo gratuita →</a>
+        </div>
+        <p class="hero-note">Sin permanencia. Diagnóstico gratuito de 20 minutos.</p>
       </div>
 
-      <div style="background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.3); border-left: 3px solid var(--blue); padding: 28px;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 14px;">Un Agente Brutal</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 12px;">Un especialista ya configurado</div>
-        <p style="font-size: 13px; color: var(--white-dim); line-height: 1.75;">Con métodos reales de coaching y psicología. Sabe exactamente qué preguntarte, cómo guiarte y adónde llevarte. No necesitas saber qué pedirle — él te lleva al resultado aunque no sepas por dónde empezar.</p>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- BLOQUE 2 — TRANSPARENCIA -->
-  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 32px; margin-bottom: 48px;">
-    <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px;">Lo que necesitas saber antes de comprar</div>
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <div style="display: flex; gap: 16px; align-items: flex-start;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">01</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Necesitas un LLM con plan de pago</strong> — Claude, ChatGPT o Grok (~20€/mes). Si ya lo tienes, estos agentes son lo que le faltaba. Si no, son la razón para activarlo.</p>
-      </div>
-      <div style="display: flex; gap: 16px; align-items: flex-start;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">02</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Tus conversaciones son completamente privadas.</strong> Los agentes viven en tu LLM — nosotros nunca vemos lo que hablas con ellos.</p>
-      </div>
-      <div style="display: flex; gap: 16px; align-items: flex-start;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">03</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Para TDAH: COMPA está diseñado para usarse en voz con Grok.</strong> No es un agente de texto — es un compañero que te acompaña en tiempo real mientras trabajas.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOQUE 3 — AXON GRATIS -->
-  <div style="background: linear-gradient(135deg, #0a1a0a, #0d2a1a); border: 1px solid rgba(52,211,153,0.3); border-left: 3px solid #34D399; padding: 40px; margin-bottom: 48px; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(52,211,153,0.08) 0%, transparent 65%); pointer-events: none;"></div>
-    <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
-      <div>
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">⚡ Empieza aquí · Completamente gratis</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 10px; line-height: 1.2;">Antes de comprar cualquier cosa —<br>prueba AXON gratis</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 500px;">AXON es tu guía personal de IA. 25 conversaciones gratuitas, sin tarjeta, sin registro. Si después de usarlo no confías en la calidad, no compres nada. Es nuestra garantía real.</p>
-      </div>
-      <div style="flex-shrink: 0; text-align: center; min-width: 160px;">
-        <a href="empieza-aqui.html" style="display: block; background: #34D399; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 24px; text-decoration: none; text-align: center; transition: opacity 0.2s; margin-bottom: 10px;">Hablar con AXON gratis →</a>
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); line-height: 1.6;">Sin tarjeta · Sin registro<br>25 conversaciones gratis</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOQUE 4 — 5 PRODUCTOS -->
-  <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.3em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-    <span style="display: block; width: 20px; height: 1px; background: var(--grey);"></span>
-    Los 5 productos de la suite
-  </div>
-
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px;">
-
-    <!-- PRO — violeta -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(192,132,252,0.25); border-top: 3px solid #C084FC; padding: 28px; position: relative;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #C084FC; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Pro</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Vende más, crece más rápido y lidera con criterio — con 12 agentes especializados en ventas, carrera y liderazgo.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #C084FC;">57€</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">12 agentes · Pago único</span>
-      </div>
-      <a href="prompts-brutales-pro.html" style="display: block; background: #C084FC; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
-    </div>
-
-    <!-- TDAH — rosa -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(244,114,182,0.25); border-top: 3px solid #F472B6; padding: 28px; position: relative;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #F472B6; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">TDAH</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Foco, claridad y ejecución para cerebros que funcionan diferente. Diseñado con psicología real del TDAH — no con consejos genéricos.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #F472B6;">27€</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">3 agentes · Pago único</span>
-      </div>
-      <a href="tdah.html" style="display: block; background: #F472B6; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
-    </div>
-
-    <!-- FINANZAS — verde -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(52,211,153,0.25); border-top: 3px solid #34D399; padding: 28px; position: relative;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #34D399; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Finanzas</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Presupuesto, deudas, ahorro e inversión. Decisiones financieras con números reales — no con teoría que no se puede aplicar.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #34D399;">47€</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">4 agentes · Pago único</span>
-      </div>
-      <a href="finanzas.html" style="display: block; background: #34D399; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
-    </div>
-
-    <!-- NEGOCIO ONLINE — dorado -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(251,191,36,0.25); border-top: 3px solid #FBBF24; padding: 28px; position: relative;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FBBF24; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Negocio Online</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">De la idea al negocio funcionando. Estrategia, producto, captación y monetización — con 8 agentes que cubren todo el proceso.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #FBBF24;">57€</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">8 agentes · Pago único</span>
-      </div>
-      <a href="negocio.html" style="display: block; background: #FBBF24; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
-    </div>
-
-    <!-- DEV IA — rojo coral -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(255,107,107,0.25); border-top: 3px solid #FF6B6B; padding: 28px; position: relative;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FF6B6B; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Dev IA</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Construye apps con IA como si tuvieras un equipo. 4 agentes para diseñar, codificar, revisar y desplegar — sin saber programar.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #FF6B6B;">47€</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">4 agentes · Pago único</span>
-      </div>
-      <a href="devai.html" style="display: block; background: #FF6B6B; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
-    </div>
-
-  </div>
-
-  <!-- BLOQUE 5 — POLÍTICA HONESTA -->
-  <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px;">
-    <p style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); line-height: 1.8; max-width: 680px;">
-      <strong style="color: rgba(255,255,255,0.4);">Sin reembolsos.</strong> Una vez que activas los agentes en tu LLM, son tuyos para siempre — no podemos revertirlo. Por eso AXON es gratis: para que compruebes la calidad antes de decidir.
-    </p>
-  </div>
-
-</section>
-<div class="neon-line"></div>
-<section class="recursos-section" id="recursos">
-  <div class="section-label">Descargables</div>
-  <h2 class="section-title">Recursos gratuitos</h2>
-  <p class="section-subtitle">Guías PDF descargables, una por serie. Deja tu email y te llega al instante.</p>
-
-  <div class="recursos-grid">
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 01 · IA Explicada Simple</div>
-      <div class="recurso-title">Guía PDF — IA desde cero</div>
-      <div class="recurso-desc">El resumen completo de la Serie 1. Conceptos, metáforas y prompts listos para usar.</div>
-      <ul class="recurso-includes">
-        <li>Transistores y puertas lógicas explicados</li>
-        <li>Cómo aprende la IA — paso a paso</li>
-        <li>3 técnicas de prompts avanzados</li>
-        <li>Mapa de qué IA usar para qué</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — IA desde cero', 'Serie 01', 'https://drive.google.com/file/d/1kRHDJwsSiuMuf9ByUZ1DjvLcKU73tNKt/view')">Descargar gratis →</a>
-    </div>
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 02 · Internet y Redes</div>
-      <div class="recurso-title">Guía PDF — Cómo funciona internet</div>
-      <div class="recurso-desc">IP, DNS, paquetes, HTTPS y firewall. Todo en una sola hoja de referencia.</div>
-      <ul class="recurso-includes">
-        <li>Glosario visual de 15 términos clave</li>
-        <li>El viaje de un clic — diagrama completo</li>
-        <li>3 trucos para mejorar tu WiFi hoy</li>
-        <li>Checklist de seguridad básica</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — Cómo funciona internet', 'Serie 02', 'https://drive.google.com/file/d/1myec8MVQLXonLIxl1K-x3SU2g5VW0PLm/view')">Descargar gratis →</a>
-    </div>
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 03 · La Nube</div>
-      <div class="recurso-title">Guía PDF — La nube explicada</div>
-      <div class="recurso-desc">IaaS, PaaS, SaaS, redundancia y edge computing. El mapa completo de la nube.</div>
-      <ul class="recurso-includes">
-        <li>Comparativa AWS vs Azure vs Google Cloud</li>
-        <li>Los 4 errores más caros en la nube</li>
-        <li>La regla 3-2-1 para tus backups</li>
-        <li>Checklist para auditar tu gasto en la nube</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — La nube explicada', 'Serie 03', 'https://drive.google.com/file/d/18bwS2OJLXSFxvL5nMVCo41g3IUSIzaCn/view')">Descargar gratis →</a>
-    </div>
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 04 · Ciberseguridad</div>
-      <div class="recurso-title">Guía PDF — Protege lo que es tuyo</div>
-      <div class="recurso-desc">Hackers, contraseñas, phishing, cifrado y VPN. Plan de acción concreto por prioridad.</div>
-      <ul class="recurso-includes">
-        <li>Checklist de seguridad personal</li>
-        <li>5 señales de phishing para detectar</li>
-        <li>Las 4 capas de protección explicadas</li>
-        <li>Plan de acción por plazo temporal</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — Protege lo que es tuyo', 'Serie 04', 'https://drive.google.com/file/d/1DplnZFaB_tuxsKukUioZHIExXUMsaO3P/view')">Descargar gratis →</a>
-    </div>
-
-  </div>
-</section>
-<div class="neon-line"></div>
-
-<!-- SERIES -->
-<section class="series-section" id="series">
-  <div class="section-label">Contenido</div>
-  <h2 class="section-title">Las series</h2>
-  <p class="section-subtitle">Un roadmap completo para entender la tecnología que mueve el mundo. Con la profundidad que mereces y la claridad que necesitas.</p>
-
-  <div class="series-grid">
-
-    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg0omCzphMQX0DeAl2_tDTBL" target="_blank" class="serie-card">
-      <div class="serie-number">SERIE 01</div>
-      <div class="serie-name">IA Explicada Simple</div>
-      <div class="serie-desc">Transistores, redes neuronales, entrenamiento y prompts. La base de todo lo que viene.</div>
-      <span class="serie-badge badge-live">✓ Publicada</span>
-      <div class="serie-count">10 Shorts + Vídeo largo</div>
-    </a>
-
-    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg31cDzrMuGsq2gFjmF94EDD" target="_blank" class="serie-card">
-      <div class="serie-number">SERIE 02</div>
-      <div class="serie-name">Internet y Redes</div>
-      <div class="serie-desc">Cómo llegan los datos de un servidor al otro lado del mundo en menos de un segundo.</div>
-      <span class="serie-badge badge-live">✓ Publicada</span>
-      <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </a>
-
-    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg00QvczbYlhQ3pdZDJREYkf" target="_blank" class="serie-card">
-      <div class="serie-number">SERIE 03</div>
-      <div class="serie-name">La Nube</div>
-      <div class="serie-desc">Dónde están realmente tus fotos. Cómo Netflix sirve vídeo a 270 millones sin caerse.</div>
-      <span class="serie-badge badge-live">✓ Publicada</span>
-      <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </a>
-
-    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg1kRTMayQysKEf_JpmL-XQ1" target="_blank" class="serie-card">
-      <div class="serie-number">SERIE 04</div>
-      <div class="serie-name">Ciberseguridad</div>
-      <div class="serie-desc">Hackers, firewalls, cifrado y VPNs. Todo lo que te protege sin que lo sepas.</div>
-      <span class="serie-badge badge-live">● En curso</span>
-      <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </a>
-
-    <div class="serie-card">
-      <div class="serie-number">SERIE 05</div>
-      <div class="serie-name">IA Práctica para Profesionales</div>
-      <div class="serie-desc">Ventas, análisis de datos, reuniones y automatización. IA aplicada a tu trabajo real.</div>
-      <span class="serie-badge badge-soon">Próximamente</span>
-      <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </div>
-
-    <div class="serie-card">
-      <div class="serie-number">SERIE 06–09</div>
-      <div class="serie-name">Programación, Web, Apps y Claude</div>
-      <div class="serie-desc">Crea webs, apps y automatizaciones con IA. Sin saber programar.</div>
-      <span class="serie-badge badge-soon">En desarrollo</span>
-      <div class="serie-count">4 series · 36+ Shorts</div>
-    </div>
-
-  </div>
-</section>
-
-<div class="neon-line"></div>
-
-<div class="neon-line"></div>
-
-<!-- GUÍAS EXTENDIDAS -->
-<div class="neon-line"></div>
-<section class="guias-section" id="guias">
-  <div class="section-label">Exclusivo web</div>
-  <h2 class="section-title">Guías extendidas</h2>
-  <p class="section-subtitle">La versión extendida de los carruseles de Instagram. Más contexto, más profundidad, más sustancia.</p>
-
-  <div class="guias-grid">
-
-    <a href="guia-serie-1-ia.html" class="guia-card">
-      <span class="guia-serie-tag">Serie 01 · IA</span>
-      <div class="guia-title">Cómo funciona la IA de verdad — guía completa</div>
-      <div class="guia-desc">Desde transistores hasta prompts avanzados. Todo lo que necesitas saber para entender y usar la IA con ventaja real.</div>
-      <div class="guia-meta">
-        <span>12 min lectura</span>
-        <span>·</span>
-        <span>5 conceptos clave</span>
-      </div>
-      <span class="guia-arrow">→</span>
-    </a>
-
-    <a href="guia-serie-2-redes.html" class="guia-card">
-      <span class="guia-serie-tag">Serie 02 · Redes</span>
-      <div class="guia-title">Cómo funciona internet — de tu dedo a la pantalla</div>
-      <div class="guia-desc">IP, DNS, paquetes, HTTPS y firewall. El viaje completo que hace cada clic que das en un segundo.</div>
-      <div class="guia-meta">
-        <span>10 min lectura</span>
-        <span>·</span>
-        <span>7 conceptos clave</span>
-      </div>
-      <span class="guia-arrow">→</span>
-    </a>
-
-    <a href="guia-serie-3-nube.html" class="guia-card">
-      <span class="guia-serie-tag">Serie 03 · Nube</span>
-      <div class="guia-title">La nube explicada — de tus fotos a los servidores de Netflix</div>
-      <div class="guia-desc">Dónde están tus datos, cómo Netflix no se cae nunca, y cómo las empresas pierden (y ahorran) dinero en la nube.</div>
-      <div class="guia-meta">
-        <span>14 min lectura</span>
-        <span>·</span>
-        <span>8 conceptos clave</span>
-      </div>
-      <span class="guia-arrow">→</span>
-    </a>
-
-    <a href="guia-serie-4-ciberseguridad.html" class="guia-card">
-      <span class="guia-serie-tag">Serie 04 · Ciberseguridad</span>
-      <div class="guia-title">Ciberseguridad explicada — cómo proteger lo que es tuyo</div>
-      <div class="guia-desc">Hackers, contraseñas, phishing, cifrado y VPNs. Todo lo que te protege y todo lo que te pone en riesgo.</div>
-      <div class="guia-meta">
-        <span>12 min lectura</span>
-        <span>·</span>
-        <span>6 conceptos clave</span>
-      </div>
-      <span class="guia-arrow">→</span>
-    </a>
-
-  </div>
-</section>
-
-<div class="neon-line"></div>
-
-<!-- PRODUCTO / FUNDADORES -->
-<section class="product-section" id="producto">
-  <div class="product-inner">
-    <div>
-      <div class="product-tag">⚡ Comunidad · Lista de fundadores</div>
-      <h2 class="product-title">Ayúdanos a construir lo que necesitas</h2>
-      <p class="product-desc">Estamos desarrollando los primeros productos de TES. Antes de construir, queremos saber exactamente qué te sería más útil — y quienes nos lo digan primero tendrán acceso anticipado y precio de fundador.</p>
-
-      <ul class="product-includes">
-        <li>Acceso anticipado a todos los productos TES</li>
-        <li>Precio de fundador — siempre mejor que el precio público</li>
-        <li>Voto directo en qué construimos primero</li>
-        <li>Acceso a contenido exclusivo mientras desarrollamos</li>
-      </ul>
-
-      <div style="margin-top: 28px; background: rgba(79,195,247,0.06); border-left: 3px solid var(--blue); padding: 16px 20px;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; margin-bottom: 6px;">En desarrollo ahora mismo</div>
-        <div style="font-size: 14px; color: var(--white-dim); line-height: 1.6;">Agentes Brutales Edición Completa · Curso de IA desde Cero · Guías avanzadas por serie</div>
-      </div>
-    </div>
-
-    <div class="product-form">
-      <div class="form-title">Únete a los fundadores</div>
-      <div class="form-subtitle">Cuéntanos qué necesitas — construimos en base a eso</div>
-
-      <div class="form-group">
-        <input type="text" class="form-input" placeholder="Tu nombre" id="founder-name">
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-input" placeholder="Tu email" id="founder-email">
-      </div>
-
-      <div style="margin: 16px 0 8px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--blue); text-transform: uppercase;">¿Qué te interesa más?</div>
-
-      <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;" id="survey-options">
-        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
-          <input type="radio" name="interes" value="prompts" style="accent-color: var(--blue);"> Agentes Brutales — colecciones completas
-        </label>
-        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
-          <input type="radio" name="interes" value="curso-ia" style="accent-color: var(--blue);"> Curso completo de IA desde cero
-        </label>
-        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
-          <input type="radio" name="interes" value="curso-ventas" style="accent-color: var(--blue);"> IA aplicada a ventas y negocios
-        </label>
-        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--white-dim); padding: 10px 14px; background: rgba(79,195,247,0.04); border: 1px solid rgba(79,195,247,0.1); transition: border-color 0.2s;">
-          <input type="radio" name="interes" value="guias" style="accent-color: var(--blue);"> Guías avanzadas por serie
-        </label>
-      </div>
-
-      <button class="btn-primary" style="width: 100%; margin-top: 4px; border: none; cursor: pointer; font-size: 14px;" onclick="submitFounder()">
-        Quiero ser fundador →
-      </button>
-
-      <div class="form-note" id="founder-note">
-        Sin spam. Sin compromisos. Cuando lancemos, tú decides si compras.
-      </div>
-      <div id="founder-success" style="display:none; margin-top: 12px; color: #4ade80; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.6;">
-        ✓ Ya estás en la lista de fundadores.<br>Te avisamos antes que a nadie.
+      <!-- CHAT DEMO -->
+      <div class="chat-demo" id="chatDemo">
+        <div class="chat-header">
+          <div class="chat-avatar">😁</div>
+          <div class="chat-info">
+            <div class="chat-name">Clínica Sacoto · Barcelona</div>
+            <div class="chat-status">Agente activo 24/7</div>
+          </div>
+        </div>
+        <div class="chat-body" id="chatBody">
+          <!-- msgs injected by JS -->
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<script>
-function submitFounder() {
-  const name = document.getElementById('founder-name').value;
-  const email = document.getElementById('founder-email').value;
-  const interes = document.querySelector('input[name="interes"]:checked');
-  if (!name || !email) { alert('Por favor, rellena tu nombre y email.'); return; }
-  const recurso = 'Lista Fundadores — ' + (interes ? interes.value : 'sin selección');
-  fetch('https://script.google.com/macros/s/AKfycbwzsnUiyIBJIgCk4YaHRbsuF4wlYJvw9fcAJRl-7OQU-wBXzRtomnyxNlBD8u69u4oH/exec', {
-    method: 'POST', mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre: name, email: email, recurso: recurso })
-  });
-  document.getElementById('founder-success').style.display = 'block';
-  document.getElementById('founder-note').style.display = 'none';
-  document.querySelector('#survey-options').style.opacity = '0.4';
-  document.querySelector('#survey-options').style.pointerEvents = 'none';
-}
-</script>
-
-<div class="neon-line"></div>
-
-<!-- BLOG -->
-<section class="blog-section" id="blog">
-  <div class="section-label">Reflexión</div>
-  <h2 class="section-title">Más allá del código</h2>
-  <p class="section-subtitle">Análisis profundos sobre IA y tecnología. Con rigor, con contexto y sin clickbait.</p>
-
-  <div class="blog-grid">
-
-    <a href="blog-historia-quedaron-atras.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Historia</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">La historia de los que se quedaron atrás — y por qué tú no quieres ser uno de ellos</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Desde la piedra afilada hasta la IA. Cada revolución tecnológica tiene dos tipos de personas: los que se adaptan y los que desaparecen.</div>
-    </a>
-
-    <a href="blog-ia-futuro-opinion.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Opinión</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">La IA y el futuro: mi opinión sincera y sin filtro</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Lo que nadie dice en voz alta sobre la IA. Memorias perfectas, vínculos emocionales y por qué esto no es una distopía.</div>
-    </a>
-
-    <a href="blog-ia-espejo.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Privacidad</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">Si le preguntas a tu IA quién eres, ¿qué diría?</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Le estás entregando información que no darías a nadie. Tus miedos. Tus finanzas. Tus problemas íntimos. ¿Eres consciente de lo que estás construyendo?</div>
-    </a>
-
-    <a href="blog-nueva-desigualdad.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Sociedad</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">La nueva desigualdad que nadie está viendo</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Si la IA hace a todos más inteligentes, ¿quién es realmente el más listo? Ilimitados vs limitados: una nueva brecha que se acumula cada día.</div>
-    </a>
-
-    <a href="blog-coste-ia.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Infraestructura</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">El verdadero coste de la IA — y quién lo está pagando</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Cada vez que le escribes a una IA, en algún lugar del mundo se consume agua. No es una metáfora. Es física.</div>
-    </a>
-
-    <a href="#" class="blog-card" style="border-style: dashed; opacity: 0.5; cursor: default;">
-      <div class="blog-meta">
-        <span class="blog-category">Próximamente</span>
-      </div>
-      <div class="blog-title" style="color: var(--grey);">Más artículos en camino</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Nuevos análisis publicados con cada serie del canal.</div>
-    </a>
-
-  </div>
-</section>
-
-<div class="neon-line"></div>
-
-
-<!-- MODAL EMAIL -->
-<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-tag" id="modal-tag">Recurso gratuito</div>
-    <div class="modal-title" id="modal-title">Descarga tu guía</div>
-    <div class="modal-subtitle">Un paso rápido y el PDF es tuyo. Sin spam. Sin compromisos.</div>
-    <div class="form-group">
-      <input type="text" class="form-input" placeholder="Tu nombre" id="modal-name">
-    </div>
-    <div class="form-group" style="margin-top: 12px;">
-      <input type="email" class="form-input" placeholder="Tu email" id="modal-email">
-    </div>
-    <button class="btn-primary" style="width: 100%; margin-top: 16px; border: none; cursor: pointer;" onclick="submitModal()">
-      Acceder al PDF →
-    </button>
-    <div class="form-note" style="margin-top: 12px;">El PDF se abrirá en una nueva pestaña al instante.</div>
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><span>⚡</span> Respuesta en &lt;3 segundos</div>
+    <div class="trust-item"><span>📅</span> Integración con Google Calendar, TidyCal y Calendly</div>
+    <div class="trust-item"><span>🔒</span> RGPD compliant</div>
+    <div class="trust-item"><span>🇪🇸</span> Diseñado para el mercado español</div>
+    <div class="trust-item"><span>🤝</span> Onboarding en 10 días hábiles</div>
   </div>
 </div>
 
-<script>
-  // MENÚ HAMBURGUESA
-  function toggleMenu() {
-    const nav = document.getElementById('nav-links');
-    const btn = document.getElementById('hamburger');
-    nav.classList.toggle('open');
-    btn.classList.toggle('open');
-    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
-  }
+<!-- EL PROBLEMA -->
+<section class="section-dark">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="tag" style="background:rgba(232,112,90,0.15);color:var(--coral);">El problema real</div>
+      <h2 class="s-title" style="color:#fff;">Tu recepcionista trabaja 8 horas.<br><em>Los pacientes, 24.</em></h2>
+      <p class="s-sub">Cada llamada perdida fuera de horario, cada WhatsApp sin respuesta en 5 minutos, es una cita que se va a la competencia.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <span class="pain-icon">⏱️</span>
+        <h3>Responder tarde es perder el lead para siempre</h3>
+        <p>Una consulta por WhatsApp sin respuesta en menos de 10 minutos tiene un 80% de probabilidad de irse a la competencia. En nuestra propia investigación: mismo canal, misma semana, tres contactos distintos — tiempos de respuesta de 10 minutos, 19 horas y sin respuesta en 4 días.</p>
+        <div class="pain-stat">→ Ninguno de los tres contactos terminó en una cita agendada</div>
+      </div>
+      <div class="pain-card reveal">
+        <span class="pain-icon">⏳</span>
+        <h3>Recepción atrapada en tareas repetitivas</h3>
+        <p>Confirmaciones, recordatorios, preguntas de precio, información de horarios… tu equipo dedica horas al día a tareas que no necesitan criterio humano.</p>
+        <div class="pain-stat">→ 2–3 horas diarias en gestión de bajo valor</div>
+      </div>
+      <div class="pain-card reveal">
+        <span class="pain-icon">🔄</span>
+        <h3>Cada baja, vacaciones o rotación deja un hueco</h3>
+        <p>Cuando tu recepcionista no está — por vacaciones, baja o cambio de trabajo — la atención al paciente sufre. Formar a cada nuevo perfil requiere semanas de adaptación.</p>
+        <div class="pain-stat">→ La rotación media en recepción sanitaria es de 18–24 meses</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function closeMenu() {
-    const nav = document.getElementById('nav-links');
-    const btn = document.getElementById('hamburger');
-    nav.classList.remove('open');
-    btn.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+<!-- QUÉ HACE -->
+<section class="section-white">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="tag">Capacidades del agente</div>
+      <h2 class="s-title">Lo que gestiona el agente.<br><em>Como un equipo de 5 personas, 24/7.</em></h2>
+      <p class="s-sub">No es un chatbot con respuestas predefinidas. Es un agente entrenado con los flujos, servicios y voz específicos de tu clínica — para que tu equipo humano se centre en lo que realmente importa.</p>
+    </div>
+    <div class="features-wrap">
+      <div class="feat-card reveal">
+        <div class="feat-icon">⚡</div>
+        <h3>Responde en segundos, siempre</h3>
+        <p>WhatsApp 24/7. Sin esperas, sin música de hold. Cada mensaje contestado en menos de 3 segundos a cualquier hora del día o de la noche.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">📅</div>
+        <h3>Agenda y confirma citas</h3>
+        <p>Gestiona disponibilidad en tiempo real con Google Calendar o Calendly. Confirma, reprograma y envía recordatorios automáticos 24h antes.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon mint">🎯</div>
+        <h3>Califica leads sin esfuerzo</h3>
+        <p>Recoge nombre, motivo de consulta, urgencia y preferencias antes de pasarte el contacto. Llegas a cada conversación con contexto completo.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon mint">📣</div>
+        <h3>Detecta huecos y reacciona</h3>
+        <p>Cuando hay una cancelación, te alerta para cubrir el hueco y puede contactar a pacientes en lista de espera de forma automática.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">💡</div>
+        <h3>Vende sin presionar</h3>
+        <p>Aplica técnicas de cross-selling y upselling de forma natural en el 100% de las conversaciones. Propone tratamientos complementarios cuando el momento es el adecuado.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🔁</div>
+        <h3>Reactiva pacientes dormidos</h3>
+        <p>Campañas mensuales automáticas a pacientes inactivos. Seguimiento programado 48h después de cada cita. Sin que tengas que recordarlo.</p>
+      </div>
+    </div>
 
-  // FILTRO PROMPTS
-  function filterPrompts(cat, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.prompt-card').forEach(card => {
-      if (cat === 'todos' || card.dataset.cat === cat) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  }
+    <div style="margin-top:48px; padding:28px 32px; background:var(--coral-light); border-radius:var(--r-md); border-left:4px solid var(--coral); max-width:680px; margin-left:auto; margin-right:auto;" class="reveal">
+      <p style="font-size:14px; color:#7a3a2e; line-height:1.7;">
+        <strong style="display:block; margin-bottom:6px; font-size:15px;">¿Qué NO hace el agente?</strong>
+        No toma decisiones clínicas ni da consejos médicos. No gestiona quejas graves ni situaciones emocionalmente complejas. Cuando detecta una situación que necesita criterio humano, transfiere con todo el contexto de la conversación. Ser honesto sobre los límites forma parte de lo que nos diferencia.
+      </p>
+    </div>
+  </div>
+</section>
 
-  // COPIAR PROMPT
-  function copyPrompt(id, btn) {
-    const text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = '✓ Copiado';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = '⧉ Copiar prompt';
-        btn.classList.remove('copied');
-      }, 2000);
-    });
-  }
+<!-- COMPARATIVA -->
+<section class="section-surface">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="tag tag-mint">Análisis de inversión</div>
+      <h2 class="s-title">Tus próximas 10 contrataciones<br>son <em>1 agente IA.</em></h2>
+      <p class="s-sub">No se trata de reemplazar a tu equipo. Se trata de cubrir lo que ninguna persona puede cubrir siempre: los fines de semana, las noches, las bajas y los picos de demanda.</p>
+    </div>
+    <div class="compare-wrap">
+      <div class="compare-card compare-human reveal">
+        <div class="compare-label">Puesto de recepción</div>
+        <div class="compare-title">Inversión en recepcionista</div>
+        <div class="compare-price">2.500<span>€</span></div>
+        <div class="compare-period">al mes · coste total empresa estimado · Barcelona</div>
+        <div class="compare-rows">
+          <div class="compare-row">
+            <span class="compare-row-label">Salario bruto medio</span>
+            <span class="compare-row-val">~1.650–1.800 €/mes</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">S. Social empresa (31,2%)</span>
+            <span class="compare-row-val">~515–560 €/mes</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Pagas extra prorrateadas</span>
+            <span class="compare-row-val">~275–300 €/mes</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Horario cubierto</span>
+            <span class="compare-row-val val-bad">L–V, 9–18h</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Vacaciones / bajas</span>
+            <span class="compare-row-val val-bad">Hueco sin cubrir</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Onboarding al rotar</span>
+            <span class="compare-row-val val-bad">4–8 semanas</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Conversaciones simultáneas</span>
+            <span class="compare-row-val val-bad">1</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Deducción fiscal empresa</span>
+            <span class="compare-row-val val-bad">Parcial</span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:16px;line-height:1.5;">
+          Fuente: Indeed «Recepcionista clínica dental España», abril 2026 (50 salarios) · Glassdoor ofertas activas Barcelona 2025 (21.000–22.500 €/año) · Jobted España 2025 · SS empresa tipo general 31,2% (TGSS 2025). Los salarios varían según convenio, experiencia y tamaño de clínica. Estimaciones orientativas.
+        </p>
+      </div>
 
-  // MODAL
-  let currentPdfUrl = '';
+      <div class="compare-card compare-agent reveal">
+        <div class="compare-label">Agente IA</div>
+        <div class="compare-title" style="color:#fff;">Agente IA CallFlow</div>
+        <div class="compare-price">950<span style="font-size:20px;vertical-align:super;color:var(--coral);">€</span></div>
+        <div class="compare-period">al mes · precio normal · todo incluido</div>
+        <div class="compare-rows">
+          <div class="compare-row">
+            <span class="compare-row-label">Setup (pago único)</span>
+            <span class="compare-row-val" style="color:#fff;">500 €</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Seguridad Social</span>
+            <span class="compare-row-val" style="color:var(--mint);">0 €</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Onboarding / rotación</span>
+            <span class="compare-row-val" style="color:var(--mint);">0 €</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Horario cubierto</span>
+            <span class="compare-row-val" style="color:var(--mint);">24/7 · 365 días</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Vacaciones / bajas</span>
+            <span class="compare-row-val" style="color:var(--mint);">Sin impacto</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Activación tras baja</span>
+            <span class="compare-row-val" style="color:var(--mint);">Inmediata</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Conversaciones simultáneas</span>
+            <span class="compare-row-val" style="color:var(--mint);">Ilimitadas</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-row-label">Deducción fiscal empresa</span>
+            <span class="compare-row-val" style="color:var(--mint);">100% como gasto</span>
+          </div>
+        </div>
+        <div class="compare-saving">
+          <p>Diferencia estimada frente al coste de un puesto de recepción:<br><strong>+18.000 € al año que vuelven a tu clínica.</strong></p>
+        </div>
+        <div class="compare-fiscal">
+          <strong>Ventaja fiscal:</strong> La factura de CallFlow AI es un gasto de empresa 100% deducible. La Seguridad Social de un empleado no lo es de la misma forma. El ahorro real es mayor de lo que parece a primera vista.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function openModal(title, serie, pdfUrl) {
-    document.getElementById('modal-title').textContent = title;
-    document.getElementById('modal-tag').textContent = serie + ' · Recurso gratuito';
-    document.getElementById('modal-name').value = '';
-    document.getElementById('modal-email').value = '';
-    currentPdfUrl = pdfUrl;
-    document.getElementById('modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+<!-- CÓMO FUNCIONA -->
+<section class="section-white">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="tag">El proceso</div>
+      <h2 class="s-title">De la firma al agente activo<br><em>en 10 días hábiles.</em></h2>
+      <p class="s-sub">Un proceso claro y sin sorpresas. Tú nos cuentas cómo funciona tu clínica. Nosotros configuramos, probamos y activamos.</p>
+    </div>
+    <div class="steps-wrap">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Diagnóstico (gratuito)</h3>
+          <p>Reunión de 20 minutos para entender tu flujo actual, tus puntos de dolor y si un agente IA encaja con tu operación. Sin compromiso.</p>
+          <div class="step-timeline">Día 0 · Videollamada</div>
+        </div>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Diseño y entrenamiento</h3>
+          <p>Mapeamos tus servicios, precios, flujos de cita y objeciones frecuentes. Entrenamos al agente con la voz y los procesos específicos de tu clínica.</p>
+          <div class="step-timeline">Días 1–6 · Con tu equipo</div>
+        </div>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Pruebas y ajuste fino</h3>
+          <p>Simulamos decenas de conversaciones reales antes de activar. Ajustamos respuestas, tono y flujos hasta que el agente funciona exactamente como necesitas.</p>
+          <div class="step-timeline">Días 7–9 · QA exhaustivo</div>
+        </div>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>Activación y seguimiento</h3>
+          <p>El agente entra en producción. Primera semana con supervisión activa. Reportes mensuales de métricas: conversaciones, citas agendadas y conversión.</p>
+          <div class="step-timeline">Día 10 · En marcha</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function closeModal() {
-    document.getElementById('modal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+<!-- PRECIOS -->
+<section class="section-surface" id="precios">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="tag">Precios</div>
+      <h2 class="s-title">Transparente.<br><em>Sin letra pequeña.</em></h2>
+      <p class="s-sub">Tres planes según lo que necesitas. Sin permanencia. Sin letra pequeña.</p>
+    </div>
+    <div class="pricing-grid">
 
-  function closeModalOutside(e) {
-    if (e.target === document.getElementById('modal')) closeModal();
-  }
+      <!-- PLAN 1 -->
+      <div class="price-card reveal">
+        <div class="price-card-name">Respuesta Inteligente</div>
+        <div class="price-amount"><span>€</span>950</div>
+        <div class="price-period">al mes · todo incluido</div>
+        <div class="price-setup">Setup: 500 € · pago único</div>
+        <ul class="price-features">
+          <li>Agente IA en WhatsApp Business 24/7</li>
+          <li>Respuesta en menos de 60 segundos siempre</li>
+          <li>Calificación automática de leads</li>
+          <li>Cierre por alternativas en cada conversación</li>
+          <li>Panel de control y tickets de feedback</li>
+          <li>Prompt personalizado para tu clínica</li>
+        </ul>
+        <a href="#cta-final" class="price-cta price-cta-outline">Solicitar demo gratuita</a>
+      </div>
 
-  function submitModal() {
-    const email = document.getElementById('modal-email').value;
-    const name = document.getElementById('modal-name').value;
-    const recurso = document.getElementById('modal-title').textContent;
-    if (!email || !name) {
-      alert('Por favor, rellena tu nombre y email.');
-      return;
-    }
-    const btn = event.target;
-    btn.textContent = '✓ Abriendo PDF...';
-    btn.style.opacity = '0.7';
+      <!-- PLAN 2 destacado -->
+      <div class="price-card featured reveal">
+        <div class="price-badge">Recomendado</div>
+        <div class="price-card-name" style="color:rgba(255,255,255,0.45);">Gestión Activa</div>
+        <div class="price-amount" style="color:#fff;"><span style="color:var(--coral);">€</span>1.150</div>
+        <div class="price-period" style="color:rgba(255,255,255,0.45);">al mes · todo incluido</div>
+        <div class="price-setup" style="color:rgba(255,255,255,0.35);border-color:rgba(255,255,255,0.1);">Setup: 500 € · pago único</div>
+        <ul class="price-features">
+          <li>Todo lo del plan Respuesta Inteligente</li>
+          <li>Recordatorio automático 24h antes de cada cita</li>
+          <li>Seguimiento automático 48h post-visita</li>
+          <li>Integración con TidyCal / Google Calendar</li>
+          <li>Reporte mensual de conversiones</li>
+          <li>Ajustes de prompt ilimitados incluidos</li>
+        </ul>
+        <a href="#cta-final" class="price-cta price-cta-fill">Solicitar demo gratuita →</a>
+      </div>
 
-    // Guardar email en Google Sheets
-    fetch('https://script.google.com/macros/s/AKfycbwzsnUiyIBJIgCk4YaHRbsuF4wlYJvw9fcAJRl-7OQU-wBXzRtomnyxNlBD8u69u4oH/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre: name, email: email, recurso: recurso })
-    });
+      <!-- PLAN 3 -->
+      <div class="price-card reveal">
+        <div class="price-card-name">Crecimiento Automático</div>
+        <div class="price-amount"><span>€</span>1.350</div>
+        <div class="price-period">al mes · todo incluido</div>
+        <div class="price-setup">Setup: 500 € · pago único</div>
+        <ul class="price-features">
+          <li>Todo lo del plan Gestión Activa</li>
+          <li>Reactivación automática de leads que no reservaron</li>
+          <li>Encuesta de satisfacción post-visita</li>
+          <li>Solicitud de reseña Google en el momento óptimo</li>
+          <li>Seguimiento de presupuestos pendientes</li>
+          <li>Dashboard de métricas en tiempo real</li>
+        </ul>
+        <a href="#cta-final" class="price-cta price-cta-outline">Solicitar demo gratuita</a>
+      </div>
 
-    // Abrir PDF en nueva pestaña
-    window.open(currentPdfUrl, '_blank');
-    setTimeout(closeModal, 1000);
-  }
-</script>
+    </div>
+    <p style="text-align:center;font-size:13px;color:var(--text-muted);margin-top:32px;" class="reveal">
+      Todos los precios excluyen IVA. Factura de empresa 100% deducible como gasto.
+    </p>
+  </div>
+</section>
+
+<!-- QUIÉNES SOMOS -->
+<section class="section-white">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="tag">El equipo</div>
+      <h2 class="s-title">Experiencia real.<br><em>Sin exagerar.</em></h2>
+      <p class="s-sub">Somos un equipo pequeño de dos personas con experiencia directa en los dos problemas que resolvemos: atención al cliente de alto volumen y crecimiento comercial.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-initial">C</div>
+        <h3>Carlos</h3>
+        <div class="team-role">Operaciones & IA</div>
+        <p>Más de 10 años gestionando call centers de alto volumen en LATAM, USA y EMEA. Sabe exactamente qué pregunta hace un paciente a las 11 de la noche y cómo debe responderle un agente para que no se vaya a la competencia.</p>
+        <div class="team-tags">
+          <span class="team-tag">Call centers LATAM/EMEA</span>
+          <span class="team-tag">Flujos de atención</span>
+          <span class="team-tag">KPIs & conversión</span>
+          <span class="team-tag">Diseño de agentes IA</span>
+        </div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-initial">K</div>
+        <h3>Kate</h3>
+        <div class="team-role">Marketing & Estrategia</div>
+        <p>Fractional CMO con experiencia en growth marketing, posicionamiento y escalado de proyectos. Aporta la estrategia de adquisición de clientes, el mensaje que conecta con el dueño de clínica y la capacidad de escalar lo que funciona.</p>
+        <div class="team-tags">
+          <span class="team-tag">Growth marketing</span>
+          <span class="team-tag">Posicionamiento</span>
+          <span class="team-tag">Escalado de proyectos</span>
+          <span class="team-tag">Estrategia comercial</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:40px;padding:24px 28px;background:var(--surface);border-radius:var(--r-md);border:1px solid var(--border);max-width:640px;margin-left:auto;margin-right:auto;text-align:center;" class="reveal">
+      <p style="font-size:14.5px;color:var(--text-muted);line-height:1.7;">
+        <strong style="color:var(--text);">Una aclaración honesta:</strong> Este es nuestro primer piloto real con agentes IA para clínicas. No tenemos cien clientes ni casos de éxito publicados. Lo que sí tenemos es experiencia profunda en los problemas que resolvemos — y la honestidad de decirte exactamente dónde estamos.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="container">
+    <h2>¿Tu clínica<br>merece un agente <em>así?</em></h2>
+    <p>Solicita una demo gratuita de 20 minutos. Te mostramos el agente en acción con ejemplos del sector salud. Sin compromiso.</p>
+    <div class="cta-form">
+      <input type="text" placeholder="Tu nombre" id="f-name">
+      <input type="text" placeholder="Nombre de tu clínica" id="f-clinic">
+      <input type="tel" placeholder="WhatsApp o teléfono" id="f-phone">
+      <select id="f-type">
+        <option value="" disabled selected>Tipo de clínica</option>
+        <option>Clínica dental</option>
+        <option>Medicina estética</option>
+        <option>Fisioterapia / rehabilitación</option>
+        <option>Clínica médica general</option>
+        <option>Centro de nutrición / bienestar</option>
+        <option>Otro</option>
+      </select>
+      <button class="cta-submit" onclick="handleSubmit()">
+        Solicitar demo gratuita de 20 min →
+      </button>
+      <p class="cta-disclaimer">Sin spam. Solo te contactamos para confirmar la cita.</p>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <div>
-    <div class="footer-logo">Tecnología Explicada Simple</div>
-    <div class="footer-tagline">Tecnología explicada de forma clara y profunda. Para curiosos que no quieren quedarse atrás.</div>
-  </div>
-  <ul class="footer-links">
-    <li><a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank">YouTube</a></li>
-    <li><a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank">Instagram</a></li>
-    <li><a href="https://www.tiktok.com/@techexplicadasimple" target="_blank">TikTok</a></li>
-    <li><a href="#guias">Guías</a></li>
-    <li><a href="#prompts">Agentes Brutales</a></li>
-    <li><a href="#recursos">Recursos</a></li>
-    <li><a href="#blog">Blog</a></li>
-  </ul>
-  <div class="footer-copy">© 2026 Tecnología Explicada Simple · El Equipo TES</div>
+  <p><strong>CallFlow AI</strong> — Agentes de inteligencia artificial para clínicas y consultorios</p>
+  <p style="margin-top:6px;">Barcelona, España · <a href="mailto:hola@callflow.ai">hola@callflow.ai</a></p>
+  <p style="margin-top:12px;font-size:12px;">© 2026 CallFlow AI · <a href="legal.html" style="color:rgba(255,255,255,0.45);">Aviso legal y T&C</a> · <a href="legal.html#privacidad" style="color:rgba(255,255,255,0.45);">Política de privacidad</a> · <a href="legal.html#rgpd" style="color:rgba(255,255,255,0.45);">RGPD</a></p>
 </footer>
 
+<script>
+// ─── CHAT ANIMATION ───
+const messages = [
+  { type: 'user', text: '¡Hola! ¿Hacéis limpiezas dentales? ¿Cuánto cuesta?', delay: 800 },
+  { type: 'typing', delay: 1600 },
+  { type: 'bot', text: '¡Hola! 👋 Sí, hacemos limpiezas. La tarifa es de 65€ e incluye revisión completa y radiografía básica si es tu primera visita.', delay: 2200 },
+  { type: 'user', text: '¿Tenéis hueco esta semana?', delay: 4000 },
+  { type: 'typing', delay: 4800 },
+  { type: 'bot', text: 'Déjame ver disponibilidad... Tenemos el jueves 19 a las 17:30h o el viernes 20 a las 10:00h. ¿Cuál te viene mejor?', delay: 5400 },
+  { type: 'user', text: 'El viernes a las 10, perfecto', delay: 7200 },
+  { type: 'typing', delay: 7900 },
+  { type: 'bot', text: '✅ ¡Listo! Cita reservada para el viernes 20 a las 10:00h. Te enviaré un recordatorio el jueves por la tarde. ¿Cuál es tu nombre completo?', delay: 8400 },
+];
+
+let msgIndex = 0;
+const chatBody = document.getElementById('chatBody');
+
+function getTime() {
+  const now = new Date();
+  return now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+}
+
+function appendMsg(type, text) {
+  if (type === 'typing') {
+    const el = document.createElement('div');
+    el.className = 'typing-indicator';
+    el.id = 'typing';
+    el.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    chatBody.appendChild(el);
+    requestAnimationFrame(() => { el.classList.add('visible'); });
+    return;
+  }
+  const existing = document.getElementById('typing');
+  if (existing) existing.remove();
+
+  const div = document.createElement('div');
+  div.className = `msg msg-${type}`;
+  div.innerHTML = `${text}<div class="msg-time">${getTime()} ${type === 'bot' ? '✓✓' : ''}</div>`;
+  chatBody.appendChild(div);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => { div.classList.add('visible'); });
+  });
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function runChat() {
+  if (msgIndex >= messages.length) {
+    setTimeout(() => {
+      chatBody.innerHTML = '';
+      msgIndex = 0;
+      runChat();
+    }, 5000);
+    return;
+  }
+  const m = messages[msgIndex];
+  setTimeout(() => {
+    appendMsg(m.type, m.text);
+    msgIndex++;
+    runChat();
+  }, msgIndex === 0 ? m.delay : (m.delay - messages[msgIndex - 1].delay));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(runChat, 600);
+});
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ─── FORM SUBMIT ───
+function handleSubmit() {
+  const name = document.getElementById('f-name').value.trim();
+  const clinic = document.getElementById('f-clinic').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+
+  if (!name || !clinic || !phone) {
+    alert('Por favor rellena tu nombre, clínica y teléfono.');
+    return;
+  }
+
+  const btn = document.querySelector('.cta-submit');
+  btn.textContent = '✓ ¡Recibido! Te contactamos en menos de 24h.';
+  btn.style.background = '#27ae60';
+  btn.disabled = true;
+}
+</script>
 </body>
 </html>
