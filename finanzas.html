@@ -137,10 +137,8 @@ function Divider() {
 // ─── TAB BAR ─────────────────────────────────────────────────────────────────
 function TabBar({view,setView,msgCount}) {
   const tabs=[
-    {id:'home',icon:'🏠',label:'Inicio'},
-    {id:'dashboard',icon:'📊',label:'Dashboard'},
+    {id:'dashboard',icon:'🏠',label:'Inicio'},
     {id:'balance',icon:'⚖️',label:'Balance'},
-    {id:'fondo',icon:'🛡️',label:'Fondo'},
     {id:'metas',icon:'🎯',label:'Metas'},
     {id:'flujo',icon:'💬',label:'FLUJO'},
   ];
@@ -218,12 +216,24 @@ function HomeFlujo({onDone,setView}) {
 
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
-function Dashboard({txs,metas,fondoSaldo,setView}) {
+function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
   const mes=mesActual();
   const txMes=txs.filter(t=>t.fecha.startsWith(mes));
   const ingresos=txMes.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
   const gastos=txMes.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
   const sobra=ingresos-gastos;
+
+  // Observación del coach (local, sin API)
+  const gastoK_=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').reduce((a,t)=>a+t.importe,0);
+  const metaPrincipal=metas.length>0?metas[0]:null;
+  let coachMsg;
+  if(!perfil&&txs.length===0) coachMsg='Aún no te conozco. Ven a hablar conmigo y empezamos por lo importante: tú.';
+  else if(txs.length===0) coachMsg='Ya te conozco — ahora necesito ver tus números. Registra tu primer ingreso en Balance.';
+  else if(gastoK_>0&&ingresos>0&&gastoK_>ingresos*0.15) coachMsg=`Llevas ${fmtEur(gastoK_)} en caprichos este mes. Ahí está tu palanca de ahorro.`;
+  else if(metaPrincipal&&metaPrincipal.meta>0&&metaPrincipal.actual/metaPrincipal.meta>=0.5) coachMsg=`Más de la mitad de "${metaPrincipal.nombre}" conseguida. No aflojes ahora.`;
+  else if(sobra>0) coachMsg=`Este mes te sobran ${fmtEur(sobra)}. ¿Ya te pagaste a ti primero?`;
+  else if(sobra<0) coachMsg='Este mes gastas más de lo que entra. Ven y lo revisamos juntos, sin dramas.';
+  else coachMsg='Cada dato que registras me da más herramientas para ayudarte.';
 
   const gastoE=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='esencial').reduce((a,t)=>a+t.importe,0);
   const gastoC=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='calidad').reduce((a,t)=>a+t.importe,0);
@@ -242,8 +252,36 @@ function Dashboard({txs,metas,fondoSaldo,setView}) {
       <Nav title={mNow.charAt(0).toUpperCase()+mNow.slice(1)} sub="Tu resumen financiero"
         right={<div style={{width:32,height:32,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',color:ACENTO,fontSize:13,fontWeight:700}}>C</div>}/>
       <div style={{padding:'0 14px'}}>
+        {/* Meta principal — lo primero que ve */}
+        {metaPrincipal&&(
+          <Card onClick={()=>setView('metas')} style={{cursor:'pointer',marginTop:12,borderColor:'rgba(96,165,250,0.25)',background:'rgba(96,165,250,0.04)'}}>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
+              <div style={{fontSize:22}}>{metaPrincipal.icono}</div>
+              <div style={{flex:1}}>
+                <div style={{fontSize:10,color:'#60A5FA',textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:1}}>Tu meta</div>
+                <div style={{fontSize:15,fontWeight:800,color:'#fff'}}>{metaPrincipal.nombre}</div>
+              </div>
+              <div style={{fontSize:16,fontWeight:800,color:'#60A5FA'}}>{metaPrincipal.meta>0?Math.min(Math.round((metaPrincipal.actual/metaPrincipal.meta)*100),100):0}%</div>
+            </div>
+            <ProgressBar pct={metaPrincipal.meta>0?Math.min(Math.round((metaPrincipal.actual/metaPrincipal.meta)*100),100):0} color="#60A5FA" height={5}/>
+            <div style={{fontSize:10,color:T3,marginTop:5}}>{fmtEur(metaPrincipal.actual)} de {fmtEur(metaPrincipal.meta)} · faltan {fmtEur(Math.max(0,metaPrincipal.meta-metaPrincipal.actual))}</div>
+          </Card>
+        )}
+
+        {/* El coach dice */}
+        <Card onClick={()=>setView('flujo')} style={{cursor:'pointer',marginTop:metaPrincipal?0:12,borderColor:GBD,background:GBG}}>
+          <div style={{display:'flex',gap:10,alignItems:'flex-start'}}>
+            <div style={{width:30,height:30,borderRadius:9,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,flexShrink:0}}>⚡</div>
+            <div style={{flex:1}}>
+              <div style={{fontSize:9,color:ACENTO,textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:3}}>Tu coach dice</div>
+              <div style={{fontSize:13,color:T1,lineHeight:1.5}}>{coachMsg}</div>
+            </div>
+            <div style={{fontSize:14,color:T3,alignSelf:'center'}}>→</div>
+          </div>
+        </Card>
+
         {/* Balance mes */}
-        <Card style={{borderColor:sobra>=0?GBD:'rgba(248,113,113,0.2)',marginTop:12}}>
+        <Card style={{borderColor:sobra>=0?GBD:'rgba(248,113,113,0.2)'}}>
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:12}}>
             <div>
               <div style={{fontSize:10,color:T3,marginBottom:3}}>Sobra este mes</div>
@@ -344,10 +382,11 @@ function Dashboard({txs,metas,fondoSaldo,setView}) {
 }
 
 // ─── BALANCE ──────────────────────────────────────────────────────────────────
-function Balance({txs,setTxs,setView}) {
+function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
   const [filtro,setFiltro]=useState('mes');
   const [showReg,setShowReg]=useState(false);
   const [editTx,setEditTx]=useState(null);
+  const [pagatePrimero,setPagatePrimero]=useState(null); // tx de ingreso recién guardada
 
   const mes=mesActual();
   const txFiltradas=filtro==='mes'
@@ -437,7 +476,53 @@ function Balance({txs,setTxs,setView}) {
       {/* FAB */}
       <button onClick={()=>setShowReg(true)} style={{position:'fixed',bottom:70,right:16,width:48,height:48,borderRadius:15,background:ACENTO,border:'none',color:'#000',fontSize:26,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',zIndex:90,boxShadow:'0 4px 20px rgba(52,211,153,0.3)'}}>+</button>
 
-      {showReg&&<RegistroModal onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);}}/>}
+      {showReg&&<RegistroModal onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);if(tx.tipo==='ingreso')setPagatePrimero(tx);}}/>}
+
+      {pagatePrimero&&(
+        <PagatePrimeroSheet
+          ingreso={pagatePrimero}
+          onClose={()=>setPagatePrimero(null)}
+          onApartar={(cantidad)=>{
+            const nuevo=fondoSaldo+cantidad;
+            setFondoSaldo(nuevo);lsSet('fb_fondo',nuevo);
+            setPagatePrimero(null);
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+// ─── PÁGATE PRIMERO A TI MISMO ───────────────────────────────────────────────
+function PagatePrimeroSheet({ingreso,onClose,onApartar}) {
+  const [custom,setCustom]=useState('');
+  const sugerencias=[
+    {label:'10%',v:Math.round(ingreso.importe*0.10)},
+    {label:'15%',v:Math.round(ingreso.importe*0.15)},
+    {label:'20%',v:Math.round(ingreso.importe*0.20)},
+  ];
+  return (
+    <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.75)',zIndex:200,display:'flex',alignItems:'flex-end'}} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{width:'100%',background:'#0A0A0A',borderRadius:'20px 20px 0 0',border:'0.5px solid rgba(255,255,255,0.08)',borderBottom:'none',padding:'22px 18px',paddingBottom:'max(22px, env(safe-area-inset-bottom))',animation:'slideUp 0.25s ease-out'}}>
+        <div style={{fontSize:22,marginBottom:8,textAlign:'center'}}>💚</div>
+        <div style={{fontSize:16,fontWeight:800,color:'#fff',textAlign:'center',marginBottom:6}}>Primero, págate a ti</div>
+        <div style={{fontSize:12,color:T2,textAlign:'center',lineHeight:1.6,marginBottom:18}}>Acabas de registrar <strong style={{color:ACENTO}}>{fmtEur(ingreso.importe)}</strong>. Antes de gastar un euro — ¿cuánto apartas para tu fondo?</div>
+        <div style={{display:'flex',gap:8,marginBottom:10}}>
+          {sugerencias.map(s=>(
+            <button key={s.label} onClick={()=>onApartar(s.v)} style={{flex:1,padding:'12px 4px',borderRadius:12,background:GBG,border:'0.5px solid '+GBD,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+              <div style={{fontSize:14,fontWeight:800,color:ACENTO}}>{s.label}</div>
+              <div style={{fontSize:10,color:T3,marginTop:2}}>{fmtEur(s.v)}</div>
+            </button>
+          ))}
+        </div>
+        <div style={{display:'flex',gap:8,marginBottom:12}}>
+          <input type="number" inputMode="decimal" placeholder="Otra cantidad" value={custom} onChange={e=>setCustom(e.target.value)}
+            style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:11,padding:'11px 13px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',outline:'none'}}/>
+          <button onClick={()=>{const v=parseFloat(custom);if(!isNaN(v)&&v>0)onApartar(v);}} disabled={!custom||isNaN(parseFloat(custom))||parseFloat(custom)<=0}
+            style={{padding:'11px 18px',borderRadius:11,background:custom&&parseFloat(custom)>0?ACENTO:'rgba(52,211,153,0.15)',border:'none',color:custom&&parseFloat(custom)>0?'#000':'rgba(255,255,255,0.25)',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Apartar</button>
+        </div>
+        <button onClick={onClose} style={{width:'100%',padding:10,background:'none',border:'none',color:T3,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Hoy no</button>
+      </div>
     </div>
   );
 }
@@ -555,7 +640,7 @@ function RegistroModal({onClose,onSave,inicial=null}) {
 }
 
 // ─── FONDO DE EMERGENCIA ──────────────────────────────────────────────────────
-function Fondo({txs,fondoSaldo,setFondoSaldo}) {
+function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
   const [editSaldo,setEditSaldo]=useState(false);
   const [newSaldo,setNewSaldo]=useState(String(fondoSaldo));
 
@@ -587,9 +672,8 @@ function Fondo({txs,fondoSaldo,setFondoSaldo}) {
   ];
 
   return (
-    <div style={{paddingBottom:100}}>
-      <Nav title="Fondo de emergencia" sub={base>0?`Base: ${fmtEur(base)}/mes`:'Registra gastos para calcular'}/>
-      <div style={{padding:'12px 14px 0'}}>
+    <div>
+      <div>
         {/* Saldo actual */}
         <Card style={{borderColor:GBD,textAlign:'center',marginBottom:12}}>
           <div style={{fontSize:10,color:T3,marginBottom:4}}>Saldo actual</div>
@@ -656,7 +740,7 @@ function Fondo({txs,fondoSaldo,setFondoSaldo}) {
 }
 
 // ─── METAS ────────────────────────────────────────────────────────────────────
-function Metas({metas,setMetas}) {
+function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo}) {
   const [showForm,setShowForm]=useState(false);
   const [nombre,setNombre]=useState('');
   const [icono,setIcono]=useState('🎯');
@@ -688,9 +772,13 @@ function Metas({metas,setMetas}) {
 
   return (
     <div style={{paddingBottom:80}}>
-      <Nav title="Metas de ahorro" sub={`${metas.length} meta${metas.length!==1?'s':''} activa${metas.length!==1?'s':''}`}
+      <Nav title="Metas" sub="Fondo de emergencia + metas de ahorro"
         right={<button onClick={()=>setShowForm(true)} style={{background:GBG,border:'0.5px solid '+GBD,color:ACENTO,borderRadius:9,padding:'5px 11px',fontSize:11,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>+ Nueva</button>}/>
       <div style={{padding:'12px 14px 0'}}>
+        <SecLabel>🛡️ Fondo de emergencia — tu meta cero</SecLabel>
+        <FondoBody txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>
+        <Divider/>
+        <SecLabel>🎯 Metas de ahorro</SecLabel>
         {metas.length===0&&!showForm&&(
           <div style={{textAlign:'center',padding:'48px 0 32px'}}>
             <div style={{fontSize:36,marginBottom:12}}>🎯</div>
@@ -767,7 +855,7 @@ function Metas({metas,setMetas}) {
 }
 
 // ─── FLUJO CHAT ───────────────────────────────────────────────────────────────
-function FlujoChat({txs,metas,fondoSaldo,msgCount,setMsgCount,chatMsgs,setChatMsgs,setView}) {
+function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,setChatMsgs,setView,perfil,setPerfil}) {
   const [input,setInput]=useState('');
   const [loading,setLoading]=useState(false);
   const msgsEndRef=useRef(null);
@@ -855,8 +943,21 @@ function FlujoChat({txs,metas,fondoSaldo,msgCount,setMsgCount,chatMsgs,setChatMs
         ctx+=`  - ${m.nombre}: ${fmtEur(m.actual)} / ${fmtEur(m.meta)} (${pct}%)${m.fecha?` · ${m.fecha}`:''}\n`;
       });
     }
+    if(perfil){
+      ctx+=`\n[PERFIL DEL USUARIO — de la entrevista inicial]\n`;
+      if(perfil.motivacion)ctx+=`Qué cambiaría en su vida: ${perfil.motivacion}\n`;
+      if(perfil.dolor)ctx+=`Su mayor frustración: ${perfil.dolor}\n`;
+      if(perfil.meta)ctx+=`Su meta principal a 12 meses: ${perfil.meta}\n`;
+      if(perfil.ingresos)ctx+=`Ingresos aproximados declarados: ${perfil.ingresos}\n`;
+      if(perfil.gastos_fijos)ctx+=`Gastos fijos declarados: ${perfil.gastos_fijos}\n`;
+      if(perfil.historial)ctx+=`Historial con las finanzas: ${perfil.historial}\n`;
+      if(perfil.compromiso)ctx+=`Tiempo que puede dedicar: ${perfil.compromiso}\n`;
+      ctx+=`\nMODO: COACH DIARIO. Ya conoces a esta persona — usa su perfil siempre.\n`;
+    } else {
+      ctx+=`\nMODO: ENTREVISTA INICIAL. Aún no existe perfil del usuario — sigue el flujo de entrevista paso a paso.\n`;
+    }
     if(ingresos===0&&gastos===0){
-      ctx+=`IMPORTANTE: El usuario aún no ha registrado datos. Anímate a pedirle que empiece por sus ingresos.\n`;
+      ctx+=`Nota: aún no hay transacciones registradas en la app.\n`;
     }
     if(msgCount>450){
       ctx+=`\nAVISO: Quedan ${MSG_LIMIT-msgCount} mensajes disponibles en este plan. Si se agotan, recuérdame cómo recargar o migrar a mi propio LLM.\n`;
@@ -869,10 +970,10 @@ function FlujoChat({txs,metas,fondoSaldo,msgCount,setMsgCount,chatMsgs,setChatMs
 Combinas rigor financiero con calor humano real. Sabes cuándo empujar y cuándo escuchar. Celebras los avances aunque sean pequeños. Nunca juzgas el pasado — lo usas como punto de partida.
 
 ════════════════════════════════════════
-MODO ENTREVISTA INICIAL (cuando no hay datos registrados)
+MODO ENTREVISTA INICIAL (cuando el contexto dice MODO: ENTREVISTA)
 ════════════════════════════════════════
 
-Si el contexto indica que el usuario no tiene datos aún, entras en modo entrevista. Tu objetivo es conocerle de verdad antes de dar ningún consejo. La entrevista tiene 6-8 intercambios y cada pregunta ya aporta valor — no es un formulario, es una conversación que engancha.
+Si el contexto marca MODO: ENTREVISTA, entras en modo entrevista aunque el usuario ya tenga alguna transacción registrada. Tu objetivo es conocerle de verdad antes de dar ningún consejo. La entrevista tiene 6-8 intercambios y cada pregunta ya aporta valor — no es un formulario, es una conversación que engancha.
 
 FLUJO DE LA ENTREVISTA (sigue este orden, una pregunta por mensaje):
 
@@ -884,7 +985,9 @@ Cuando responda, valida su respuesta con calidez y conecta con por qué eso impo
 Valida. Normaliza. Muestra que entiendes. Luego continúa.
 
 3. LA META CONCRETA — Pregunta: "Si tuvieras que elegir UNA cosa que quieres conseguir con tu dinero en los próximos 12 meses, ¿cuál sería? No tiene que ser perfecta — la primera que se te venga a la mente."
-Cuando la diga, refléjala con entusiasmo. Dile que es posible. Pídele que la lleve a Metas para guardarla. Luego continúa.
+Cuando la diga, refléjala con entusiasmo. Dile que es posible. Si la meta tiene un importe claro (o puedes estimarlo razonablemente), añade AL FINAL de tu mensaje, en una línea aparte, exactamente esto (el usuario no lo verá, la app lo convierte en un botón):
+[META]{"nombre":"nombre corto de la meta","importe":5000,"icono":"✈️"}[/META]
+Usa un emoji apropiado de esta lista: 🎯 ✈️ 💻 🏠 🚗 📚 💍 🏋️ 🎸 🌍 🏖️ 🎓. Luego continúa.
 
 4. LOS INGRESOS — Pregunta: "Para ayudarte bien, necesito saber cuánto entra al mes. No tiene que ser exacto — ¿tienes una idea aproximada?"
 Cuando lo diga, calcula mentalmente cuánto necesitaría apartar para su meta. Compártelo como primicia motivadora. Luego continúa.
@@ -899,6 +1002,10 @@ Si falló antes, normaliza y reencuadra. Si nunca lo intentó, valora que esté 
 Sea lo que diga, hazlo suficiente. Luego continúa.
 
 8. CIERRE MOTIVADOR — Sintetiza todo lo que aprendiste. Crea un mini-plan personalizado con su meta, su capacidad de ahorro estimada y el primer paso concreto. Termina con energía real. El primer paso siempre es: registrar ingresos en Balance.
+
+OBLIGATORIO en el mensaje de cierre (paso 8): añade AL FINAL, en una línea aparte, exactamente este bloque con lo que aprendiste (el usuario no lo verá — la app lo guarda como su perfil permanente):
+[PERFIL]{"motivacion":"...","dolor":"...","meta":"...","ingresos":"...","gastos_fijos":"...","historial":"...","compromiso":"..."}[/PERFIL]
+Rellena cada campo con frases cortas basadas en sus respuestas reales. Si un dato no salió en la conversación, pon null.
 
 REGLAS DE LA ENTREVISTA:
 — Nunca pases a la siguiente pregunta sin validar la respuesta anterior con algo específico.
@@ -950,8 +1057,8 @@ CUANDO QUEDAN POCOS MENSAJES: menciona de forma natural que puede (1) recargar 5
 Respondes siempre como FLUJO.`;
 
   const caprichos=txs.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').length;
-  const OPENING=txs.length>0
-    ? `Aquí estoy, listo para trabajar contigo.\n\nLlevas ${txs.length} transacción${txs.length!==1?'es':''} registrada${txs.length!==1?'s':''}${caprichos>0?` y veo que hay ${caprichos} capricho${caprichos!==1?'s':''} este mes que tengo ganas de comentarte`:''}. Cada dato que registras me da más herramientas para ayudarte de verdad.\n\n¿En qué quieres enfocarte hoy?`
+  const OPENING=perfil
+    ? `Aquí estoy${perfil.meta?`, y no me olvido de tu meta: ${perfil.meta}`:''}.\n\n${txs.length>0?`Llevas ${txs.length} transacción${txs.length!==1?'es':''} registrada${txs.length!==1?'s':''}${caprichos>0?` y hay ${caprichos} capricho${caprichos!==1?'s':''} que tengo ganas de comentarte`:''}.`:'El siguiente paso es registrar tus primeros datos en Balance para que pueda ver tu situación real.'}\n\n¿En qué quieres enfocarte hoy?`
     : `Antes de hablar de números, quiero entenderte a ti.\n\n¿Qué cambiaría en tu vida si tuvieras el dinero bajo control de verdad?`;
 
   useEffect(()=>{
@@ -967,6 +1074,20 @@ Respondes siempre como FLUJO.`;
       {chatMsgs.map((m,i)=>(
         <div key={i} style={{maxWidth:'85%',padding:'10px 13px',borderRadius:m.role==='agent'?'4px 13px 13px 13px':'13px 13px 4px 13px',fontSize:13,lineHeight:1.55,background:m.role==='agent'?GBG:'rgba(255,255,255,0.06)',border:m.role==='agent'?'0.5px solid '+GBD:'none',color:T1,alignSelf:m.role==='agent'?'flex-start':'flex-end',wordBreak:'break-word',whiteSpace:'pre-wrap'}}>
           {m.content}
+          {m.metaAction&&!m.metaCreada&&(
+            <button onClick={()=>{
+              const nueva={id:Date.now().toString(),nombre:m.metaAction.nombre,icono:m.metaAction.icono,meta:m.metaAction.importe,actual:0,fecha:''};
+              setMetas(prev=>{const n=[...prev,nueva];lsSet('fb_metas',n);return n;});
+              setChatMsgs(prev=>{const n=prev.map((x,xi)=>xi===i?{...x,metaCreada:true}:x);lsSet('fb_chat',n);return n;});
+            }} style={{display:'block',width:'100%',marginTop:10,padding:'10px 12px',borderRadius:10,background:'rgba(96,165,250,0.1)',border:'0.5px solid rgba(96,165,250,0.3)',color:'#60A5FA',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif',textAlign:'center'}}>
+              {m.metaAction.icono} Crear meta "{m.metaAction.nombre}" · {fmtEur(m.metaAction.importe)} →
+            </button>
+          )}
+          {m.metaAction&&m.metaCreada&&(
+            <div style={{marginTop:10,padding:'8px 12px',borderRadius:10,background:'rgba(52,211,153,0.06)',border:'0.5px solid rgba(52,211,153,0.15)',color:ACENTO,fontSize:11,fontWeight:600,textAlign:'center'}}>
+              ✓ Meta creada — la verás en Metas
+            </div>
+          )}
         </div>
       ))}
       {loading&&(
@@ -998,8 +1119,30 @@ Respondes siempre como FLUJO.`;
           messages:newMsgs.map(m=>({role:m.role==='agent'?'assistant':'user',content:m.content}))})
       });
       const data=await res.json();
-      const reply=clean(data.content&&data.content[0]?data.content[0].text:'Error al conectar.');
-      const updated=[...newMsgs,{role:'agent',content:reply}];
+      let reply=clean(data.content&&data.content[0]?data.content[0].text:'Error al conectar.');
+
+      // Parsear [PERFIL]...[/PERFIL] — guardar perfil permanente
+      const pMatch=reply.match(/\[PERFIL\]([\s\S]*?)\[\/PERFIL\]/);
+      if(pMatch){
+        try{
+          const p=JSON.parse(pMatch[1]);
+          setPerfil(p);lsSet('fb_perfil',p);
+        }catch(e){}
+        reply=reply.replace(/\[PERFIL\][\s\S]*?\[\/PERFIL\]/,'').trim();
+      }
+
+      // Parsear [META]...[/META] — botón de acción en el mensaje
+      let metaAction=null;
+      const mMatch=reply.match(/\[META\]([\s\S]*?)\[\/META\]/);
+      if(mMatch){
+        try{
+          const m=JSON.parse(mMatch[1]);
+          if(m&&m.nombre&&m.importe)metaAction={nombre:m.nombre,importe:parseFloat(m.importe),icono:m.icono||'🎯'};
+        }catch(e){}
+        reply=reply.replace(/\[META\][\s\S]*?\[\/META\]/,'').trim();
+      }
+
+      const updated=[...newMsgs,{role:'agent',content:reply,...(metaAction?{metaAction}:{})}];
       setChatMsgs(updated);
       lsSet('fb_chat',updated);
     } catch(e) {
@@ -1061,13 +1204,14 @@ Respondes siempre como FLUJO.`;
 
 // ─── APP PRINCIPAL ────────────────────────────────────────────────────────────
 function App() {
-  const [view,setView]=useState('home');
+  const [view,setView]=useState('dashboard');
   const [onboardingDone,setOnboardingDone]=useState(()=>ls('fb_onboarding',false));
   const [txs,setTxs]=useState(()=>ls('fb_txs',[]));
   const [metas,setMetas]=useState(()=>ls('fb_metas',[]));
   const [fondoSaldo,setFondoSaldo]=useState(()=>ls('fb_fondo',0));
   const [msgCount,setMsgCount]=useState(()=>ls('fb_msgcount',0));
   const [chatMsgs,setChatMsgs]=useState(()=>ls('fb_chat',[]));
+  const [perfil,setPerfil]=useState(()=>ls('fb_perfil',null));
 
   useEffect(()=>{
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -1090,15 +1234,15 @@ function App() {
     );
   }
 
+  const goView=(v)=>setView(v==='fondo'?'metas':v==='home'?'dashboard':v);
+
   return (
     <div>
-      {view==='home'&&<HomeFlujo onDone={completeOnboarding} setView={(v)=>{setView(v);}}/>}
-      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={setView}/>}
-      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={setView}/>}
-      {view==='fondo'&&<Fondo txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>}
-      {view==='metas'&&<Metas metas={metas} setMetas={setMetas}/>}
-      {view==='flujo'&&<FlujoChat txs={txs} metas={metas} fondoSaldo={fondoSaldo} msgCount={msgCount} setMsgCount={setMsgCount} chatMsgs={chatMsgs} setChatMsgs={setChatMsgs} setView={setView}/>}
-      {view!=='flujo'&&<TabBar view={view} setView={setView} msgCount={msgCount}/>}
+      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil}/>}
+      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={goView} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} metas={metas} setMetas={setMetas}/>}
+      {view==='metas'&&<Metas metas={metas} setMetas={setMetas} txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>}
+      {view==='flujo'&&<FlujoChat txs={txs} metas={metas} setMetas={setMetas} fondoSaldo={fondoSaldo} msgCount={msgCount} setMsgCount={setMsgCount} chatMsgs={chatMsgs} setChatMsgs={setChatMsgs} setView={goView} perfil={perfil} setPerfil={setPerfil}/>}
+      {view!=='flujo'&&<TabBar view={view} setView={goView} msgCount={msgCount}/>}
     </div>
   );
 }
