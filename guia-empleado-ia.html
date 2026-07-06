@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Qué IA usar para cada tarea? | Tecnología Explicada Simple</title>
+<meta name="description" content="La guía rápida de la serie Conceptos de IA: qué IA usar para cada tarea — ChatGPT, Claude, Grok o Gemini.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1WSKFYBEN"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z1WSKFYBEN');</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--blue:#4FC3F7;--blue-ice:#80D8FF;--blue-dark:#0D2233;--blue-mid:#0A3A5C;--black:#000000;--grey:#4A6070;--white:#FFFFFF;--white-dim:rgba(255,255,255,0.75);}
+  *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 24px;}
+  nav{padding:20px 24px;display:flex;justify-content:center;border-bottom:1px solid rgba(79,195,247,0.08);}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+
+  .hero{padding:56px 0 32px;text-align:center;}
+  .eyebrow{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.25em;color:var(--blue);background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.2);padding:6px 14px;text-transform:uppercase;margin-bottom:24px;}
+  .hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(30px,8vw,44px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;}
+  .hero h1 span{color:var(--blue);}
+  .hero p{font-size:15px;color:var(--white-dim);line-height:1.6;max-width:440px;margin:0 auto;}
+
+  /* FORM */
+  .capture{background:var(--blue-dark);border:1px solid rgba(79,195,247,0.25);padding:32px 24px;margin:8px 0 40px;}
+  .capture-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--blue);text-transform:uppercase;margin-bottom:8px;text-align:center;}
+  .capture h2{font-family:'Syne',sans-serif;font-weight:700;font-size:19px;text-align:center;margin-bottom:8px;line-height:1.3;}
+  .capture-sub{font-size:13px;color:var(--white-dim);text-align:center;margin-bottom:24px;line-height:1.5;}
+  .field{margin-bottom:12px;}
+  .field input{width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(79,195,247,0.2);color:var(--white);font-family:'Inter',sans-serif;font-size:16px;padding:15px 16px;outline:none;transition:border-color 0.2s;}
+  .field input:focus{border-color:var(--blue);}
+  .field input::placeholder{color:var(--grey);}
+  .btn{width:100%;background:var(--blue);color:var(--black);font-family:'Syne',sans-serif;font-weight:700;font-size:15px;letter-spacing:0.05em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;transition:opacity 0.2s;}
+  .btn:hover{opacity:0.88;}
+  .form-note{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);text-align:center;margin-top:14px;line-height:1.5;}
+
+  /* CONTENT (hidden until submit) */
+  .guide{display:none;}
+  .guide.visible{display:block;animation:fade 0.5s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .guide-success{background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.3);padding:14px 18px;margin-bottom:32px;font-family:'Space Mono',monospace;font-size:12px;color:#4ade80;text-align:center;line-height:1.5;}
+
+  .tool{background:rgba(255,255,255,0.02);border:1px solid rgba(79,195,247,0.12);border-left:3px solid var(--blue);padding:22px 20px;margin-bottom:14px;}
+  .tool-name{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--white);margin-bottom:4px;}
+  .tool-name span{color:var(--blue);font-weight:600;font-size:14px;}
+  .tool-desc{font-size:14px;color:var(--white-dim);line-height:1.6;}
+
+  .rule{background:var(--blue-dark);border:1px solid rgba(79,195,247,0.25);padding:24px 20px;margin:24px 0 8px;}
+  .rule-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--blue);text-transform:uppercase;margin-bottom:16px;text-align:center;}
+  .rule-row{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid rgba(79,195,247,0.08);font-size:14px;line-height:1.5;}
+  .rule-row:last-child{border-bottom:none;}
+  .rule-q{color:var(--white);flex:1;}
+  .rule-a{color:var(--blue);font-family:'Space Mono',monospace;font-size:12px;font-weight:700;text-align:right;flex-shrink:0;}
+
+  .final-cta{text-align:center;padding:40px 0 24px;}
+  .final-cta p{font-size:14px;color:var(--white-dim);margin-bottom:16px;line-height:1.6;}
+  .final-cta a{display:inline-block;color:var(--blue);font-family:'Syne',sans-serif;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(79,195,247,0.3);padding:12px 24px;transition:background 0.2s;}
+  .final-cta a:hover{background:rgba(79,195,247,0.08);}
+
+  footer{border-top:1px solid rgba(79,195,247,0.08);padding:32px 24px;text-align:center;margin-top:40px;}
+  .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;}
+  .footer-copy{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);opacity:0.6;line-height:1.6;}
+  .footer-copy a{color:var(--grey);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav><a href="index.html" class="nav-logo">TES</a></nav>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Serie · Conceptos de IA</div>
+    <h1>¿Qué IA usar para <span>cada tarea?</span></h1>
+    <p>La guía rápida de la serie Conceptos de IA — Tecnología Explicada Simple.</p>
+  </div>
+
+  <!-- FORMULARIO DE CAPTURA -->
+  <div class="capture" id="capture-box">
+    <div class="capture-label">⚡ Guía gratuita</div>
+    <h2>Te la envío ahora mismo</h2>
+    <div class="capture-sub">Déjame tu email y desbloqueas la guía al instante.</div>
+    <div class="field">
+      <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name">
+    </div>
+    <div class="field">
+      <input type="email" id="email" placeholder="Tu email" autocomplete="email" inputmode="email">
+    </div>
+    <button class="btn" onclick="enviarGuia()" id="submit-btn">Enviarme la guía →</button>
+    <div class="form-note">Sin spam. Solo la guía y contenido útil de vez en cuando.</div>
+  </div>
+
+  <!-- CONTENIDO (oculto hasta enviar) -->
+  <div class="guide" id="guide-content">
+    <div class="guide-success">✓ ¡Listo! Aquí tienes tu guía. También te la he enviado por email.</div>
+
+    <div class="tool">
+      <div class="tool-name">ChatGPT <span>— el todoterreno</span></div>
+      <div class="tool-desc">Ideas, lluvia de ideas, textos creativos, cuando no sabes por dónde empezar.</div>
+    </div>
+
+    <div class="tool">
+      <div class="tool-name">Claude <span>— el analista</span></div>
+      <div class="tool-desc">Documentos largos, razonamiento profundo, matices, cuando el detalle importa.</div>
+    </div>
+
+    <div class="tool">
+      <div class="tool-name">Grok <span>— el directo</span></div>
+      <div class="tool-desc">Respuestas sin rodeos, información del momento, datos actualizados.</div>
+    </div>
+
+    <div class="tool">
+      <div class="tool-name">Gemini <span>— el conectado</span></div>
+      <div class="tool-desc">Cuando trabajas dentro de Google (Gmail, Docs, Drive, buscador).</div>
+    </div>
+
+    <div class="rule">
+      <div class="rule-title">La regla rápida</div>
+      <div class="rule-row"><span class="rule-q">¿El dato cambia cada hora?</span><span class="rule-a">Grok o Gemini</span></div>
+      <div class="rule-row"><span class="rule-q">¿Hay que pensar a fondo?</span><span class="rule-a">Claude</span></div>
+      <div class="rule-row"><span class="rule-q">¿No sabes por dónde empezar?</span><span class="rule-a">ChatGPT</span></div>
+    </div>
+
+    <div class="final-cta">
+      <p>Esta guía es parte de la serie <strong>Conceptos de IA</strong>. Cada vídeo desmonta una idea clave para que domines la IA de verdad, no solo la uses.</p>
+      <a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" rel="noopener">Ver la serie completa en YouTube →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">
+    © 2026 · El Equipo TES<br>
+    <a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" rel="noopener">@tecnologia.explicada.simple</a>
+  </div>
+</footer>
+
+<script>
+function enviarGuia() {
+  var nombre = document.getElementById('nombre').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!nombre) { alert('Por favor, escribe tu nombre.'); return; }
+  if (!emailRegex.test(email)) { alert('Por favor, introduce un email válido.'); return; }
+
+  var btn = document.getElementById('submit-btn');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  // Mismo endpoint de captura del resto del sitio
+  fetch('https://script.google.com/macros/s/AKfycbwzsnUiyIBJIgCk4YaHRbsuF4wlYJvw9fcAJRl-7OQU-wBXzRtomnyxNlBD8u69u4oH/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nombre: nombre, email: email, recurso: 'Guia Que IA usar - Serie 7 (EMPLEADO)' })
+  });
+
+  // Evento de conversión en Google Analytics
+  gtag('event', 'generate_lead', {
+    'event_category': 'captura_email',
+    'event_label': 'guia-empleado-ia',
+    'recurso': 'Guia Que IA usar'
+  });
+
+  // Revelar contenido
+  document.getElementById('capture-box').style.display = 'none';
+  var guide = document.getElementById('guide-content');
+  guide.classList.add('visible');
+  guide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
