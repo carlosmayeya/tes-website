@@ -18,6 +18,7 @@ textarea,input,select{font-family:inherit}
 ::-webkit-scrollbar-thumb{background:rgba(52,211,153,0.2);border-radius:4px}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 @keyframes typing{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
+@keyframes pulseFab{0%,100%{box-shadow:0 4px 24px rgba(52,211,153,0.4)}50%{box-shadow:0 4px 32px rgba(52,211,153,0.7)}}
 @keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
 @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
 #app{min-height:100vh}
@@ -47,9 +48,9 @@ const ACENTO = '#34D399';
 const G = ACENTO;
 const CA = 'rgba(255,255,255,0.03)';
 const CB = 'rgba(255,255,255,0.07)';
-const T1 = 'rgba(255,255,255,0.88)';
-const T2 = 'rgba(255,255,255,0.55)';
-const T3 = 'rgba(255,255,255,0.32)';
+const T1 = 'rgba(255,255,255,0.92)';
+const T2 = 'rgba(255,255,255,0.68)';
+const T3 = 'rgba(255,255,255,0.50)';
 const GBG = 'rgba(52,211,153,0.06)';
 const GBD = 'rgba(52,211,153,0.18)';
 
@@ -107,7 +108,7 @@ function BadgeTipo({tipo}) {
   };
   const c=cfg[tipo];
   if(!c) return null;
-  return <span style={{fontSize:9,fontWeight:600,padding:'2px 7px',borderRadius:20,background:c.bg,color:c.color,letterSpacing:'0.03em',whiteSpace:'nowrap'}}>{c.label}</span>;
+  return <span style={{fontSize:13,fontWeight:600,padding:'2px 7px',borderRadius:20,background:c.bg,color:c.color,letterSpacing:'0.03em',whiteSpace:'nowrap'}}>{c.label}</span>;
 }
 
 function ProgressBar({pct,color=ACENTO,height=3}) {
@@ -127,7 +128,7 @@ function Card({children,style={},onClick}) {
 }
 
 function SecLabel({children}) {
-  return <div style={{fontSize:10,color:T3,letterSpacing:'0.07em',textTransform:'uppercase',margin:'13px 0 7px'}}>{children}</div>;
+  return <div style={{fontSize:12,color:T3,letterSpacing:'0.07em',textTransform:'uppercase',margin:'13px 0 7px'}}>{children}</div>;
 }
 
 function Divider() {
@@ -143,13 +144,13 @@ function TabBar({view,setView,msgCount}) {
     {id:'flujo',icon:'💬',label:'FARO'},
   ];
   return (
-    <div style={{position:'fixed',bottom:0,left:0,right:0,display:'flex',borderTop:'0.5px solid rgba(255,255,255,0.07)',background:'rgba(0,0,0,0.97)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',zIndex:100,paddingBottom:'env(safe-area-inset-bottom,6px)'}}>
+    <div style={{position:'fixed',bottom:0,left:0,right:0,display:'flex',borderTop:'0.5px solid rgba(255,255,255,0.07)',background:'rgba(0,0,0,0.97)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',zIndex:100,paddingBottom:'env(safe-area-inset-bottom,10px)'}}>
       {tabs.map(t=>(
         <button key={t.id} onClick={()=>setView(t.id)}
-          style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:2,padding:'7px 2px 4px',background:'none',border:'none',cursor:'pointer',color:view===t.id?ACENTO:'rgba(255,255,255,0.28)',fontSize:8,fontFamily:'Inter,sans-serif',fontWeight:view===t.id?600:400,transition:'color 0.15s',position:'relative'}}>
-          <span style={{fontSize:18}}>{t.icon}</span>
+          style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:4,padding:'10px 2px 6px',background:'none',border:'none',cursor:'pointer',color:view===t.id?ACENTO:'rgba(255,255,255,0.28)',fontSize:13,fontFamily:'Inter,sans-serif',fontWeight:view===t.id?700:500,transition:'color 0.15s',position:'relative'}}>
+          <span style={{fontSize:26}}>{t.icon}</span>
           {t.label}
-          {t.id==='flujo'&&msgCount>450&&<span style={{position:'absolute',top:4,right:'50%',transform:'translateX(200%)',width:6,height:6,borderRadius:'50%',background:'#F87171'}}/>}
+          {t.id==='flujo'&&msgCount>450&&<span style={{position:'absolute',top:6,right:'50%',transform:'translateX(220%)',width:8,height:8,borderRadius:'50%',background:'#F87171'}}/>}
         </button>
       ))}
     </div>
@@ -162,7 +163,7 @@ function Nav({title,sub,right}) {
     <div style={{position:'sticky',top:0,zIndex:50,background:'rgba(0,0,0,0.97)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',borderBottom:'0.5px solid rgba(255,255,255,0.06)',paddingTop:'calc(env(safe-area-inset-top, 0px) + 10px)',paddingBottom:8,paddingLeft:16,paddingRight:16,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
       <div>
         <div style={{fontSize:15,fontWeight:700,color:'#fff'}}>{title}</div>
-        {sub&&<div style={{fontSize:10,color:T3,marginTop:1}}>{sub}</div>}
+        {sub&&<div style={{fontSize:12,color:T3,marginTop:1}}>{sub}</div>}
       </div>
       {right||<div/>}
     </div>
@@ -184,7 +185,7 @@ function HomeFlujo({onDone,setView}) {
     }}>
       <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
         <div style={{width:56,height:56,borderRadius:16,background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16,fontSize:26}}>⚡</div>
-        <div style={{fontSize:9,color:ACENTO,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:8}}>Finanzas Brutales</div>
+        <div style={{fontSize:13,color:ACENTO,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:8}}>Finanzas Brutales</div>
         <div style={{fontSize:24,fontWeight:800,color:'#fff',letterSpacing:'-0.03em',lineHeight:1.2,marginBottom:8}}>Hola, soy FARO</div>
         <div style={{fontSize:13,color:T2,lineHeight:1.6,maxWidth:260}}>Tu coach financiero personal. Estoy aquí para ayudarte a tomar control de tu dinero — de verdad.</div>
       </div>
@@ -248,7 +249,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
   const mNow=new Date().toLocaleString('es-ES',{month:'long',year:'numeric'});
 
   return (
-    <div style={{paddingBottom:80}}>
+    <div style={{paddingBottom:100}}>
       <Nav title={mNow.charAt(0).toUpperCase()+mNow.slice(1)} sub="Tu resumen financiero"
         right={<div style={{width:32,height:32,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',color:ACENTO,fontSize:13,fontWeight:700}}>C</div>}/>
       <div style={{padding:'0 14px'}}>
@@ -258,13 +259,13 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
             <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
               <div style={{fontSize:22}}>{metaPrincipal.icono}</div>
               <div style={{flex:1}}>
-                <div style={{fontSize:10,color:'#60A5FA',textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:1}}>Tu meta</div>
+                <div style={{fontSize:12,color:'#60A5FA',textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:1}}>Tu meta</div>
                 <div style={{fontSize:15,fontWeight:800,color:'#fff'}}>{metaPrincipal.nombre}</div>
               </div>
               <div style={{fontSize:16,fontWeight:800,color:'#60A5FA'}}>{metaPrincipal.meta>0?Math.min(Math.round((metaPrincipal.actual/metaPrincipal.meta)*100),100):0}%</div>
             </div>
             <ProgressBar pct={metaPrincipal.meta>0?Math.min(Math.round((metaPrincipal.actual/metaPrincipal.meta)*100),100):0} color="#60A5FA" height={5}/>
-            <div style={{fontSize:10,color:T3,marginTop:5}}>{fmtEur(metaPrincipal.actual)} de {fmtEur(metaPrincipal.meta)} · faltan {fmtEur(Math.max(0,metaPrincipal.meta-metaPrincipal.actual))}</div>
+            <div style={{fontSize:12,color:T3,marginTop:5}}>{fmtEur(metaPrincipal.actual)} de {fmtEur(metaPrincipal.meta)} · faltan {fmtEur(Math.max(0,metaPrincipal.meta-metaPrincipal.actual))}</div>
           </Card>
         )}
 
@@ -273,7 +274,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
           <div style={{display:'flex',gap:10,alignItems:'flex-start'}}>
             <div style={{width:30,height:30,borderRadius:9,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,flexShrink:0}}>⚡</div>
             <div style={{flex:1}}>
-              <div style={{fontSize:9,color:ACENTO,textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:3}}>Tu coach dice</div>
+              <div style={{fontSize:13,color:ACENTO,textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:3}}>Tu coach dice</div>
               <div style={{fontSize:13,color:T1,lineHeight:1.5}}>{coachMsg}</div>
             </div>
             <div style={{fontSize:14,color:T3,alignSelf:'center'}}>→</div>
@@ -284,19 +285,19 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
         <Card style={{borderColor:sobra>=0?GBD:'rgba(248,113,113,0.2)'}}>
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:12}}>
             <div>
-              <div style={{fontSize:10,color:T3,marginBottom:3}}>Sobra este mes</div>
+              <div style={{fontSize:12,color:T3,marginBottom:3}}>Sobra este mes</div>
               <div style={{fontSize:28,fontWeight:800,color:sobra>=0?ACENTO:'#F87171',letterSpacing:'-0.03em'}}>{sobra>=0?'+':''}{fmtEur(sobra)}</div>
             </div>
-            <button onClick={()=>setView('balance')} style={{background:CA,border:'0.5px solid '+CB,borderRadius:8,padding:'5px 10px',fontSize:11,color:T2,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Ver →</button>
+            <button onClick={()=>setView('balance')} style={{background:CA,border:'0.5px solid '+CB,borderRadius:8,padding:'5px 10px',fontSize:13,color:T2,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Ver →</button>
           </div>
           <div style={{display:'flex',gap:0}}>
             <div style={{flex:1,textAlign:'center'}}>
-              <div style={{fontSize:10,color:T3,marginBottom:2}}>Ingresos</div>
+              <div style={{fontSize:12,color:T3,marginBottom:2}}>Ingresos</div>
               <div style={{fontSize:15,fontWeight:700,color:ACENTO}}>{fmtEur(ingresos)}</div>
             </div>
             <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
             <div style={{flex:1,textAlign:'center'}}>
-              <div style={{fontSize:10,color:T3,marginBottom:2}}>Gastos</div>
+              <div style={{fontSize:12,color:T3,marginBottom:2}}>Gastos</div>
               <div style={{fontSize:15,fontWeight:700,color:'#F87171'}}>{fmtEur(gastos)}</div>
             </div>
           </div>
@@ -311,12 +312,12 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
               <span style={{fontSize:16}}>🛡️</span>
               <span style={{fontSize:13,fontWeight:600,color:'#fff'}}>Fondo de emergencia</span>
             </div>
-            <span style={{fontSize:11,color:ACENTO,fontWeight:700}}>{pct3}%</span>
+            <span style={{fontSize:13,color:ACENTO,fontWeight:700}}>{pct3}%</span>
           </div>
           <ProgressBar pct={pct3}/>
           <div style={{display:'flex',justifyContent:'space-between',marginTop:5}}>
-            <span style={{fontSize:10,color:T3}}>{fmtEur(fondoSaldo)} / {fmtEur(f3)} mínimo</span>
-            {pct3>=100&&<span style={{fontSize:10,color:ACENTO}}>✓ Mínimo alcanzado</span>}
+            <span style={{fontSize:12,color:T3}}>{fmtEur(fondoSaldo)} / {fmtEur(f3)} mínimo</span>
+            {pct3>=100&&<span style={{fontSize:12,color:ACENTO}}>✓ Mínimo alcanzado</span>}
           </div>
         </Card>
 
@@ -330,12 +331,12 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
                   <span style={{fontSize:16}}>{m.icono||'🎯'}</span>
                   <span style={{fontSize:13,fontWeight:600,color:'#fff'}}>{m.nombre}</span>
                 </div>
-                <span style={{fontSize:11,color:'#60A5FA',fontWeight:700}}>{pct}%</span>
+                <span style={{fontSize:13,color:'#60A5FA',fontWeight:700}}>{pct}%</span>
               </div>
               <ProgressBar pct={pct} color="#60A5FA"/>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:5}}>
-                <span style={{fontSize:10,color:T3}}>{fmtEur(m.actual)} / {fmtEur(m.meta)}</span>
-                {m.fecha&&<span style={{fontSize:10,color:T3}}>{m.fecha}</span>}
+                <span style={{fontSize:12,color:T3}}>{fmtEur(m.actual)} / {fmtEur(m.meta)}</span>
+                {m.fecha&&<span style={{fontSize:12,color:T3}}>{m.fecha}</span>}
               </div>
             </Card>
           );
@@ -353,7 +354,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
             {[{label:'Esencial',v:gastoE,c:ACENTO},{label:'Calidad de vida',v:gastoC,c:'#60A5FA'},{label:'Capricho',v:gastoK,c:'#FBBF24'}].map(({label,v,c})=>(
               <div key={label} style={{marginBottom:label==='Capricho'?0:10}}>
                 <div style={{display:'flex',justifyContent:'space-between',marginBottom:4}}>
-                  <span style={{fontSize:11,color:T2}}>{label}</span>
+                  <span style={{fontSize:13,color:T2}}>{label}</span>
                   <span style={{fontSize:12,fontWeight:600,color:'#fff'}}>{fmtEur(v)}</span>
                 </div>
                 <ProgressBar pct={gastos>0?Math.round((v/gastos)*100):0} color={c}/>
@@ -372,7 +373,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
           <div style={{width:36,height:36,borderRadius:10,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',color:'#000',fontSize:18,flexShrink:0}}>⚡</div>
           <div style={{flex:1}}>
             <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>Hablar con FARO</div>
-            <div style={{fontSize:10,color:T3}}>Tu asesor financiero personal</div>
+            <div style={{fontSize:12,color:T3}}>Tu asesor financiero personal</div>
           </div>
           <span style={{fontSize:16,color:'rgba(52,211,153,0.4)'}}>→</span>
         </div>
@@ -409,12 +410,12 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
   });
 
   return (
-    <div style={{paddingBottom:80}}>
+    <div style={{paddingBottom:100}}>
       <Nav title="Balance" sub={filtro==='mes'?'Este mes':'Todo el historial'}
         right={
           <div style={{display:'flex',gap:5}}>
             {['mes','todo'].map(f=>(
-              <button key={f} onClick={()=>setFiltro(f)} style={{background:filtro===f?'rgba(255,255,255,0.08)':'none',border:'none',color:filtro===f?'#fff':T3,borderRadius:7,padding:'3px 9px',fontSize:10,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+              <button key={f} onClick={()=>setFiltro(f)} style={{background:filtro===f?'rgba(255,255,255,0.08)':'none',border:'none',color:filtro===f?'#fff':T3,borderRadius:7,padding:'3px 9px',fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
                 {f==='mes'?'Mes':'Todo'}
               </button>
             ))}
@@ -423,19 +424,19 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
       <div style={{padding:'12px 14px 0'}}>
         <Card style={{borderColor:sobra>=0?GBD:'rgba(248,113,113,0.15)',marginBottom:12}}>
           <div style={{display:'flex',justifyContent:'space-around',textAlign:'center'}}>
-            <div><div style={{fontSize:10,color:T3,marginBottom:2}}>Ingresos</div><div style={{fontSize:16,fontWeight:700,color:ACENTO}}>{fmtEur(ingresos)}</div></div>
+            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Ingresos</div><div style={{fontSize:16,fontWeight:700,color:ACENTO}}>{fmtEur(ingresos)}</div></div>
             <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
-            <div><div style={{fontSize:10,color:T3,marginBottom:2}}>Gastos</div><div style={{fontSize:16,fontWeight:700,color:'#F87171'}}>{fmtEur(gastos)}</div></div>
+            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Gastos</div><div style={{fontSize:16,fontWeight:700,color:'#F87171'}}>{fmtEur(gastos)}</div></div>
             <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
-            <div><div style={{fontSize:10,color:T3,marginBottom:2}}>Sobra</div><div style={{fontSize:16,fontWeight:700,color:sobra>=0?ACENTO:'#F87171'}}>{sobra>=0?'+':''}{fmtEur(sobra)}</div></div>
+            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Sobra</div><div style={{fontSize:16,fontWeight:700,color:sobra>=0?ACENTO:'#F87171'}}>{sobra>=0?'+':''}{fmtEur(sobra)}</div></div>
           </div>
         </Card>
 
         {Object.keys(grouped).length===0&&(
-          <div style={{textAlign:'center',padding:'40px 0',color:T3}}>
+          <div style={{textAlign:'center',padding:'40px 0 8px',color:T3}}>
             <div style={{fontSize:32,marginBottom:12}}>💸</div>
             <div style={{fontSize:14,marginBottom:6}}>Sin transacciones</div>
-            <div style={{fontSize:12,marginBottom:16}}>Registra tu primer ingreso o gasto</div>
+            <div style={{fontSize:12,marginBottom:16}}>Toca el botón verde para registrar tu primer ingreso o gasto</div>
           </div>
         )}
 
@@ -444,8 +445,8 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
           return (
             <div key={fecha}>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',margin:'10px 0 6px'}}>
-                <span style={{fontSize:10,color:T3,textTransform:'uppercase',letterSpacing:'0.06em'}}>{fmtFecha(fecha)}</span>
-                <span style={{fontSize:11,fontWeight:600,color:totalDia>=0?ACENTO:'#F87171'}}>{totalDia>=0?'+':''}{fmtEur(totalDia)}</span>
+                <span style={{fontSize:12,color:T3,textTransform:'uppercase',letterSpacing:'0.06em'}}>{fmtFecha(fecha)}</span>
+                <span style={{fontSize:13,fontWeight:600,color:totalDia>=0?ACENTO:'#F87171'}}>{totalDia>=0?'+':''}{fmtEur(totalDia)}</span>
               </div>
               {items.map(t=>(
                 <div key={t.id} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 0',borderBottom:'0.5px solid rgba(255,255,255,0.04)'}}>
@@ -455,16 +456,16 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{fontSize:13,color:'#fff',fontWeight:500,marginBottom:2}}>{t.nombre}</div>
                     <div style={{display:'flex',alignItems:'center',gap:5}}>
-                      <span style={{fontSize:10,color:T3}}>{t.categoria}</span>
+                      <span style={{fontSize:12,color:T3}}>{t.categoria}</span>
                       {t.tipo==='gasto'&&<BadgeTipo tipo={t.tipogasto}/>}
-                      {t.recurrente&&<span style={{fontSize:9,color:T3}}>↻</span>}
+                      {t.recurrente&&<span style={{fontSize:13,color:T3}}>↻</span>}
                     </div>
                   </div>
                   <div style={{textAlign:'right',flexShrink:0}}>
                     <div style={{fontSize:13,fontWeight:600,color:t.tipo==='ingreso'?ACENTO:'#F87171'}}>
                       {t.tipo==='ingreso'?'+':'-'}{fmtEur(t.importe)}
                     </div>
-                    <button onClick={()=>deleteTx(t.id)} style={{fontSize:9,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif',marginTop:1}}>borrar</button>
+                    <button onClick={()=>deleteTx(t.id)} style={{fontSize:13,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif',marginTop:1}}>borrar</button>
                   </div>
                 </div>
               ))}
@@ -473,8 +474,36 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
         })}
       </div>
 
-      {/* FAB */}
-      <button onClick={()=>setShowReg(true)} style={{position:'fixed',bottom:70,right:16,width:48,height:48,borderRadius:15,background:ACENTO,border:'none',color:'#000',fontSize:26,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',zIndex:90,boxShadow:'0 4px 20px rgba(52,211,153,0.3)'}}>+</button>
+      {/* FAB — aparece centrado en el vacío y baja a su sitio conforme hay más transacciones */}
+      {(() => {
+        const n=txFiltradas.length;
+        const UMBRAL=6; // a partir de aquí, posición fija normal
+        if(n>=UMBRAL){
+          return (
+            <button onClick={()=>setShowReg(true)} style={{position:'fixed',bottom:86,right:16,width:48,height:48,borderRadius:15,background:ACENTO,border:'none',color:'#000',fontSize:26,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',zIndex:90,boxShadow:'0 4px 20px rgba(52,211,153,0.3)',transition:'all 0.4s ease'}}>+</button>
+          );
+        }
+        // Interpola entre centro de la pantalla (n=0) y esquina inferior (n=UMBRAL)
+        const t=n/UMBRAL; // 0 → 1
+        const topPct=42+t*(88-42); // del 42% al 88% de altura de viewport
+        return (
+          <button onClick={()=>setShowReg(true)} style={{
+            position:'fixed',
+            top:`${topPct}vh`,
+            right:n<2?'50%':16,
+            transform:n<2?'translateX(50%)':'none',
+            width:n<2?56:48,
+            height:n<2?56:48,
+            borderRadius:n<2?18:15,
+            background:ACENTO,border:'none',color:'#000',
+            fontSize:n<2?30:26,fontWeight:700,cursor:'pointer',
+            display:'flex',alignItems:'center',justifyContent:'center',
+            zIndex:90,boxShadow:'0 4px 24px rgba(52,211,153,0.4)',
+            transition:'all 0.5s cubic-bezier(0.34,1.2,0.64,1)',
+            animation:n===0?'pulseFab 2s ease-in-out infinite':'none'
+          }}>+</button>
+        );
+      })()}
 
       {showReg&&<RegistroModal onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);if(tx.tipo==='ingreso')setPagatePrimero(tx);}}/>}
 
@@ -511,7 +540,7 @@ function PagatePrimeroSheet({ingreso,onClose,onApartar}) {
           {sugerencias.map(s=>(
             <button key={s.label} onClick={()=>onApartar(s.v)} style={{flex:1,padding:'12px 4px',borderRadius:12,background:GBG,border:'0.5px solid '+GBD,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
               <div style={{fontSize:14,fontWeight:800,color:ACENTO}}>{s.label}</div>
-              <div style={{fontSize:10,color:T3,marginTop:2}}>{fmtEur(s.v)}</div>
+              <div style={{fontSize:12,color:T3,marginTop:2}}>{fmtEur(s.v)}</div>
             </button>
           ))}
         </div>
@@ -607,20 +636,20 @@ function RegistroModal({onClose,onSave,inicial=null}) {
         {/* Tipo gasto — la decisión consciente */}
         {tipoTx==='gasto'&&(
           <div style={{background:'rgba(255,255,255,0.02)',border:'0.5px solid rgba(255,255,255,0.06)',borderRadius:12,padding:'11px 13px',marginBottom:10}}>
-            <div style={{fontSize:10,color:T3,marginBottom:8,letterSpacing:'0.05em'}}>TIPO DE GASTO — ¿qué es para ti?</div>
+            <div style={{fontSize:12,color:T3,marginBottom:8,letterSpacing:'0.05em'}}>TIPO DE GASTO — ¿qué es para ti?</div>
             <div style={{display:'flex',gap:6}}>
               {[
                 {id:'esencial',label:'Esencial',hint:'Sin esto, la vida se para',ac:ACENTO},
                 {id:'calidad',label:'Calidad de vida',hint:'Sin esto, la vida es gris',ac:'#60A5FA'},
                 {id:'capricho',label:'Capricho',hint:'Puedo vivir sin ello',ac:'#FBBF24'},
               ].map(({id,label,hint,ac})=>(
-                <button key={id} onClick={()=>setTipogasto(id)} style={{flex:1,padding:'8px 4px',borderRadius:9,background:tipogasto===id?`rgba(${id==='esencial'?'52,211,153':id==='calidad'?'96,165,250':'251,191,36'},0.1)`:'none',border:`0.5px solid ${tipogasto===id?ac:'rgba(255,255,255,0.07)'}`,color:tipogasto===id?ac:T3,fontSize:10,fontWeight:tipogasto===id?700:400,cursor:'pointer',fontFamily:'Inter,sans-serif',lineHeight:1.3,transition:'all 0.15s'}}>
+                <button key={id} onClick={()=>setTipogasto(id)} style={{flex:1,padding:'8px 4px',borderRadius:9,background:tipogasto===id?`rgba(${id==='esencial'?'52,211,153':id==='calidad'?'96,165,250':'251,191,36'},0.1)`:'none',border:`0.5px solid ${tipogasto===id?ac:'rgba(255,255,255,0.07)'}`,color:tipogasto===id?ac:T3,fontSize:12,fontWeight:tipogasto===id?700:400,cursor:'pointer',fontFamily:'Inter,sans-serif',lineHeight:1.3,transition:'all 0.15s'}}>
                   {label}
                 </button>
               ))}
             </div>
             {tipogasto&&(
-              <div style={{fontSize:10,color:T3,marginTop:6,textAlign:'center'}}>
+              <div style={{fontSize:12,color:T3,marginTop:6,textAlign:'center'}}>
                 {tipogasto==='esencial'&&'Entra en tu fondo de emergencia ✓'}
                 {tipogasto==='calidad'&&'Entra en tu fondo de emergencia ✓'}
                 {tipogasto==='capricho'&&'No entra en el fondo — palanca de ahorro potencial'}
@@ -676,7 +705,7 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
       <div>
         {/* Saldo actual */}
         <Card style={{borderColor:GBD,textAlign:'center',marginBottom:12}}>
-          <div style={{fontSize:10,color:T3,marginBottom:4}}>Saldo actual</div>
+          <div style={{fontSize:12,color:T3,marginBottom:4}}>Saldo actual</div>
           {editSaldo?(
             <div style={{display:'flex',gap:8,alignItems:'center',justifyContent:'center',margin:'4px 0'}}>
               <input type="number" value={newSaldo} onChange={e=>setNewSaldo(e.target.value)} autoFocus
@@ -686,7 +715,7 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
           ):(
             <div style={{fontSize:32,fontWeight:800,color:ACENTO,letterSpacing:'-0.03em',marginBottom:4}}>{fmtEur(fondoSaldo)}</div>
           )}
-          <button onClick={()=>editSaldo?saveSaldo():setEditSaldo(true)} style={{fontSize:11,color:editSaldo?ACENTO:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+          <button onClick={()=>editSaldo?saveSaldo():setEditSaldo(true)} style={{fontSize:13,color:editSaldo?ACENTO:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
             {editSaldo?'Guardar saldo':'Actualizar saldo →'}
           </button>
         </Card>
@@ -708,8 +737,8 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
                 </div>
                 <ProgressBar pct={nv.pct} color={nv.color} height={3}/>
                 <div style={{display:'flex',justifyContent:'space-between',marginTop:3}}>
-                  <span style={{fontSize:10,color:T3}}>{nv.pct}% · faltan {fmtEur(Math.max(0,nv.meta-fondoSaldo))}</span>
-                  {nv.pct>=100&&<span style={{fontSize:10,color:ACENTO}}>✓ Alcanzado</span>}
+                  <span style={{fontSize:12,color:T3}}>{nv.pct}% · faltan {fmtEur(Math.max(0,nv.meta-fondoSaldo))}</span>
+                  {nv.pct>=100&&<span style={{fontSize:12,color:ACENTO}}>✓ Alcanzado</span>}
                 </div>
               </div>
             </div>
@@ -732,7 +761,7 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
         </Card>
 
         <div style={{marginTop:10,padding:'11px 13px',background:'rgba(251,191,36,0.04)',border:'0.5px solid rgba(251,191,36,0.12)',borderRadius:12}}>
-          <div style={{fontSize:11,color:'rgba(251,191,36,0.8)',lineHeight:1.6}}>💡 <strong>Recuerda:</strong> El fondo de emergencia no es ahorro — es infraestructura. No se toca. Sin él, no se invierte.</div>
+          <div style={{fontSize:13,color:'rgba(251,191,36,0.8)',lineHeight:1.6}}>💡 <strong>Recuerda:</strong> El fondo de emergencia no es ahorro — es infraestructura. No se toca. Sin él, no se invierte.</div>
         </div>
       </div>
     </div>
@@ -771,9 +800,9 @@ function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo}) {
   }
 
   return (
-    <div style={{paddingBottom:80}}>
+    <div style={{paddingBottom:100}}>
       <Nav title="Metas" sub="Fondo de emergencia + metas de ahorro"
-        right={<button onClick={()=>setShowForm(true)} style={{background:GBG,border:'0.5px solid '+GBD,color:ACENTO,borderRadius:9,padding:'5px 11px',fontSize:11,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>+ Nueva</button>}/>
+        right={<button onClick={()=>setShowForm(true)} style={{background:GBG,border:'0.5px solid '+GBD,color:ACENTO,borderRadius:9,padding:'5px 11px',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>+ Nueva</button>}/>
       <div style={{padding:'12px 14px 0'}}>
         <SecLabel>🛡️ Fondo de emergencia — tu meta cero</SecLabel>
         <FondoBody txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>
@@ -798,24 +827,24 @@ function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo}) {
                   <div style={{width:36,height:36,borderRadius:10,background:'rgba(96,165,250,0.08)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18}}>{m.icono}</div>
                   <div>
                     <div style={{fontSize:14,fontWeight:700,color:'#fff'}}>{m.nombre}</div>
-                    {m.fecha&&<div style={{fontSize:10,color:T3}}>{m.fecha}</div>}
+                    {m.fecha&&<div style={{fontSize:12,color:T3}}>{m.fecha}</div>}
                   </div>
                 </div>
-                <button onClick={()=>deleteMeta(m.id)} style={{fontSize:10,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>✕</button>
+                <button onClick={()=>deleteMeta(m.id)} style={{fontSize:12,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>✕</button>
               </div>
               <ProgressBar pct={pct} color="#60A5FA" height={4}/>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:6,marginBottom:10}}>
-                <span style={{fontSize:11,color:T3}}>{fmtEur(m.actual)} / {fmtEur(m.meta)}</span>
-                <span style={{fontSize:11,color:'#60A5FA',fontWeight:600}}>{pct}%</span>
+                <span style={{fontSize:13,color:T3}}>{fmtEur(m.actual)} / {fmtEur(m.meta)}</span>
+                <span style={{fontSize:13,color:'#60A5FA',fontWeight:600}}>{pct}%</span>
               </div>
               {pct<100&&(
                 <div style={{display:'flex',gap:6}}>
                   {[50,100,200].map(cant=>(
-                    <button key={cant} onClick={()=>aportarMeta(m.id,cant)} style={{flex:1,padding:'7px 4px',borderRadius:8,background:'rgba(96,165,250,0.06)',border:'0.5px solid rgba(96,165,250,0.15)',color:'#60A5FA',fontSize:11,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+                    <button key={cant} onClick={()=>aportarMeta(m.id,cant)} style={{flex:1,padding:'7px 4px',borderRadius:8,background:'rgba(96,165,250,0.06)',border:'0.5px solid rgba(96,165,250,0.15)',color:'#60A5FA',fontSize:13,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
                       +{cant}€
                     </button>
                   ))}
-                  <button onClick={()=>{const v=prompt('¿Cuánto añadir?');if(v&&!isNaN(parseFloat(v)))aportarMeta(m.id,parseFloat(v));}} style={{flex:1,padding:'7px 4px',borderRadius:8,background:'rgba(96,165,250,0.06)',border:'0.5px solid rgba(96,165,250,0.15)',color:'#60A5FA',fontSize:11,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>otro</button>
+                  <button onClick={()=>{const v=prompt('¿Cuánto añadir?');if(v&&!isNaN(parseFloat(v)))aportarMeta(m.id,parseFloat(v));}} style={{flex:1,padding:'7px 4px',borderRadius:8,background:'rgba(96,165,250,0.06)',border:'0.5px solid rgba(96,165,250,0.15)',color:'#60A5FA',fontSize:13,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>otro</button>
                 </div>
               )}
               {pct>=100&&<div style={{textAlign:'center',fontSize:12,color:ACENTO,fontWeight:700}}>🎉 Meta alcanzada</div>}
@@ -1084,7 +1113,7 @@ Respondes siempre como FARO.`;
             </button>
           )}
           {m.metaAction&&m.metaCreada&&(
-            <div style={{marginTop:10,padding:'8px 12px',borderRadius:10,background:'rgba(52,211,153,0.06)',border:'0.5px solid rgba(52,211,153,0.15)',color:ACENTO,fontSize:11,fontWeight:600,textAlign:'center'}}>
+            <div style={{marginTop:10,padding:'8px 12px',borderRadius:10,background:'rgba(52,211,153,0.06)',border:'0.5px solid rgba(52,211,153,0.15)',color:ACENTO,fontSize:13,fontWeight:600,textAlign:'center'}}>
               ✓ Meta creada — la verás en Metas
             </div>
           )}
@@ -1167,10 +1196,10 @@ Respondes siempre como FARO.`;
           <div style={{width:28,height:28,borderRadius:8,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',color:'#000',fontSize:14}}>⚡</div>
           <div>
             <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>FARO</div>
-            <div style={{fontSize:9,color:ACENTO}}>en línea</div>
+            <div style={{fontSize:13,color:ACENTO}}>en línea</div>
           </div>
         </div>
-        <div style={{fontSize:10,color:remaining<50?'#F87171':T3}}>{remaining} msgs</div>
+        <div style={{fontSize:12,color:remaining<50?'#F87171':T3}}>{remaining} msgs</div>
       </div>
 
       {/* Mensajes — row 2 */}
