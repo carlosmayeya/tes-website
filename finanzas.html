@@ -81,6 +81,45 @@ const CATS_GASTO = ['Vivienda','Alimentación','Transporte','Salud','Educación'
 const CATS_INGRESO = ['Salario','Freelance','Negocio','Inversiones','Alquiler','Otros'];
 const ICONOS_CAT = {Vivienda:'🏠',Alimentación:'🛒',Transporte:'🚗',Salud:'💊',Educación:'📚',Telecomunicaciones:'📱',Seguros:'🛡️',Entretenimiento:'🎬',Ropa:'👕',Restaurantes:'🍽️',Suscripciones:'📺',Salario:'💼',Freelance:'💻',Negocio:'🏪',Inversiones:'📈',Alquiler:'🏘️',Otros:'📌'};
 
+// ─── TIPS FINANCIEROS — rotan uno por día ────────────────────────────────────
+const TIPS_FINANCIEROS = [
+  'Un fondo de emergencia no es para invertir — es para dormir tranquilo. Su trabajo es estar ahí, no crecer.',
+  'Págate a ti primero: aparta tu ahorro en cuanto entra el ingreso, no con lo que sobra a fin de mes.',
+  'Un gasto "capricho" no es malo. El problema es no saber cuántos capricho te estás permitiendo.',
+  'Si no sabes en qué se te va el dinero, la primera victoria no es ahorrar más — es registrar todo un mes.',
+  'La regla no escrita: gastos esenciales + calidad de vida no deberían superar el 80% de tus ingresos.',
+  'Una suscripción de 8€/mes son 96€ al año. Revisa las tuyas — casi nadie recuerda todas las que tiene activas.',
+  'El interés compuesto premia el tiempo, no la cantidad. Empezar con poco hoy vale más que empezar con mucho en 5 años.',
+  'Una meta sin fecha es un deseo. Una meta con fecha es un plan.',
+  'Antes de comprar algo caro, espera 48 horas. Si sigues queriéndolo igual, probablemente no es un impulso.',
+  'La deuda de tarjeta de crédito casi siempre cuesta más que lo que ganarías invirtiendo. Págala primero.',
+  'Tres meses de gastos esenciales cubiertos cambian cómo tomas decisiones — hasta las laborales.',
+  'Comparar tu progreso financiero con el de otros es la forma más rápida de sentirte mal sin motivo real.',
+  'Un aumento de sueldo es la mejor oportunidad para subir tu ahorro antes de que suba tu nivel de gasto.',
+  'Las "calidad de vida" (el gimnasio, la cena mensual) no son lujo — son lo que sostiene que sigas motivado.',
+  'Revisar tus gastos una vez por semana toma 5 minutos y evita sorpresas de fin de mes.',
+  'Comprar en oferta algo que no necesitabas no es ahorrar — es gastar con descuento.',
+  'El primer mes registrando gastos siempre da vergüenza un poco. El segundo mes ya da tranquilidad.',
+  "El dinero que 'no cuenta' porque son pocos euros — un café aquí, una app allá — suele ser el que más se acumula.",
+  'Ahorrar el 10% de lo que ganas, siempre, en automático, funciona mejor que "ahorrar lo que sobre".',
+  'Una emergencia real no avisa. Por eso el fondo de emergencia se construye antes de necesitarlo, no después.',
+  'Si algo se paga solo una vez al año (seguro, impuesto), divide el coste entre 12 y apártalo cada mes.',
+  'Negociar tu seguro o tu tarifa de móvil una vez al año puede ahorrarte más que recortar comidas fuera.',
+  'El miedo a mirar tus números casi siempre es peor que los números en sí.',
+  'Una meta de ahorro compartida en voz alta (o escrita) se cumple más que una que solo existe en tu cabeza.',
+  'No necesitas ganar más para empezar a ahorrar. Necesitas decidir cuánto apartar antes de ver lo que sobra.',
+  'El gasto en "calidad de vida" que más rápido crece suele ser el que menos se disfruta con el tiempo.',
+  'Cancelar una suscripción que no usas es un ahorro instantáneo, sin sacrificio real.',
+  'Invertir sin fondo de emergencia es como construir el segundo piso sin haber terminado los cimientos.',
+  'La disciplina financiera no es privarte de todo — es elegir con intención en qué gastas.',
+  'Cada euro que ahorras hoy es una hora de libertad que te compras para el futuro.',
+];
+
+function getTipDelDia(){
+  const dayIndex=Math.floor(Date.now()/86400000); // días desde epoch — cambia una vez al día
+  return TIPS_FINANCIEROS[dayIndex%TIPS_FINANCIEROS.length];
+}
+
 function fmtEur(n) {
   return n.toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:0})+' €';
 }
@@ -224,17 +263,17 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
   const gastos=txMes.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
   const sobra=ingresos-gastos;
 
-  // Observación del coach (local, sin API)
+  // Observación del coach (local, sin API) — mezcla alertas basadas en datos con tips educativos rotativos
   const gastoK_=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').reduce((a,t)=>a+t.importe,0);
   const metaPrincipal=metas.length>0?metas[0]:null;
-  let coachMsg;
+  const tipDelDia=getTipDelDia();
+  let coachMsg, esTip=false;
   if(!perfil&&txs.length===0) coachMsg='Aún no te conozco. Ven a hablar conmigo y empezamos por lo importante: tú.';
   else if(txs.length===0) coachMsg='Ya te conozco — ahora necesito ver tus números. Registra tu primer ingreso en Balance.';
   else if(gastoK_>0&&ingresos>0&&gastoK_>ingresos*0.15) coachMsg=`Llevas ${fmtEur(gastoK_)} en caprichos este mes. Ahí está tu palanca de ahorro.`;
   else if(metaPrincipal&&metaPrincipal.meta>0&&metaPrincipal.actual/metaPrincipal.meta>=0.5) coachMsg=`Más de la mitad de "${metaPrincipal.nombre}" conseguida. No aflojes ahora.`;
-  else if(sobra>0) coachMsg=`Este mes te sobran ${fmtEur(sobra)}. ¿Ya te pagaste a ti primero?`;
   else if(sobra<0) coachMsg='Este mes gastas más de lo que entra. Ven y lo revisamos juntos, sin dramas.';
-  else coachMsg='Cada dato que registras me da más herramientas para ayudarte.';
+  else { coachMsg=tipDelDia; esTip=true; }
 
   const gastoE=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='esencial').reduce((a,t)=>a+t.importe,0);
   const gastoC=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='calidad').reduce((a,t)=>a+t.importe,0);
@@ -269,12 +308,12 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
           </Card>
         )}
 
-        {/* El coach dice */}
+        {/* El coach dice / Tip del día */}
         <Card onClick={()=>setView('flujo')} style={{cursor:'pointer',marginTop:metaPrincipal?0:12,borderColor:GBD,background:GBG}}>
           <div style={{display:'flex',gap:10,alignItems:'flex-start'}}>
-            <div style={{width:30,height:30,borderRadius:9,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,flexShrink:0}}>⚡</div>
+            <div style={{width:30,height:30,borderRadius:9,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,flexShrink:0}}>{esTip?'💡':'⚡'}</div>
             <div style={{flex:1}}>
-              <div style={{fontSize:13,color:ACENTO,textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:3}}>Tu coach dice</div>
+              <div style={{fontSize:13,color:ACENTO,textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:3}}>{esTip?'Tip financiero del día':'Tu coach dice'}</div>
               <div style={{fontSize:13,color:T1,lineHeight:1.5}}>{coachMsg}</div>
             </div>
             <div style={{fontSize:14,color:T3,alignSelf:'center'}}>→</div>
