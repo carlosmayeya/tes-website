@@ -383,11 +383,57 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
 }
 
 // ─── BALANCE ──────────────────────────────────────────────────────────────────
+// ─── GRUPO DE CATEGORÍA COLAPSABLE ────────────────────────────────────────────
+function CategoriaGrupo({grupo,abierta,onToggle,deleteTx}) {
+  const color=grupo.tipo==='ingreso'?ACENTO:'#F87171';
+  const signo=grupo.tipo==='ingreso'?'+':'-';
+  return (
+    <div style={{marginBottom:8,borderRadius:13,background:'rgba(255,255,255,0.03)',border:'0.5px solid rgba(255,255,255,0.05)',overflow:'hidden'}}>
+      <button onClick={onToggle} style={{width:'100%',display:'flex',alignItems:'center',gap:10,padding:'12px 13px',background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif',textAlign:'left'}}>
+        <div style={{width:36,height:36,borderRadius:11,background:'rgba(255,255,255,0.05)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:17,flexShrink:0}}>
+          {ICONOS_CAT[grupo.categoria]||'📌'}
+        </div>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{fontSize:14,color:'#fff',fontWeight:600,marginBottom:1}}>{grupo.categoria}</div>
+          <div style={{fontSize:12,color:T3}}>{grupo.items.length} transacción{grupo.items.length!==1?'es':''}</div>
+        </div>
+        <div style={{textAlign:'right',flexShrink:0,display:'flex',alignItems:'center',gap:8}}>
+          <div style={{fontSize:15,fontWeight:700,color}}>{signo}{fmtEur(grupo.total)}</div>
+          <div style={{fontSize:12,color:T3,transform:abierta?'rotate(180deg)':'none',transition:'transform 0.2s'}}>▾</div>
+        </div>
+      </button>
+      {abierta&&(
+        <div style={{borderTop:'0.5px solid rgba(255,255,255,0.05)',padding:'2px 13px 6px'}}>
+          {[...grupo.items].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(t=>(
+            <div key={t.id} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 0',borderBottom:'0.5px solid rgba(255,255,255,0.04)'}}>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontSize:13,color:'#fff',fontWeight:500,marginBottom:2}}>{t.nombre}</div>
+                <div style={{display:'flex',alignItems:'center',gap:5}}>
+                  <span style={{fontSize:12,color:T3}}>{fmtFecha(t.fecha)}</span>
+                  {t.tipo==='gasto'&&<BadgeTipo tipo={t.tipogasto}/>}
+                  {t.recurrente&&<span style={{fontSize:13,color:T3}}>↻</span>}
+                </div>
+              </div>
+              <div style={{textAlign:'right',flexShrink:0}}>
+                <div style={{fontSize:13,fontWeight:600,color:t.tipo==='ingreso'?ACENTO:'#F87171'}}>
+                  {t.tipo==='ingreso'?'+':'-'}{fmtEur(t.importe)}
+                </div>
+                <button onClick={()=>deleteTx(t.id)} style={{fontSize:13,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif',marginTop:1}}>borrar</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
   const [filtro,setFiltro]=useState('mes');
   const [showReg,setShowReg]=useState(false);
   const [editTx,setEditTx]=useState(null);
   const [pagatePrimero,setPagatePrimero]=useState(null); // tx de ingreso recién guardada
+  const [catAbierta,setCatAbierta]=useState(null); // categoría expandida actualmente
 
   const mes=mesActual();
   const txFiltradas=filtro==='mes'
@@ -402,12 +448,16 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
     setTxs(prev=>{const n=prev.filter(t=>t.id!==id);lsSet('fb_txs',n);return n;});
   }
 
-  // agrupar por fecha
-  const grouped={};
-  [...txFiltradas].sort((a,b)=>b.fecha.localeCompare(a.fecha)).forEach(t=>{
-    if(!grouped[t.fecha]) grouped[t.fecha]=[];
-    grouped[t.fecha].push(t);
+  // agrupar por categoría (separando ingresos y gastos, ordenado por total desc)
+  const gruposMap={};
+  txFiltradas.forEach(t=>{
+    const key=t.tipo+'|'+t.categoria;
+    if(!gruposMap[key]) gruposMap[key]={categoria:t.categoria,tipo:t.tipo,items:[],total:0};
+    gruposMap[key].items.push(t);
+    gruposMap[key].total+=t.importe;
   });
+  const gruposIngreso=Object.values(gruposMap).filter(g=>g.tipo==='ingreso').sort((a,b)=>b.total-a.total);
+  const gruposGasto=Object.values(gruposMap).filter(g=>g.tipo==='gasto').sort((a,b)=>b.total-a.total);
 
   return (
     <div style={{paddingBottom:100}}>
@@ -432,7 +482,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
           </div>
         </Card>
 
-        {Object.keys(grouped).length===0&&(
+        {Object.keys(gruposMap).length===0&&(
           <div style={{textAlign:'center',padding:'40px 0 8px',color:T3}}>
             <div style={{fontSize:32,marginBottom:12}}>💸</div>
             <div style={{fontSize:14,marginBottom:6}}>Sin transacciones</div>
@@ -440,38 +490,23 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
           </div>
         )}
 
-        {Object.entries(grouped).map(([fecha,items])=>{
-          const totalDia=items.reduce((a,t)=>a+(t.tipo==='ingreso'?t.importe:-t.importe),0);
-          return (
-            <div key={fecha}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',margin:'10px 0 6px'}}>
-                <span style={{fontSize:12,color:T3,textTransform:'uppercase',letterSpacing:'0.06em'}}>{fmtFecha(fecha)}</span>
-                <span style={{fontSize:13,fontWeight:600,color:totalDia>=0?ACENTO:'#F87171'}}>{totalDia>=0?'+':''}{fmtEur(totalDia)}</span>
-              </div>
-              {items.map(t=>(
-                <div key={t.id} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 0',borderBottom:'0.5px solid rgba(255,255,255,0.04)'}}>
-                  <div style={{width:32,height:32,borderRadius:10,background:'rgba(255,255,255,0.05)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,flexShrink:0}}>
-                    {ICONOS_CAT[t.categoria]||'📌'}
-                  </div>
-                  <div style={{flex:1,minWidth:0}}>
-                    <div style={{fontSize:13,color:'#fff',fontWeight:500,marginBottom:2}}>{t.nombre}</div>
-                    <div style={{display:'flex',alignItems:'center',gap:5}}>
-                      <span style={{fontSize:12,color:T3}}>{t.categoria}</span>
-                      {t.tipo==='gasto'&&<BadgeTipo tipo={t.tipogasto}/>}
-                      {t.recurrente&&<span style={{fontSize:13,color:T3}}>↻</span>}
-                    </div>
-                  </div>
-                  <div style={{textAlign:'right',flexShrink:0}}>
-                    <div style={{fontSize:13,fontWeight:600,color:t.tipo==='ingreso'?ACENTO:'#F87171'}}>
-                      {t.tipo==='ingreso'?'+':'-'}{fmtEur(t.importe)}
-                    </div>
-                    <button onClick={()=>deleteTx(t.id)} style={{fontSize:13,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif',marginTop:1}}>borrar</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-        })}
+        {gruposIngreso.length>0&&(
+          <div style={{fontSize:12,color:T3,textTransform:'uppercase',letterSpacing:'0.06em',margin:'10px 0 6px'}}>Ingresos</div>
+        )}
+        {gruposIngreso.map(g=>(
+          <CategoriaGrupo key={'ingreso|'+g.categoria} grupo={g} abierta={catAbierta==='ingreso|'+g.categoria}
+            onToggle={()=>setCatAbierta(catAbierta==='ingreso|'+g.categoria?null:'ingreso|'+g.categoria)}
+            deleteTx={deleteTx}/>
+        ))}
+
+        {gruposGasto.length>0&&(
+          <div style={{fontSize:12,color:T3,textTransform:'uppercase',letterSpacing:'0.06em',margin:'14px 0 6px'}}>Gastos</div>
+        )}
+        {gruposGasto.map(g=>(
+          <CategoriaGrupo key={'gasto|'+g.categoria} grupo={g} abierta={catAbierta==='gasto|'+g.categoria}
+            onToggle={()=>setCatAbierta(catAbierta==='gasto|'+g.categoria?null:'gasto|'+g.categoria)}
+            deleteTx={deleteTx}/>
+        ))}
       </div>
 
       {/* FAB — aparece centrado en el vacío y baja a su sitio conforme hay más transacciones */}
@@ -480,25 +515,25 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
         const UMBRAL=6; // a partir de aquí, posición fija normal
         if(n>=UMBRAL){
           return (
-            <button onClick={()=>setShowReg(true)} style={{position:'fixed',bottom:86,right:16,width:48,height:48,borderRadius:15,background:ACENTO,border:'none',color:'#000',fontSize:26,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',zIndex:90,boxShadow:'0 4px 20px rgba(52,211,153,0.3)',transition:'all 0.4s ease'}}>+</button>
+            <button onClick={()=>setShowReg(true)} style={{position:'fixed',bottom:'calc(78px + env(safe-area-inset-bottom, 0px))',right:18,width:56,height:56,borderRadius:18,background:ACENTO,border:'2px solid rgba(0,0,0,0.4)',color:'#000',fontSize:30,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',zIndex:95,boxShadow:'0 6px 24px rgba(52,211,153,0.55), 0 2px 8px rgba(0,0,0,0.4)',transition:'all 0.4s ease'}}>+</button>
           );
         }
         // Interpola entre centro de la pantalla (n=0) y esquina inferior (n=UMBRAL)
         const t=n/UMBRAL; // 0 → 1
-        const topPct=42+t*(88-42); // del 42% al 88% de altura de viewport
+        const topPct=42+t*(84-42); // del 42% al 84% de altura de viewport
         return (
           <button onClick={()=>setShowReg(true)} style={{
             position:'fixed',
             top:`${topPct}vh`,
-            right:n<2?'50%':16,
+            right:n<2?'50%':18,
             transform:n<2?'translateX(50%)':'none',
-            width:n<2?56:48,
-            height:n<2?56:48,
-            borderRadius:n<2?18:15,
-            background:ACENTO,border:'none',color:'#000',
-            fontSize:n<2?30:26,fontWeight:700,cursor:'pointer',
+            width:n<2?60:56,
+            height:n<2?60:56,
+            borderRadius:n<2?20:18,
+            background:ACENTO,border:'2px solid rgba(0,0,0,0.4)',color:'#000',
+            fontSize:n<2?32:30,fontWeight:800,cursor:'pointer',
             display:'flex',alignItems:'center',justifyContent:'center',
-            zIndex:90,boxShadow:'0 4px 24px rgba(52,211,153,0.4)',
+            zIndex:95,boxShadow:'0 6px 28px rgba(52,211,153,0.55), 0 2px 8px rgba(0,0,0,0.4)',
             transition:'all 0.5s cubic-bezier(0.34,1.2,0.64,1)',
             animation:n===0?'pulseFab 2s ease-in-out infinite':'none'
           }}>+</button>
@@ -599,7 +634,7 @@ function RegistroModal({onClose,onSave,inicial=null}) {
 
         {/* Importe grande */}
         <div style={{textAlign:'center',marginBottom:16}}>
-          <input type="number" value={importe} onChange={e=>setImporte(e.target.value)} placeholder="0"
+          <input type="number" inputMode="decimal" pattern="[0-9]*" value={importe} onChange={e=>setImporte(e.target.value)} placeholder="0"
             style={{fontSize:34,fontWeight:800,color:'#fff',background:'none',border:'none',outline:'none',textAlign:'center',width:'100%',letterSpacing:'-0.03em'}}/>
           <div style={{fontSize:12,color:T3,marginTop:-4}}>€</div>
         </div>
@@ -609,12 +644,12 @@ function RegistroModal({onClose,onSave,inicial=null}) {
           <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
             <span style={{fontSize:15}}>📝</span>
             <input value={nombre} onChange={e=>setNombre(e.target.value)} placeholder="Nombre (ej. Alquiler, Salario...)"
-              style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:13,fontFamily:'Inter,sans-serif'}}/>
+              style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif'}}/>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
             <span style={{fontSize:15}}>🏷️</span>
             <select value={categoria} onChange={e=>setCategoria(e.target.value)}
-              style={{flex:1,background:'none',border:'none',outline:'none',color:categoria?'#fff':T3,fontSize:13,fontFamily:'Inter,sans-serif',cursor:'pointer'}}>
+              style={{flex:1,background:'none',border:'none',outline:'none',color:categoria?'#fff':T3,fontSize:16,fontFamily:'Inter,sans-serif',cursor:'pointer'}}>
               <option value="" style={{background:'#111'}}>Categoría</option>
               {cats.map(c=><option key={c} value={c} style={{background:'#111'}}>{c}</option>)}
             </select>
@@ -622,7 +657,7 @@ function RegistroModal({onClose,onSave,inicial=null}) {
           <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
             <span style={{fontSize:15}}>📅</span>
             <input type="date" value={fecha} onChange={e=>setFecha(e.target.value)}
-              style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:13,fontFamily:'Inter,sans-serif',cursor:'pointer'}}/>
+              style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',cursor:'pointer'}}/>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px'}}>
             <span style={{fontSize:15}}>↻</span>
@@ -708,7 +743,7 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
           <div style={{fontSize:12,color:T3,marginBottom:4}}>Saldo actual</div>
           {editSaldo?(
             <div style={{display:'flex',gap:8,alignItems:'center',justifyContent:'center',margin:'4px 0'}}>
-              <input type="number" value={newSaldo} onChange={e=>setNewSaldo(e.target.value)} autoFocus
+              <input type="number" inputMode="decimal" value={newSaldo} onChange={e=>setNewSaldo(e.target.value)} autoFocus
                 style={{fontSize:24,fontWeight:800,color:'#fff',background:'none',border:'none',outline:'none',textAlign:'center',width:140,fontFamily:'Inter,sans-serif'}}/>
               <span style={{fontSize:16,color:T2}}>€</span>
             </div>
@@ -863,15 +898,15 @@ function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo}) {
               ))}
             </div>
             <input value={nombre} onChange={e=>setNombre(e.target.value)} placeholder="Nombre de la meta"
-              style={{width:'100%',background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:13,marginBottom:8,fontFamily:'Inter,sans-serif'}}/>
+              style={{width:'100%',background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:16,marginBottom:8,fontFamily:'Inter,sans-serif'}}/>
             <div style={{display:'flex',gap:8,marginBottom:8}}>
-              <input type="number" value={meta} onChange={e=>setMeta(e.target.value)} placeholder="Meta total (€)"
-                style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:13,fontFamily:'Inter,sans-serif'}}/>
-              <input type="number" value={actual} onChange={e=>setActual(e.target.value)} placeholder="Ya tengo (€)"
-                style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:13,fontFamily:'Inter,sans-serif'}}/>
+              <input type="number" inputMode="decimal" value={meta} onChange={e=>setMeta(e.target.value)} placeholder="Meta total (€)"
+                style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif'}}/>
+              <input type="number" inputMode="decimal" value={actual} onChange={e=>setActual(e.target.value)} placeholder="Ya tengo (€)"
+                style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif'}}/>
             </div>
             <input value={fecha} onChange={e=>setFecha(e.target.value)} placeholder="Fecha objetivo (ej. dic 2026)"
-              style={{width:'100%',background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:13,marginBottom:10,fontFamily:'Inter,sans-serif'}}/>
+              style={{width:'100%',background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:16,marginBottom:10,fontFamily:'Inter,sans-serif'}}/>
             <div style={{display:'flex',gap:8}}>
               <button onClick={()=>setShowForm(false)} style={{flex:1,padding:10,borderRadius:9,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',color:T2,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Cancelar</button>
               <button onClick={guardarMeta} style={{flex:2,padding:10,borderRadius:9,background:ACENTO,border:'none',color:'#000',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Guardar meta</button>
