@@ -383,8 +383,64 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
 }
 
 // ─── BALANCE ──────────────────────────────────────────────────────────────────
+// ─── FILA DE TRANSACCIÓN CON SWIPE (deslizar para editar/borrar) ─────────────
+function TxRow({t,onEdit,onDelete}) {
+  const [dx,setDx]=useState(0);
+  const [dragging,setDragging]=useState(false);
+  const startX=useRef(0);
+  const startDx=useRef(0);
+  const ACTIONS_W=136; // ancho total de los dos botones de acción
+
+  function onTouchStart(e){
+    startX.current=e.touches[0].clientX;
+    startDx.current=dx;
+    setDragging(true);
+  }
+  function onTouchMove(e){
+    const delta=e.touches[0].clientX-startX.current;
+    let next=startDx.current+delta;
+    next=Math.max(-ACTIONS_W,Math.min(0,next));
+    setDx(next);
+  }
+  function onTouchEnd(){
+    setDragging(false);
+    // Snap: si pasó de la mitad, queda abierto; si no, cierra
+    setDx(prev=>prev<-ACTIONS_W/2?-ACTIONS_W:0);
+  }
+
+  return (
+    <div style={{position:'relative',overflow:'hidden',borderBottom:'0.5px solid rgba(255,255,255,0.04)'}}>
+      {/* Acciones reveladas al deslizar */}
+      <div style={{position:'absolute',top:0,right:0,bottom:0,width:ACTIONS_W,display:'flex'}}>
+        <button onClick={()=>{onEdit(t);setDx(0);}} style={{flex:1,background:'rgba(96,165,250,0.15)',border:'none',color:'#60A5FA',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif',display:'flex',alignItems:'center',justifyContent:'center'}}>Editar</button>
+        <button onClick={()=>{onDelete(t.id);setDx(0);}} style={{flex:1,background:'rgba(248,113,113,0.18)',border:'none',color:'#F87171',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif',display:'flex',alignItems:'center',justifyContent:'center'}}>Borrar</button>
+      </div>
+      {/* Fila deslizable */}
+      <div
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        style={{display:'flex',alignItems:'center',gap:10,padding:'9px 0',background:'#0a0a0a',transform:`translateX(${dx}px)`,transition:dragging?'none':'transform 0.25s ease-out',touchAction:'pan-y'}}>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{fontSize:13,color:'#fff',fontWeight:500,marginBottom:2}}>{t.nombre}</div>
+          <div style={{display:'flex',alignItems:'center',gap:5}}>
+            <span style={{fontSize:12,color:T3}}>{fmtFecha(t.fecha)}</span>
+            {t.tipo==='gasto'&&<BadgeTipo tipo={t.tipogasto}/>}
+            {t.recurrente&&<span style={{fontSize:13,color:T3}}>↻</span>}
+          </div>
+        </div>
+        <div style={{textAlign:'right',flexShrink:0}}>
+          <div style={{fontSize:13,fontWeight:600,color:t.tipo==='ingreso'?ACENTO:'#F87171'}}>
+            {t.tipo==='ingreso'?'+':'-'}{fmtEur(t.importe)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── GRUPO DE CATEGORÍA COLAPSABLE ────────────────────────────────────────────
-function CategoriaGrupo({grupo,abierta,onToggle,deleteTx}) {
+function CategoriaGrupo({grupo,abierta,onToggle,onEdit,deleteTx}) {
   const color=grupo.tipo==='ingreso'?ACENTO:'#F87171';
   const signo=grupo.tipo==='ingreso'?'+':'-';
   return (
@@ -404,23 +460,9 @@ function CategoriaGrupo({grupo,abierta,onToggle,deleteTx}) {
       </button>
       {abierta&&(
         <div style={{borderTop:'0.5px solid rgba(255,255,255,0.05)',padding:'2px 13px 6px'}}>
+          <div style={{fontSize:11,color:T3,textAlign:'center',padding:'6px 0 2px'}}>← Desliza una transacción para editar o borrar</div>
           {[...grupo.items].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(t=>(
-            <div key={t.id} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 0',borderBottom:'0.5px solid rgba(255,255,255,0.04)'}}>
-              <div style={{flex:1,minWidth:0}}>
-                <div style={{fontSize:13,color:'#fff',fontWeight:500,marginBottom:2}}>{t.nombre}</div>
-                <div style={{display:'flex',alignItems:'center',gap:5}}>
-                  <span style={{fontSize:12,color:T3}}>{fmtFecha(t.fecha)}</span>
-                  {t.tipo==='gasto'&&<BadgeTipo tipo={t.tipogasto}/>}
-                  {t.recurrente&&<span style={{fontSize:13,color:T3}}>↻</span>}
-                </div>
-              </div>
-              <div style={{textAlign:'right',flexShrink:0}}>
-                <div style={{fontSize:13,fontWeight:600,color:t.tipo==='ingreso'?ACENTO:'#F87171'}}>
-                  {t.tipo==='ingreso'?'+':'-'}{fmtEur(t.importe)}
-                </div>
-                <button onClick={()=>deleteTx(t.id)} style={{fontSize:13,color:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif',marginTop:1}}>borrar</button>
-              </div>
-            </div>
+            <TxRow key={t.id} t={t} onEdit={onEdit} onDelete={deleteTx}/>
           ))}
         </div>
       )}
@@ -496,7 +538,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
         {gruposIngreso.map(g=>(
           <CategoriaGrupo key={'ingreso|'+g.categoria} grupo={g} abierta={catAbierta==='ingreso|'+g.categoria}
             onToggle={()=>setCatAbierta(catAbierta==='ingreso|'+g.categoria?null:'ingreso|'+g.categoria)}
-            deleteTx={deleteTx}/>
+            onEdit={setEditTx} deleteTx={deleteTx}/>
         ))}
 
         {gruposGasto.length>0&&(
@@ -505,7 +547,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
         {gruposGasto.map(g=>(
           <CategoriaGrupo key={'gasto|'+g.categoria} grupo={g} abierta={catAbierta==='gasto|'+g.categoria}
             onToggle={()=>setCatAbierta(catAbierta==='gasto|'+g.categoria?null:'gasto|'+g.categoria)}
-            deleteTx={deleteTx}/>
+            onEdit={setEditTx} deleteTx={deleteTx}/>
         ))}
       </div>
 
@@ -541,6 +583,8 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
       })()}
 
       {showReg&&<RegistroModal onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);if(tx.tipo==='ingreso')setPagatePrimero(tx);}}/>}
+
+      {editTx&&<RegistroModal inicial={editTx} onClose={()=>setEditTx(null)} onSave={tx=>{setTxs(prev=>{const n=prev.map(x=>x.id===editTx.id?{...tx,id:editTx.id}:x);lsSet('fb_txs',n);return n;});setEditTx(null);}}/>}
 
       {pagatePrimero&&(
         <PagatePrimeroSheet
@@ -619,7 +663,7 @@ function RegistroModal({onClose,onSave,inicial=null}) {
         {/* Header */}
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
           <button onClick={onClose} style={{background:'none',border:'none',color:T2,fontSize:13,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Cancelar</button>
-          <span style={{fontSize:14,fontWeight:700,color:'#fff'}}>Nueva transacción</span>
+          <span style={{fontSize:14,fontWeight:700,color:'#fff'}}>{inicial?'Editar transacción':'Nueva transacción'}</span>
           <button onClick={guardar} style={{background:'none',border:'none',color:ACENTO,fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Guardar</button>
         </div>
 
