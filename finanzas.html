@@ -140,7 +140,7 @@ function TabBar({view,setView,msgCount}) {
     {id:'dashboard',icon:'🏠',label:'Inicio'},
     {id:'balance',icon:'⚖️',label:'Balance'},
     {id:'metas',icon:'🎯',label:'Metas'},
-    {id:'flujo',icon:'💬',label:'FLUJO'},
+    {id:'flujo',icon:'💬',label:'FARO'},
   ];
   return (
     <div style={{position:'fixed',bottom:0,left:0,right:0,display:'flex',borderTop:'0.5px solid rgba(255,255,255,0.07)',background:'rgba(0,0,0,0.97)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',zIndex:100,paddingBottom:'env(safe-area-inset-bottom,6px)'}}>
@@ -169,7 +169,7 @@ function Nav({title,sub,right}) {
   );
 }
 
-// ─── PANTALLA DE BIENVENIDA FLUJO ─────────────────────────────────────────────
+// ─── PANTALLA DE BIENVENIDA FARO ─────────────────────────────────────────────
 function HomeFlujo({onDone,setView}) {
   return (
     <div style={{
@@ -185,7 +185,7 @@ function HomeFlujo({onDone,setView}) {
       <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
         <div style={{width:56,height:56,borderRadius:16,background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16,fontSize:26}}>⚡</div>
         <div style={{fontSize:9,color:ACENTO,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:8}}>Finanzas Brutales</div>
-        <div style={{fontSize:24,fontWeight:800,color:'#fff',letterSpacing:'-0.03em',lineHeight:1.2,marginBottom:8}}>Hola, soy FLUJO</div>
+        <div style={{fontSize:24,fontWeight:800,color:'#fff',letterSpacing:'-0.03em',lineHeight:1.2,marginBottom:8}}>Hola, soy FARO</div>
         <div style={{fontSize:13,color:T2,lineHeight:1.6,maxWidth:260}}>Tu coach financiero personal. Estoy aquí para ayudarte a tomar control de tu dinero — de verdad.</div>
       </div>
       <div style={{width:'100%',display:'flex',flexDirection:'column',gap:10}}>
@@ -202,7 +202,7 @@ function HomeFlujo({onDone,setView}) {
       </div>
       <div style={{width:'100%',display:'flex',flexDirection:'column',gap:10}}>
         <button onClick={()=>setView('flujo')} style={{width:'100%',padding:15,borderRadius:13,background:ACENTO,border:'none',color:'#000',fontSize:14,fontWeight:800,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
-          Empezar con FLUJO →
+          Empezar con FARO →
         </button>
         <button onClick={onDone} style={{width:'100%',padding:12,borderRadius:13,background:'transparent',border:'0.5px solid rgba(255,255,255,0.1)',color:T2,fontSize:13,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
           Explorar la app primero
@@ -371,7 +371,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
         <div onClick={()=>setView('flujo')} style={{display:'flex',alignItems:'center',gap:12,padding:'12px 14px',background:GBG,border:'0.5px solid '+GBD,borderRadius:14,cursor:'pointer',marginTop:4}}>
           <div style={{width:36,height:36,borderRadius:10,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',color:'#000',fontSize:18,flexShrink:0}}>⚡</div>
           <div style={{flex:1}}>
-            <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>Hablar con FLUJO</div>
+            <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>Hablar con FARO</div>
             <div style={{fontSize:10,color:T3}}>Tu asesor financiero personal</div>
           </div>
           <span style={{fontSize:16,color:'rgba(52,211,153,0.4)'}}>→</span>
@@ -965,7 +965,7 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
     return ctx;
   }
 
-  const SYSTEM_FLUJO=`Eres FLUJO, el coach financiero personal de Finanzas Brutales. No eres un chatbot de finanzas — eres un entrenador personal del dinero. Tu misión no es solo dar estrategia: es emocionar al usuario, mantenerlo motivado y acompañarlo hasta que sus finanzas cambien de verdad.
+  const SYSTEM_FLUJO=`Eres FARO, el coach financiero personal de Finanzas Brutales. No eres un chatbot de finanzas — eres un entrenador personal del dinero. Tu misión no es solo dar estrategia: es emocionar al usuario, mantenerlo motivado y acompañarlo hasta que sus finanzas cambien de verdad.
 
 Combinas rigor financiero con calor humano real. Sabes cuándo empujar y cuándo escuchar. Celebras los avances aunque sean pequeños. Nunca juzgas el pasado — lo usas como punto de partida.
 
@@ -1052,9 +1052,9 @@ REGLAS DE COMUNICACIÓN (siempre)
 — Nunca dices "no puedo" — siempre orientas.
 — Sobre inversión: educas, no recomiendas activos. Nunca sin fondo completo.
 
-CUANDO QUEDAN POCOS MENSAJES: menciona de forma natural que puede (1) recargar 500 mensajes más por 19€, o (2) llevarse las instrucciones de FLUJO a Claude, ChatGPT o Grok con su propia cuenta.
+CUANDO QUEDAN POCOS MENSAJES: menciona de forma natural que puede (1) recargar 500 mensajes más por 19€, o (2) llevarse las instrucciones de FARO a Claude, ChatGPT o Grok con su propia cuenta.
 
-Respondes siempre como FLUJO.`;
+Respondes siempre como FARO.`;
 
   const caprichos=txs.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').length;
   const OPENING=perfil
@@ -1166,7 +1166,7 @@ Respondes siempre como FLUJO.`;
         <div style={{display:'flex',alignItems:'center',gap:8}}>
           <div style={{width:28,height:28,borderRadius:8,background:ACENTO,display:'flex',alignItems:'center',justifyContent:'center',color:'#000',fontSize:14}}>⚡</div>
           <div>
-            <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>FLUJO</div>
+            <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>FARO</div>
             <div style={{fontSize:9,color:ACENTO}}>en línea</div>
           </div>
         </div>
@@ -1187,7 +1187,7 @@ Respondes siempre como FLUJO.`;
           <textarea
             id="flujo-input"
             style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:11,padding:'10px 13px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',resize:'none',outline:'none',height:44,lineHeight:1.4,maxHeight:100}}
-            placeholder="Escribe a FLUJO..."
+            placeholder="Escribe a FARO..."
             value={input}
             onChange={e=>setInput(e.target.value)}
             onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}}
