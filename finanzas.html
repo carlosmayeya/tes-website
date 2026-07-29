@@ -120,6 +120,209 @@ function getTipDelDia(){
   return TIPS_FINANCIEROS[dayIndex%TIPS_FINANCIEROS.length];
 }
 
+// ─── AJUSTES: copia de seguridad, perfil, datos ──────────────────────────────
+const BACKUP_KEYS=['fb_txs','fb_metas','fb_fondo','fb_perfil','fb_cuentas','fb_chat','fb_msgcount','fb_onboarding','fb_ultima_cuenta'];
+
+function AjustesSheet({onClose,perfil,setPerfil}) {
+  const [msg,setMsg]=useState('');
+  const [confirmarBorrado,setConfirmarBorrado]=useState(false);
+  const fileRef=useRef(null);
+
+  function exportar(){
+    try{
+      const data={_app:'Finanzas Brutales',_version:1,_fecha:new Date().toISOString()};
+      BACKUP_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!==null)data[k]=v;});
+      const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=`finanzas-brutales-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      setMsg('✓ Copia descargada. Guárdala en un sitio seguro.');
+    }catch(e){setMsg('No se pudo exportar: '+e.message);}
+  }
+
+  function importar(e){
+    const file=e.target.files&&e.target.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=()=>{
+      try{
+        const data=JSON.parse(reader.result);
+        if(data._app!=='Finanzas Brutales') throw new Error('El archivo no es una copia válida');
+        BACKUP_KEYS.forEach(k=>{if(data[k]!==undefined)localStorage.setItem(k,data[k]);});
+        setMsg('✓ Datos restaurados. Recargando...');
+        setTimeout(()=>window.location.reload(),900);
+      }catch(err){setMsg('Error al importar: '+err.message);}
+    };
+    reader.readAsText(file);
+  }
+
+  function borrarTodo(){
+    BACKUP_KEYS.forEach(k=>localStorage.removeItem(k));
+    window.location.reload();
+  }
+
+  return (
+    <div style={{position:'fixed',inset:0,zIndex:200,display:'flex',flexDirection:'column'}}>
+      <div onClick={onClose} style={{flex:1,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(4px)'}}/>
+      <div style={{background:'#0a0a0a',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:'20px 20px 0 0',padding:'16px 16px 32px',paddingBottom:'max(32px, env(safe-area-inset-bottom))',animation:'slideUp 0.25s ease',maxHeight:'85vh',overflowY:'auto'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:14}}>
+          <span style={{fontSize:14,fontWeight:700,color:'#fff'}}>Ajustes y copia de seguridad</span>
+          <button onClick={onClose} style={{background:'none',border:'none',color:ACENTO,fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Listo</button>
+        </div>
+
+        <div style={{background:'rgba(251,191,36,0.06)',border:'0.5px solid rgba(251,191,36,0.25)',borderRadius:12,padding:'11px 13px',marginBottom:14}}>
+          <div style={{fontSize:12,color:'#FBBF24',lineHeight:1.55}}>
+            <strong>Importante:</strong> tus datos viven solo en este dispositivo. Si borras el historial del navegador o cambias de móvil, los perderás. Descarga una copia de vez en cuando.
+          </div>
+        </div>
+
+        <button onClick={exportar} style={{width:'100%',padding:13,borderRadius:12,background:ACENTO,border:'none',color:'#000',fontSize:14,fontWeight:800,cursor:'pointer',fontFamily:'Inter,sans-serif',marginBottom:8}}>
+          ⬇ Descargar copia de seguridad
+        </button>
+
+        <button onClick={()=>fileRef.current&&fileRef.current.click()} style={{width:'100%',padding:12,borderRadius:12,background:'rgba(255,255,255,0.05)',border:'0.5px solid rgba(255,255,255,0.1)',color:T1,fontSize:13,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif',marginBottom:8}}>
+          ⬆ Restaurar desde archivo
+        </button>
+        <input ref={fileRef} type="file" accept="application/json,.json" onChange={importar} style={{display:'none'}}/>
+
+        {msg&&<div style={{fontSize:12,color:msg.startsWith('✓')?ACENTO:'#F87171',textAlign:'center',padding:'8px 0',lineHeight:1.5}}>{msg}</div>}
+
+        {perfil&&(
+          <div style={{marginTop:14}}>
+            <div style={{fontSize:12,color:T3,textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:8}}>Lo que FARO sabe de ti</div>
+            <div style={{background:'rgba(255,255,255,0.03)',border:'0.5px solid rgba(255,255,255,0.06)',borderRadius:12,padding:'12px 13px',marginBottom:8}}>
+              {[
+                ['Tu motivación',perfil.motivacion],
+                ['Tu mayor frustración',perfil.dolor],
+                ['Tu meta',perfil.meta],
+                ['Ingresos declarados',perfil.ingresos],
+                ['Gastos fijos',perfil.gastos_fijos],
+                ['Historial',perfil.historial],
+                ['Tiempo disponible',perfil.compromiso],
+              ].filter(([,v])=>v).map(([k,v])=>(
+                <div key={k} style={{marginBottom:8}}>
+                  <div style={{fontSize:11,color:T3,marginBottom:2}}>{k}</div>
+                  <div style={{fontSize:13,color:T1,lineHeight:1.5}}>{v}</div>
+                </div>
+              ))}
+            </div>
+            <button onClick={()=>{setPerfil(null);localStorage.removeItem('fb_perfil');localStorage.removeItem('fb_chat');setMsg('✓ Perfil borrado. FARO volverá a entrevistarte.');}}
+              style={{width:'100%',padding:11,borderRadius:11,background:'none',border:'0.5px solid rgba(255,255,255,0.1)',color:T2,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+              Rehacer la entrevista con FARO
+            </button>
+          </div>
+        )}
+
+        <div style={{marginTop:18,paddingTop:14,borderTop:'0.5px solid rgba(255,255,255,0.06)'}}>
+          {!confirmarBorrado?(
+            <button onClick={()=>setConfirmarBorrado(true)} style={{width:'100%',padding:11,borderRadius:11,background:'none',border:'0.5px solid rgba(248,113,113,0.25)',color:'#F87171',fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+              Borrar todos mis datos
+            </button>
+          ):(
+            <div>
+              <div style={{fontSize:12,color:T2,textAlign:'center',marginBottom:8,lineHeight:1.5}}>Esto borra transacciones, metas, fondo, cuentas y perfil. No se puede deshacer.</div>
+              <div style={{display:'flex',gap:8}}>
+                <button onClick={()=>setConfirmarBorrado(false)} style={{flex:1,padding:11,borderRadius:11,background:'rgba(255,255,255,0.05)',border:'none',color:T1,fontSize:13,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Cancelar</button>
+                <button onClick={borrarTodo} style={{flex:1,padding:11,borderRadius:11,background:'rgba(248,113,113,0.15)',border:'0.5px solid rgba(248,113,113,0.35)',color:'#F87171',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Sí, borrar</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── CUENTAS: cálculo de proyección ──────────────────────────────────────────
+// Para cada cuenta: saldo actual − gastos recurrentes asignados = lo que quedará
+function proyectarCuentas(cuentas,txs){
+  return cuentas.map(c=>{
+    const recurrentes=txs.filter(t=>t.tipo==='gasto'&&t.recurrente&&t.cuenta===c.id);
+    const cargos=recurrentes.reduce((a,t)=>a+t.importe,0);
+    const ingresosRec=txs.filter(t=>t.tipo==='ingreso'&&t.recurrente&&t.cuenta===c.id).reduce((a,t)=>a+t.importe,0);
+    const restante=c.saldo+ingresosRec-cargos;
+    return {...c,cargos,ingresosRec,restante,deficit:restante<0?Math.abs(restante):0,nRecurrentes:recurrentes.length};
+  });
+}
+
+// ─── GESTOR DE CUENTAS ───────────────────────────────────────────────────────
+function CuentasSheet({cuentas,setCuentas,txs,onClose}) {
+  const [nombre,setNombre]=useState('');
+  const [saldo,setSaldo]=useState('');
+  const proy=proyectarCuentas(cuentas,txs);
+
+  function añadir(){
+    if(!nombre.trim()) return;
+    const nueva={id:Date.now().toString(),nombre:nombre.trim(),saldo:parseFloat(saldo)||0};
+    const n=[...cuentas,nueva];
+    setCuentas(n);lsSet('fb_cuentas',n);
+    setNombre('');setSaldo('');
+  }
+  function actualizarSaldo(id,v){
+    const n=cuentas.map(c=>c.id===id?{...c,saldo:parseFloat(v)||0}:c);
+    setCuentas(n);lsSet('fb_cuentas',n);
+  }
+  function borrar(id){
+    const n=cuentas.filter(c=>c.id!==id);
+    setCuentas(n);lsSet('fb_cuentas',n);
+  }
+
+  return (
+    <div style={{position:'fixed',inset:0,zIndex:200,display:'flex',flexDirection:'column'}}>
+      <div onClick={onClose} style={{flex:1,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(4px)'}}/>
+      <div style={{background:'#0a0a0a',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:'20px 20px 0 0',padding:'16px 16px 32px',paddingBottom:'max(32px, env(safe-area-inset-bottom))',animation:'slideUp 0.25s ease',maxHeight:'85vh',overflowY:'auto'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:6}}>
+          <span style={{fontSize:14,fontWeight:700,color:'#fff'}}>Mis cuentas</span>
+          <button onClick={onClose} style={{background:'none',border:'none',color:ACENTO,fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Listo</button>
+        </div>
+        <div style={{fontSize:12,color:T3,lineHeight:1.5,marginBottom:14}}>Solo nombres y saldos que tú escribes. La app nunca pide ni guarda datos bancarios reales.</div>
+
+        {proy.map(c=>(
+          <div key={c.id} style={{background:'rgba(255,255,255,0.03)',border:'0.5px solid '+(c.deficit>0?'rgba(248,113,113,0.35)':'rgba(255,255,255,0.06)'),borderRadius:13,padding:'12px 13px',marginBottom:8}}>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:6}}>
+              <span style={{fontSize:14,fontWeight:700,color:'#fff'}}>🏦 {c.nombre}</span>
+              <button onClick={()=>borrar(c.id)} style={{background:'none',border:'none',color:T3,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Borrar</button>
+            </div>
+            <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8}}>
+              <span style={{fontSize:12,color:T3,flexShrink:0}}>Saldo actual</span>
+              <input type="number" inputMode="decimal" defaultValue={c.saldo} onBlur={e=>actualizarSaldo(c.id,e.target.value)}
+                style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'8px 11px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',outline:'none'}}/>
+              <span style={{fontSize:13,color:T2}}>€</span>
+            </div>
+            {c.nRecurrentes>0?(
+              <div style={{fontSize:12,lineHeight:1.5,color:c.deficit>0?'#F87171':T3}}>
+                {c.nRecurrentes} cargo{c.nRecurrentes!==1?'s':''} recurrente{c.nRecurrentes!==1?'s':''} · {fmtEur(c.cargos)}/mes
+                {c.ingresosRec>0&&` · +${fmtEur(c.ingresosRec)} de ingresos`}
+                <br/>
+                {c.deficit>0
+                  ? <strong>⚠️ Faltan {fmtEur(c.deficit)} para cubrir los cargos</strong>
+                  : <span style={{color:ACENTO}}>✓ Cubierto — quedarían {fmtEur(c.restante)}</span>}
+              </div>
+            ):(
+              <div style={{fontSize:12,color:T3}}>Sin cargos recurrentes asignados todavía</div>
+            )}
+          </div>
+        ))}
+
+        <div style={{background:'rgba(255,255,255,0.03)',border:'0.5px dashed rgba(255,255,255,0.12)',borderRadius:13,padding:'12px 13px',marginTop:4}}>
+          <div style={{fontSize:12,color:T3,marginBottom:8}}>Añadir cuenta</div>
+          <input value={nombre} onChange={e=>setNombre(e.target.value)} placeholder="Nombre (ej. Nómina, Ahorro, Compartida)"
+            style={{width:'100%',background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',marginBottom:8,outline:'none'}}/>
+          <div style={{display:'flex',gap:8}}>
+            <input type="number" inputMode="decimal" value={saldo} onChange={e=>setSaldo(e.target.value)} placeholder="Saldo actual (€)"
+              style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'10px 12px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',outline:'none'}}/>
+            <button onClick={añadir} disabled={!nombre.trim()}
+              style={{padding:'10px 18px',borderRadius:9,background:nombre.trim()?ACENTO:'rgba(52,211,153,0.15)',border:'none',color:nombre.trim()?'#000':'rgba(255,255,255,0.25)',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Añadir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── BARRAS DE FONDO DE EMERGENCIA POR TRAMOS (3 / 6 / 12 meses) ─────────────
 function FondoBarras({fondoSaldo,f3,f6,f12,compact=false}) {
   if(f3<=0) return null;
@@ -289,7 +492,8 @@ function HomeFlujo({onDone,setView}) {
 
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
-function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
+function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil}) {
+  const [showAjustes,setShowAjustes]=useState(false);
   const mes=mesActual();
   const txMes=txs.filter(t=>t.fecha.startsWith(mes));
   const ingresos=txMes.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
@@ -323,7 +527,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
   return (
     <div style={{paddingBottom:100}}>
       <Nav title={mNow.charAt(0).toUpperCase()+mNow.slice(1)} sub="Tu resumen financiero"
-        right={<div style={{width:32,height:32,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',color:ACENTO,fontSize:13,fontWeight:700}}>C</div>}/>
+        right={<button onClick={()=>setShowAjustes(true)} style={{width:34,height:34,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>⚙️</button>}/>
       <div style={{padding:'0 14px'}}>
         {/* Meta principal — lo primero que ve */}
         {metaPrincipal&&(
@@ -447,6 +651,8 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil}) {
           <span style={{fontSize:16,color:'rgba(52,211,153,0.4)'}}>→</span>
         </div>
       </div>
+
+      {showAjustes&&<AjustesSheet onClose={()=>setShowAjustes(false)} perfil={perfil} setPerfil={setPerfil}/>}
     </div>
   );
 }
@@ -539,8 +745,10 @@ function CategoriaGrupo({grupo,abierta,onToggle,onEdit,deleteTx}) {
   );
 }
 
-function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
+function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cuentas,setCuentas}) {
   const [filtro,setFiltro]=useState('mes');
+  const [showCuentas,setShowCuentas]=useState(false);
+  const [filtroCuenta,setFiltroCuenta]=useState('');
   const [showReg,setShowReg]=useState(false);
   const [editTx,setEditTx]=useState(null);
   const [pagatePrimero,setPagatePrimero]=useState(null); // tx de ingreso recién guardada
@@ -551,8 +759,11 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
     ? txs.filter(t=>t.fecha.startsWith(mes))
     : txs;
 
-  const ingresos=txFiltradas.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
-  const gastos=txFiltradas.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
+  const txCuenta=filtroCuenta?txFiltradas.filter(t=>t.cuenta===filtroCuenta):txFiltradas;
+  const proyCuentas=proyectarCuentas(cuentas,txs);
+  const cuentasEnRiesgo=proyCuentas.filter(c=>c.deficit>0);
+  const ingresos=txCuenta.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
+  const gastos=txCuenta.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
   const sobra=ingresos-gastos;
 
   function deleteTx(id) {
@@ -561,7 +772,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
 
   // agrupar por categoría (separando ingresos y gastos, ordenado por total desc)
   const gruposMap={};
-  txFiltradas.forEach(t=>{
+  txCuenta.forEach(t=>{
     const key=t.tipo+'|'+t.categoria;
     if(!gruposMap[key]) gruposMap[key]={categoria:t.categoria,tipo:t.tipo,items:[],total:0};
     gruposMap[key].items.push(t);
@@ -574,7 +785,10 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
     <div style={{paddingBottom:100}}>
       <Nav title="Balance" sub={filtro==='mes'?'Este mes':'Todo el historial'}
         right={
-          <div style={{display:'flex',gap:5}}>
+          <div style={{display:'flex',gap:5,alignItems:'center'}}>
+            <button onClick={()=>setShowCuentas(true)} style={{background:cuentasEnRiesgo.length>0?'rgba(248,113,113,0.15)':'rgba(255,255,255,0.06)',border:'none',borderRadius:8,padding:'5px 9px',fontSize:14,cursor:'pointer',fontFamily:'Inter,sans-serif',position:'relative'}}>
+              🏦{cuentasEnRiesgo.length>0&&<span style={{position:'absolute',top:2,right:2,width:7,height:7,borderRadius:'50%',background:'#F87171'}}/>}
+            </button>
             {['mes','todo'].map(f=>(
               <button key={f} onClick={()=>setFiltro(f)} style={{background:filtro===f?'rgba(255,255,255,0.08)':'none',border:'none',color:filtro===f?'#fff':T3,borderRadius:7,padding:'3px 9px',fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
                 {f==='mes'?'Mes':'Todo'}
@@ -592,6 +806,26 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
             <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Sobra</div><div style={{fontSize:16,fontWeight:700,color:sobra>=0?ACENTO:'#F87171'}}>{sobra>=0?'+':''}{fmtEur(sobra)}</div></div>
           </div>
         </Card>
+
+        {cuentasEnRiesgo.length>0&&(
+          <div onClick={()=>setShowCuentas(true)} style={{background:'rgba(248,113,113,0.08)',border:'0.5px solid rgba(248,113,113,0.3)',borderRadius:13,padding:'12px 13px',marginBottom:10,cursor:'pointer'}}>
+            <div style={{fontSize:13,fontWeight:700,color:'#F87171',marginBottom:3}}>⚠️ Riesgo de impago</div>
+            {cuentasEnRiesgo.map(c=>(
+              <div key={c.id} style={{fontSize:12,color:T2,lineHeight:1.5}}>A <strong style={{color:'#fff'}}>{c.nombre}</strong> le faltan {fmtEur(c.deficit)} para cubrir sus cargos de este mes.</div>
+            ))}
+          </div>
+        )}
+
+        {cuentas.length>0&&(
+          <div style={{display:'flex',gap:6,overflowX:'auto',paddingBottom:8,marginBottom:4}}>
+            <button onClick={()=>setFiltroCuenta('')} style={{flexShrink:0,padding:'6px 12px',borderRadius:9,background:!filtroCuenta?'rgba(255,255,255,0.1)':'none',border:'0.5px solid rgba(255,255,255,0.08)',color:!filtroCuenta?'#fff':T3,fontSize:12,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Todas</button>
+            {proyCuentas.map(c=>(
+              <button key={c.id} onClick={()=>setFiltroCuenta(c.id)} style={{flexShrink:0,padding:'6px 12px',borderRadius:9,background:filtroCuenta===c.id?'rgba(255,255,255,0.1)':'none',border:'0.5px solid '+(c.deficit>0?'rgba(248,113,113,0.35)':'rgba(255,255,255,0.08)'),color:filtroCuenta===c.id?'#fff':(c.deficit>0?'#F87171':T3),fontSize:12,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+                {c.nombre}{c.deficit>0?' ⚠️':''}
+              </button>
+            ))}
+          </div>
+        )}
 
         {Object.keys(gruposMap).length===0&&(
           <div style={{textAlign:'center',padding:'40px 0 8px',color:T3}}>
@@ -622,7 +856,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
 
       {/* FAB — aparece centrado en el vacío y baja a su sitio conforme hay más transacciones */}
       {(() => {
-        const n=txFiltradas.length;
+        const n=txCuenta.length;
         const UMBRAL=6; // a partir de aquí, posición fija normal
         if(n>=UMBRAL){
           return (
@@ -651,9 +885,11 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas}) {
         );
       })()}
 
-      {showReg&&<RegistroModal onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);if(tx.tipo==='ingreso')setPagatePrimero(tx);}}/>}
+      {showCuentas&&<CuentasSheet cuentas={cuentas} setCuentas={setCuentas} txs={txs} onClose={()=>setShowCuentas(false)}/>}
 
-      {editTx&&<RegistroModal inicial={editTx} onClose={()=>setEditTx(null)} onSave={tx=>{setTxs(prev=>{const n=prev.map(x=>x.id===editTx.id?{...tx,id:editTx.id}:x);lsSet('fb_txs',n);return n;});setEditTx(null);}}/>}
+      {showReg&&<RegistroModal cuentas={cuentas} onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);if(tx.tipo==='ingreso')setPagatePrimero(tx);}}/>}
+
+      {editTx&&<RegistroModal cuentas={cuentas} inicial={editTx} onClose={()=>setEditTx(null)} onSave={tx=>{setTxs(prev=>{const n=prev.map(x=>x.id===editTx.id?{...tx,id:editTx.id}:x);lsSet('fb_txs',n);return n;});setEditTx(null);}}/>}
 
       {pagatePrimero&&(
         <PagatePrimeroSheet
@@ -705,8 +941,9 @@ function PagatePrimeroSheet({ingreso,onClose,onApartar}) {
 }
 
 // ─── REGISTRO MODAL ───────────────────────────────────────────────────────────
-function RegistroModal({onClose,onSave,inicial=null}) {
+function RegistroModal({onClose,onSave,inicial=null,cuentas=[]}) {
   const [tipoTx,setTipoTx]=useState(inicial?.tipo||'gasto');
+  const [cuenta,setCuenta]=useState(inicial?.cuenta||ls('fb_ultima_cuenta','')||'');
   const [nombre,setNombre]=useState(inicial?.nombre||'');
   const [categoria,setCategoria]=useState(inicial?.categoria||'');
   const [importe,setImporte]=useState(inicial?.importe?String(inicial.importe):'');
@@ -720,7 +957,8 @@ function RegistroModal({onClose,onSave,inicial=null}) {
     if(!importe||isNaN(parseFloat(importe))||parseFloat(importe)<=0){setErr('Importe inválido');return;}
     if(!categoria){setErr('Selecciona una categoría');return;}
     if(tipoTx==='gasto'&&!tipogasto){setErr('Elige el tipo de gasto');return;}
-    onSave({id:Date.now().toString(),tipo:tipoTx,nombre:nombre.trim(),categoria,importe:parseFloat(importe),fecha,recurrente,tipogasto:tipoTx==='gasto'?tipogasto:null});
+    if(cuenta) lsSet('fb_ultima_cuenta',cuenta);
+    onSave({id:Date.now().toString(),tipo:tipoTx,nombre:nombre.trim(),categoria,importe:parseFloat(importe),fecha,recurrente,tipogasto:tipoTx==='gasto'?tipogasto:null,cuenta:cuenta||null});
   }
 
   const cats=tipoTx==='gasto'?CATS_GASTO:CATS_INGRESO;
@@ -772,6 +1010,16 @@ function RegistroModal({onClose,onSave,inicial=null}) {
             <input type="date" value={fecha} onChange={e=>setFecha(e.target.value)}
               style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',cursor:'pointer'}}/>
           </div>
+          {cuentas.length>0&&(
+            <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
+              <span style={{fontSize:15}}>🏦</span>
+              <select value={cuenta} onChange={e=>setCuenta(e.target.value)}
+                style={{flex:1,background:'none',border:'none',outline:'none',color:cuenta?'#fff':T3,fontSize:16,fontFamily:'Inter,sans-serif',cursor:'pointer'}}>
+                <option value="" style={{background:'#111'}}>Cuenta (opcional)</option>
+                {cuentas.map(c=><option key={c.id} value={c.id} style={{background:'#111'}}>{c.nombre}</option>)}
+              </select>
+            </div>
+          )}
           <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px'}}>
             <span style={{fontSize:15}}>↻</span>
             <span style={{fontSize:13,color:T2,flex:1}}>¿Se repite cada mes?</span>
@@ -1028,7 +1276,7 @@ function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo}) {
 }
 
 // ─── FLUJO CHAT ───────────────────────────────────────────────────────────────
-function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,setChatMsgs,setView,perfil,setPerfil}) {
+function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,setChatMsgs,setView,perfil,setPerfil,cuentas=[]}) {
   const [input,setInput]=useState('');
   const [loading,setLoading]=useState(false);
   const msgsEndRef=useRef(null);
@@ -1115,6 +1363,16 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
         const pct=m.meta>0?Math.round((m.actual/m.meta)*100):0;
         ctx+=`  - ${m.nombre}: ${fmtEur(m.actual)} / ${fmtEur(m.meta)} (${pct}%)${m.fecha?` · ${m.fecha}`:''}\n`;
       });
+    }
+    if(cuentas.length>0){
+      const proy=proyectarCuentas(cuentas,txs);
+      ctx+=`\n[CUENTAS DEL USUARIO]\n`;
+      proy.forEach(cu=>{
+        ctx+=`${cu.nombre}: saldo ${fmtEur(cu.saldo)}, ${cu.nRecurrentes} cargos recurrentes (${fmtEur(cu.cargos)}/mes)`;
+        ctx+=cu.deficit>0?` — DÉFICIT de ${fmtEur(cu.deficit)}, riesgo de impago\n`:` — cubierto\n`;
+      });
+      const riesgo=proy.filter(cu=>cu.deficit>0);
+      if(riesgo.length>0) ctx+=`AVISO: menciona el riesgo de impago en ${riesgo.map(r=>r.nombre).join(', ')} y sugiere mover dinero entre cuentas.\n`;
     }
     if(perfil){
       ctx+=`\n[PERFIL DEL USUARIO — de la entrevista inicial]\n`;
@@ -1385,6 +1643,7 @@ function App() {
   const [msgCount,setMsgCount]=useState(()=>ls('fb_msgcount',0));
   const [chatMsgs,setChatMsgs]=useState(()=>ls('fb_chat',[]));
   const [perfil,setPerfil]=useState(()=>ls('fb_perfil',null));
+  const [cuentas,setCuentas]=useState(()=>ls('fb_cuentas',[]));
 
   useEffect(()=>{
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -1411,10 +1670,10 @@ function App() {
 
   return (
     <div>
-      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil}/>}
-      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={goView} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} metas={metas} setMetas={setMetas}/>}
+      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil} setPerfil={setPerfil}/>}
+      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={goView} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} metas={metas} setMetas={setMetas} cuentas={cuentas} setCuentas={setCuentas}/>}
       {view==='metas'&&<Metas metas={metas} setMetas={setMetas} txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>}
-      {view==='flujo'&&<FlujoChat txs={txs} metas={metas} setMetas={setMetas} fondoSaldo={fondoSaldo} msgCount={msgCount} setMsgCount={setMsgCount} chatMsgs={chatMsgs} setChatMsgs={setChatMsgs} setView={goView} perfil={perfil} setPerfil={setPerfil}/>}
+      {view==='flujo'&&<FlujoChat txs={txs} metas={metas} setMetas={setMetas} fondoSaldo={fondoSaldo} msgCount={msgCount} setMsgCount={setMsgCount} chatMsgs={chatMsgs} setChatMsgs={setChatMsgs} setView={goView} perfil={perfil} setPerfil={setPerfil} cuentas={cuentas}/>}
       {view!=='flujo'&&<TabBar view={view} setView={goView} msgCount={msgCount}/>}
     </div>
   );
