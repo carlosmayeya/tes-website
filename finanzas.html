@@ -659,12 +659,14 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil}) {
 
 // ─── BALANCE ──────────────────────────────────────────────────────────────────
 // ─── FILA DE TRANSACCIÓN CON SWIPE (deslizar para editar/borrar) ─────────────
-function TxRow({t,onEdit,onDelete}) {
+function TxRow({t,onEdit,onDelete,cuentas=[],assignCuenta}) {
   const [dx,setDx]=useState(0);
   const [dragging,setDragging]=useState(false);
+  const [showPicker,setShowPicker]=useState(false);
   const startX=useRef(0);
   const startDx=useRef(0);
-  const ACTIONS_W=136; // ancho total de los dos botones de acción
+  const ACTIONS_W=204; // ancho total de los tres botones de acción
+  const cuentaActual=cuentas.find(c=>c.id===t.cuenta);
 
   function onTouchStart(e){
     startX.current=e.touches[0].clientX;
@@ -687,6 +689,7 @@ function TxRow({t,onEdit,onDelete}) {
     <div style={{position:'relative',overflow:'hidden',borderBottom:'0.5px solid rgba(255,255,255,0.04)'}}>
       {/* Acciones reveladas al deslizar */}
       <div style={{position:'absolute',top:0,right:0,bottom:0,width:ACTIONS_W,display:'flex'}}>
+        <button onClick={()=>{setShowPicker(true);setDx(0);}} style={{flex:1,background:'rgba(251,191,36,0.15)',border:'none',color:'#FBBF24',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif',display:'flex',alignItems:'center',justifyContent:'center'}}>Cuenta</button>
         <button onClick={()=>{onEdit(t);setDx(0);}} style={{flex:1,background:'rgba(96,165,250,0.15)',border:'none',color:'#60A5FA',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif',display:'flex',alignItems:'center',justifyContent:'center'}}>Editar</button>
         <button onClick={()=>{onDelete(t.id);setDx(0);}} style={{flex:1,background:'rgba(248,113,113,0.18)',border:'none',color:'#F87171',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif',display:'flex',alignItems:'center',justifyContent:'center'}}>Borrar</button>
       </div>
@@ -698,10 +701,11 @@ function TxRow({t,onEdit,onDelete}) {
         style={{display:'flex',alignItems:'center',gap:10,padding:'9px 0',background:'#0a0a0a',transform:`translateX(${dx}px)`,transition:dragging?'none':'transform 0.25s ease-out',touchAction:'pan-y'}}>
         <div style={{flex:1,minWidth:0}}>
           <div style={{fontSize:13,color:'#fff',fontWeight:500,marginBottom:2}}>{t.nombre}</div>
-          <div style={{display:'flex',alignItems:'center',gap:5}}>
+          <div style={{display:'flex',alignItems:'center',gap:5,flexWrap:'wrap'}}>
             <span style={{fontSize:12,color:T3}}>{fmtFecha(t.fecha)}</span>
             {t.tipo==='gasto'&&<BadgeTipo tipo={t.tipogasto}/>}
             {t.recurrente&&<span style={{fontSize:13,color:T3}}>↻</span>}
+            {cuentaActual&&<span style={{fontSize:11,color:'#FBBF24',background:'rgba(251,191,36,0.1)',borderRadius:6,padding:'1px 6px'}}>🏦 {cuentaActual.nombre}</span>}
           </div>
         </div>
         <div style={{textAlign:'right',flexShrink:0}}>
@@ -710,12 +714,41 @@ function TxRow({t,onEdit,onDelete}) {
           </div>
         </div>
       </div>
+
+      {/* Selector rápido de cuenta */}
+      {showPicker&&(
+        <div style={{position:'fixed',inset:0,zIndex:210,display:'flex',flexDirection:'column',justifyContent:'flex-end'}} onClick={()=>setShowPicker(false)}>
+          <div onClick={e=>e.stopPropagation()} style={{background:'#0a0a0a',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:'20px 20px 0 0',padding:'16px 16px 32px',paddingBottom:'max(32px, env(safe-area-inset-bottom))',animation:'slideUp 0.25s ease'}}>
+            <div style={{fontSize:14,fontWeight:700,color:'#fff',marginBottom:4,textAlign:'center'}}>Asignar a cuenta</div>
+            <div style={{fontSize:12,color:T3,textAlign:'center',marginBottom:14,lineHeight:1.5}}>"{t.nombre}" seguirá contando en tus totales igual — esto solo la organiza.</div>
+            {cuentas.length===0?(
+              <div style={{fontSize:12,color:T3,textAlign:'center',padding:'10px 0'}}>Aún no tienes cuentas creadas. Ve a Balance → Mis cuentas bancarias.</div>
+            ):(
+              <div style={{display:'flex',flexDirection:'column',gap:6}}>
+                {cuentas.map(c=>(
+                  <button key={c.id} onClick={()=>{assignCuenta(t.id,c.id);setShowPicker(false);}}
+                    style={{display:'flex',alignItems:'center',gap:10,padding:'12px 13px',borderRadius:12,background:t.cuenta===c.id?'rgba(251,191,36,0.12)':'rgba(255,255,255,0.04)',border:'0.5px solid '+(t.cuenta===c.id?'rgba(251,191,36,0.35)':'rgba(255,255,255,0.07)'),color:'#fff',fontSize:14,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif',textAlign:'left'}}>
+                    <span style={{fontSize:17}}>🏦</span>{c.nombre}
+                    {t.cuenta===c.id&&<span style={{marginLeft:'auto',color:'#FBBF24'}}>✓</span>}
+                  </button>
+                ))}
+                {t.cuenta&&(
+                  <button onClick={()=>{assignCuenta(t.id,null);setShowPicker(false);}}
+                    style={{padding:'10px 13px',borderRadius:12,background:'none',border:'0.5px solid rgba(255,255,255,0.08)',color:T2,fontSize:13,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+                    Quitar de la cuenta
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 // ─── GRUPO DE CATEGORÍA COLAPSABLE ────────────────────────────────────────────
-function CategoriaGrupo({grupo,abierta,onToggle,onEdit,deleteTx}) {
+function CategoriaGrupo({grupo,abierta,onToggle,onEdit,deleteTx,cuentas=[],assignCuenta}) {
   const color=grupo.tipo==='ingreso'?ACENTO:'#F87171';
   const signo=grupo.tipo==='ingreso'?'+':'-';
   return (
@@ -737,7 +770,7 @@ function CategoriaGrupo({grupo,abierta,onToggle,onEdit,deleteTx}) {
         <div style={{borderTop:'0.5px solid rgba(255,255,255,0.05)',padding:'2px 13px 6px'}}>
           <div style={{fontSize:11,color:T3,textAlign:'center',padding:'6px 0 2px'}}>← Desliza una transacción para editar o borrar</div>
           {[...grupo.items].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(t=>(
-            <TxRow key={t.id} t={t} onEdit={onEdit} onDelete={deleteTx}/>
+            <TxRow key={t.id} t={t} onEdit={onEdit} onDelete={deleteTx} cuentas={cuentas} assignCuenta={assignCuenta}/>
           ))}
         </div>
       )}
@@ -768,6 +801,9 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
 
   function deleteTx(id) {
     setTxs(prev=>{const n=prev.filter(t=>t.id!==id);lsSet('fb_txs',n);return n;});
+  }
+  function assignCuenta(id,cuentaId) {
+    setTxs(prev=>{const n=prev.map(t=>t.id===id?{...t,cuenta:cuentaId||null}:t);lsSet('fb_txs',n);return n;});
   }
 
   // agrupar por categoría (separando ingresos y gastos, ordenado por total desc)
@@ -850,7 +886,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
         {gruposIngreso.map(g=>(
           <CategoriaGrupo key={'ingreso|'+g.categoria} grupo={g} abierta={catAbierta==='ingreso|'+g.categoria}
             onToggle={()=>setCatAbierta(catAbierta==='ingreso|'+g.categoria?null:'ingreso|'+g.categoria)}
-            onEdit={setEditTx} deleteTx={deleteTx}/>
+            onEdit={setEditTx} deleteTx={deleteTx} cuentas={cuentas} assignCuenta={assignCuenta}/>
         ))}
 
         {gruposGasto.length>0&&(
@@ -859,7 +895,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
         {gruposGasto.map(g=>(
           <CategoriaGrupo key={'gasto|'+g.categoria} grupo={g} abierta={catAbierta==='gasto|'+g.categoria}
             onToggle={()=>setCatAbierta(catAbierta==='gasto|'+g.categoria?null:'gasto|'+g.categoria)}
-            onEdit={setEditTx} deleteTx={deleteTx}/>
+            onEdit={setEditTx} deleteTx={deleteTx} cuentas={cuentas} assignCuenta={assignCuenta}/>
         ))}
       </div>
 
