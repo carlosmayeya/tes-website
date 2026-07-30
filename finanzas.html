@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Finanzas Brutales">
-<title>Finanzas Brutales — Tecnología Explicada Simple</title>
+<title>Finanzas Brutales - Tecnología Explicada Simple</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -65,7 +65,7 @@ function clean(t) {
     .replace(/#{1,6}\s+/g,'')
     .replace(/\*\*([^*]+)\*\*/g,'$1')
     .replace(/\*([^*]+)\*/g,'$1')
-    .replace(/---/g,'—')
+    .replace(/---/g,' - ')
     .replace(/\n{3,}/g,'\n\n')
     .trim();
 }
@@ -81,26 +81,26 @@ const CATS_GASTO = ['Vivienda','Alimentación','Transporte','Salud','Educación'
 const CATS_INGRESO = ['Salario','Freelance','Negocio','Inversiones','Alquiler','Otros'];
 const ICONOS_CAT = {Vivienda:'🏠',Alimentación:'🛒',Transporte:'🚗',Salud:'💊',Educación:'📚',Telecomunicaciones:'📱',Seguros:'🛡️',Entretenimiento:'🎬',Ropa:'👕',Restaurantes:'🍽️',Suscripciones:'📺',Salario:'💼',Freelance:'💻',Negocio:'🏪',Inversiones:'📈',Alquiler:'🏘️',Otros:'📌'};
 
-// ─── TIPS FINANCIEROS — rotan uno por día ────────────────────────────────────
+// ─── TIPS FINANCIEROS - rotan uno por día ────────────────────────────────────
 const TIPS_FINANCIEROS = [
-  'Un fondo de emergencia no es para invertir — es para dormir tranquilo. Su trabajo es estar ahí, no crecer.',
+  'Un fondo de emergencia no es para invertir - es para dormir tranquilo. Su trabajo es estar ahí, no crecer.',
   'Págate a ti primero: aparta tu ahorro en cuanto entra el ingreso, no con lo que sobra a fin de mes.',
   'Un gasto "capricho" no es malo. El problema es no saber cuántos capricho te estás permitiendo.',
-  'Si no sabes en qué se te va el dinero, la primera victoria no es ahorrar más — es registrar todo un mes.',
+  'Si no sabes en qué se te va el dinero, la primera victoria no es ahorrar más - es registrar todo un mes.',
   'La regla no escrita: gastos esenciales + calidad de vida no deberían superar el 80% de tus ingresos.',
-  'Una suscripción de 8€/mes son 96€ al año. Revisa las tuyas — casi nadie recuerda todas las que tiene activas.',
+  'Una suscripción de 8€/mes son 96€ al año. Revisa las tuyas - casi nadie recuerda todas las que tiene activas.',
   'El interés compuesto premia el tiempo, no la cantidad. Empezar con poco hoy vale más que empezar con mucho en 5 años.',
   'Una meta sin fecha es un deseo. Una meta con fecha es un plan.',
   'Antes de comprar algo caro, espera 48 horas. Si sigues queriéndolo igual, probablemente no es un impulso.',
   'La deuda de tarjeta de crédito casi siempre cuesta más que lo que ganarías invirtiendo. Págala primero.',
-  'Tres meses de gastos esenciales cubiertos cambian cómo tomas decisiones — hasta las laborales.',
+  'Tres meses de gastos esenciales cubiertos cambian cómo tomas decisiones - hasta las laborales.',
   'Comparar tu progreso financiero con el de otros es la forma más rápida de sentirte mal sin motivo real.',
   'Un aumento de sueldo es la mejor oportunidad para subir tu ahorro antes de que suba tu nivel de gasto.',
-  'Las "calidad de vida" (el gimnasio, la cena mensual) no son lujo — son lo que sostiene que sigas motivado.',
+  'Las "calidad de vida" (el gimnasio, la cena mensual) no son lujo - son lo que sostiene que sigas motivado.',
   'Revisar tus gastos una vez por semana toma 5 minutos y evita sorpresas de fin de mes.',
-  'Comprar en oferta algo que no necesitabas no es ahorrar — es gastar con descuento.',
+  'Comprar en oferta algo que no necesitabas no es ahorrar - es gastar con descuento.',
   'El primer mes registrando gastos siempre da vergüenza un poco. El segundo mes ya da tranquilidad.',
-  "El dinero que 'no cuenta' porque son pocos euros — un café aquí, una app allá — suele ser el que más se acumula.",
+  "El dinero que 'no cuenta' porque son pocos euros - un café aquí, una app allá - suele ser el que más se acumula.",
   'Ahorrar el 10% de lo que ganas, siempre, en automático, funciona mejor que "ahorrar lo que sobre".',
   'Una emergencia real no avisa. Por eso el fondo de emergencia se construye antes de necesitarlo, no después.',
   'Si algo se paga solo una vez al año (seguro, impuesto), divide el coste entre 12 y apártalo cada mes.',
@@ -111,12 +111,12 @@ const TIPS_FINANCIEROS = [
   'El gasto en "calidad de vida" que más rápido crece suele ser el que menos se disfruta con el tiempo.',
   'Cancelar una suscripción que no usas es un ahorro instantáneo, sin sacrificio real.',
   'Invertir sin fondo de emergencia es como construir el segundo piso sin haber terminado los cimientos.',
-  'La disciplina financiera no es privarte de todo — es elegir con intención en qué gastas.',
+  'La disciplina financiera no es privarte de todo - es elegir con intención en qué gastas.',
   'Cada euro que ahorras hoy es una hora de libertad que te compras para el futuro.',
 ];
 
 function getTipDelDia(){
-  const dayIndex=Math.floor(Date.now()/86400000); // días desde epoch — cambia una vez al día
+  const dayIndex=Math.floor(Date.now()/86400000); // días desde epoch - cambia una vez al día
   return TIPS_FINANCIEROS[dayIndex%TIPS_FINANCIEROS.length];
 }
 
@@ -249,6 +249,90 @@ function proyectarCuentas(cuentas,txs){
 }
 
 // ─── GESTOR DE CUENTAS ───────────────────────────────────────────────────────
+// ─── TARJETA DE CUENTA CON SWIPE (deslizar para editar/borrar) ───────────────
+function CuentaCard({c,onRename,onDelete,onUpdateSaldo}) {
+  const [dx,setDx]=useState(0);
+  const [dragging,setDragging]=useState(false);
+  const [editando,setEditando]=useState(false);
+  const [nombreTmp,setNombreTmp]=useState(c.nombre);
+  const [confirmarBorrado,setConfirmarBorrado]=useState(false);
+  const startX=useRef(0);
+  const startDx=useRef(0);
+  const ACTIONS_W=136;
+
+  function onTouchStart(e){startX.current=e.touches[0].clientX;startDx.current=dx;setDragging(true);}
+  function onTouchMove(e){
+    const delta=e.touches[0].clientX-startX.current;
+    setDx(Math.max(-ACTIONS_W,Math.min(0,startDx.current+delta)));
+  }
+  function onTouchEnd(){
+    setDragging(false);
+    setDx(prev=>prev<-ACTIONS_W/2?-ACTIONS_W:0);
+  }
+  function guardarNombre(){
+    if(nombreTmp.trim()) onRename(c.id,nombreTmp.trim());
+    setEditando(false);setDx(0);
+  }
+
+  return (
+    <div style={{position:'relative',overflow:'hidden',borderRadius:13,marginBottom:8}}>
+      {/* Acciones reveladas al deslizar */}
+      <div style={{position:'absolute',top:0,right:0,bottom:0,width:ACTIONS_W,display:'flex',borderRadius:'0 13px 13px 0',overflow:'hidden'}}>
+        <button onClick={()=>{setEditando(true);setDx(0);}} style={{flex:1,background:'rgba(96,165,250,0.15)',border:'none',color:'#60A5FA',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Editar</button>
+        <button onClick={()=>{setConfirmarBorrado(true);setDx(0);}} style={{flex:1,background:'rgba(248,113,113,0.18)',border:'none',color:'#F87171',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Borrar</button>
+      </div>
+
+      {/* Tarjeta deslizable */}
+      <div
+        onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
+        style={{background:'#0a0a0a',border:'0.5px solid '+(c.deficit>0?'rgba(248,113,113,0.35)':'rgba(255,255,255,0.06)'),borderRadius:13,padding:'12px 13px',transform:`translateX(${dx}px)`,transition:dragging?'none':'transform 0.25s ease-out',touchAction:'pan-y'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:6,gap:8}}>
+          {editando?(
+            <input autoFocus value={nombreTmp} onChange={e=>setNombreTmp(e.target.value)} onBlur={guardarNombre}
+              onKeyDown={e=>e.key==='Enter'&&guardarNombre()}
+              style={{flex:1,background:'rgba(255,255,255,0.06)',border:'0.5px solid rgba(255,255,255,0.15)',borderRadius:8,padding:'5px 9px',color:'#fff',fontSize:14,fontWeight:700,fontFamily:'Inter,sans-serif',outline:'none'}}/>
+          ):(
+            <span style={{fontSize:14,fontWeight:700,color:'#fff'}}>🏦 {c.nombre}</span>
+          )}
+          <span style={{fontSize:11,color:T3,flexShrink:0}}>← desliza</span>
+        </div>
+        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8}}>
+          <span style={{fontSize:12,color:T3,flexShrink:0}}>Saldo actual</span>
+          <input type="number" inputMode="decimal" defaultValue={c.saldo} onBlur={e=>onUpdateSaldo(c.id,e.target.value)}
+            style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'8px 11px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',outline:'none'}}/>
+          <span style={{fontSize:13,color:T2}}>€</span>
+        </div>
+        {c.nRecurrentes>0?(
+          <div style={{fontSize:12,lineHeight:1.5,color:c.deficit>0?'#F87171':T3}}>
+            {c.nRecurrentes} cargo{c.nRecurrentes!==1?'s':''} recurrente{c.nRecurrentes!==1?'s':''} · {fmtEur(c.cargos)}/mes
+            {c.ingresosRec>0&&` · +${fmtEur(c.ingresosRec)} de ingresos`}
+            <br/>
+            {c.deficit>0
+              ? <strong>⚠️ Faltan {fmtEur(c.deficit)} para cubrir los cargos</strong>
+              : <span style={{color:ACENTO}}>✓ Cubierto - quedarían {fmtEur(c.restante)}</span>}
+          </div>
+        ):(
+          <div style={{fontSize:12,color:T3}}>Sin cargos recurrentes asignados todavía</div>
+        )}
+      </div>
+
+      {/* Confirmación de borrado */}
+      {confirmarBorrado&&(
+        <div style={{position:'fixed',inset:0,zIndex:220,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(0,0,0,0.75)',padding:24}} onClick={()=>setConfirmarBorrado(false)}>
+          <div onClick={e=>e.stopPropagation()} style={{background:'#111',border:'0.5px solid rgba(255,255,255,0.1)',borderRadius:16,padding:18,maxWidth:300}}>
+            <div style={{fontSize:14,fontWeight:700,color:'#fff',marginBottom:6}}>¿Borrar "{c.nombre}"?</div>
+            <div style={{fontSize:12,color:T2,lineHeight:1.5,marginBottom:14}}>Las transacciones ya asignadas a esta cuenta no se borrarán, solo dejarán de estar vinculadas.</div>
+            <div style={{display:'flex',gap:8}}>
+              <button onClick={()=>setConfirmarBorrado(false)} style={{flex:1,padding:10,borderRadius:10,background:'rgba(255,255,255,0.06)',border:'none',color:T1,fontSize:13,fontWeight:600,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Cancelar</button>
+              <button onClick={()=>onDelete(c.id)} style={{flex:1,padding:10,borderRadius:10,background:'rgba(248,113,113,0.15)',border:'0.5px solid rgba(248,113,113,0.35)',color:'#F87171',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Sí, borrar</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function CuentasSheet({cuentas,setCuentas,txs,onClose}) {
   const [nombre,setNombre]=useState('');
   const [saldo,setSaldo]=useState('');
@@ -263,6 +347,10 @@ function CuentasSheet({cuentas,setCuentas,txs,onClose}) {
   }
   function actualizarSaldo(id,v){
     const n=cuentas.map(c=>c.id===id?{...c,saldo:parseFloat(v)||0}:c);
+    setCuentas(n);lsSet('fb_cuentas',n);
+  }
+  function renombrar(id,nuevoNombre){
+    const n=cuentas.map(c=>c.id===id?{...c,nombre:nuevoNombre}:c);
     setCuentas(n);lsSet('fb_cuentas',n);
   }
   function borrar(id){
@@ -281,30 +369,7 @@ function CuentasSheet({cuentas,setCuentas,txs,onClose}) {
         <div style={{fontSize:12,color:T3,lineHeight:1.5,marginBottom:14}}>Solo nombres y saldos que tú escribes. La app nunca pide ni guarda datos bancarios reales.</div>
 
         {proy.map(c=>(
-          <div key={c.id} style={{background:'rgba(255,255,255,0.03)',border:'0.5px solid '+(c.deficit>0?'rgba(248,113,113,0.35)':'rgba(255,255,255,0.06)'),borderRadius:13,padding:'12px 13px',marginBottom:8}}>
-            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:6}}>
-              <span style={{fontSize:14,fontWeight:700,color:'#fff'}}>🏦 {c.nombre}</span>
-              <button onClick={()=>borrar(c.id)} style={{background:'none',border:'none',color:T3,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Borrar</button>
-            </div>
-            <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8}}>
-              <span style={{fontSize:12,color:T3,flexShrink:0}}>Saldo actual</span>
-              <input type="number" inputMode="decimal" defaultValue={c.saldo} onBlur={e=>actualizarSaldo(c.id,e.target.value)}
-                style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'8px 11px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',outline:'none'}}/>
-              <span style={{fontSize:13,color:T2}}>€</span>
-            </div>
-            {c.nRecurrentes>0?(
-              <div style={{fontSize:12,lineHeight:1.5,color:c.deficit>0?'#F87171':T3}}>
-                {c.nRecurrentes} cargo{c.nRecurrentes!==1?'s':''} recurrente{c.nRecurrentes!==1?'s':''} · {fmtEur(c.cargos)}/mes
-                {c.ingresosRec>0&&` · +${fmtEur(c.ingresosRec)} de ingresos`}
-                <br/>
-                {c.deficit>0
-                  ? <strong>⚠️ Faltan {fmtEur(c.deficit)} para cubrir los cargos</strong>
-                  : <span style={{color:ACENTO}}>✓ Cubierto — quedarían {fmtEur(c.restante)}</span>}
-              </div>
-            ):(
-              <div style={{fontSize:12,color:T3}}>Sin cargos recurrentes asignados todavía</div>
-            )}
-          </div>
+          <CuentaCard key={c.id} c={c} onRename={renombrar} onDelete={borrar} onUpdateSaldo={actualizarSaldo}/>
         ))}
 
         <div style={{background:'rgba(255,255,255,0.03)',border:'0.5px dashed rgba(255,255,255,0.12)',borderRadius:13,padding:'12px 13px',marginTop:4}}>
@@ -462,11 +527,11 @@ function HomeFlujo({onDone,setView}) {
         <div style={{width:56,height:56,borderRadius:16,background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16,fontSize:26}}>⚡</div>
         <div style={{fontSize:13,color:ACENTO,letterSpacing:'0.12em',textTransform:'uppercase',marginBottom:8}}>Finanzas Brutales</div>
         <div style={{fontSize:24,fontWeight:800,color:'#fff',letterSpacing:'-0.03em',lineHeight:1.2,marginBottom:8}}>Hola, soy FARO</div>
-        <div style={{fontSize:13,color:T2,lineHeight:1.6,maxWidth:260}}>Tu coach financiero personal. Estoy aquí para ayudarte a tomar control de tu dinero — de verdad.</div>
+        <div style={{fontSize:13,color:T2,lineHeight:1.6,maxWidth:260}}>Tu coach financiero personal. Estoy aquí para ayudarte a tomar control de tu dinero - de verdad.</div>
       </div>
       <div style={{width:'100%',display:'flex',flexDirection:'column',gap:10}}>
         {[
-          {emoji:'🎯',text:'Empezamos con tus metas — lo que realmente quieres conseguir'},
+          {emoji:'🎯',text:'Empezamos con tus metas - lo que realmente quieres conseguir'},
           {emoji:'📊',text:'Analizo tu situación en tiempo real con tus datos'},
           {emoji:'🔥',text:'Te mantengo motivado y con un plan claro cada semana'},
         ].map((item,i)=>(
@@ -500,13 +565,13 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil}) {
   const gastos=txMes.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
   const sobra=ingresos-gastos;
 
-  // Observación del coach (local, sin API) — mezcla alertas basadas en datos con tips educativos rotativos
+  // Observación del coach (local, sin API) - mezcla alertas basadas en datos con tips educativos rotativos
   const gastoK_=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').reduce((a,t)=>a+t.importe,0);
   const metaPrincipal=metas.length>0?metas[0]:null;
   const tipDelDia=getTipDelDia();
   let coachMsg, esTip=false;
   if(!perfil&&txs.length===0) coachMsg='Aún no te conozco. Ven a hablar conmigo y empezamos por lo importante: tú.';
-  else if(txs.length===0) coachMsg='Ya te conozco — ahora necesito ver tus números. Registra tu primer ingreso en Balance.';
+  else if(txs.length===0) coachMsg='Ya te conozco - ahora necesito ver tus números. Registra tu primer ingreso en Balance.';
   else if(gastoK_>0&&ingresos>0&&gastoK_>ingresos*0.15) coachMsg=`Llevas ${fmtEur(gastoK_)} en caprichos este mes. Ahí está tu palanca de ahorro.`;
   else if(metaPrincipal&&metaPrincipal.meta>0&&metaPrincipal.actual/metaPrincipal.meta>=0.5) coachMsg=`Más de la mitad de "${metaPrincipal.nombre}" conseguida. No aflojes ahora.`;
   else if(sobra<0) coachMsg='Este mes gastas más de lo que entra. Ven y lo revisamos juntos, sin dramas.';
@@ -529,7 +594,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil}) {
       <Nav title={mNow.charAt(0).toUpperCase()+mNow.slice(1)} sub="Tu resumen financiero"
         right={<button onClick={()=>setShowAjustes(true)} style={{width:34,height:34,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>⚙️</button>}/>
       <div style={{padding:'0 14px'}}>
-        {/* Meta principal — lo primero que ve */}
+        {/* Meta principal - lo primero que ve */}
         {metaPrincipal&&(
           <Card onClick={()=>setView('metas')} style={{cursor:'pointer',marginTop:12,borderColor:'rgba(96,165,250,0.25)',background:'rgba(96,165,250,0.04)'}}>
             <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
@@ -720,7 +785,7 @@ function TxRow({t,onEdit,onDelete,cuentas=[],assignCuenta}) {
         <div style={{position:'fixed',inset:0,zIndex:210,display:'flex',flexDirection:'column',justifyContent:'flex-end'}} onClick={()=>setShowPicker(false)}>
           <div onClick={e=>e.stopPropagation()} style={{background:'#0a0a0a',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:'20px 20px 0 0',padding:'16px 16px 32px',paddingBottom:'max(32px, env(safe-area-inset-bottom))',animation:'slideUp 0.25s ease'}}>
             <div style={{fontSize:14,fontWeight:700,color:'#fff',marginBottom:4,textAlign:'center'}}>Asignar a cuenta</div>
-            <div style={{fontSize:12,color:T3,textAlign:'center',marginBottom:14,lineHeight:1.5}}>"{t.nombre}" seguirá contando en tus totales igual — esto solo la organiza.</div>
+            <div style={{fontSize:12,color:T3,textAlign:'center',marginBottom:14,lineHeight:1.5}}>"{t.nombre}" seguirá contando en tus totales igual - esto solo la organiza.</div>
             {cuentas.length===0?(
               <div style={{fontSize:12,color:T3,textAlign:'center',padding:'10px 0'}}>Aún no tienes cuentas creadas. Ve a Balance → Mis cuentas bancarias.</div>
             ):(
@@ -899,7 +964,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
         ))}
       </div>
 
-      {/* FAB — aparece centrado en el vacío y baja a su sitio conforme hay más transacciones */}
+      {/* FAB - aparece centrado en el vacío y baja a su sitio conforme hay más transacciones */}
       {(() => {
         const n=txCuenta.length;
         const UMBRAL=6; // a partir de aquí, posición fija normal
@@ -932,9 +997,9 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
 
       {showCuentas&&<CuentasSheet cuentas={cuentas} setCuentas={setCuentas} txs={txs} onClose={()=>setShowCuentas(false)}/>}
 
-      {showReg&&<RegistroModal cuentas={cuentas} onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);if(tx.tipo==='ingreso')setPagatePrimero(tx);}}/>}
+      {showReg&&<RegistroModal cuentas={cuentas} setCuentas={setCuentas} onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);if(tx.tipo==='ingreso')setPagatePrimero(tx);}}/>}
 
-      {editTx&&<RegistroModal cuentas={cuentas} inicial={editTx} onClose={()=>setEditTx(null)} onSave={tx=>{setTxs(prev=>{const n=prev.map(x=>x.id===editTx.id?{...tx,id:editTx.id}:x);lsSet('fb_txs',n);return n;});setEditTx(null);}}/>}
+      {editTx&&<RegistroModal cuentas={cuentas} setCuentas={setCuentas} inicial={editTx} onClose={()=>setEditTx(null)} onSave={tx=>{setTxs(prev=>{const n=prev.map(x=>x.id===editTx.id?{...tx,id:editTx.id}:x);lsSet('fb_txs',n);return n;});setEditTx(null);}}/>}
 
       {pagatePrimero&&(
         <PagatePrimeroSheet
@@ -964,7 +1029,7 @@ function PagatePrimeroSheet({ingreso,onClose,onApartar}) {
       <div onClick={e=>e.stopPropagation()} style={{width:'100%',background:'#0A0A0A',borderRadius:'20px 20px 0 0',border:'0.5px solid rgba(255,255,255,0.08)',borderBottom:'none',padding:'22px 18px',paddingBottom:'max(22px, env(safe-area-inset-bottom))',animation:'slideUp 0.25s ease-out'}}>
         <div style={{fontSize:22,marginBottom:8,textAlign:'center'}}>💚</div>
         <div style={{fontSize:16,fontWeight:800,color:'#fff',textAlign:'center',marginBottom:6}}>Primero, págate a ti</div>
-        <div style={{fontSize:12,color:T2,textAlign:'center',lineHeight:1.6,marginBottom:18}}>Acabas de registrar <strong style={{color:ACENTO}}>{fmtEur(ingreso.importe)}</strong>. Antes de gastar un euro — ¿cuánto apartas para tu fondo?</div>
+        <div style={{fontSize:12,color:T2,textAlign:'center',lineHeight:1.6,marginBottom:18}}>Acabas de registrar <strong style={{color:ACENTO}}>{fmtEur(ingreso.importe)}</strong>. Antes de gastar un euro - ¿cuánto apartas para tu fondo?</div>
         <div style={{display:'flex',gap:8,marginBottom:10}}>
           {sugerencias.map(s=>(
             <button key={s.label} onClick={()=>onApartar(s.v)} style={{flex:1,padding:'12px 4px',borderRadius:12,background:GBG,border:'0.5px solid '+GBD,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
@@ -986,9 +1051,12 @@ function PagatePrimeroSheet({ingreso,onClose,onApartar}) {
 }
 
 // ─── REGISTRO MODAL ───────────────────────────────────────────────────────────
-function RegistroModal({onClose,onSave,inicial=null,cuentas=[]}) {
+function RegistroModal({onClose,onSave,inicial=null,cuentas=[],setCuentas}) {
   const [tipoTx,setTipoTx]=useState(inicial?.tipo||'gasto');
   const [cuenta,setCuenta]=useState(inicial?.cuenta||ls('fb_ultima_cuenta','')||'');
+  const [creandoCuenta,setCreandoCuenta]=useState(false);
+  const [nuevaCuentaNombre,setNuevaCuentaNombre]=useState('');
+  const [nuevaCuentaSaldo,setNuevaCuentaSaldo]=useState('');
   const [nombre,setNombre]=useState(inicial?.nombre||'');
   const [categoria,setCategoria]=useState(inicial?.categoria||'');
   const [importe,setImporte]=useState(inicial?.importe?String(inicial.importe):'');
@@ -996,6 +1064,16 @@ function RegistroModal({onClose,onSave,inicial=null,cuentas=[]}) {
   const [recurrente,setRecurrente]=useState(inicial?.recurrente||false);
   const [tipogasto,setTipogasto]=useState(inicial?.tipogasto||'');
   const [err,setErr]=useState('');
+
+  function crearCuentaInline(){
+    if(!nuevaCuentaNombre.trim()||!setCuentas) return;
+    const nueva={id:Date.now().toString(),nombre:nuevaCuentaNombre.trim(),saldo:parseFloat(nuevaCuentaSaldo)||0};
+    const n=[...cuentas,nueva];
+    setCuentas(n);lsSet('fb_cuentas',n);
+    setCuenta(nueva.id);
+    setCreandoCuenta(false);
+    setNuevaCuentaNombre('');setNuevaCuentaSaldo('');
+  }
 
   function guardar() {
     if(!nombre.trim()){setErr('Añade un nombre');return;}
@@ -1055,14 +1133,39 @@ function RegistroModal({onClose,onSave,inicial=null,cuentas=[]}) {
             <input type="date" value={fecha} onChange={e=>setFecha(e.target.value)}
               style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',cursor:'pointer'}}/>
           </div>
-          {cuentas.length>0&&(
+          {cuentas.length>0?(
             <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
               <span style={{fontSize:15}}>🏦</span>
-              <select value={cuenta} onChange={e=>setCuenta(e.target.value)}
+              <select value={cuenta} onChange={e=>{if(e.target.value==='__nueva__'){setCreandoCuenta(true);}else{setCuenta(e.target.value);}}}
                 style={{flex:1,background:'none',border:'none',outline:'none',color:cuenta?'#fff':T3,fontSize:16,fontFamily:'Inter,sans-serif',cursor:'pointer'}}>
                 <option value="" style={{background:'#111'}}>Cuenta (opcional)</option>
                 {cuentas.map(c=><option key={c.id} value={c.id} style={{background:'#111'}}>{c.nombre}</option>)}
+                <option value="__nueva__" style={{background:'#111'}}>+ Crear nueva cuenta</option>
               </select>
+            </div>
+          ):(
+            <div style={{padding:'11px 13px',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
+              {!creandoCuenta?(
+                <button onClick={()=>setCreandoCuenta(true)} style={{display:'flex',alignItems:'center',gap:12,width:'100%',background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif',padding:0}}>
+                  <span style={{fontSize:15}}>🏦</span>
+                  <span style={{fontSize:14,color:'#60A5FA',fontWeight:600}}>+ Añadir cuenta (opcional)</span>
+                </button>
+              ):null}
+            </div>
+          )}
+
+          {creandoCuenta&&(
+            <div style={{padding:'11px 13px',background:'rgba(96,165,250,0.05)',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
+              <div style={{fontSize:12,color:T3,marginBottom:8}}>Nueva cuenta</div>
+              <input value={nuevaCuentaNombre} onChange={e=>setNuevaCuentaNombre(e.target.value)} placeholder="Nombre (ej. Nomina, Ahorro)" autoFocus
+                style={{width:'100%',background:'rgba(255,255,255,0.05)',border:'0.5px solid rgba(255,255,255,0.1)',borderRadius:9,padding:'9px 11px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',marginBottom:8,outline:'none'}}/>
+              <div style={{display:'flex',gap:8}}>
+                <input type="number" inputMode="decimal" value={nuevaCuentaSaldo} onChange={e=>setNuevaCuentaSaldo(e.target.value)} placeholder="Saldo actual (opcional)"
+                  style={{flex:1,background:'rgba(255,255,255,0.05)',border:'0.5px solid rgba(255,255,255,0.1)',borderRadius:9,padding:'9px 11px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',outline:'none'}}/>
+                <button onClick={crearCuentaInline} disabled={!nuevaCuentaNombre.trim()}
+                  style={{padding:'9px 16px',borderRadius:9,background:nuevaCuentaNombre.trim()?ACENTO:'rgba(52,211,153,0.15)',border:'none',color:nuevaCuentaNombre.trim()?'#000':'rgba(255,255,255,0.25)',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Crear</button>
+              </div>
+              <button onClick={()=>{setCreandoCuenta(false);setNuevaCuentaNombre('');setNuevaCuentaSaldo('');}} style={{marginTop:6,background:'none',border:'none',color:T3,fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Cancelar</button>
             </div>
           )}
           <div style={{display:'flex',alignItems:'center',gap:12,padding:'11px 13px'}}>
@@ -1074,10 +1177,10 @@ function RegistroModal({onClose,onSave,inicial=null,cuentas=[]}) {
           </div>
         </div>
 
-        {/* Tipo gasto — la decisión consciente */}
+        {/* Tipo gasto - la decisión consciente */}
         {tipoTx==='gasto'&&(
           <div style={{background:'rgba(255,255,255,0.02)',border:'0.5px solid rgba(255,255,255,0.06)',borderRadius:12,padding:'11px 13px',marginBottom:10}}>
-            <div style={{fontSize:12,color:T3,marginBottom:8,letterSpacing:'0.05em'}}>TIPO DE GASTO — ¿qué es para ti?</div>
+            <div style={{fontSize:12,color:T3,marginBottom:8,letterSpacing:'0.05em'}}>TIPO DE GASTO - ¿qué es para ti?</div>
             <div style={{display:'flex',gap:6}}>
               {[
                 {id:'esencial',label:'Esencial',hint:'Sin esto, la vida se para',ac:ACENTO},
@@ -1093,7 +1196,7 @@ function RegistroModal({onClose,onSave,inicial=null,cuentas=[]}) {
               <div style={{fontSize:12,color:T3,marginTop:6,textAlign:'center'}}>
                 {tipogasto==='esencial'&&'Entra en tu fondo de emergencia ✓'}
                 {tipogasto==='calidad'&&'Entra en tu fondo de emergencia ✓'}
-                {tipogasto==='capricho'&&'No entra en el fondo — palanca de ahorro potencial'}
+                {tipogasto==='capricho'&&'No entra en el fondo - palanca de ahorro potencial'}
               </div>
             )}
           </div>
@@ -1171,11 +1274,11 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
               <span>12 meses: {fmtEur(f12)}</span>
             </div>
             {fondoSaldo>=f12?(
-              <div style={{marginTop:8,fontSize:12,color:'#60A5FA',textAlign:'center'}}>✓ Fondo ideal completo — nivel máximo de seguridad</div>
+              <div style={{marginTop:8,fontSize:12,color:'#60A5FA',textAlign:'center'}}>✓ Fondo ideal completo - nivel máximo de seguridad</div>
             ):fondoSaldo>=f6?(
-              <div style={{marginTop:8,fontSize:12,color:ACENTO,textAlign:'center'}}>✓ Nivel deseable alcanzado — vas camino al ideal</div>
+              <div style={{marginTop:8,fontSize:12,color:ACENTO,textAlign:'center'}}>✓ Nivel deseable alcanzado - vas camino al ideal</div>
             ):fondoSaldo>=f3?(
-              <div style={{marginTop:8,fontSize:12,color:ACENTO,textAlign:'center'}}>✓ Mínimo alcanzado — puedes empezar a invertir</div>
+              <div style={{marginTop:8,fontSize:12,color:ACENTO,textAlign:'center'}}>✓ Mínimo alcanzado - puedes empezar a invertir</div>
             ):(
               <div style={{marginTop:8,fontSize:12,color:T3,textAlign:'center'}}>Faltan {fmtEur(Math.max(0,f3-fondoSaldo))} para tu mínimo de 3 meses</div>
             )}
@@ -1198,7 +1301,7 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
         </Card>
 
         <div style={{marginTop:10,padding:'11px 13px',background:'rgba(251,191,36,0.04)',border:'0.5px solid rgba(251,191,36,0.12)',borderRadius:12}}>
-          <div style={{fontSize:13,color:'rgba(251,191,36,0.8)',lineHeight:1.6}}>💡 <strong>Recuerda:</strong> El fondo de emergencia no es ahorro — es infraestructura. No se toca. Sin él, no se invierte.</div>
+          <div style={{fontSize:13,color:'rgba(251,191,36,0.8)',lineHeight:1.6}}>💡 <strong>Recuerda:</strong> El fondo de emergencia no es ahorro - es infraestructura. No se toca. Sin él, no se invierte.</div>
         </div>
       </div>
     </div>
@@ -1241,7 +1344,7 @@ function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo}) {
       <Nav title="Metas" sub="Fondo de emergencia + metas de ahorro"
         right={<button onClick={()=>setShowForm(true)} style={{background:GBG,border:'0.5px solid '+GBD,color:ACENTO,borderRadius:9,padding:'5px 11px',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>+ Nueva</button>}/>
       <div style={{padding:'12px 14px 0'}}>
-        <SecLabel>🛡️ Fondo de emergencia — tu meta cero</SecLabel>
+        <SecLabel>🛡️ Fondo de emergencia - tu meta cero</SecLabel>
         <FondoBody txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>
         <Divider/>
         <SecLabel>🎯 Metas de ahorro</SecLabel>
@@ -1327,7 +1430,7 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
   const msgsEndRef=useRef(null);
   const chatScreenRef=useRef(null);
 
-  // CSS Grid + VisualViewport — patrón idéntico al que funciona en Calma
+  // CSS Grid + VisualViewport - patrón idéntico al que funciona en Calma
   useEffect(()=>{
     const vv=window.visualViewport;
     function updateHeight(){
@@ -1392,7 +1495,7 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
     const f3=baseFondo*3;
     const pctFondo=f3>0?Math.round((fondoSaldo/f3)*100):0;
 
-    let ctx=`[CONTEXTO FINANCIERO DEL USUARIO — ${new Date().toLocaleDateString('es-ES',{month:'long',year:'numeric'})}]\n`;
+    let ctx=`[CONTEXTO FINANCIERO DEL USUARIO - ${new Date().toLocaleDateString('es-ES',{month:'long',year:'numeric'})}]\n`;
     ctx+=`Ingresos este mes: ${fmtEur(ingresos)}\n`;
     ctx+=`Gastos este mes: ${fmtEur(gastos)} (sobra: ${fmtEur(ingresos-gastos)})\n`;
     ctx+=`  - Esenciales: ${fmtEur(gastoE)}\n`;
@@ -1414,13 +1517,13 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
       ctx+=`\n[CUENTAS DEL USUARIO]\n`;
       proy.forEach(cu=>{
         ctx+=`${cu.nombre}: saldo ${fmtEur(cu.saldo)}, ${cu.nRecurrentes} cargos recurrentes (${fmtEur(cu.cargos)}/mes)`;
-        ctx+=cu.deficit>0?` — DÉFICIT de ${fmtEur(cu.deficit)}, riesgo de impago\n`:` — cubierto\n`;
+        ctx+=cu.deficit>0?` - DÉFICIT de ${fmtEur(cu.deficit)}, riesgo de impago\n`:` - cubierto\n`;
       });
       const riesgo=proy.filter(cu=>cu.deficit>0);
       if(riesgo.length>0) ctx+=`AVISO: menciona el riesgo de impago en ${riesgo.map(r=>r.nombre).join(', ')} y sugiere mover dinero entre cuentas.\n`;
     }
     if(perfil){
-      ctx+=`\n[PERFIL DEL USUARIO — de la entrevista inicial]\n`;
+      ctx+=`\n[PERFIL DEL USUARIO - de la entrevista inicial]\n`;
       if(perfil.motivacion)ctx+=`Qué cambiaría en su vida: ${perfil.motivacion}\n`;
       if(perfil.dolor)ctx+=`Su mayor frustración: ${perfil.dolor}\n`;
       if(perfil.meta)ctx+=`Su meta principal a 12 meses: ${perfil.meta}\n`;
@@ -1428,9 +1531,9 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
       if(perfil.gastos_fijos)ctx+=`Gastos fijos declarados: ${perfil.gastos_fijos}\n`;
       if(perfil.historial)ctx+=`Historial con las finanzas: ${perfil.historial}\n`;
       if(perfil.compromiso)ctx+=`Tiempo que puede dedicar: ${perfil.compromiso}\n`;
-      ctx+=`\nMODO: COACH DIARIO. Ya conoces a esta persona — usa su perfil siempre.\n`;
+      ctx+=`\nMODO: COACH DIARIO. Ya conoces a esta persona - usa su perfil siempre.\n`;
     } else {
-      ctx+=`\nMODO: ENTREVISTA INICIAL. Aún no existe perfil del usuario — sigue el flujo de entrevista paso a paso.\n`;
+      ctx+=`\nMODO: ENTREVISTA INICIAL. Aún no existe perfil del usuario - sigue el flujo de entrevista paso a paso.\n`;
     }
     if(ingresos===0&&gastos===0){
       ctx+=`Nota: aún no hay transacciones registradas en la app.\n`;
@@ -1441,52 +1544,49 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
     return ctx;
   }
 
-  const SYSTEM_FLUJO=`Eres FARO, el coach financiero personal de Finanzas Brutales. No eres un chatbot de finanzas — eres un entrenador personal del dinero. Tu misión no es solo dar estrategia: es emocionar al usuario, mantenerlo motivado y acompañarlo hasta que sus finanzas cambien de verdad.
+  const SYSTEM_FLUJO=`Eres FARO, el coach financiero personal de Finanzas Brutales. No eres un chatbot de finanzas - eres un entrenador personal del dinero. Tu misión no es solo dar estrategia: es emocionar al usuario, mantenerlo motivado y acompañarlo hasta que sus finanzas cambien de verdad.
 
-Combinas rigor financiero con calor humano real. Sabes cuándo empujar y cuándo escuchar. Celebras los avances aunque sean pequeños. Nunca juzgas el pasado — lo usas como punto de partida.
+Combinas rigor financiero con calor humano real. Sabes cuándo empujar y cuándo escuchar. Celebras los avances aunque sean pequeños. Nunca juzgas el pasado - lo usas como punto de partida.
 
 ════════════════════════════════════════
 MODO ENTREVISTA INICIAL (cuando el contexto dice MODO: ENTREVISTA)
 ════════════════════════════════════════
 
-Si el contexto marca MODO: ENTREVISTA, entras en modo entrevista aunque el usuario ya tenga alguna transacción registrada. Tu objetivo es conocerle de verdad antes de dar ningún consejo. La entrevista tiene 6-8 intercambios y cada pregunta ya aporta valor — no es un formulario, es una conversación que engancha.
+Si el contexto marca MODO: ENTREVISTA, entras en modo entrevista aunque el usuario ya tenga alguna transacción registrada. Tu objetivo es conocerle de verdad antes de dar ningún consejo. La entrevista tiene 6-8 intercambios y cada pregunta ya aporta valor - no es un formulario, es una conversación que engancha.
 
 FLUJO DE LA ENTREVISTA (sigue este orden, una pregunta por mensaje):
 
-1. APERTURA EMOCIONAL — Empieza así, sin variaciones:
+1. APERTURA EMOCIONAL - Empieza así, sin variaciones:
 "Antes de hablar de números, quiero entenderte a ti. ¿Qué cambiaría en tu vida si tuvieras el dinero bajo control de verdad?"
 Cuando responda, valida su respuesta con calidez y conecta con por qué eso importa. Luego continúa.
 
-2. EL DOLOR — Pregunta: "¿Y qué es lo que más te frustra o preocupa de tu dinero ahora mismo?"
+2. EL DOLOR - Pregunta: "¿Y qué es lo que más te frustra o preocupa de tu dinero ahora mismo?"
 Valida. Normaliza. Muestra que entiendes. Luego continúa.
 
-3. LA META CONCRETA — Pregunta: "Si tuvieras que elegir UNA cosa que quieres conseguir con tu dinero en los próximos 12 meses, ¿cuál sería? No tiene que ser perfecta — la primera que se te venga a la mente."
+3. LA META CONCRETA - Pregunta: "Si tuvieras que elegir UNA cosa que quieres conseguir con tu dinero en los próximos 12 meses, ¿cuál sería? No tiene que ser perfecta - la primera que se te venga a la mente."
 Cuando la diga, refléjala con entusiasmo. Dile que es posible. Si la meta tiene un importe claro (o puedes estimarlo razonablemente), añade AL FINAL de tu mensaje, en una línea aparte, exactamente esto (el usuario no lo verá, la app lo convierte en un botón):
 [META]{"nombre":"nombre corto de la meta","importe":5000,"icono":"✈️"}[/META]
 Usa un emoji apropiado de esta lista: 🎯 ✈️ 💻 🏠 🚗 📚 💍 🏋️ 🎸 🌍 🏖️ 🎓. Luego continúa.
 
-4. LOS INGRESOS — Pregunta: "Para ayudarte bien, necesito saber cuánto entra al mes. No tiene que ser exacto — ¿tienes una idea aproximada?"
+4. LOS INGRESOS - Pregunta: "Para ayudarte bien, necesito saber cuánto entra al mes. No tiene que ser exacto - ¿tienes una idea aproximada?"
 Cuando lo diga, calcula mentalmente cuánto necesitaría apartar para su meta. Compártelo como primicia motivadora. Luego continúa.
 
-5. LOS GASTOS FIJOS — Pregunta: "¿Cuáles son tus 3-4 gastos que salen sí o sí cada mes? Alquiler, hipoteca, suscripciones, seguros..."
+5. LOS GASTOS FIJOS - Pregunta: "¿Cuáles son tus 3-4 gastos que salen sí o sí cada mes? Alquiler, hipoteca, suscripciones, seguros..."
 Introduce las categorías de forma natural aquí como observación, no como lección. Luego continúa.
 
-6. EL HISTORIAL — Pregunta: "¿Has intentado antes controlar tus finanzas o ahorrar de forma sistemática? ¿Qué pasó?"
+6. EL HISTORIAL - Pregunta: "¿Has intentado antes controlar tus finanzas o ahorrar de forma sistemática? ¿Qué pasó?"
 Si falló antes, normaliza y reencuadra. Si nunca lo intentó, valora que esté empezando ahora. Luego continúa.
 
-7. EL COMPROMISO — Pregunta: "¿Cuánto tiempo a la semana crees que podrías dedicarle a esto? Ni un minuto al día es suficiente si sabes en qué enfocarte."
+7. EL COMPROMISO - Pregunta: "¿Cuánto tiempo a la semana crees que podrías dedicarle a esto? Ni un minuto al día es suficiente si sabes en qué enfocarte."
 Sea lo que diga, hazlo suficiente. Luego continúa.
 
-8. CIERRE MOTIVADOR — Sintetiza todo lo que aprendiste. Crea un mini-plan personalizado con su meta, su capacidad de ahorro estimada y el primer paso concreto. Termina con energía real. El primer paso siempre es: registrar ingresos en Balance.
+8. CIERRE MOTIVADOR - Sintetiza todo lo que aprendiste. Crea un mini-plan personalizado con su meta, su capacidad de ahorro estimada y el primer paso concreto. Termina con energía real. El primer paso siempre es: registrar ingresos en Balance.
 
-OBLIGATORIO en el mensaje de cierre (paso 8): añade AL FINAL, en una línea aparte, exactamente este bloque con lo que aprendiste (el usuario no lo verá — la app lo guarda como su perfil permanente):
+OBLIGATORIO en el mensaje de cierre (paso 8): añade AL FINAL, en una línea aparte, exactamente este bloque con lo que aprendiste (el usuario no lo verá - la app lo guarda como su perfil permanente):
 [PERFIL]{"motivacion":"...","dolor":"...","meta":"...","ingresos":"...","gastos_fijos":"...","historial":"...","compromiso":"..."}[/PERFIL]
 Rellena cada campo con frases cortas basadas en sus respuestas reales. Si un dato no salió en la conversación, pon null.
 
-REGLAS DE LA ENTREVISTA:
-— Nunca pases a la siguiente pregunta sin validar la respuesta anterior con algo específico.
-— La validación no es genérica — es específica a lo que dijeron.
-— Si el usuario quiere saltarse la entrevista, respeta y pasa a modo asesor.
+REGLAS DE LA ENTREVISTA: - Nunca pases a la siguiente pregunta sin validar la respuesta anterior con algo específico. - La validación no es genérica - es específica a lo que dijeron. - Si el usuario quiere saltarse la entrevista, respeta y pasa a modo asesor.
 
 ════════════════════════════════════════
 MODO COACH DIARIO (cuando hay datos registrados)
@@ -1494,10 +1594,10 @@ MODO COACH DIARIO (cuando hay datos registrados)
 
 Cuando hay datos, eres el entrenador que ya conoce al usuario. Tu trabajo diario:
 
-CELEBRA avances aunque sean pequeños. "Llevas 3 semanas registrando todo — eso ya es un hábito. La mayoría abandona en la primera semana."
+CELEBRA avances aunque sean pequeños. "Llevas 3 semanas registrando todo - eso ya es un hábito. La mayoría abandona en la primera semana."
 SEÑALA patrones sin juzgar. "Veo que los caprichos subieron este mes. ¿Qué pasó?"
 EMPUJA hacia el siguiente paso concreto. Siempre hay uno.
-MOTIVA cuando los números son difíciles. La situación puede ser dura — tú no lo eres.
+MOTIVA cuando los números son difíciles. La situación puede ser dura - tú no lo eres.
 PRIMERO ME PAGO A MÍ MISMO: si ves que registró un ingreso y no ha apartado nada, pregúntale cuánto quiere apartar antes de gastar. Este hábito lo cambia todo.
 
 ════════════════════════════════════════
@@ -1517,16 +1617,16 @@ Capricho: puede vivir sin ello. No cuenta para el fondo. Es la palanca de ahorro
 ════════════════════════════════════════
 REGLAS DE COMUNICACIÓN (siempre)
 ════════════════════════════════════════
-
-— Máximo 3 párrafos. Nunca más de 4 líneas por párrafo.
-— Una sola idea por mensaje.
-— Termina siempre con una pregunta o un reto concreto.
-— Nunca más de una pregunta por mensaje.
-— Sin listas ni bullets. Conversación natural y cálida.
-— Nunca juzgas el gasto pasado — es información, no condena.
-— Nunca inventas datos que no están en el contexto.
-— Nunca dices "no puedo" — siempre orientas.
-— Sobre inversión: educas, no recomiendas activos. Nunca sin fondo completo.
+- Máximo 3 párrafos. Nunca más de 4 líneas por párrafo.
+- Una sola idea por mensaje.
+- Termina siempre con una pregunta o un reto concreto.
+- Nunca más de una pregunta por mensaje.
+- Sin listas ni bullets. Conversación natural y cálida.
+- Nunca juzgas el gasto pasado, es información, no condena.
+- Nunca inventas datos que no están en el contexto.
+- Nunca dices "no puedo", siempre orientas.
+- Sobre inversión: educas, no recomiendas activos. Nunca sin fondo completo.
+- Nunca uses el guion largo (el carácter em dash, más ancho que un guion normal) en tus respuestas. Usa punto, coma o un guion normal (-) en su lugar.
 
 CUANDO QUEDAN POCOS MENSAJES: menciona de forma natural que puede (1) recargar 500 mensajes más por 19€, o (2) llevarse las instrucciones de FARO a Claude, ChatGPT o Grok con su propia cuenta.
 
@@ -1543,7 +1643,7 @@ Respondes siempre como FARO.`;
     }
   },[]);
 
-  // Spacer real en DOM — colapsado por JS al abrir teclado
+  // Spacer real en DOM - colapsado por JS al abrir teclado
   const chatPanelEl = (
     <div id="flujo-msgs" style={{gridRow:2,overflowY:'auto',overflowX:'hidden',padding:'12px 14px',display:'flex',flexDirection:'column',gap:9,minHeight:0,WebkitOverflowScrolling:'touch',overscrollBehaviorY:'contain'}}>
       <div id="flujo-spacer" style={{flex:1,minHeight:0}}/>
@@ -1561,7 +1661,7 @@ Respondes siempre como FARO.`;
           )}
           {m.metaAction&&m.metaCreada&&(
             <div style={{marginTop:10,padding:'8px 12px',borderRadius:10,background:'rgba(52,211,153,0.06)',border:'0.5px solid rgba(52,211,153,0.15)',color:ACENTO,fontSize:13,fontWeight:600,textAlign:'center'}}>
-              ✓ Meta creada — la verás en Metas
+              ✓ Meta creada - la verás en Metas
             </div>
           )}
         </div>
@@ -1597,7 +1697,7 @@ Respondes siempre como FARO.`;
       const data=await res.json();
       let reply=clean(data.content&&data.content[0]?data.content[0].text:'Error al conectar.');
 
-      // Parsear [PERFIL]...[/PERFIL] — guardar perfil permanente
+      // Parsear [PERFIL]...[/PERFIL] - guardar perfil permanente
       const pMatch=reply.match(/\[PERFIL\]([\s\S]*?)\[\/PERFIL\]/);
       if(pMatch){
         try{
@@ -1607,7 +1707,7 @@ Respondes siempre como FARO.`;
         reply=reply.replace(/\[PERFIL\][\s\S]*?\[\/PERFIL\]/,'').trim();
       }
 
-      // Parsear [META]...[/META] — botón de acción en el mensaje
+      // Parsear [META]...[/META] - botón de acción en el mensaje
       let metaAction=null;
       const mMatch=reply.match(/\[META\]([\s\S]*?)\[\/META\]/);
       if(mMatch){
@@ -1636,7 +1736,7 @@ Respondes siempre como FARO.`;
       background:'#000',overflow:'hidden',zIndex:50,
       display:'grid',gridTemplateRows:'auto 1fr auto',gridTemplateColumns:'100%'
     }}>
-      {/* Header — row 1 */}
+      {/* Header - row 1 */}
       <div style={{gridRow:1,display:'flex',alignItems:'center',justifyContent:'space-between',paddingTop:'max(10px, env(safe-area-inset-top))',paddingBottom:8,paddingLeft:16,paddingRight:16,borderBottom:'0.5px solid rgba(255,255,255,0.06)',background:'rgba(0,0,0,0.98)',minHeight:0}}>
         <button onClick={()=>setView('dashboard')} style={{background:'none',border:'none',color:T2,fontSize:13,cursor:'pointer',fontFamily:'Inter,sans-serif',padding:'4px 0'}}>← Volver</button>
         <div style={{display:'flex',alignItems:'center',gap:8}}>
@@ -1649,14 +1749,14 @@ Respondes siempre como FARO.`;
         <div style={{fontSize:12,color:remaining<50?'#F87171':T3}}>{remaining} msgs</div>
       </div>
 
-      {/* Mensajes — row 2 */}
+      {/* Mensajes - row 2 */}
       {chatPanelEl}
 
-      {/* Input — row 3 */}
+      {/* Input - row 3 */}
       {remaining<=0?(
         <div style={{gridRow:3,padding:'12px 14px',paddingBottom:'max(12px, env(safe-area-inset-bottom))',borderTop:'0.5px solid rgba(255,255,255,0.06)',background:'#000',minHeight:0}}>
           <div style={{fontSize:12,color:T2,textAlign:'center',marginBottom:8}}>Has usado todos tus mensajes.</div>
-          <button style={{width:'100%',padding:10,borderRadius:10,background:GBG,border:'0.5px solid '+GBD,color:ACENTO,fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Recargar 500 msgs — 19€</button>
+          <button style={{width:'100%',padding:10,borderRadius:10,background:GBG,border:'0.5px solid '+GBD,color:ACENTO,fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Recargar 500 msgs - 19€</button>
         </div>
       ):(
         <div style={{gridRow:3,padding:'8px 12px',paddingBottom:'max(10px, env(safe-area-inset-bottom))',borderTop:'0.5px solid rgba(255,255,255,0.06)',display:'flex',gap:8,alignItems:'flex-end',background:'rgba(0,0,0,0.97)',minHeight:0}}>
