@@ -786,9 +786,6 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
       <Nav title="Balance" sub={filtro==='mes'?'Este mes':'Todo el historial'}
         right={
           <div style={{display:'flex',gap:5,alignItems:'center'}}>
-            <button onClick={()=>setShowCuentas(true)} style={{background:cuentasEnRiesgo.length>0?'rgba(248,113,113,0.15)':'rgba(255,255,255,0.06)',border:'none',borderRadius:8,padding:'5px 9px',fontSize:14,cursor:'pointer',fontFamily:'Inter,sans-serif',position:'relative'}}>
-              🏦{cuentasEnRiesgo.length>0&&<span style={{position:'absolute',top:2,right:2,width:7,height:7,borderRadius:'50%',background:'#F87171'}}/>}
-            </button>
             {['mes','todo'].map(f=>(
               <button key={f} onClick={()=>setFiltro(f)} style={{background:filtro===f?'rgba(255,255,255,0.08)':'none',border:'none',color:filtro===f?'#fff':T3,borderRadius:7,padding:'3px 9px',fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
                 {f==='mes'?'Mes':'Todo'}
@@ -797,6 +794,18 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
           </div>
         }/>
       <div style={{padding:'12px 14px 0'}}>
+        <div onClick={()=>setShowCuentas(true)} style={{display:'flex',alignItems:'center',gap:10,background:cuentasEnRiesgo.length>0?'rgba(248,113,113,0.08)':'rgba(255,255,255,0.03)',border:'0.5px solid '+(cuentasEnRiesgo.length>0?'rgba(248,113,113,0.3)':'rgba(255,255,255,0.07)'),borderRadius:13,padding:'12px 13px',marginBottom:10,cursor:'pointer'}}>
+          <div style={{width:34,height:34,borderRadius:10,background:'rgba(255,255,255,0.06)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:17,flexShrink:0}}>🏦</div>
+          <div style={{flex:1}}>
+            <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>Mis cuentas bancarias</div>
+            <div style={{fontSize:12,color:cuentasEnRiesgo.length>0?'#F87171':T3}}>
+              {cuentas.length===0?'Crea tus cuentas para organizar tus gastos':
+                cuentasEnRiesgo.length>0?`⚠️ ${cuentasEnRiesgo.length} cuenta${cuentasEnRiesgo.length!==1?'s':''} con riesgo de impago`:
+                `${cuentas.length} cuenta${cuentas.length!==1?'s':''} · todo cubierto`}
+            </div>
+          </div>
+          <span style={{fontSize:14,color:T3}}>→</span>
+        </div>
         <Card style={{borderColor:sobra>=0?GBD:'rgba(248,113,113,0.15)',marginBottom:12}}>
           <div style={{display:'flex',justifyContent:'space-around',textAlign:'center'}}>
             <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Ingresos</div><div style={{fontSize:16,fontWeight:700,color:ACENTO}}>{fmtEur(ingresos)}</div></div>
