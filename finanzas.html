@@ -503,6 +503,21 @@ function TabBar({view,setView,msgCount}) {
 }
 
 // ─── NAV HEADER ──────────────────────────────────────────────────────────────
+// ─── BOTÓN DE OJO: activa/desactiva el modo privado ──────────────────────────
+function EyeToggle({modoPrivado,toggleModoPrivado}) {
+  return (
+    <button onClick={toggleModoPrivado} style={{
+      width:34,height:34,borderRadius:'50%',flexShrink:0,
+      background:modoPrivado?ACENTO:GBG,
+      border:'0.5px solid '+(modoPrivado?ACENTO:GBD),
+      display:'flex',alignItems:'center',justifyContent:'center',
+      fontSize:15,cursor:'pointer',fontFamily:'Inter,sans-serif'
+    }}>
+      👁️
+    </button>
+  );
+}
+
 function Nav({title,sub,right}) {
   return (
     <div style={{position:'sticky',top:0,zIndex:50,background:'rgba(0,0,0,0.97)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',borderBottom:'0.5px solid rgba(255,255,255,0.06)',paddingTop:'calc(env(safe-area-inset-top, 0px) + 10px)',paddingBottom:8,paddingLeft:16,paddingRight:16,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
@@ -562,7 +577,7 @@ function HomeFlujo({onDone,setView}) {
 
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
-function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil}) {
+function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,toggleModoPrivado}) {
   const [showAjustes,setShowAjustes]=useState(false);
   const mes=mesActual();
   const txMes=txs.filter(t=>t.fecha.startsWith(mes));
@@ -597,7 +612,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil}) {
   return (
     <div style={{paddingBottom:100}}>
       <Nav title={mNow.charAt(0).toUpperCase()+mNow.slice(1)} sub="Tu resumen financiero"
-        right={<button onClick={()=>setShowAjustes(true)} style={{width:34,height:34,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>⚙️</button>}/>
+        right={<div style={{display:'flex',gap:8,alignItems:'center'}}><EyeToggle modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/><button onClick={()=>setShowAjustes(true)} style={{width:34,height:34,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>⚙️</button></div>}/>
       <div style={{padding:'0 14px'}}>
         {/* Meta principal - lo primero que ve */}
         {metaPrincipal&&(
@@ -848,7 +863,7 @@ function CategoriaGrupo({grupo,abierta,onToggle,onEdit,deleteTx,cuentas=[],assig
   );
 }
 
-function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cuentas,setCuentas}) {
+function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cuentas,setCuentas,modoPrivado,toggleModoPrivado}) {
   const [filtro,setFiltro]=useState('mes');
   const [showCuentas,setShowCuentas]=useState(false);
   const [filtroCuenta,setFiltroCuenta]=useState('');
@@ -891,12 +906,15 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
     <div style={{paddingBottom:100}}>
       <Nav title="Balance" sub={filtro==='mes'?'Este mes':'Todo el historial'}
         right={
-          <div style={{display:'flex',gap:5,alignItems:'center'}}>
-            {['mes','todo'].map(f=>(
-              <button key={f} onClick={()=>setFiltro(f)} style={{background:filtro===f?'rgba(255,255,255,0.08)':'none',border:'none',color:filtro===f?'#fff':T3,borderRadius:7,padding:'3px 9px',fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
-                {f==='mes'?'Mes':'Todo'}
-              </button>
-            ))}
+          <div style={{display:'flex',gap:8,alignItems:'center'}}>
+            <EyeToggle modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>
+            <div style={{display:'flex',gap:5,alignItems:'center'}}>
+              {['mes','todo'].map(f=>(
+                <button key={f} onClick={()=>setFiltro(f)} style={{background:filtro===f?'rgba(255,255,255,0.08)':'none',border:'none',color:filtro===f?'#fff':T3,borderRadius:7,padding:'3px 9px',fontSize:12,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+                  {f==='mes'?'Mes':'Todo'}
+                </button>
+              ))}
+            </div>
           </div>
         }/>
       <div style={{padding:'12px 14px 0'}}>
@@ -1314,7 +1332,7 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
 }
 
 // ─── METAS ────────────────────────────────────────────────────────────────────
-function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo}) {
+function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo,modoPrivado,toggleModoPrivado}) {
   const [showForm,setShowForm]=useState(false);
   const [nombre,setNombre]=useState('');
   const [icono,setIcono]=useState('🎯');
@@ -1347,7 +1365,7 @@ function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo}) {
   return (
     <div style={{paddingBottom:100}}>
       <Nav title="Metas" sub="Fondo de emergencia + metas de ahorro"
-        right={<button onClick={()=>setShowForm(true)} style={{background:GBG,border:'0.5px solid '+GBD,color:ACENTO,borderRadius:9,padding:'5px 11px',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>+ Nueva</button>}/>
+        right={<div style={{display:'flex',gap:8,alignItems:'center'}}><EyeToggle modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/><button onClick={()=>setShowForm(true)} style={{background:GBG,border:'0.5px solid '+GBD,color:ACENTO,borderRadius:9,padding:'5px 11px',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>+ Nueva</button></div>}/>
       <div style={{padding:'12px 14px 0'}}>
         <SecLabel>🛡️ Fondo de emergencia - tu meta cero</SecLabel>
         <FondoBody txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>
@@ -1825,28 +1843,12 @@ function App() {
 
   return (
     <div>
-      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil} setPerfil={setPerfil}/>}
-      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={goView} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} metas={metas} setMetas={setMetas} cuentas={cuentas} setCuentas={setCuentas}/>}
-      {view==='metas'&&<Metas metas={metas} setMetas={setMetas} txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo}/>}
+      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil} setPerfil={setPerfil} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>}
+      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={goView} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} metas={metas} setMetas={setMetas} cuentas={cuentas} setCuentas={setCuentas} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>}
+      {view==='metas'&&<Metas metas={metas} setMetas={setMetas} txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>}
       {view==='flujo'&&<FlujoChat txs={txs} metas={metas} setMetas={setMetas} fondoSaldo={fondoSaldo} msgCount={msgCount} setMsgCount={setMsgCount} chatMsgs={chatMsgs} setChatMsgs={setChatMsgs} setView={goView} perfil={perfil} setPerfil={setPerfil} cuentas={cuentas}/>}
       {view!=='flujo'&&<TabBar view={view} setView={goView} msgCount={msgCount}/>}
 
-      {view!=='flujo'&&(
-        <button onClick={toggleModoPrivado} style={{
-          position:'fixed',
-          bottom:'calc(72px + env(safe-area-inset-bottom, 0px))',
-          left:14,
-          width:38,height:38,borderRadius:'50%',
-          background:modoPrivado?ACENTO:'rgba(255,255,255,0.08)',
-          border:'0.5px solid '+(modoPrivado?ACENTO:'rgba(255,255,255,0.14)'),
-          display:'flex',alignItems:'center',justifyContent:'center',
-          fontSize:16,cursor:'pointer',zIndex:110,
-          boxShadow:modoPrivado?'0 3px 14px rgba(52,211,153,0.4)':'0 2px 10px rgba(0,0,0,0.3)',
-          transition:'all 0.2s'
-        }}>
-          👁️
-        </button>
-      )}
     </div>
   );
 }
