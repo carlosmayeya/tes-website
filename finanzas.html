@@ -537,7 +537,7 @@ function generarRecurrentes(txs,mesLimite) {
     porSerie[key].push(t);
   });
   const nuevas=[];
-  Object.values(porSerie).forEach(serie=>{
+  Object.entries(porSerie).forEach(([key,serie])=>{
     const ultima=serie.reduce((a,b)=>a.fecha>b.fecha?a:b);
     const mesUltima=mesDeFecha(ultima.fecha);
     let gap=diffMeses(mesUltima,mesLimite);
