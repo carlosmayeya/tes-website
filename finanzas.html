@@ -123,6 +123,50 @@ function getTipDelDia(){
 // ─── AJUSTES: copia de seguridad, perfil, datos ──────────────────────────────
 const BACKUP_KEYS=['fb_txs','fb_metas','fb_fondo','fb_perfil','fb_cuentas','fb_chat','fb_msgcount','fb_onboarding','fb_ultima_cuenta'];
 
+// ─── SELECTOR DE MES Y AÑO ────────────────────────────────────────────────────
+function MesPickerSheet({mesActual:mesSel,onSelect,onClose}) {
+  const [anio,setAnio]=useState(parseInt(mesSel.split('-')[0],10));
+  const mesSelNum=parseInt(mesSel.split('-')[1],10);
+  const nombresMeses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const hoyStr=mesActual();
+  const anioHoy=parseInt(hoyStr.split('-')[0],10);
+  const mesHoyNum=parseInt(hoyStr.split('-')[1],10);
+
+  function elegir(mIdx){
+    const mStr=anio+'-'+String(mIdx+1).padStart(2,'0');
+    onSelect(mStr);
+  }
+
+  return (
+    <div style={{position:'fixed',inset:0,zIndex:200,display:'flex',flexDirection:'column'}}>
+      <div onClick={onClose} style={{flex:1,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(4px)'}}/>
+      <div style={{background:'#0a0a0a',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:'20px 20px 0 0',padding:'16px 16px 28px',paddingBottom:'max(28px, env(safe-area-inset-bottom))',animation:'slideUp 0.25s ease'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
+          <button onClick={()=>setAnio(a=>a-1)} style={{background:'rgba(255,255,255,0.06)',border:'none',borderRadius:9,width:34,height:34,color:'#fff',fontSize:16,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>‹</button>
+          <span style={{fontSize:15,fontWeight:700,color:'#fff'}}>{anio}</span>
+          <button onClick={()=>setAnio(a=>a+1)} style={{background:'rgba(255,255,255,0.06)',border:'none',borderRadius:9,width:34,height:34,color:'#fff',fontSize:16,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>›</button>
+        </div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8,marginBottom:14}}>
+          {nombresMeses.map((nombre,i)=>{
+            const esSeleccionado=anio===parseInt(mesSel.split('-')[0],10)&&i+1===mesSelNum;
+            const esHoy=anio===anioHoy&&i+1===mesHoyNum;
+            const esFuturo=anio>anioHoy||(anio===anioHoy&&i+1>mesHoyNum);
+            return (
+              <button key={nombre} onClick={()=>!esFuturo&&elegir(i)} disabled={esFuturo}
+                style={{padding:'12px 4px',borderRadius:11,background:esSeleccionado?ACENTO:'rgba(255,255,255,0.04)',border:'0.5px solid '+(esSeleccionado?ACENTO:esHoy?'rgba(52,211,153,0.4)':'rgba(255,255,255,0.07)'),color:esFuturo?'rgba(255,255,255,0.2)':esSeleccionado?'#000':'#fff',fontSize:13,fontWeight:esSeleccionado?800:600,cursor:esFuturo?'default':'pointer',fontFamily:'Inter,sans-serif'}}>
+                {nombre}
+              </button>
+            );
+          })}
+        </div>
+        <button onClick={()=>onSelect(mesActual())} style={{width:'100%',padding:11,borderRadius:11,background:'none',border:'0.5px solid rgba(255,255,255,0.1)',color:ACENTO,fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+          Ir al mes actual
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function AjustesSheet({onClose,perfil,setPerfil}) {
   const [msg,setMsg]=useState('');
   const [confirmarBorrado,setConfirmarBorrado]=useState(false);
@@ -304,12 +348,12 @@ function CuentaCard({c,onRename,onDelete,onUpdateSaldo}) {
         </div>
         {c.nRecurrentes>0?(
           <div style={{fontSize:12,lineHeight:1.5,color:c.deficit>0?'#F87171':T3}}>
-            {c.nRecurrentes} cargo{c.nRecurrentes!==1?'s':''} recurrente{c.nRecurrentes!==1?'s':''} · {fmtEur(c.cargos)}/mes
+            {c.nRecurrentes} cargo{c.nRecurrentes!==1?'s':''} recurrente{c.nRecurrentes!==1?'s':''} · {<Cifra n={c.cargos}/>}/mes
             {c.ingresosRec>0&&` · +${fmtEur(c.ingresosRec)} de ingresos`}
             <br/>
             {c.deficit>0
-              ? <strong>⚠️ Faltan {fmtEur(c.deficit)} para cubrir los cargos</strong>
-              : <span style={{color:ACENTO}}>✓ Cubierto - quedarían {fmtEur(c.restante)}</span>}
+              ? <strong>⚠️ Faltan {<Cifra n={c.deficit}/>} para cubrir los cargos</strong>
+              : <span style={{color:ACENTO}}>✓ Cubierto - quedarían {<Cifra n={c.restante}/>}</span>}
           </div>
         ):(
           <div style={{fontSize:12,color:T3}}>Sin cargos recurrentes asignados todavía</div>
@@ -426,8 +470,35 @@ function fmtEur(n) {
   const txt=n.toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:0})+' €';
   return PRIVADO?txt.replace(/[0-9]/g,'•'):txt;
 }
+// fmtEurReal: SIEMPRE el valor real, sin enmascarar. Uso exclusivo para el contexto
+// interno que se envía a FARO — el modo privado es solo visual, FARO debe seguir
+// viendo los números reales para poder dar consejos financieros útiles.
+function fmtEurReal(n) {
+  return n.toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:0})+' €';
+}
 function fmtPct(p) {
   return PRIVADO?'••%':p+'%';
+}
+
+// ─── CIFRA: muestra un importe, y si el modo privado está activo, se puede
+// mantener presionado para revelarlo temporalmente sin desactivar el modo ────
+function Cifra({n}) {
+  const [show,setShow]=useState(false);
+  if(!PRIVADO) return fmtEur(n);
+  const real=n.toLocaleString('es-ES',{minimumFractionDigits:0,maximumFractionDigits:0})+' €';
+  const masked=real.replace(/[0-9]/g,'•');
+  return (
+    <span
+      onTouchStart={()=>setShow(true)}
+      onTouchEnd={()=>setShow(false)}
+      onTouchCancel={()=>setShow(false)}
+      onMouseDown={()=>setShow(true)}
+      onMouseUp={()=>setShow(false)}
+      onMouseLeave={()=>setShow(false)}
+      style={{cursor:'pointer',userSelect:'none',WebkitUserSelect:'none'}}>
+      {show?real:masked}
+    </span>
+  );
 }
 function fmtFecha(d) {
   const dias=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
@@ -438,6 +509,50 @@ function fmtFecha(d) {
 function mesActual() {
   const n=new Date();
   return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0');
+}
+function sumarMeses(fechaStr,n) {
+  const [y,m,d]=fechaStr.split('-').map(Number);
+  const dt=new Date(y,m-1+n,1);
+  const ultimoDia=new Date(dt.getFullYear(),dt.getMonth()+1,0).getDate();
+  const diaFinal=Math.min(d,ultimoDia);
+  return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(diaFinal).padStart(2,'0');
+}
+function mesDeFecha(fechaStr){ return fechaStr.slice(0,7); }
+function diffMeses(mesA,mesB){
+  const [ya,ma]=mesA.split('-').map(Number);
+  const [yb,mb]=mesB.split('-').map(Number);
+  return (yb-ya)*12+(mb-ma);
+}
+// Genera automáticamente las transacciones recurrentes que faltan hasta el mes
+// indicado (por defecto, el mes actual). Cada serie recurrente se identifica por
+// tipo+categoria+nombre+cuenta+tipogasto; se toma la última instancia conocida de
+// cada serie y se clona mes a mes hasta cubrir el hueco, sin duplicar si ya existe.
+function generarRecurrentes(txs,mesLimite) {
+  mesLimite=mesLimite||mesActual();
+  const porSerie={};
+  txs.forEach(t=>{
+    if(!t.recurrente) return;
+    const key=[t.tipo,t.categoria,t.nombre,t.cuenta||'',t.tipogasto||''].join('|');
+    if(!porSerie[key]) porSerie[key]=[];
+    porSerie[key].push(t);
+  });
+  const nuevas=[];
+  Object.values(porSerie).forEach(serie=>{
+    const ultima=serie.reduce((a,b)=>a.fecha>b.fecha?a:b);
+    const mesUltima=mesDeFecha(ultima.fecha);
+    let gap=diffMeses(mesUltima,mesLimite);
+    if(gap<=0) return; // ya está al día
+    if(gap>24) gap=24; // límite de seguridad para no generar años de golpe
+    const mesesExistentes=new Set(serie.map(t=>mesDeFecha(t.fecha)));
+    for(let i=1;i<=gap;i++){
+      const nuevaFecha=sumarMeses(ultima.fecha,i);
+      const mesNueva=mesDeFecha(nuevaFecha);
+      if(mesesExistentes.has(mesNueva)) continue;
+      nuevas.push({...ultima,id:Date.now().toString()+'_'+key+'_'+i,fecha:nuevaFecha});
+      mesesExistentes.add(mesNueva);
+    }
+  });
+  return nuevas;
 }
 function hoy() {
   return new Date().toISOString().split('T')[0];
@@ -577,9 +692,11 @@ function HomeFlujo({onDone,setView}) {
 
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
-function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,toggleModoPrivado}) {
+function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,toggleModoPrivado,mesSeleccionado,setMesSeleccionado}) {
   const [showAjustes,setShowAjustes]=useState(false);
-  const mes=mesActual();
+  const [showMesPicker,setShowMesPicker]=useState(false);
+  const mes=mesSeleccionado||mesActual();
+  const esMesActual=mes===mesActual();
   const txMes=txs.filter(t=>t.fecha.startsWith(mes));
   const ingresos=txMes.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
   const gastos=txMes.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
@@ -601,17 +718,27 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
   const gastoC=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='calidad').reduce((a,t)=>a+t.importe,0);
   const gastoK=txMes.filter(t=>t.tipo==='gasto'&&t.tipogasto==='capricho').reduce((a,t)=>a+t.importe,0);
 
-  // Base fondo: suma de gastos esencial + calidad de TODOS los meses (promedio mensual de recurrentes)
-  const recurrentes=txs.filter(t=>t.tipo==='gasto'&&t.recurrente&&(t.tipogasto==='esencial'||t.tipogasto==='calidad'));
-  const baseFondo=recurrentes.reduce((a,t)=>a+t.importe,0)||gastoE+gastoC;
+  // Base fondo: una sola instancia por serie recurrente (evita sumar de más si
+  // ya existen varios meses generados de la misma serie), tomando la más reciente.
+  const seriesRecurrentes={};
+  txs.filter(t=>t.tipo==='gasto'&&t.recurrente&&(t.tipogasto==='esencial'||t.tipogasto==='calidad')).forEach(t=>{
+    const key=[t.categoria,t.nombre,t.cuenta||'',t.tipogasto].join('|');
+    if(!seriesRecurrentes[key]||t.fecha>seriesRecurrentes[key].fecha) seriesRecurrentes[key]=t;
+  });
+  const baseFondo=Object.values(seriesRecurrentes).reduce((a,t)=>a+t.importe,0)||gastoE+gastoC;
   const f3=baseFondo*3, f6=baseFondo*6, f12=baseFondo*12;
   const pct3=f3>0?Math.round((fondoSaldo/f3)*100):0;
 
-  const mNow=new Date().toLocaleString('es-ES',{month:'long',year:'numeric'});
+  const mNow=new Date(mes+'-15T12:00:00').toLocaleString('es-ES',{month:'long',year:'numeric'});
 
   return (
     <div style={{paddingBottom:100}}>
-      <Nav title={mNow.charAt(0).toUpperCase()+mNow.slice(1)} sub="Tu resumen financiero"
+      <Nav title={
+        <button onClick={()=>setShowMesPicker(true)} style={{display:'flex',alignItems:'center',gap:5,background:'none',border:'none',padding:0,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+          <span style={{fontSize:15,fontWeight:700,color:'#fff'}}>{mNow.charAt(0).toUpperCase()+mNow.slice(1)}</span>
+          <span style={{fontSize:11,color:T3}}>▾</span>
+        </button>
+      } sub={esMesActual?'Tu resumen financiero':'Viendo un mes anterior'}
         right={<div style={{display:'flex',gap:8,alignItems:'center'}}><EyeToggle modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/><button onClick={()=>setShowAjustes(true)} style={{width:34,height:34,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>⚙️</button></div>}/>
       <div style={{padding:'0 14px'}}>
         {/* Meta principal - lo primero que ve */}
@@ -626,7 +753,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
               <div style={{fontSize:16,fontWeight:800,color:'#60A5FA'}}>{fmtPct(metaPrincipal.meta>0?Math.min(Math.round((metaPrincipal.actual/metaPrincipal.meta)*100),100):0)}</div>
             </div>
             <ProgressBar pct={metaPrincipal.meta>0?Math.min(Math.round((metaPrincipal.actual/metaPrincipal.meta)*100),100):0} color="#60A5FA" height={5}/>
-            <div style={{fontSize:12,color:T3,marginTop:5}}>{fmtEur(metaPrincipal.actual)} de {fmtEur(metaPrincipal.meta)} · faltan {fmtEur(Math.max(0,metaPrincipal.meta-metaPrincipal.actual))}</div>
+            <div style={{fontSize:12,color:T3,marginTop:5}}>{<Cifra n={metaPrincipal.actual}/>} de {<Cifra n={metaPrincipal.meta}/>} · faltan {<Cifra n={Math.max(0,metaPrincipal.meta-metaPrincipal.actual)}/>}</div>
           </Card>
         )}
 
@@ -647,19 +774,19 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:12}}>
             <div>
               <div style={{fontSize:12,color:T3,marginBottom:3}}>Sobra este mes</div>
-              <div style={{fontSize:28,fontWeight:800,color:sobra>=0?ACENTO:'#F87171',letterSpacing:'-0.03em'}}>{sobra>=0?'+':''}{fmtEur(sobra)}</div>
+              <div style={{fontSize:28,fontWeight:800,color:sobra>=0?ACENTO:'#F87171',letterSpacing:'-0.03em'}}>{sobra>=0?'+':''}{<Cifra n={sobra}/>}</div>
             </div>
             <button onClick={()=>setView('balance')} style={{background:CA,border:'0.5px solid '+CB,borderRadius:8,padding:'5px 10px',fontSize:13,color:T2,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>Ver →</button>
           </div>
           <div style={{display:'flex',gap:0}}>
             <div style={{flex:1,textAlign:'center'}}>
               <div style={{fontSize:12,color:T3,marginBottom:2}}>Ingresos</div>
-              <div style={{fontSize:15,fontWeight:700,color:ACENTO}}>{fmtEur(ingresos)}</div>
+              <div style={{fontSize:15,fontWeight:700,color:ACENTO}}>{<Cifra n={ingresos}/>}</div>
             </div>
             <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
             <div style={{flex:1,textAlign:'center'}}>
               <div style={{fontSize:12,color:T3,marginBottom:2}}>Gastos</div>
-              <div style={{fontSize:15,fontWeight:700,color:'#F87171'}}>{fmtEur(gastos)}</div>
+              <div style={{fontSize:15,fontWeight:700,color:'#F87171'}}>{<Cifra n={gastos}/>}</div>
             </div>
           </div>
         </Card>
@@ -676,7 +803,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
             {pct3>=100&&<span style={{fontSize:12,color:ACENTO}}>✓ Mínimo alcanzado</span>}
           </div>
           <FondoBarras fondoSaldo={fondoSaldo} f3={f3} f6={f6} f12={f12} compact/>
-          <div style={{fontSize:12,color:T3,marginTop:8}}>{fmtEur(fondoSaldo)} ahorrados</div>
+          <div style={{fontSize:12,color:T3,marginTop:8}}>{<Cifra n={fondoSaldo}/>} ahorrados</div>
         </Card>
 
         {/* Metas */}
@@ -693,7 +820,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
               </div>
               <ProgressBar pct={pct} color="#60A5FA"/>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:5}}>
-                <span style={{fontSize:12,color:T3}}>{fmtEur(m.actual)} / {fmtEur(m.meta)}</span>
+                <span style={{fontSize:12,color:T3}}>{<Cifra n={m.actual}/>} / {<Cifra n={m.meta}/>}</span>
                 {m.fecha&&<span style={{fontSize:12,color:T3}}>{m.fecha}</span>}
               </div>
             </Card>
@@ -713,7 +840,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
               <div key={label} style={{marginBottom:label==='Capricho'?0:10}}>
                 <div style={{display:'flex',justifyContent:'space-between',marginBottom:4}}>
                   <span style={{fontSize:13,color:T2}}>{label}</span>
-                  <span style={{fontSize:12,fontWeight:600,color:'#fff'}}>{fmtEur(v)}</span>
+                  <span style={{fontSize:12,fontWeight:600,color:'#fff'}}>{<Cifra n={v}/>}</span>
                 </div>
                 <ProgressBar pct={gastos>0?Math.round((v/gastos)*100):0} color={c}/>
               </div>
@@ -738,6 +865,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
       </div>
 
       {showAjustes&&<AjustesSheet onClose={()=>setShowAjustes(false)} perfil={perfil} setPerfil={setPerfil}/>}
+      {showMesPicker&&<MesPickerSheet mesActual={mes} onSelect={m=>{setMesSeleccionado(m);setShowMesPicker(false);}} onClose={()=>setShowMesPicker(false)}/>}
     </div>
   );
 }
@@ -795,7 +923,7 @@ function TxRow({t,onEdit,onDelete,cuentas=[],assignCuenta}) {
         </div>
         <div style={{textAlign:'right',flexShrink:0}}>
           <div style={{fontSize:13,fontWeight:600,color:t.tipo==='ingreso'?ACENTO:'#F87171'}}>
-            {t.tipo==='ingreso'?'+':'-'}{fmtEur(t.importe)}
+            {t.tipo==='ingreso'?'+':'-'}{<Cifra n={t.importe}/>}
           </div>
         </div>
       </div>
@@ -847,7 +975,7 @@ function CategoriaGrupo({grupo,abierta,onToggle,onEdit,deleteTx,cuentas=[],assig
           <div style={{fontSize:12,color:T3}}>{grupo.items.length} transacción{grupo.items.length!==1?'es':''}</div>
         </div>
         <div style={{textAlign:'right',flexShrink:0,display:'flex',alignItems:'center',gap:8}}>
-          <div style={{fontSize:15,fontWeight:700,color}}>{signo}{fmtEur(grupo.total)}</div>
+          <div style={{fontSize:15,fontWeight:700,color}}>{signo}{<Cifra n={grupo.total}/>}</div>
           <div style={{fontSize:12,color:T3,transform:abierta?'rotate(180deg)':'none',transition:'transform 0.2s'}}>▾</div>
         </div>
       </button>
@@ -932,11 +1060,11 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
         </div>
         <Card style={{borderColor:sobra>=0?GBD:'rgba(248,113,113,0.15)',marginBottom:12}}>
           <div style={{display:'flex',justifyContent:'space-around',textAlign:'center'}}>
-            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Ingresos</div><div style={{fontSize:16,fontWeight:700,color:ACENTO}}>{fmtEur(ingresos)}</div></div>
+            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Ingresos</div><div style={{fontSize:16,fontWeight:700,color:ACENTO}}>{<Cifra n={ingresos}/>}</div></div>
             <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
-            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Gastos</div><div style={{fontSize:16,fontWeight:700,color:'#F87171'}}>{fmtEur(gastos)}</div></div>
+            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Gastos</div><div style={{fontSize:16,fontWeight:700,color:'#F87171'}}>{<Cifra n={gastos}/>}</div></div>
             <div style={{width:'0.5px',background:'rgba(255,255,255,0.06)'}}/>
-            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Sobra</div><div style={{fontSize:16,fontWeight:700,color:sobra>=0?ACENTO:'#F87171'}}>{sobra>=0?'+':''}{fmtEur(sobra)}</div></div>
+            <div><div style={{fontSize:12,color:T3,marginBottom:2}}>Sobra</div><div style={{fontSize:16,fontWeight:700,color:sobra>=0?ACENTO:'#F87171'}}>{sobra>=0?'+':''}{<Cifra n={sobra}/>}</div></div>
           </div>
         </Card>
 
@@ -944,7 +1072,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
           <div onClick={()=>setShowCuentas(true)} style={{background:'rgba(248,113,113,0.08)',border:'0.5px solid rgba(248,113,113,0.3)',borderRadius:13,padding:'12px 13px',marginBottom:10,cursor:'pointer'}}>
             <div style={{fontSize:13,fontWeight:700,color:'#F87171',marginBottom:3}}>⚠️ Riesgo de impago</div>
             {cuentasEnRiesgo.map(c=>(
-              <div key={c.id} style={{fontSize:12,color:T2,lineHeight:1.5}}>A <strong style={{color:'#fff'}}>{c.nombre}</strong> le faltan {fmtEur(c.deficit)} para cubrir sus cargos de este mes.</div>
+              <div key={c.id} style={{fontSize:12,color:T2,lineHeight:1.5}}>A <strong style={{color:'#fff'}}>{c.nombre}</strong> le faltan {<Cifra n={c.deficit}/>} para cubrir sus cargos de este mes.</div>
             ))}
           </div>
         )}
@@ -1052,12 +1180,12 @@ function PagatePrimeroSheet({ingreso,onClose,onApartar}) {
       <div onClick={e=>e.stopPropagation()} style={{width:'100%',background:'#0A0A0A',borderRadius:'20px 20px 0 0',border:'0.5px solid rgba(255,255,255,0.08)',borderBottom:'none',padding:'22px 18px',paddingBottom:'max(22px, env(safe-area-inset-bottom))',animation:'slideUp 0.25s ease-out'}}>
         <div style={{fontSize:22,marginBottom:8,textAlign:'center'}}>💚</div>
         <div style={{fontSize:16,fontWeight:800,color:'#fff',textAlign:'center',marginBottom:6}}>Primero, págate a ti</div>
-        <div style={{fontSize:12,color:T2,textAlign:'center',lineHeight:1.6,marginBottom:18}}>Acabas de registrar <strong style={{color:ACENTO}}>{fmtEur(ingreso.importe)}</strong>. Antes de gastar un euro - ¿cuánto apartas para tu fondo?</div>
+        <div style={{fontSize:12,color:T2,textAlign:'center',lineHeight:1.6,marginBottom:18}}>Acabas de registrar <strong style={{color:ACENTO}}>{<Cifra n={ingreso.importe}/>}</strong>. Antes de gastar un euro - ¿cuánto apartas para tu fondo?</div>
         <div style={{display:'flex',gap:8,marginBottom:10}}>
           {sugerencias.map(s=>(
             <button key={s.label} onClick={()=>onApartar(s.v)} style={{flex:1,padding:'12px 4px',borderRadius:12,background:GBG,border:'0.5px solid '+GBD,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
               <div style={{fontSize:14,fontWeight:800,color:ACENTO}}>{s.label}</div>
-              <div style={{fontSize:12,color:T3,marginTop:2}}>{fmtEur(s.v)}</div>
+              <div style={{fontSize:12,color:T3,marginTop:2}}>{<Cifra n={s.v}/>}</div>
             </button>
           ))}
         </div>
@@ -1274,7 +1402,7 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
               <span style={{fontSize:16,color:T2}}>€</span>
             </div>
           ):(
-            <div style={{fontSize:32,fontWeight:800,color:ACENTO,letterSpacing:'-0.03em',marginBottom:4}}>{fmtEur(fondoSaldo)}</div>
+            <div style={{fontSize:32,fontWeight:800,color:ACENTO,letterSpacing:'-0.03em',marginBottom:4}}>{<Cifra n={fondoSaldo}/>}</div>
           )}
           <button onClick={()=>editSaldo?saveSaldo():setEditSaldo(true)} style={{fontSize:13,color:editSaldo?ACENTO:T3,background:'none',border:'none',cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
             {editSaldo?'Guardar saldo':'Actualizar saldo →'}
@@ -1292,9 +1420,9 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
             <FondoBarras fondoSaldo={fondoSaldo} f3={f3} f6={f6} f12={f12}/>
             <Divider/>
             <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:T3}}>
-              <span>3 meses: {fmtEur(f3)}</span>
-              <span>6 meses: {fmtEur(f6)}</span>
-              <span>12 meses: {fmtEur(f12)}</span>
+              <span>3 meses: {<Cifra n={f3}/>}</span>
+              <span>6 meses: {<Cifra n={f6}/>}</span>
+              <span>12 meses: {<Cifra n={f12}/>}</span>
             </div>
             {fondoSaldo>=f12?(
               <div style={{marginTop:8,fontSize:12,color:'#60A5FA',textAlign:'center'}}>✓ Fondo ideal completo - nivel máximo de seguridad</div>
@@ -1303,7 +1431,7 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
             ):fondoSaldo>=f3?(
               <div style={{marginTop:8,fontSize:12,color:ACENTO,textAlign:'center'}}>✓ Mínimo alcanzado - puedes empezar a invertir</div>
             ):(
-              <div style={{marginTop:8,fontSize:12,color:T3,textAlign:'center'}}>Faltan {fmtEur(Math.max(0,f3-fondoSaldo))} para tu mínimo de 3 meses</div>
+              <div style={{marginTop:8,fontSize:12,color:T3,textAlign:'center'}}>Faltan {<Cifra n={Math.max(0,f3-fondoSaldo)}/>} para tu mínimo de 3 meses</div>
             )}
           </Card>
         )}
@@ -1314,12 +1442,12 @@ function FondoBody({txs,fondoSaldo,setFondoSaldo}) {
           {[{label:'Gastos esenciales',v:gastoE},{label:'Calidad de vida',v:gastoC}].map(({label,v})=>(
             <div key={label} style={{display:'flex',justifyContent:'space-between',padding:'5px 0',borderBottom:'0.5px solid rgba(255,255,255,0.05)'}}>
               <span style={{fontSize:12,color:T2}}>{label}</span>
-              <span style={{fontSize:12,fontWeight:600,color:'#fff'}}>{fmtEur(v)}/mes</span>
+              <span style={{fontSize:12,fontWeight:600,color:'#fff'}}>{<Cifra n={v}/>}/mes</span>
             </div>
           ))}
           <div style={{display:'flex',justifyContent:'space-between',padding:'5px 0'}}>
             <span style={{fontSize:12,color:ACENTO,fontWeight:600}}>Total base</span>
-            <span style={{fontSize:12,fontWeight:700,color:ACENTO}}>{fmtEur(gastoE+gastoC)}/mes</span>
+            <span style={{fontSize:12,fontWeight:700,color:ACENTO}}>{<Cifra n={gastoE+gastoC}/>}/mes</span>
           </div>
         </Card>
 
@@ -1397,7 +1525,7 @@ function Metas({metas,setMetas,txs,fondoSaldo,setFondoSaldo,modoPrivado,toggleMo
               </div>
               <ProgressBar pct={pct} color="#60A5FA" height={4}/>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:6,marginBottom:10}}>
-                <span style={{fontSize:13,color:T3}}>{fmtEur(m.actual)} / {fmtEur(m.meta)}</span>
+                <span style={{fontSize:13,color:T3}}>{<Cifra n={m.actual}/>} / {<Cifra n={m.meta}/>}</span>
                 <span style={{fontSize:13,color:'#60A5FA',fontWeight:600}}>{fmtPct(pct)}</span>
               </div>
               {pct<100&&(
@@ -1519,28 +1647,28 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
     const pctFondo=f3>0?Math.round((fondoSaldo/f3)*100):0;
 
     let ctx=`[CONTEXTO FINANCIERO DEL USUARIO - ${new Date().toLocaleDateString('es-ES',{month:'long',year:'numeric'})}]\n`;
-    ctx+=`Ingresos este mes: ${fmtEur(ingresos)}\n`;
-    ctx+=`Gastos este mes: ${fmtEur(gastos)} (sobra: ${fmtEur(ingresos-gastos)})\n`;
-    ctx+=`  - Esenciales: ${fmtEur(gastoE)}\n`;
-    ctx+=`  - Calidad de vida: ${fmtEur(gastoC)}\n`;
-    ctx+=`  - Caprichos: ${fmtEur(gastoK)}\n`;
+    ctx+=`Ingresos este mes: ${fmtEurReal(ingresos)}\n`;
+    ctx+=`Gastos este mes: ${fmtEurReal(gastos)} (sobra: ${fmtEurReal(ingresos-gastos)})\n`;
+    ctx+=`  - Esenciales: ${fmtEurReal(gastoE)}\n`;
+    ctx+=`  - Calidad de vida: ${fmtEurReal(gastoC)}\n`;
+    ctx+=`  - Caprichos: ${fmtEurReal(gastoK)}\n`;
     if(recurrentes.length>0){
-      ctx+=`Gastos fijos recurrentes: ${recurrentes.slice(0,5).map(t=>`${t.nombre} ${fmtEur(t.importe)}`).join(', ')}\n`;
+      ctx+=`Gastos fijos recurrentes: ${recurrentes.slice(0,5).map(t=>`${t.nombre} ${fmtEurReal(t.importe)}`).join(', ')}\n`;
     }
-    ctx+=`Fondo de emergencia: ${fmtEur(fondoSaldo)} (${pctFondo}% del mínimo de 3 meses = ${fmtEur(f3)})\n`;
+    ctx+=`Fondo de emergencia: ${fmtEurReal(fondoSaldo)} (${pctFondo}% del mínimo de 3 meses = ${fmtEurReal(f3)})\n`;
     if(metas.length>0){
       ctx+=`Metas de ahorro activas:\n`;
       metas.forEach(m=>{
         const pct=m.meta>0?Math.round((m.actual/m.meta)*100):0;
-        ctx+=`  - ${m.nombre}: ${fmtEur(m.actual)} / ${fmtEur(m.meta)} (${pct}%)${m.fecha?` · ${m.fecha}`:''}\n`;
+        ctx+=`  - ${m.nombre}: ${fmtEurReal(m.actual)} / ${fmtEurReal(m.meta)} (${pct}%)${m.fecha?` · ${m.fecha}`:''}\n`;
       });
     }
     if(cuentas.length>0){
       const proy=proyectarCuentas(cuentas,txs);
       ctx+=`\n[CUENTAS DEL USUARIO]\n`;
       proy.forEach(cu=>{
-        ctx+=`${cu.nombre}: saldo ${fmtEur(cu.saldo)}, ${cu.nRecurrentes} cargos recurrentes (${fmtEur(cu.cargos)}/mes)`;
-        ctx+=cu.deficit>0?` - DÉFICIT de ${fmtEur(cu.deficit)}, riesgo de impago\n`:` - cubierto\n`;
+        ctx+=`${cu.nombre}: saldo ${fmtEurReal(cu.saldo)}, ${cu.nRecurrentes} cargos recurrentes (${fmtEurReal(cu.cargos)}/mes)`;
+        ctx+=cu.deficit>0?` - DÉFICIT de ${fmtEurReal(cu.deficit)}, riesgo de impago\n`:` - cubierto\n`;
       });
       const riesgo=proy.filter(cu=>cu.deficit>0);
       if(riesgo.length>0) ctx+=`AVISO: menciona el riesgo de impago en ${riesgo.map(r=>r.nombre).join(', ')} y sugiere mover dinero entre cuentas.\n`;
@@ -1679,7 +1807,7 @@ Respondes siempre como FARO.`;
               setMetas(prev=>{const n=[...prev,nueva];lsSet('fb_metas',n);return n;});
               setChatMsgs(prev=>{const n=prev.map((x,xi)=>xi===i?{...x,metaCreada:true}:x);lsSet('fb_chat',n);return n;});
             }} style={{display:'block',width:'100%',marginTop:10,padding:'10px 12px',borderRadius:10,background:'rgba(96,165,250,0.1)',border:'0.5px solid rgba(96,165,250,0.3)',color:'#60A5FA',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif',textAlign:'center'}}>
-              {m.metaAction.icono} Crear meta "{m.metaAction.nombre}" · {fmtEur(m.metaAction.importe)} →
+              {m.metaAction.icono} Crear meta "{m.metaAction.nombre}" · {<Cifra n={m.metaAction.importe}/>} →
             </button>
           )}
           {m.metaAction&&m.metaCreada&&(
@@ -1813,10 +1941,25 @@ function App() {
   const [perfil,setPerfil]=useState(()=>ls('fb_perfil',null));
   const [cuentas,setCuentas]=useState(()=>ls('fb_cuentas',[]));
   const [modoPrivado,setModoPrivadoState]=useState(false);
+  const [mesSeleccionado,setMesSeleccionado]=useState(()=>mesActual());
+  const yaGenero=useRef(false);
   function toggleModoPrivado(){
     PRIVADO=!PRIVADO;
     setModoPrivadoState(PRIVADO);
   }
+
+  // Rescata transacciones recurrentes que faltaban (ej. al cambiar de mes)
+  useEffect(()=>{
+    if(yaGenero.current) return;
+    yaGenero.current=true;
+    setTxs(prev=>{
+      const nuevas=generarRecurrentes(prev);
+      if(nuevas.length===0) return prev;
+      const actualizado=[...prev,...nuevas];
+      lsSet('fb_txs',actualizado);
+      return actualizado;
+    });
+  },[]);
 
   useEffect(()=>{
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -1843,7 +1986,7 @@ function App() {
 
   return (
     <div>
-      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil} setPerfil={setPerfil} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>}
+      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil} setPerfil={setPerfil} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado} mesSeleccionado={mesSeleccionado} setMesSeleccionado={setMesSeleccionado}/>}
       {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={goView} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} metas={metas} setMetas={setMetas} cuentas={cuentas} setCuentas={setCuentas} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>}
       {view==='metas'&&<Metas metas={metas} setMetas={setMetas} txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>}
       {view==='flujo'&&<FlujoChat txs={txs} metas={metas} setMetas={setMetas} fondoSaldo={fondoSaldo} msgCount={msgCount} setMsgCount={setMsgCount} chatMsgs={chatMsgs} setChatMsgs={setChatMsgs} setView={goView} perfil={perfil} setPerfil={setPerfil} cuentas={cuentas}/>}
