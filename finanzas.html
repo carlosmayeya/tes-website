@@ -43,6 +43,7 @@ const { useState, useRef, useEffect, useCallback } = React;
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 const IS_PRO = true;
+const APP_VERSION = '2026-08-02-1'; // súbela cada vez que despliegues, para verificar caché
 const MSG_LIMIT = 500;
 const ACENTO = '#34D399';
 const G = ACENTO;
@@ -167,10 +168,48 @@ function MesPickerSheet({mesActual:mesSel,onSelect,onClose}) {
   );
 }
 
-function AjustesSheet({onClose,perfil,setPerfil}) {
+function AjustesSheet({onClose,perfil,setPerfil,txs=[],setTxs}) {
   const [msg,setMsg]=useState('');
   const [confirmarBorrado,setConfirmarBorrado]=useState(false);
   const fileRef=useRef(null);
+
+  // ── Diagnóstico de recurrentes: compara el mes anterior contra el actual
+  // por serie (mismo agrupamiento que generarRecurrentes) y detecta huecos.
+  const mesAct=mesActual();
+  const mesAnt=mesDeFecha(sumarMeses(mesAct+'-01',-1));
+  const porSerieDiag={};
+  txs.forEach(t=>{
+    if(!t.recurrente) return;
+    const key=t.serieId||[t.tipo,t.categoria,t.nombre,t.cuenta||'',t.tipogasto||''].join('|');
+    if(!porSerieDiag[key]) porSerieDiag[key]=[];
+    porSerieDiag[key].push(t);
+  });
+  const faltantes=[];
+  Object.values(porSerieDiag).forEach(serie=>{
+    const delAnt=serie.filter(t=>mesDeFecha(t.fecha)===mesAnt);
+    const delAct=serie.filter(t=>mesDeFecha(t.fecha)===mesAct);
+    if(delAnt.length>delAct.length){
+      // Emparejar por importe para saber cuáles concretos faltan
+      const importesActRestantes=delAct.map(t=>t.importe);
+      delAnt.forEach(item=>{
+        const idx=importesActRestantes.indexOf(item.importe);
+        if(idx>=0){ importesActRestantes.splice(idx,1); }
+        else{ faltantes.push(item); }
+      });
+    }
+  });
+
+  function generarFaltante(item){
+    const nuevaFecha=sumarMeses(item.fecha, diffMeses(mesDeFecha(item.fecha), mesAct));
+    const nueva={...item,id:Date.now().toString()+'_fix',fecha:nuevaFecha};
+    setTxs(prev=>{const n=[...prev,nueva];lsSet('fb_txs',n);return n;});
+    setMsg(`✓ Añadido "${item.nombre}" (${fmtEurReal(item.importe)}) a ${mesAct}.`);
+  }
+  function generarTodosFaltantes(){
+    const nuevas=faltantes.map((item,i)=>({...item,id:Date.now().toString()+'_fixall_'+i,fecha:sumarMeses(item.fecha, diffMeses(mesDeFecha(item.fecha), mesAct))}));
+    setTxs(prev=>{const n=[...prev,...nuevas];lsSet('fb_txs',n);return n;});
+    setMsg(`✓ Añadidas ${nuevas.length} transacciones que faltaban en ${mesAct}.`);
+  }
 
   function exportar(){
     try{
@@ -222,6 +261,27 @@ function AjustesSheet({onClose,perfil,setPerfil}) {
             <strong>Importante:</strong> tus datos viven solo en este dispositivo. Si borras el historial del navegador o cambias de móvil, los perderás. Descarga una copia de vez en cuando.
           </div>
         </div>
+
+        {faltantes.length>0&&(
+          <div style={{background:'rgba(248,113,113,0.06)',border:'0.5px solid rgba(248,113,113,0.25)',borderRadius:12,padding:'12px 13px',marginBottom:14}}>
+            <div style={{fontSize:13,fontWeight:700,color:'#F87171',marginBottom:6}}>⚠️ Recurrentes que no se repitieron en {mesAct}</div>
+            <div style={{fontSize:12,color:T2,lineHeight:1.5,marginBottom:10}}>Estos gastos existían en {mesAnt} marcados como recurrentes, pero no se generó su copia este mes:</div>
+            {faltantes.map((item,i)=>(
+              <div key={i} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'8px 0',borderBottom:i<faltantes.length-1?'0.5px solid rgba(255,255,255,0.06)':'none'}}>
+                <div>
+                  <div style={{fontSize:13,color:'#fff',fontWeight:600}}>{item.nombre}</div>
+                  <div style={{fontSize:12,color:T3}}>{fmtEurReal(item.importe)} · {item.categoria}</div>
+                </div>
+                <button onClick={()=>generarFaltante(item)} style={{background:'rgba(52,211,153,0.15)',border:'0.5px solid rgba(52,211,153,0.35)',color:ACENTO,borderRadius:9,padding:'6px 11px',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif',flexShrink:0}}>Añadir</button>
+              </div>
+            ))}
+            {faltantes.length>1&&(
+              <button onClick={generarTodosFaltantes} style={{width:'100%',marginTop:10,padding:10,borderRadius:10,background:ACENTO,border:'none',color:'#000',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
+                Añadir los {faltantes.length}
+              </button>
+            )}
+          </div>
+        )}
 
         <button onClick={exportar} style={{width:'100%',padding:13,borderRadius:12,background:ACENTO,border:'none',color:'#000',fontSize:14,fontWeight:800,cursor:'pointer',fontFamily:'Inter,sans-serif',marginBottom:8}}>
           ⬇ Descargar copia de seguridad
@@ -275,6 +335,7 @@ function AjustesSheet({onClose,perfil,setPerfil}) {
             </div>
           )}
         </div>
+        <div style={{textAlign:'center',marginTop:16,fontSize:11,color:'rgba(255,255,255,0.2)'}}>Versión {APP_VERSION}</div>
       </div>
     </div>
   );
@@ -532,23 +593,27 @@ function generarRecurrentes(txs,mesLimite) {
   const porSerie={};
   txs.forEach(t=>{
     if(!t.recurrente) return;
-    const key=[t.tipo,t.categoria,t.nombre,t.cuenta||'',t.tipogasto||''].join('|');
+    const key=t.serieId||[t.tipo,t.categoria,t.nombre,t.cuenta||'',t.tipogasto||''].join('|');
     if(!porSerie[key]) porSerie[key]=[];
     porSerie[key].push(t);
   });
   const nuevas=[];
   Object.entries(porSerie).forEach(([key,serie])=>{
-    const ultima=serie.reduce((a,b)=>a.fecha>b.fecha?a:b);
-    const mesUltima=mesDeFecha(ultima.fecha);
+    // Mes más reciente con actividad en esta serie (no una sola transacción -
+    // puede haber varias con la misma key en el mismo mes, y todas deben clonarse)
+    const mesUltima=serie.reduce((max,t)=>{const m=mesDeFecha(t.fecha);return m>max?m:max;},'0000-00');
     let gap=diffMeses(mesUltima,mesLimite);
     if(gap<=0) return; // ya está al día
     if(gap>24) gap=24; // límite de seguridad para no generar años de golpe
+    const itemsUltimoMes=serie.filter(t=>mesDeFecha(t.fecha)===mesUltima);
     const mesesExistentes=new Set(serie.map(t=>mesDeFecha(t.fecha)));
     for(let i=1;i<=gap;i++){
-      const nuevaFecha=sumarMeses(ultima.fecha,i);
-      const mesNueva=mesDeFecha(nuevaFecha);
+      const mesNueva=mesDeFecha(sumarMeses(itemsUltimoMes[0].fecha,i));
       if(mesesExistentes.has(mesNueva)) continue;
-      nuevas.push({...ultima,id:Date.now().toString()+'_'+key+'_'+i,fecha:nuevaFecha});
+      itemsUltimoMes.forEach((item,idx)=>{
+        const nuevaFecha=sumarMeses(item.fecha,i);
+        nuevas.push({...item,id:Date.now().toString()+'_'+key+'_'+i+'_'+idx,fecha:nuevaFecha});
+      });
       mesesExistentes.add(mesNueva);
     }
   });
@@ -633,6 +698,25 @@ function EyeToggle({modoPrivado,toggleModoPrivado}) {
   );
 }
 
+// ─── BOTÓN DE MES: un único control compartido en toda la app. Al cambiar el
+// mes aquí, se actualiza en Inicio y Balance por igual (mismo estado global) ──
+function MonthToggle({mes,onOpen}) {
+  const esActual=mes===mesActual();
+  const etiqueta=new Date(mes+'-15T12:00:00').toLocaleString('es-ES',{month:'short'}).replace('.','');
+  return (
+    <button onClick={onOpen} style={{
+      height:34,borderRadius:17,flexShrink:0,padding:'0 12px',
+      background:esActual?GBG:'rgba(251,191,36,0.12)',
+      border:'0.5px solid '+(esActual?GBD:'rgba(251,191,36,0.4)'),
+      display:'flex',alignItems:'center',gap:4,
+      fontSize:12,fontWeight:700,color:esActual?ACENTO:'#FBBF24',
+      cursor:'pointer',fontFamily:'Inter,sans-serif',textTransform:'capitalize'
+    }}>
+      📅 {etiqueta}
+    </button>
+  );
+}
+
 function Nav({title,sub,right}) {
   return (
     <div style={{position:'sticky',top:0,zIndex:50,background:'rgba(0,0,0,0.97)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',borderBottom:'0.5px solid rgba(255,255,255,0.06)',paddingTop:'calc(env(safe-area-inset-top, 0px) + 10px)',paddingBottom:8,paddingLeft:16,paddingRight:16,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
@@ -692,7 +776,7 @@ function HomeFlujo({onDone,setView}) {
 
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
-function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,toggleModoPrivado,mesSeleccionado,setMesSeleccionado}) {
+function Dashboard({txs,setTxs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,toggleModoPrivado,mesSeleccionado,setMesSeleccionado}) {
   const [showAjustes,setShowAjustes]=useState(false);
   const [showMesPicker,setShowMesPicker]=useState(false);
   const mes=mesSeleccionado||mesActual();
@@ -733,13 +817,8 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
 
   return (
     <div style={{paddingBottom:100}}>
-      <Nav title={
-        <button onClick={()=>setShowMesPicker(true)} style={{display:'flex',alignItems:'center',gap:5,background:'none',border:'none',padding:0,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>
-          <span style={{fontSize:15,fontWeight:700,color:'#fff'}}>{mNow.charAt(0).toUpperCase()+mNow.slice(1)}</span>
-          <span style={{fontSize:11,color:T3}}>▾</span>
-        </button>
-      } sub={esMesActual?'Tu resumen financiero':'Viendo un mes anterior'}
-        right={<div style={{display:'flex',gap:8,alignItems:'center'}}><EyeToggle modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/><button onClick={()=>setShowAjustes(true)} style={{width:34,height:34,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>⚙️</button></div>}/>
+      <Nav title={mNow.charAt(0).toUpperCase()+mNow.slice(1)} sub={esMesActual?'Tu resumen financiero':'Viendo un mes anterior'}
+        right={<div style={{display:'flex',gap:8,alignItems:'center'}}><MonthToggle mes={mes} onOpen={()=>setShowMesPicker(true)}/><EyeToggle modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/><button onClick={()=>setShowAjustes(true)} style={{width:34,height:34,borderRadius:'50%',background:GBG,border:'0.5px solid '+GBD,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,cursor:'pointer',fontFamily:'Inter,sans-serif'}}>⚙️</button></div>}/>
       <div style={{padding:'0 14px'}}>
         {/* Meta principal - lo primero que ve */}
         {metaPrincipal&&(
@@ -864,7 +943,7 @@ function Dashboard({txs,metas,fondoSaldo,setView,perfil,setPerfil,modoPrivado,to
         </div>
       </div>
 
-      {showAjustes&&<AjustesSheet onClose={()=>setShowAjustes(false)} perfil={perfil} setPerfil={setPerfil}/>}
+      {showAjustes&&<AjustesSheet onClose={()=>setShowAjustes(false)} perfil={perfil} setPerfil={setPerfil} txs={txs} setTxs={setTxs}/>}
       {showMesPicker&&<MesPickerSheet mesActual={mes} onSelect={m=>{setMesSeleccionado(m);setShowMesPicker(false);}} onClose={()=>setShowMesPicker(false)}/>}
     </div>
   );
@@ -991,7 +1070,7 @@ function CategoriaGrupo({grupo,abierta,onToggle,onEdit,deleteTx,cuentas=[],assig
   );
 }
 
-function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cuentas,setCuentas,modoPrivado,toggleModoPrivado}) {
+function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cuentas,setCuentas,modoPrivado,toggleModoPrivado,mesSeleccionado,setMesSeleccionado}) {
   const [filtro,setFiltro]=useState('mes');
   const [showCuentas,setShowCuentas]=useState(false);
   const [filtroCuenta,setFiltroCuenta]=useState('');
@@ -999,8 +1078,10 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
   const [editTx,setEditTx]=useState(null);
   const [pagatePrimero,setPagatePrimero]=useState(null); // tx de ingreso recién guardada
   const [catAbierta,setCatAbierta]=useState(null); // categoría expandida actualmente
+  const [showMesPicker,setShowMesPicker]=useState(false);
 
-  const mes=mesActual();
+  const mes=mesSeleccionado||mesActual();
+  const esMesActual=mes===mesActual();
   const txFiltradas=filtro==='mes'
     ? txs.filter(t=>t.fecha.startsWith(mes))
     : txs;
@@ -1032,9 +1113,10 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
 
   return (
     <div style={{paddingBottom:100}}>
-      <Nav title="Balance" sub={filtro==='mes'?'Este mes':'Todo el historial'}
+      <Nav title="Balance" sub={filtro==='mes'?(esMesActual?'Este mes':'Viendo un mes anterior'):'Todo el historial'}
         right={
           <div style={{display:'flex',gap:8,alignItems:'center'}}>
+            <MonthToggle mes={mes} onOpen={()=>setShowMesPicker(true)}/>
             <EyeToggle modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>
             <div style={{display:'flex',gap:5,alignItems:'center'}}>
               {['mes','todo'].map(f=>(
@@ -1147,6 +1229,7 @@ function Balance({txs,setTxs,setView,fondoSaldo,setFondoSaldo,metas,setMetas,cue
       })()}
 
       {showCuentas&&<CuentasSheet cuentas={cuentas} setCuentas={setCuentas} txs={txs} onClose={()=>setShowCuentas(false)}/>}
+      {showMesPicker&&<MesPickerSheet mesActual={mes} onSelect={m=>{setMesSeleccionado(m);setFiltro('mes');setShowMesPicker(false);}} onClose={()=>setShowMesPicker(false)}/>}
 
       {showReg&&<RegistroModal cuentas={cuentas} setCuentas={setCuentas} onClose={()=>setShowReg(false)} onSave={tx=>{setTxs(prev=>{const n=[...prev,tx];lsSet('fb_txs',n);return n;});setShowReg(false);if(tx.tipo==='ingreso')setPagatePrimero(tx);}}/>}
 
@@ -1986,8 +2069,8 @@ function App() {
 
   return (
     <div>
-      {view==='dashboard'&&<Dashboard txs={txs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil} setPerfil={setPerfil} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado} mesSeleccionado={mesSeleccionado} setMesSeleccionado={setMesSeleccionado}/>}
-      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={goView} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} metas={metas} setMetas={setMetas} cuentas={cuentas} setCuentas={setCuentas} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>}
+      {view==='dashboard'&&<Dashboard txs={txs} setTxs={setTxs} metas={metas} fondoSaldo={fondoSaldo} setView={goView} perfil={perfil} setPerfil={setPerfil} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado} mesSeleccionado={mesSeleccionado} setMesSeleccionado={setMesSeleccionado}/>}
+      {view==='balance'&&<Balance txs={txs} setTxs={setTxs} setView={goView} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} metas={metas} setMetas={setMetas} cuentas={cuentas} setCuentas={setCuentas} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado} mesSeleccionado={mesSeleccionado} setMesSeleccionado={setMesSeleccionado}/>}
       {view==='metas'&&<Metas metas={metas} setMetas={setMetas} txs={txs} fondoSaldo={fondoSaldo} setFondoSaldo={setFondoSaldo} modoPrivado={modoPrivado} toggleModoPrivado={toggleModoPrivado}/>}
       {view==='flujo'&&<FlujoChat txs={txs} metas={metas} setMetas={setMetas} fondoSaldo={fondoSaldo} msgCount={msgCount} setMsgCount={setMsgCount} chatMsgs={chatMsgs} setChatMsgs={setChatMsgs} setView={goView} perfil={perfil} setPerfil={setPerfil} cuentas={cuentas}/>}
       {view!=='flujo'&&<TabBar view={view} setView={goView} msgCount={msgCount}/>}
