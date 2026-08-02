@@ -343,13 +343,36 @@ function AjustesSheet({onClose,perfil,setPerfil,txs=[],setTxs}) {
 
 // ─── CUENTAS: cálculo de proyección ──────────────────────────────────────────
 // Para cada cuenta: saldo actual − gastos recurrentes asignados = lo que quedará
+// Cada cuenta tiene un "saldo" (el número que el usuario escribió) y una
+// "fechaCreacion" (el día en que lo escribió). A partir de ahí, cualquier
+// transacción de esa cuenta con fecha entre ese día y hoy YA SE CONSIDERA
+// COBRADA y se descuenta/suma automáticamente al saldo, sin que el usuario
+// tenga que tocar nada. Los cargos con fecha futura (aún no llegó el día de
+// pago) no se descuentan todavía - solo sirven para avisar de riesgo.
 function proyectarCuentas(cuentas,txs){
+  const hoyStr=hoy();
+  const mesHoy=mesActual();
   return cuentas.map(c=>{
-    const recurrentes=txs.filter(t=>t.tipo==='gasto'&&t.recurrente&&t.cuenta===c.id);
-    const cargos=recurrentes.reduce((a,t)=>a+t.importe,0);
-    const ingresosRec=txs.filter(t=>t.tipo==='ingreso'&&t.recurrente&&t.cuenta===c.id).reduce((a,t)=>a+t.importe,0);
-    const restante=c.saldo+ingresosRec-cargos;
-    return {...c,cargos,ingresosRec,restante,deficit:restante<0?Math.abs(restante):0,nRecurrentes:recurrentes.length};
+    const ancla=c.fechaCreacion||hoyStr;
+    // Transacciones ya ocurridas desde que se fijó el saldo hasta hoy (inclusive)
+    const ocurridas=txs.filter(t=>t.cuenta===c.id&&t.fecha>=ancla&&t.fecha<=hoyStr);
+    const yaGastado=ocurridas.filter(t=>t.tipo==='gasto').reduce((a,t)=>a+t.importe,0);
+    const yaIngresado=ocurridas.filter(t=>t.tipo==='ingreso').reduce((a,t)=>a+t.importe,0);
+    const saldoActual=c.saldo+yaIngresado-yaGastado;
+
+    // Cargos recurrentes de este mes que AÚN NO han llegado (para avisar antes de que pasen)
+    const pendientesGasto=txs.filter(t=>t.cuenta===c.id&&t.recurrente&&t.tipo==='gasto'&&t.fecha.startsWith(mesHoy)&&t.fecha>hoyStr);
+    const pendientesIngreso=txs.filter(t=>t.cuenta===c.id&&t.recurrente&&t.tipo==='ingreso'&&t.fecha.startsWith(mesHoy)&&t.fecha>hoyStr);
+    const pendienteImporte=pendientesGasto.reduce((a,t)=>a+t.importe,0);
+    const pendienteIngreso=pendientesIngreso.reduce((a,t)=>a+t.importe,0);
+    const restante=saldoActual+pendienteIngreso-pendienteImporte;
+
+    // Info general del mes (para mostrar "tienes N cargos recurrentes este mes")
+    const recurrentesMes=txs.filter(t=>t.cuenta===c.id&&t.recurrente&&t.tipo==='gasto'&&t.fecha.startsWith(mesHoy));
+    const cargos=recurrentesMes.reduce((a,t)=>a+t.importe,0);
+    const ingresosRec=txs.filter(t=>t.cuenta===c.id&&t.recurrente&&t.tipo==='ingreso'&&t.fecha.startsWith(mesHoy)).reduce((a,t)=>a+t.importe,0);
+
+    return {...c,saldoActual,cargos,ingresosRec,restante,deficit:restante<0?Math.abs(restante):0,nRecurrentes:recurrentesMes.length,pendienteImporte,pendienteIngreso};
   });
 }
 
@@ -401,20 +424,32 @@ function CuentaCard({c,onRename,onDelete,onUpdateSaldo}) {
           )}
           <span style={{fontSize:11,color:T3,flexShrink:0}}>← desliza</span>
         </div>
-        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8}}>
-          <span style={{fontSize:12,color:T3,flexShrink:0}}>Saldo actual</span>
+        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:6}}>
+          <span style={{fontSize:12,color:T3,flexShrink:0}}>Saldo que escribiste</span>
           <input type="number" inputMode="decimal" defaultValue={c.saldo} onBlur={e=>onUpdateSaldo(c.id,e.target.value)}
             style={{flex:1,background:'rgba(255,255,255,0.04)',border:'0.5px solid rgba(255,255,255,0.08)',borderRadius:9,padding:'8px 11px',color:'#fff',fontSize:16,fontFamily:'Inter,sans-serif',outline:'none'}}/>
           <span style={{fontSize:13,color:T2}}>€</span>
         </div>
+        {c.fechaCreacion&&(
+          <div style={{fontSize:11,color:T3,marginBottom:8}}>
+            Anotado el {fmtFecha(c.fechaCreacion)}{(c.saldoActual!==c.saldo)&&<> · desde entonces: <span style={{color:c.saldoActual>=c.saldo?ACENTO:'#F87171',fontWeight:700}}>{c.saldoActual>=c.saldo?'+':''}{<Cifra n={c.saldoActual-c.saldo}/>}</span></>}
+          </div>
+        )}
+        {(c.saldoActual!==undefined&&c.saldoActual!==c.saldo)&&(
+          <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8,padding:'8px 10px',background:'rgba(52,211,153,0.06)',border:'0.5px solid rgba(52,211,153,0.2)',borderRadius:9}}>
+            <span style={{fontSize:11,color:ACENTO,fontWeight:700}}>SALDO ACTUAL ESTIMADO</span>
+            <span style={{marginLeft:'auto',fontSize:15,fontWeight:800,color:ACENTO}}>{<Cifra n={c.saldoActual}/>}</span>
+          </div>
+        )}
         {c.nRecurrentes>0?(
           <div style={{fontSize:12,lineHeight:1.5,color:c.deficit>0?'#F87171':T3}}>
-            {c.nRecurrentes} cargo{c.nRecurrentes!==1?'s':''} recurrente{c.nRecurrentes!==1?'s':''} · {<Cifra n={c.cargos}/>}/mes
+            {c.nRecurrentes} cargo{c.nRecurrentes!==1?'s':''} recurrente{c.nRecurrentes!==1?'s':''} este mes · {<Cifra n={c.cargos}/>} en total
+            {c.pendienteImporte>0&&<> · {<Cifra n={c.pendienteImporte}/>} aún por llegar</>}
             {c.ingresosRec>0&&` · +${fmtEur(c.ingresosRec)} de ingresos`}
             <br/>
             {c.deficit>0
-              ? <strong>⚠️ Faltan {<Cifra n={c.deficit}/>} para cubrir los cargos</strong>
-              : <span style={{color:ACENTO}}>✓ Cubierto - quedarían {<Cifra n={c.restante}/>}</span>}
+              ? <strong>⚠️ Con lo que falta por cobrar este mes, faltarían {<Cifra n={c.deficit}/>}</strong>
+              : <span style={{color:ACENTO}}>✓ Cubierto - a fin de mes quedarían {<Cifra n={c.restante}/>}</span>}
           </div>
         ):(
           <div style={{fontSize:12,color:T3}}>Sin cargos recurrentes asignados todavía</div>
@@ -445,13 +480,15 @@ function CuentasSheet({cuentas,setCuentas,txs,onClose}) {
 
   function añadir(){
     if(!nombre.trim()) return;
-    const nueva={id:Date.now().toString(),nombre:nombre.trim(),saldo:parseFloat(saldo)||0};
+    const nueva={id:Date.now().toString(),nombre:nombre.trim(),saldo:parseFloat(saldo)||0,fechaCreacion:hoy()};
     const n=[...cuentas,nueva];
     setCuentas(n);lsSet('fb_cuentas',n);
     setNombre('');setSaldo('');
   }
   function actualizarSaldo(id,v){
-    const n=cuentas.map(c=>c.id===id?{...c,saldo:parseFloat(v)||0}:c);
+    // Re-anclar: al escribir el saldo real, ese día pasa a ser el nuevo punto
+    // de referencia - los movimientos posteriores volverán a descontarse solos.
+    const n=cuentas.map(c=>c.id===id?{...c,saldo:parseFloat(v)||0,fechaCreacion:hoy()}:c);
     setCuentas(n);lsSet('fb_cuentas',n);
   }
   function renombrar(id,nuevoNombre){
@@ -1301,7 +1338,7 @@ function RegistroModal({onClose,onSave,inicial=null,cuentas=[],setCuentas}) {
 
   function crearCuentaInline(){
     if(!nuevaCuentaNombre.trim()||!setCuentas) return;
-    const nueva={id:Date.now().toString(),nombre:nuevaCuentaNombre.trim(),saldo:parseFloat(nuevaCuentaSaldo)||0};
+    const nueva={id:Date.now().toString(),nombre:nuevaCuentaNombre.trim(),saldo:parseFloat(nuevaCuentaSaldo)||0,fechaCreacion:hoy()};
     const n=[...cuentas,nueva];
     setCuentas(n);lsSet('fb_cuentas',n);
     setCuenta(nueva.id);
@@ -1750,7 +1787,7 @@ function FlujoChat({txs,metas,setMetas,fondoSaldo,msgCount,setMsgCount,chatMsgs,
       const proy=proyectarCuentas(cuentas,txs);
       ctx+=`\n[CUENTAS DEL USUARIO]\n`;
       proy.forEach(cu=>{
-        ctx+=`${cu.nombre}: saldo ${fmtEurReal(cu.saldo)}, ${cu.nRecurrentes} cargos recurrentes (${fmtEurReal(cu.cargos)}/mes)`;
+        ctx+=`${cu.nombre}: saldo actual ${fmtEurReal(cu.saldoActual)}, ${cu.nRecurrentes} cargos recurrentes este mes (${fmtEurReal(cu.cargos)} en total, ${fmtEurReal(cu.pendienteImporte)} aún por llegar)`;
         ctx+=cu.deficit>0?` - DÉFICIT de ${fmtEurReal(cu.deficit)}, riesgo de impago\n`:` - cubierto\n`;
       });
       const riesgo=proy.filter(cu=>cu.deficit>0);
