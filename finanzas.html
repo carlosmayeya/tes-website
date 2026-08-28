@@ -55,12 +55,6 @@ const T3 = 'rgba(255,255,255,0.50)';
 const GBG = 'rgba(52,211,153,0.06)';
 const GBD = 'rgba(52,211,153,0.18)';
 
-function getKey() {
-  var k1='sk-ant-api03-qp8DjbMxmbh2aM_0I0iR_idH';
-  var k2='AEC3xX6mjydeTfvE68JfUy8S00zqZ8aNqf1LiW7SVsgPF_MyDEZ9TkTc4EHp1g-Tcv6QwAA';
-  return k1+k2;
-}
-
 function clean(t) {
   return t
     .replace(/#{1,6}\s+/g,'')
@@ -1959,10 +1953,10 @@ Respondes siempre como FARO.`;
     setMsgCount(newCount);
     lsSet('fb_msgcount',newCount);
     try {
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
+      const res=await fetch('/api/chat',{
         method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':getKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:600,system:systemWithContext,
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({system:systemWithContext,
           messages:newMsgs.map(m=>({role:m.role==='agent'?'assistant':'user',content:m.content}))})
       });
       const data=await res.json();
