@@ -1103,6 +1103,13 @@
     transform: translateY(-7px) rotate(-45deg);
   }
 
+  @media (max-width: 1024px) {
+    /* Grid de 4 agentes gratis — 2 columnas en tablet */
+    #prompts > div[style*="repeat(4, 1fr)"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+
   @media (max-width: 768px) {
     .hamburger { display: flex; }
 
@@ -1147,6 +1154,10 @@
     /* Grid de diferenciación — columna única en móvil */
     #prompts > div:first-of-type > div:last-child {
       grid-template-columns: 1fr !important;
+    }
+    /* Grid de 4 agentes gratis — 2 columnas en tablet, 1 en móvil */
+    #prompts > div[style*="repeat(4, 1fr)"] {
+      grid-template-columns: repeat(2, 1fr) !important;
     }
     section { padding: 60px 20px; }
     .hero { padding: 90px 20px 60px; }
@@ -1296,13 +1307,12 @@
     <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
       <div>
         <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">⚡ Empieza aquí · Completamente gratis</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 10px; line-height: 1.2;">Antes de comprar cualquier cosa —<br>prueba AXON gratis</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 500px;">AXON es tu guía personal de IA. 25 conversaciones gratuitas, sin tarjeta, sin registro. Si después de usarlo no confías en la calidad, no compres nada. Es nuestra garantía real.</p>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 10px; line-height: 1.2;">AXON — tu guía personal de IA</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 500px;">Copia el agente y actívalo en tu Claude, ChatGPT o Grok en 30 segundos. Es texto, no una app — vive en tu LLM, con tu cuenta y tus propias conversaciones, sin límites impuestos por nosotros.</p>
       </div>
       <div style="flex-shrink: 0; text-align: center; min-width: 160px;">
-        <div style="display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: #34D399; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.3); padding: 6px 14px; text-transform: uppercase; margin-bottom: 12px;">Muy pronto</div>
-        <a href="#producto" style="display: block; background: #34D399; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 24px; text-decoration: none; text-align: center; transition: opacity 0.2s; margin-bottom: 10px;">Avísame cuando esté listo →</a>
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); line-height: 1.6;">Sin tarjeta · Sin registro<br>25 conversaciones gratis</div>
+        <a href="#producto" style="display: block; background: #34D399; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 24px; text-decoration: none; text-align: center; transition: opacity 0.2s; margin-bottom: 10px;">Conseguir AXON →</a>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); line-height: 1.6;">Gratis · Se activa en tu LLM<br>Claude · ChatGPT · Grok</div>
       </div>
     </div>
   </div>
@@ -1315,80 +1325,75 @@
 
   <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px;">
 
-  <!-- BLOQUE 4 — LOS AGENTES -->
+  <!-- BLOQUE 4 — LOS 4 AGENTES GRATIS -->
   <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.3em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
     <span style="display: block; width: 20px; height: 1px; background: var(--grey);"></span>
-    Los agentes de la suite
+    Los agentes gratis de la suite
   </div>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px;">
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
 
     <!-- PRO — violeta, gratis por email -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(192,132,252,0.25); border-top: 3px solid #C084FC; padding: 28px; position: relative;">
+    <div style="background: var(--blue-dark); border: 1px solid rgba(192,132,252,0.25); border-top: 3px solid #C084FC; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
       <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #C084FC; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="position: absolute; top: 14px; right: 14px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #C084FC; background: rgba(192,132,252,0.08); border: 1px solid rgba(192,132,252,0.25); padding: 3px 8px; text-transform: uppercase;">Gratis</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Pro</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Vende más, crece más rápido y lidera con criterio — con 12 agentes especializados en ventas, carrera y liderazgo.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #C084FC;">Gratis</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">12 agentes · Por email</span>
-      </div>
-      <a href="#producto" style="display: block; background: #C084FC; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
+      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #C084FC; background: rgba(192,132,252,0.08); border: 1px solid rgba(192,132,252,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Pro</div>
+      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Ventas, carrera y liderazgo — 12 agentes especializados.</p>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #C084FC; margin-bottom: 2px;">Gratis</div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; color: var(--grey); margin-bottom: 14px;">12 agentes · Por email</div>
+      <a href="#producto" style="display: block; background: #C084FC; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
     </div>
 
     <!-- TDAH — rosa, gratis por email -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(244,114,182,0.25); border-top: 3px solid #F472B6; padding: 28px; position: relative;">
+    <div style="background: var(--blue-dark); border: 1px solid rgba(244,114,182,0.25); border-top: 3px solid #F472B6; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
       <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #F472B6; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="position: absolute; top: 14px; right: 14px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #F472B6; background: rgba(244,114,182,0.08); border: 1px solid rgba(244,114,182,0.25); padding: 3px 8px; text-transform: uppercase;">Gratis</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">TDAH</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Foco, claridad y ejecución para cerebros que funcionan diferente. Diseñado con psicología real del TDAH — no con consejos genéricos.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #F472B6;">Gratis</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">3 agentes · Por email</span>
-      </div>
-      <a href="#producto" style="display: block; background: #F472B6; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
-    </div>
-
-    <!-- FINANZAS — verde, producto premium, próximamente -->
-    <div style="background: linear-gradient(135deg, var(--blue-dark), #0d2a1a); border: 1px solid rgba(52,211,153,0.4); border-top: 3px solid #34D399; padding: 28px; position: relative; overflow: hidden;">
-      <div style="position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(52,211,153,0.12) 0%, transparent 65%); pointer-events: none;"></div>
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #34D399; text-transform: uppercase; margin-bottom: 10px; position: relative; z-index: 2;">Agentes Brutales · App completa</div>
-      <div style="position: absolute; top: 14px; right: 14px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #34D399; background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.35); padding: 3px 8px; text-transform: uppercase;">Próximamente</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px; position: relative; z-index: 2;">Finanzas</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.65; margin-bottom: 16px; position: relative; z-index: 2;">No es un prompt más — es una aplicación completa que lleva tus finanzas contigo: presupuesto, deudas y ahorro en un panel que recuerda tu historial y avanza contigo mes a mes. Lo más completo de toda la suite.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px; position: relative; z-index: 2;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #34D399;">47€</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">App completa · Pago único</span>
-      </div>
-      <button disabled style="display: block; width: 100%; background: transparent; color: #34D399; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; border: 1px solid #34D399; opacity: 0.6; cursor: not-allowed; position: relative; z-index: 2;">🔒 Próximamente</button>
+      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #F472B6; background: rgba(244,114,182,0.08); border: 1px solid rgba(244,114,182,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">TDAH</div>
+      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Foco y ejecución con psicología real del TDAH.</p>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #F472B6; margin-bottom: 2px;">Gratis</div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; color: var(--grey); margin-bottom: 14px;">3 agentes · Por email</div>
+      <a href="#producto" style="display: block; background: #F472B6; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
     </div>
 
     <!-- NEGOCIO ONLINE — dorado, gratis por email -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(251,191,36,0.25); border-top: 3px solid #FBBF24; padding: 28px; position: relative;">
+    <div style="background: var(--blue-dark); border: 1px solid rgba(251,191,36,0.25); border-top: 3px solid #FBBF24; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
       <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FBBF24; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="position: absolute; top: 14px; right: 14px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FBBF24; background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); padding: 3px 8px; text-transform: uppercase;">Gratis</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Negocio Online</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">De la idea al negocio funcionando. Estrategia, producto, captación y monetización — con 8 agentes que cubren todo el proceso.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #FBBF24;">Gratis</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">8 agentes · Por email</span>
-      </div>
-      <a href="#producto" style="display: block; background: #FBBF24; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
+      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FBBF24; background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Negocio Online</div>
+      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">De la idea al negocio funcionando — 8 agentes.</p>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #FBBF24; margin-bottom: 2px;">Gratis</div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; color: var(--grey); margin-bottom: 14px;">8 agentes · Por email</div>
+      <a href="#producto" style="display: block; background: #FBBF24; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
     </div>
 
     <!-- DEV IA — rojo coral, gratis por email -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(255,107,107,0.25); border-top: 3px solid #FF6B6B; padding: 28px; position: relative;">
+    <div style="background: var(--blue-dark); border: 1px solid rgba(255,107,107,0.25); border-top: 3px solid #FF6B6B; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
       <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FF6B6B; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="position: absolute; top: 14px; right: 14px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FF6B6B; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.25); padding: 3px 8px; text-transform: uppercase;">Gratis</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 8px;">Dev IA</div>
-      <p style="font-size: 13px; color: var(--white-dim); line-height: 1.6; margin-bottom: 16px;">Construye apps con IA como si tuvieras un equipo. 4 agentes para diseñar, codificar, revisar y desplegar — sin saber programar.</p>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
-        <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #FF6B6B;">Gratis</span>
-        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey);">4 agentes · Por email</span>
-      </div>
-      <a href="#producto" style="display: block; background: #FF6B6B; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir acceso →</a>
+      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FF6B6B; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Dev IA</div>
+      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Construye apps con IA — 4 agentes especializados.</p>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #FF6B6B; margin-bottom: 2px;">Gratis</div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; color: var(--grey); margin-bottom: 14px;">4 agentes · Por email</div>
+      <a href="#producto" style="display: block; background: #FF6B6B; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
     </div>
 
+  </div>
+
+  <!-- FINANZAS — banner ancho completo, estilo AXON -->
+  <div style="background: linear-gradient(135deg, var(--blue-dark), #0d2a1a); border: 1px solid rgba(52,211,153,0.4); border-left: 3px solid #34D399; padding: 40px; margin-bottom: 32px; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(52,211,153,0.1) 0%, transparent 65%); pointer-events: none;"></div>
+    <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
+      <div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">💎 El agente premium · App completa</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; margin-bottom: 12px; line-height: 1.2;">Finanzas — el único que no es un prompt</div>
+        <p style="font-size: 15px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 560px;">No copias esto en tu LLM — es una aplicación completa que lleva tus finanzas contigo: presupuesto, deudas y ahorro en un panel que recuerda tu historial y avanza contigo mes a mes. El más completo de toda la suite, con más desarrollo y mantenimiento continuo detrás.</p>
+      </div>
+      <div style="flex-shrink: 0; text-align: center; min-width: 180px;">
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 40px; color: #34D399; line-height: 1; margin-bottom: 4px;">47€</div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); margin-bottom: 16px;">App completa · Pago único</div>
+        <button disabled style="display: block; width: 100%; background: transparent; color: #34D399; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 20px; border: 1px solid #34D399; opacity: 0.65; cursor: not-allowed;">🔒 Próximamente</button>
+      </div>
+    </div>
   </div>
 
   <!-- BLOQUE 5 — POLÍTICA HONESTA -->
