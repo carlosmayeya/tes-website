@@ -1105,7 +1105,7 @@
 
   @media (max-width: 1024px) {
     /* Grid de 4 agentes gratis — 2 columnas en tablet */
-    #prompts > div[style*="repeat(4, 1fr)"] {
+    .free-agents-grid {
       grid-template-columns: repeat(2, 1fr) !important;
     }
   }
@@ -1155,9 +1155,9 @@
     #prompts > div:first-of-type > div:last-child {
       grid-template-columns: 1fr !important;
     }
-    /* Grid de 4 agentes gratis — 2 columnas en tablet, 1 en móvil */
-    #prompts > div[style*="repeat(4, 1fr)"] {
-      grid-template-columns: repeat(2, 1fr) !important;
+    /* Grid de 4 agentes gratis — 1 columna en móvil */
+    .free-agents-grid {
+      grid-template-columns: 1fr !important;
     }
     section { padding: 60px 20px; }
     .hero { padding: 90px 20px 60px; }
@@ -1331,7 +1331,7 @@
     Los agentes gratis de la suite
   </div>
 
-  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
+  <div class="free-agents-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
 
     <!-- PRO — violeta, gratis por email -->
     <div style="background: var(--blue-dark); border: 1px solid rgba(192,132,252,0.25); border-top: 3px solid #C084FC; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
@@ -1339,8 +1339,7 @@
       <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #C084FC; background: rgba(192,132,252,0.08); border: 1px solid rgba(192,132,252,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
       <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Pro</div>
       <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Ventas, carrera y liderazgo — 12 agentes especializados.</p>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #C084FC; margin-bottom: 2px;">Gratis</div>
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; color: var(--grey); margin-bottom: 14px;">12 agentes · Por email</div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">12 agentes · Por email</div>
       <a href="#producto" style="display: block; background: #C084FC; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
     </div>
 
@@ -1350,8 +1349,7 @@
       <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #F472B6; background: rgba(244,114,182,0.08); border: 1px solid rgba(244,114,182,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
       <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">TDAH</div>
       <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Foco y ejecución con psicología real del TDAH.</p>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #F472B6; margin-bottom: 2px;">Gratis</div>
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; color: var(--grey); margin-bottom: 14px;">3 agentes · Por email</div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">3 agentes · Por email</div>
       <a href="#producto" style="display: block; background: #F472B6; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
     </div>
 
@@ -1361,8 +1359,7 @@
       <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FBBF24; background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
       <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Negocio Online</div>
       <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">De la idea al negocio funcionando — 8 agentes.</p>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #FBBF24; margin-bottom: 2px;">Gratis</div>
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; color: var(--grey); margin-bottom: 14px;">8 agentes · Por email</div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">8 agentes · Por email</div>
       <a href="#producto" style="display: block; background: #FBBF24; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
     </div>
 
@@ -1372,8 +1369,7 @@
       <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FF6B6B; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
       <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Dev IA</div>
       <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Construye apps con IA — 4 agentes especializados.</p>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: #FF6B6B; margin-bottom: 2px;">Gratis</div>
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; color: var(--grey); margin-bottom: 14px;">4 agentes · Por email</div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">4 agentes · Por email</div>
       <a href="#producto" style="display: block; background: #FF6B6B; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
     </div>
 
