@@ -754,6 +754,16 @@
     background: var(--black);
   }
 
+  .free-agents-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  @media (max-width: 1024px) {
+    .free-agents-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .free-agents-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
   .prompts-filters {
     display: flex;
     gap: 8px;
@@ -1104,10 +1114,6 @@
   }
 
   @media (max-width: 1024px) {
-    /* Grid de 4 agentes gratis — 2 columnas en tablet */
-    .free-agents-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
-    }
   }
 
   @media (max-width: 768px) {
@@ -1155,10 +1161,7 @@
     #prompts > div:first-of-type > div:last-child {
       grid-template-columns: 1fr !important;
     }
-    /* Grid de 4 agentes gratis — 1 columna en móvil */
-    .free-agents-grid {
-      grid-template-columns: 1fr !important;
-    }
+    
     section { padding: 60px 20px; }
     .hero { padding: 90px 20px 60px; }
     .hero-scroll { left: 20px; }
@@ -1331,7 +1334,7 @@
     Los agentes gratis de la suite
   </div>
 
-  <div class="free-agents-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
+  <div class="free-agents-grid" style="display: grid; gap: 16px; margin-bottom: 32px;">
 
     <!-- PRO — violeta, gratis por email -->
     <div style="background: var(--blue-dark); border: 1px solid rgba(192,132,252,0.25); border-top: 3px solid #C084FC; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
