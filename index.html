@@ -749,10 +749,126 @@
     transform: translateX(0);
   }
 
+  /* Card fusionada: guía completa + PDF, dos acciones */
+  .guia-card-full {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .guia-card-full:hover {
+    border-color: rgba(79,195,247,0.3);
+    background: var(--blue-dark);
+  }
+  .guia-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .guia-btn-read {
+    display: block;
+    text-align: center;
+    background: var(--blue);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .guia-btn-read:hover { opacity: 0.88; }
+  .guia-btn-pdf {
+    display: block;
+    text-align: center;
+    background: transparent;
+    color: var(--blue);
+    border: 1px solid rgba(79,195,247,0.3);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 11px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .guia-btn-pdf:hover {
+    background: rgba(79,195,247,0.08);
+  }
+
   /* BIBLIOTECA DE PROMPTS */
   .prompts-section {
     background: var(--black);
   }
+
+  /* ── SISTEMA DE DESBLOQUEO POR EMAIL ── */
+  .gated-content {
+    position: relative;
+  }
+  .gated-content.locked > *:not(.gate-overlay) {
+    filter: blur(6px);
+    pointer-events: none;
+    user-select: none;
+  }
+  .gate-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: rgba(0,0,0,0.55);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .gated-content.locked .gate-overlay {
+    display: flex;
+  }
+  .gate-card {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.4);
+    padding: 36px 32px;
+    max-width: 380px;
+    text-align: center;
+  }
+  .gate-card .gate-icon {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .gate-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .gate-card p {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .gate-card button {
+    background: var(--blue);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .gate-card button:hover { opacity: 0.88; }
 
   .free-agents-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1396,86 +1512,6 @@
 
 </section>
 <div class="neon-line"></div>
-<section class="recursos-section" id="recursos">
-  <div class="section-label">Descargables</div>
-  <h2 class="section-title">Recursos gratuitos</h2>
-  <p class="section-subtitle">Guías PDF descargables, una por serie. Deja tu email y te llega al instante.</p>
-
-  <div class="recursos-grid">
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 01 · IA Explicada Simple</div>
-      <div class="recurso-title">Guía PDF — IA desde cero</div>
-      <div class="recurso-desc">El resumen completo de la Serie 1. Conceptos, metáforas y prompts listos para usar.</div>
-      <ul class="recurso-includes">
-        <li>Transistores y puertas lógicas explicados</li>
-        <li>Cómo aprende la IA — paso a paso</li>
-        <li>3 técnicas de prompts avanzados</li>
-        <li>Mapa de qué IA usar para qué</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — IA desde cero', 'Serie 01', 'https://drive.google.com/file/d/1kRHDJwsSiuMuf9ByUZ1DjvLcKU73tNKt/view')">Descargar gratis →</a>
-    </div>
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 02 · Internet y Redes</div>
-      <div class="recurso-title">Guía PDF — Cómo funciona internet</div>
-      <div class="recurso-desc">IP, DNS, paquetes, HTTPS y firewall. Todo en una sola hoja de referencia.</div>
-      <ul class="recurso-includes">
-        <li>Glosario visual de 15 términos clave</li>
-        <li>El viaje de un clic — diagrama completo</li>
-        <li>3 trucos para mejorar tu WiFi hoy</li>
-        <li>Checklist de seguridad básica</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — Cómo funciona internet', 'Serie 02', 'https://drive.google.com/file/d/1myec8MVQLXonLIxl1K-x3SU2g5VW0PLm/view')">Descargar gratis →</a>
-    </div>
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 03 · La Nube</div>
-      <div class="recurso-title">Guía PDF — La nube explicada</div>
-      <div class="recurso-desc">IaaS, PaaS, SaaS, redundancia y edge computing. El mapa completo de la nube.</div>
-      <ul class="recurso-includes">
-        <li>Comparativa AWS vs Azure vs Google Cloud</li>
-        <li>Los 4 errores más caros en la nube</li>
-        <li>La regla 3-2-1 para tus backups</li>
-        <li>Checklist para auditar tu gasto en la nube</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — La nube explicada', 'Serie 03', 'https://drive.google.com/file/d/18bwS2OJLXSFxvL5nMVCo41g3IUSIzaCn/view')">Descargar gratis →</a>
-    </div>
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 04 · Ciberseguridad</div>
-      <div class="recurso-title">Guía PDF — Protege lo que es tuyo</div>
-      <div class="recurso-desc">Hackers, contraseñas, phishing, cifrado y VPN. Plan de acción concreto por prioridad.</div>
-      <ul class="recurso-includes">
-        <li>Checklist de seguridad personal</li>
-        <li>5 señales de phishing para detectar</li>
-        <li>Las 4 capas de protección explicadas</li>
-        <li>Plan de acción por plazo temporal</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — Protege lo que es tuyo', 'Serie 04', 'https://drive.google.com/file/d/1DplnZFaB_tuxsKukUioZHIExXUMsaO3P/view')">Descargar gratis →</a>
-    </div>
-
-    <div class="recurso-card">
-      <span class="recurso-icon">📄</span>
-      <div class="recurso-serie">Serie 06 · Programar Sin Código</div>
-      <div class="recurso-title">Guía PDF — El prompt es el nuevo código</div>
-      <div class="recurso-desc">La fórmula Rol + Tarea + Formato para escribir prompts que ahorran horas de trabajo real, con ejemplos listos para copiar.</div>
-      <ul class="recurso-includes">
-        <li>Los 3 elementos de todo prompt que funciona</li>
-        <li>Ejemplo real: antes y después del mismo prompt</li>
-        <li>5 prompts listos para copiar hoy mismo</li>
-        <li>La regla rápida para revisar cualquier prompt</li>
-      </ul>
-      <a class="btn-primary" style="display: block; text-align: center; font-size: 12px; text-decoration: none; cursor: pointer;" onclick="openModal('Guía PDF — El prompt es el nuevo código', 'Serie 06', 'https://tecnologiaexplicadasimple.com/Guia_El_Prompt_Es_El_Nuevo_Codigo.pdf')">Descargar gratis →</a>
-    </div>
-
-  </div>
-</section>
-<div class="neon-line"></div>
 
 <!-- SERIES -->
 <section class="series-section" id="series">
@@ -1540,64 +1576,103 @@
 
 <div class="neon-line"></div>
 
-<!-- GUÍAS EXTENDIDAS -->
+<!-- GUÍAS -->
 <div class="neon-line"></div>
 <section class="guias-section" id="guias">
   <div class="section-label">Exclusivo web</div>
-  <h2 class="section-title">Guías extendidas</h2>
-  <p class="section-subtitle">La versión extendida de los carruseles de Instagram. Más contexto, más profundidad, más sustancia.</p>
+  <h2 class="section-title">Guías</h2>
+  <p class="section-subtitle">Lee online o descarga en PDF — el contenido extendido de cada serie, con conceptos, prompts y checklists listos para usar. Deja tu email una vez y desbloqueas todo.</p>
 
-  <div class="guias-grid">
+  <div class="gated-content locked" id="guias-gate">
+    <div class="guias-grid">
 
-    <a href="guia-serie-1-ia.html" class="guia-card">
-      <span class="guia-serie-tag">Serie 01 · IA</span>
-      <div class="guia-title">Cómo funciona la IA de verdad — guía completa</div>
-      <div class="guia-desc">Desde transistores hasta prompts avanzados. Todo lo que necesitas saber para entender y usar la IA con ventaja real.</div>
-      <div class="guia-meta">
-        <span>12 min lectura</span>
-        <span>·</span>
-        <span>5 conceptos clave</span>
+      <div class="guia-card-full">
+        <span class="guia-serie-tag">Serie 01 · IA</span>
+        <div class="guia-title">Cómo funciona la IA de verdad — guía completa</div>
+        <div class="guia-desc">Desde transistores hasta prompts avanzados. Todo lo que necesitas saber para entender y usar la IA con ventaja real.</div>
+        <div class="guia-meta">
+          <span>12 min lectura</span>
+          <span>·</span>
+          <span>5 conceptos clave</span>
+        </div>
+        <div class="guia-actions">
+          <a href="guia-serie-1-ia.html" class="guia-btn-read">Leer guía completa →</a>
+          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — IA desde cero', 'Serie 01', 'https://drive.google.com/file/d/1kRHDJwsSiuMuf9ByUZ1DjvLcKU73tNKt/view')">Descargar PDF ↓</a>
+        </div>
       </div>
-      <span class="guia-arrow">→</span>
-    </a>
 
-    <a href="guia-serie-2-redes.html" class="guia-card">
-      <span class="guia-serie-tag">Serie 02 · Redes</span>
-      <div class="guia-title">Cómo funciona internet — de tu dedo a la pantalla</div>
-      <div class="guia-desc">IP, DNS, paquetes, HTTPS y firewall. El viaje completo que hace cada clic que das en un segundo.</div>
-      <div class="guia-meta">
-        <span>10 min lectura</span>
-        <span>·</span>
-        <span>7 conceptos clave</span>
+      <div class="guia-card-full">
+        <span class="guia-serie-tag">Serie 02 · Redes</span>
+        <div class="guia-title">Cómo funciona internet — de tu dedo a la pantalla</div>
+        <div class="guia-desc">IP, DNS, paquetes, HTTPS y firewall. El viaje completo que hace cada clic que das en un segundo.</div>
+        <div class="guia-meta">
+          <span>10 min lectura</span>
+          <span>·</span>
+          <span>7 conceptos clave</span>
+        </div>
+        <div class="guia-actions">
+          <a href="guia-serie-2-redes.html" class="guia-btn-read">Leer guía completa →</a>
+          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — Cómo funciona internet', 'Serie 02', 'https://drive.google.com/file/d/1myec8MVQLXonLIxl1K-x3SU2g5VW0PLm/view')">Descargar PDF ↓</a>
+        </div>
       </div>
-      <span class="guia-arrow">→</span>
-    </a>
 
-    <a href="guia-serie-3-nube.html" class="guia-card">
-      <span class="guia-serie-tag">Serie 03 · Nube</span>
-      <div class="guia-title">La nube explicada — de tus fotos a los servidores de Netflix</div>
-      <div class="guia-desc">Dónde están tus datos, cómo Netflix no se cae nunca, y cómo las empresas pierden (y ahorran) dinero en la nube.</div>
-      <div class="guia-meta">
-        <span>14 min lectura</span>
-        <span>·</span>
-        <span>8 conceptos clave</span>
+      <div class="guia-card-full">
+        <span class="guia-serie-tag">Serie 03 · Nube</span>
+        <div class="guia-title">La nube explicada — de tus fotos a los servidores de Netflix</div>
+        <div class="guia-desc">Dónde están tus datos, cómo Netflix no se cae nunca, y cómo las empresas pierden (y ahorran) dinero en la nube.</div>
+        <div class="guia-meta">
+          <span>14 min lectura</span>
+          <span>·</span>
+          <span>8 conceptos clave</span>
+        </div>
+        <div class="guia-actions">
+          <a href="guia-serie-3-nube.html" class="guia-btn-read">Leer guía completa →</a>
+          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — La nube explicada', 'Serie 03', 'https://drive.google.com/file/d/18bwS2OJLXSFxvL5nMVCo41g3IUSIzaCn/view')">Descargar PDF ↓</a>
+        </div>
       </div>
-      <span class="guia-arrow">→</span>
-    </a>
 
-    <a href="guia-serie-4-ciberseguridad.html" class="guia-card">
-      <span class="guia-serie-tag">Serie 04 · Ciberseguridad</span>
-      <div class="guia-title">Ciberseguridad explicada — cómo proteger lo que es tuyo</div>
-      <div class="guia-desc">Hackers, contraseñas, phishing, cifrado y VPNs. Todo lo que te protege y todo lo que te pone en riesgo.</div>
-      <div class="guia-meta">
-        <span>12 min lectura</span>
-        <span>·</span>
-        <span>6 conceptos clave</span>
+      <div class="guia-card-full">
+        <span class="guia-serie-tag">Serie 04 · Ciberseguridad</span>
+        <div class="guia-title">Ciberseguridad explicada — cómo proteger lo que es tuyo</div>
+        <div class="guia-desc">Hackers, contraseñas, phishing, cifrado y VPNs. Todo lo que te protege y todo lo que te pone en riesgo.</div>
+        <div class="guia-meta">
+          <span>12 min lectura</span>
+          <span>·</span>
+          <span>6 conceptos clave</span>
+        </div>
+        <div class="guia-actions">
+          <a href="guia-serie-4-ciberseguridad.html" class="guia-btn-read">Leer guía completa →</a>
+          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — Protege lo que es tuyo', 'Serie 04', 'https://drive.google.com/file/d/1DplnZFaB_tuxsKukUioZHIExXUMsaO3P/view')">Descargar PDF ↓</a>
+        </div>
       </div>
-      <span class="guia-arrow">→</span>
-    </a>
 
+      <div class="guia-card-full">
+        <span class="guia-serie-tag">Serie 06 · Programar Sin Código</span>
+        <div class="guia-title">El prompt es el nuevo código</div>
+        <div class="guia-desc">La fórmula Rol + Tarea + Formato para escribir prompts que ahorran horas de trabajo real, con ejemplos listos para copiar.</div>
+        <div class="guia-meta">
+          <span>8 min lectura</span>
+          <span>·</span>
+          <span>5 prompts listos</span>
+        </div>
+        <div class="guia-actions">
+          <a href="#" class="guia-btn-read" style="opacity: 0.4; pointer-events: none;">Próximamente en web</a>
+          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — El prompt es el nuevo código', 'Serie 06', 'https://tecnologiaexplicadasimple.com/Guia_El_Prompt_Es_El_Nuevo_Codigo.pdf')">Descargar PDF ↓</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="gate-overlay">
+      <div class="gate-card">
+        <div class="gate-icon">🔒</div>
+        <h3>Desbloquea todas las guías</h3>
+        <p>Deja tu email una vez y accedes a todas las guías completas y sus PDFs — sin volver a pedírtelo.</p>
+        <button onclick="scrollToUnlock()">Desbloquear con mi email →</button>
+      </div>
+    </div>
   </div>
+
 </section>
 
 <div class="neon-line"></div>
@@ -1681,7 +1756,31 @@ function submitFounder() {
   document.getElementById('founder-note').style.display = 'none';
   document.querySelector('#survey-options').style.opacity = '0.4';
   document.querySelector('#survey-options').style.pointerEvents = 'none';
+
+  // Desbloquea el resto de la web
+  localStorage.setItem('tes_unlocked', 'true');
+  unlockGatedContent();
 }
+
+// ── SISTEMA DE DESBLOQUEO ──
+function unlockGatedContent() {
+  document.querySelectorAll('.gated-content').forEach(function(el) {
+    el.classList.remove('locked');
+  });
+  document.querySelectorAll('.gate-overlay').forEach(function(el) {
+    el.style.display = 'none';
+  });
+}
+
+function scrollToUnlock() {
+  document.getElementById('producto').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('tes_unlocked') === 'true') {
+    unlockGatedContent();
+  }
+});
 </script>
 
 <div class="neon-line"></div>
