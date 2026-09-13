@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Publica tu app en internet — gratis | Tecnología Explicada Simple</title>
-<meta name="description" content="La guía de publicación de la serie Crea Tu Primera App con IA.">
+<meta name="description" content="La guía paso a paso de GitHub + Vercel + Porkbun que usan los creadores de Agentes Brutales. Publica tu app con dominio propio en menos de 15 minutos.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1WSKFYBEN"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z1WSKFYBEN');</script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,20 +12,21 @@
   :root{--blue:#4FC3F7;--blue-ice:#80D8FF;--blue-dark:#0D2233;--blue-mid:#0A3A5C;--black:#000000;--grey:#4A6070;--white:#FFFFFF;--white-dim:rgba(255,255,255,0.75);}
   *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
   body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:640px;margin:0 auto;padding:0 24px;}
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px;}
   nav{padding:20px 24px;display:flex;justify-content:center;border-bottom:1px solid rgba(79,195,247,0.08);}
   .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
 
-  .hero{padding:56px 0 32px;text-align:center;}
+  .hero{padding:56px 0 24px;text-align:center;}
   .eyebrow{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.25em;color:var(--blue);background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.2);padding:6px 14px;text-transform:uppercase;margin-bottom:24px;}
-  .hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(28px,7.5vw,40px);line-height:1.15;letter-spacing:-0.02em;margin-bottom:16px;}
+  .hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(28px,7vw,40px);line-height:1.15;letter-spacing:-0.02em;margin-bottom:16px;}
   .hero h1 span{color:var(--blue);}
-  .hero p{font-size:15px;color:var(--white-dim);line-height:1.6;max-width:440px;margin:0 auto;}
+  .hero p{font-size:15px;color:var(--white-dim);line-height:1.6;max-width:460px;margin:0 auto;}
 
+  /* FORM — visible desde el principio, nada de contenido antes */
   .capture{background:var(--blue-dark);border:1px solid rgba(79,195,247,0.25);padding:32px 24px;margin:8px 0 40px;}
   .capture-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--blue);text-transform:uppercase;margin-bottom:8px;text-align:center;}
-  .capture h2{font-family:'Syne',sans-serif;font-weight:700;font-size:19px;text-align:center;margin-bottom:8px;line-height:1.3;}
-  .capture-sub{font-size:13px;color:var(--white-dim);text-align:center;margin-bottom:24px;line-height:1.5;}
+  .capture h2{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;text-align:center;margin-bottom:8px;line-height:1.4;}
+  .capture-sub{font-size:13px;color:var(--white-dim);text-align:center;margin-bottom:24px;line-height:1.6;}
   .field{margin-bottom:12px;}
   .field input{width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(79,195,247,0.2);color:var(--white);font-family:'Inter',sans-serif;font-size:16px;padding:15px 16px;outline:none;transition:border-color 0.2s;}
   .field input:focus{border-color:var(--blue);}
@@ -34,16 +35,49 @@
   .btn:hover{opacity:0.88;}
   .form-note{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);text-align:center;margin-top:14px;line-height:1.5;}
 
+  /* CONTENIDO — oculto hasta enviar el email */
   .guide{display:none;}
   .guide.visible{display:block;animation:fade 0.5s ease;}
   @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
   .guide-success{background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.3);padding:14px 18px;margin-bottom:32px;font-family:'Space Mono',monospace;font-size:12px;color:#4ade80;text-align:center;line-height:1.5;}
 
-  .resource-box{background:rgba(255,255,255,0.02);border:1px solid rgba(79,195,247,0.12);border-left:3px solid var(--blue);padding:24px 20px;margin-bottom:24px;}
-  .resource-box h3{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:var(--white);margin-bottom:10px;}
-  .resource-box p{font-size:14px;color:var(--white-dim);line-height:1.7;}
+  .intro{font-size:15px;color:var(--white-dim);line-height:1.75;text-align:center;max-width:520px;margin:0 auto 40px;padding-bottom:32px;border-bottom:1px solid rgba(79,195,247,0.1);}
+  .intro strong{color:var(--white);}
 
-  .final-cta{text-align:center;padding:40px 0 24px;}
+  .section-block{margin-bottom:32px;}
+  .section-num{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--blue);text-transform:uppercase;margin-bottom:10px;}
+  .section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:21px;color:var(--white);margin-bottom:16px;}
+
+  .info-rows{display:flex;flex-direction:column;gap:2px;}
+  .info-row{background:rgba(255,255,255,0.02);border-left:3px solid var(--blue);padding:16px 18px;}
+  .info-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.15em;color:var(--blue-ice);text-transform:uppercase;margin-bottom:6px;}
+  .info-text{font-size:14px;color:var(--white-dim);line-height:1.65;}
+  .info-text strong{color:var(--white);font-weight:600;}
+  .info-text code{background:rgba(79,195,247,0.1);color:var(--blue-ice);padding:2px 6px;font-family:'Space Mono',monospace;font-size:12px;}
+
+  .flow-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .flow-item{display:flex;align-items:center;gap:14px;background:var(--blue-dark);padding:14px 18px;border-left:3px solid var(--blue);}
+  .flow-num{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--blue);flex-shrink:0;width:20px;}
+  .flow-text{font-size:14px;color:var(--white);}
+
+  .highlight-box{background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));border:1px solid rgba(79,195,247,0.3);padding:22px 24px;margin:32px 0;text-align:center;}
+  .highlight-box p{font-size:14px;color:var(--white);line-height:1.6;font-weight:500;}
+  .highlight-box p span{color:var(--blue-ice);}
+
+  /* CHECKLIST — los 10 pasos, entregados junto al contenido */
+  .checklist-box{background:rgba(255,255,255,0.02);border:1px solid rgba(79,195,247,0.2);padding:28px 24px;margin:40px 0;}
+  .checklist-header{text-align:center;margin-bottom:20px;}
+  .checklist-header .cl-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--blue);text-transform:uppercase;margin-bottom:8px;}
+  .checklist-header h3{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--white);}
+  .checklist-items{display:flex;flex-direction:column;gap:2px;}
+  .cl-item{display:flex;align-items:flex-start;gap:12px;background:var(--blue-dark);padding:13px 16px;}
+  .cl-check{color:var(--blue);font-weight:700;font-size:14px;flex-shrink:0;padding-top:1px;}
+  .cl-text{font-size:13px;color:var(--white-dim);line-height:1.5;}
+  .cl-text strong{color:var(--white);}
+  .cl-text a{color:var(--blue-ice);text-decoration:none;font-weight:600;}
+  .cl-text a:hover{opacity:0.8;}
+
+  .final-cta{text-align:center;padding:16px 0 24px;}
   .final-cta p{font-size:14px;color:var(--white-dim);margin-bottom:16px;line-height:1.6;}
   .final-cta a{display:inline-block;color:var(--blue);font-family:'Syne',sans-serif;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(79,195,247,0.3);padding:12px 24px;transition:background 0.2s;}
   .final-cta a:hover{background:rgba(79,195,247,0.08);}
@@ -62,35 +96,139 @@
 
   <div class="hero">
     <div class="eyebrow">Serie · Crea Tu Primera App con IA · EP8</div>
-    <h1>Publica tu app en internet — gratis</h1>
-    <p>La guía de publicación de la serie Crea Tu Primera App con IA.</p>
+    <h1>Publica tu app en internet <span>— gratis</span></h1>
+    <p>La guía paso a paso de GitHub + Vercel + Porkbun que usan los creadores de Agentes Brutales.</p>
   </div>
 
+  <!-- FORMULARIO — lo primero que ve el visitante, nada de contenido antes -->
   <div class="capture" id="capture-box">
-    <div class="capture-label">⚡ Recurso gratuito</div>
-    <h2>Te lo envío ahora mismo</h2>
-    <div class="capture-sub">Déjame tu email y desbloqueas el recurso al instante.</div>
+    <div class="capture-label">⚡ Guía + checklist gratis</div>
+    <h2>Déjame tu email y te mando la guía completa</h2>
+    <div class="capture-sub">Incluye la checklist de los 10 pasos exactos con los links a cada herramienta.</div>
     <div class="field">
       <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name">
     </div>
     <div class="field">
       <input type="email" id="email" placeholder="Tu email" autocomplete="email" inputmode="email">
     </div>
-    <button class="btn" onclick="enviarRecurso()" id="submit-btn">Enviármelo →</button>
-    <div class="form-note">Tu email solo se usa para enviarte este recurso. Sin spam.</div>
+    <button class="btn" onclick="enviarGuia()" id="submit-btn">Enviarme la guía →</button>
+    <div class="form-note">Tu email solo se usa para enviarte esta guía. Sin spam.</div>
   </div>
 
+  <!-- CONTENIDO — oculto hasta enviar el email -->
   <div class="guide" id="guide-content">
-    <div class="guide-success">✓ ¡Listo! Aquí tienes tu recurso. También te lo he enviado por email.</div>
+    <div class="guide-success">✓ ¡Listo! Aquí tienes tu guía completa. También te la hemos enviado por email.</div>
 
-    <div class="resource-box">
-      <h3>Guía de publicación</h3>
-      <p>GitHub + Vercel + Porkbun, paso a paso — el mismo proceso que uso para publicar esta web, explicado para que lo repitas con tu propia app.</p>
+    <p class="intro">Tu app funciona en tu ordenador. Nadie más puede verla. Esta guía te explica exactamente cómo publicarla en internet <strong>con dominio propio en menos de 15 minutos</strong> y sin tocar una línea de código.</p>
+
+    <div class="section-block">
+      <div class="section-num">Paso 01</div>
+      <div class="section-title">Sube tu código a GitHub</div>
+      <div class="info-rows">
+        <div class="info-row">
+          <div class="info-label">Qué es</div>
+          <div class="info-text">Un disco duro en la nube para tu código, con <strong>historial completo de cada cambio</strong> que hagas.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Cómo</div>
+          <div class="info-text">Crea una cuenta en <code>github.com</code> → crea un repositorio nuevo → sube tu código desde Bolt o Cursor.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Por qué importa</div>
+          <div class="info-text">Si algo sale mal, <strong>puedes volver a cualquier versión anterior</strong> — nunca pierdes trabajo.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Coste</div>
+          <div class="info-text"><strong>Gratuito</strong> para proyectos personales, siempre.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-num">Paso 02</div>
+      <div class="section-title">Conecta Vercel</div>
+      <div class="info-rows">
+        <div class="info-row">
+          <div class="info-label">Qué es</div>
+          <div class="info-text">El servicio que <strong>publica tu app automáticamente</strong> cada vez que actualizas GitHub.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Cómo</div>
+          <div class="info-text">Crea cuenta en <code>vercel.com</code> → importa tu repositorio de GitHub → Vercel despliega solo.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Lo más importante</div>
+          <div class="info-text">Cada vez que subas un cambio a GitHub, <strong>Vercel republica tu app en 90 segundos</strong> sin que hagas nada más.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Coste</div>
+          <div class="info-text"><strong>Gratuito</strong> para proyectos personales.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-num">Paso 03</div>
+      <div class="section-title">Compra tu dominio en Porkbun</div>
+      <div class="info-rows">
+        <div class="info-row">
+          <div class="info-label">Qué es</div>
+          <div class="info-text">Tu dirección propia en internet — <strong>tuapp.com</strong> en lugar de una URL genérica.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Cómo</div>
+          <div class="info-text">Busca tu dominio en <code>porkbun.com</code> → cómpralo → en configuración DNS, apunta a Vercel siguiendo su guía oficial.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Por qué Porkbun</div>
+          <div class="info-text">Es el <strong>más barato del mercado</strong> con renovaciones honestas, sin tarifas ocultas.</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Coste</div>
+          <div class="info-text">Desde <strong>10€ al año</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-num">El resultado</div>
+      <div class="section-title">Así funciona una vez configurado</div>
+      <div class="flow-list">
+        <div class="flow-item"><span class="flow-num">1</span><span class="flow-text">Mejoras algo en tu app</span></div>
+        <div class="flow-item"><span class="flow-num">2</span><span class="flow-text">Subes los cambios a GitHub</span></div>
+        <div class="flow-item"><span class="flow-num">3</span><span class="flow-text">Vercel lo detecta automáticamente</span></div>
+        <div class="flow-item"><span class="flow-num">4</span><span class="flow-text">Tu app actualizada en 90 segundos</span></div>
+        <div class="flow-item"><span class="flow-num">5</span><span class="flow-text">Publicada para todos con tu dominio propio</span></div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <p>⚡ <span>Agentes Brutales funciona exactamente así.</span> Cada mejora que se publica sigue este mismo proceso.</p>
+    </div>
+
+    <!-- CHECKLIST DE LOS 10 PASOS -->
+    <div class="checklist-box">
+      <div class="checklist-header">
+        <div class="cl-label">Tu checklist completa</div>
+        <h3>Los 10 pasos exactos, en orden</h3>
+      </div>
+      <div class="checklist-items">
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>1.</strong> Crea tu cuenta en <a href="https://github.com" target="_blank" rel="noopener">github.com</a> (gratis)</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>2.</strong> Crea un repositorio nuevo — dale un nombre claro a tu proyecto</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>3.</strong> Sube tu código desde Bolt, Cursor o donde lo hayas construido</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>4.</strong> Verifica que el código subió correctamente — revisa los archivos en GitHub</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>5.</strong> Crea tu cuenta en <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> con tu cuenta de GitHub</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>6.</strong> Importa tu repositorio — Vercel lo detecta y lo publica solo</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>7.</strong> Prueba tu app en la URL gratuita que te da Vercel (termina en <code>.vercel.app</code>)</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>8.</strong> Compra tu dominio en <a href="https://porkbun.com" target="_blank" rel="noopener">porkbun.com</a> (desde 10€/año)</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>9.</strong> En Vercel, añade tu dominio y copia los registros DNS que te da</span></div>
+        <div class="cl-item"><span class="cl-check">✓</span><span class="cl-text"><strong>10.</strong> Pega esos registros en Porkbun → espera 10-60 min → tu app está publicada con tu dominio propio</span></div>
+      </div>
     </div>
 
     <div class="final-cta">
-      <p>Este recurso es parte de la serie <strong>Crea Tu Primera App con IA</strong>. Cada episodio te acerca un paso más a construir y publicar tu propia app, sin saber programar.</p>
-      <a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" rel="noopener">Ver la serie completa en YouTube →</a>
+      <p>Esta guía es parte de la serie <strong>Crea Tu Primera App con IA</strong>.</p>
+      <a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" rel="noopener">Ver la Serie 9 completa — Crea tu primera app con IA →</a>
     </div>
   </div>
 
@@ -105,7 +243,7 @@
 </footer>
 
 <script>
-function enviarRecurso() {
+function enviarGuia() {
   var nombre = document.getElementById('nombre').value.trim();
   var email = document.getElementById('email').value.trim();
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -121,13 +259,13 @@ function enviarRecurso() {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre: nombre, email: email, recurso: 'Serie9-EP8-Guia publicacion' })
+    body: JSON.stringify({ nombre: nombre, email: email, recurso: 'serie9-ep8-publicar' })
   });
 
   gtag('event', 'generate_lead', {
     'event_category': 'captura_email',
     'event_label': 'publicar-app',
-    'recurso': 'Serie9-EP8-Guia publicacion'
+    'recurso': 'serie9-ep8-publicar'
   });
 
   document.getElementById('capture-box').style.display = 'none';
