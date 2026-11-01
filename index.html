@@ -1319,6 +1319,12 @@
     .prompts-filters { gap: 6px; }
     .filter-btn { font-size: 9px; padding: 6px 12px; }
   }
+
+  .teaser-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:900px;margin:32px auto 0;}
+  .teaser-item{display:block;padding:16px 18px;border:1px solid rgba(79,195,247,0.2);border-radius:10px;background:rgba(79,195,247,0.04);color:var(--white-dim,#ccc);text-decoration:none;font-size:14px;line-height:1.5;transition:border-color .2s,background .2s;}
+  .teaser-item:hover{border-color:var(--blue,#4FC3F7);background:rgba(79,195,247,0.08);}
+  .teaser-item span{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue,#4FC3F7);margin-bottom:4px;}
+  @media(max-width:768px){.teaser-list{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -1331,9 +1337,7 @@
   </div>
   <ul class="nav-links" id="nav-links">
     <li><a href="#series" onclick="closeMenu()">Series</a></li>
-    <li><a href="#guias" onclick="closeMenu()">Guías</a></li>
-    <li><a href="#prompts" onclick="closeMenu()">Agentes Brutales</a></li>
-    <li><a href="#recursos" onclick="closeMenu()">Recursos</a></li>
+    <li><a href="recursos.html" onclick="closeMenu()">Recursos</a></li>
     <li><a href="#blog" onclick="closeMenu()">Blog</a></li>
     <li><a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" onclick="closeMenu()">YouTube →</a></li>
     <li><a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" onclick="closeMenu()">Instagram →</a></li>
@@ -1363,7 +1367,7 @@
     <div class="hero-stat">⚡ El que entiende la tecnología no solo la usa mejor.<br><span style="color: var(--white-dim); font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.05em;">Decide mejor, negocia mejor y avanza más rápido.</span></div>
     <div class="hero-ctas">
       <a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" class="btn-primary">Ver el canal →</a>
-      <a href="#prompts" class="btn-secondary">Ver los agentes →</a>
+      <a href="recursos.html" class="btn-secondary">Guías gratis →</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -1374,143 +1378,6 @@
 
 <div class="neon-line"></div>
 
-<!-- AGENTES BRUTALES -->
-<div class="neon-line"></div>
-<section class="prompts-section" id="prompts">
-  <div class="section-label">Ecosistema de productos</div>
-  <h2 class="section-title">Agentes Brutales</h2>
-  <p class="section-subtitle">Una suite de agentes especializados, gratis a cambio de tu email — con métodos reales de coaching y psicología integrados. Finanzas es la excepción: una app completa, no un prompt.</p>
-
-  <!-- BLOQUE 1 — DIFERENCIACIÓN -->
-  <div style="margin-bottom: 48px;">
-    <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 24px; color: var(--white);">¿No es lo mismo que preguntarle a ChatGPT?</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
-
-      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 28px;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 14px;">Un LLM sin configurar</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 12px;">Un genio que puede ser cualquier cosa</div>
-        <p style="font-size: 13px; color: var(--grey); line-height: 1.75;">Médico, abogado, coach — si sabes exactamente cómo pedírselo. El problema: la mayoría no sabe qué preguntar ni por dónde empezar. Empieza de cero en cada conversación.</p>
-      </div>
-
-      <div style="background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.3); border-left: 3px solid var(--blue); padding: 28px;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 14px;">Un Agente Brutal</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 12px;">Un especialista ya configurado</div>
-        <p style="font-size: 13px; color: var(--white-dim); line-height: 1.75;">Con métodos reales de coaching y psicología. Sabe exactamente qué preguntarte, cómo guiarte y adónde llevarte. No necesitas saber qué pedirle — él te lleva al resultado aunque no sepas por dónde empezar.</p>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- BLOQUE 2 — TRANSPARENCIA -->
-  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 32px; margin-bottom: 48px;">
-    <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px;">Lo que necesitas saber antes de comprar</div>
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <div style="display: flex; gap: 16px; align-items: flex-start;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">01</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Necesitas un LLM con plan de pago</strong> — Claude, ChatGPT o Grok (~20€/mes). Los agentes son gratis; el LLM donde los usas no.</p>
-      </div>
-      <div style="display: flex; gap: 16px; align-items: flex-start;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">02</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Tus conversaciones son completamente privadas.</strong> Los agentes viven en tu LLM — nosotros nunca vemos lo que hablas con ellos.</p>
-      </div>
-      <div style="display: flex; gap: 16px; align-items: flex-start;">
-        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">03</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Para TDAH: COMPA está diseñado para usarse en voz con Grok.</strong> No es un agente de texto — es un compañero que te acompaña en tiempo real mientras trabajas.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOQUE 3 — AXON GRATIS -->
-  <div style="background: linear-gradient(135deg, #0a1a0a, #0d2a1a); border: 1px solid rgba(52,211,153,0.3); border-left: 3px solid #34D399; padding: 40px; margin-bottom: 48px; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(52,211,153,0.08) 0%, transparent 65%); pointer-events: none;"></div>
-    <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
-      <div>
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">⚡ Empieza aquí · Completamente gratis</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 10px; line-height: 1.2;">AXON — tu guía personal de IA</div>
-        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 500px;">Copia el agente y actívalo en tu Claude, ChatGPT o Grok en 30 segundos. Es texto, no una app — vive en tu LLM, con tu cuenta y tus propias conversaciones, sin límites impuestos por nosotros.</p>
-      </div>
-      <div style="flex-shrink: 0; text-align: center; min-width: 160px;">
-        <a href="#producto" style="display: block; background: #34D399; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 24px; text-decoration: none; text-align: center; transition: opacity 0.2s; margin-bottom: 10px;">Conseguir AXON →</a>
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); line-height: 1.6;">Gratis · Se activa en tu LLM<br>Claude · ChatGPT · Grok</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOQUE 4 — LOS AGENTES GRATIS -->
-  <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.3em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-    <span style="display: block; width: 20px; height: 1px; background: var(--grey);"></span>
-    Los agentes gratis de la suite
-  </div>
-
-  <div class="free-agents-grid" style="display: grid; gap: 16px; margin-bottom: 32px;">
-
-    <!-- PRO — violeta, gratis por email -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(192,132,252,0.25); border-top: 3px solid #C084FC; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #C084FC; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #C084FC; background: rgba(192,132,252,0.08); border: 1px solid rgba(192,132,252,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Pro</div>
-      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Ventas, carrera y liderazgo — 12 agentes especializados.</p>
-      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">12 agentes · Por email</div>
-      <a href="#producto" style="display: block; background: #C084FC; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
-    </div>
-
-    <!-- TDAH — rosa, gratis por email -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(244,114,182,0.25); border-top: 3px solid #F472B6; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #F472B6; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #F472B6; background: rgba(244,114,182,0.08); border: 1px solid rgba(244,114,182,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">TDAH</div>
-      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Foco y ejecución con psicología real del TDAH.</p>
-      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">3 agentes · Por email</div>
-      <a href="#producto" style="display: block; background: #F472B6; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
-    </div>
-
-    <!-- NEGOCIO ONLINE — dorado, gratis por email -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(251,191,36,0.25); border-top: 3px solid #FBBF24; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FBBF24; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FBBF24; background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Negocio Online</div>
-      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">De la idea al negocio funcionando — 8 agentes.</p>
-      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">8 agentes · Por email</div>
-      <a href="#producto" style="display: block; background: #FBBF24; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
-    </div>
-
-    <!-- DEV IA — rojo coral, gratis por email -->
-    <div style="background: var(--blue-dark); border: 1px solid rgba(255,107,107,0.25); border-top: 3px solid #FF6B6B; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
-      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FF6B6B; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
-      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FF6B6B; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
-      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Dev IA</div>
-      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Construye apps con IA — 4 agentes especializados.</p>
-      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">4 agentes · Por email</div>
-      <a href="#producto" style="display: block; background: #FF6B6B; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
-    </div>
-
-  </div>
-
-  <!-- FINANZAS — banner ancho completo, estilo AXON -->
-  <div style="background: linear-gradient(135deg, var(--blue-dark), #0d2a1a); border: 1px solid rgba(52,211,153,0.4); border-left: 3px solid #34D399; padding: 40px; margin-bottom: 32px; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(52,211,153,0.1) 0%, transparent 65%); pointer-events: none;"></div>
-    <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
-      <div>
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">💎 El agente premium · App completa</div>
-        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; margin-bottom: 12px; line-height: 1.2;">Finanzas — el único que no es un prompt</div>
-        <p style="font-size: 15px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 560px;">No copias esto en tu LLM — es una aplicación completa que lleva tus finanzas contigo: presupuesto, deudas y ahorro en un panel que recuerda tu historial y avanza contigo mes a mes. El más completo de toda la suite, con más desarrollo y mantenimiento continuo detrás.</p>
-      </div>
-      <div style="flex-shrink: 0; text-align: center; min-width: 180px;">
-        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 40px; color: #34D399; line-height: 1; margin-bottom: 4px;">47€</div>
-        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); margin-bottom: 16px;">App completa · Pago único</div>
-        <button disabled style="display: block; width: 100%; background: transparent; color: #34D399; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 20px; border: 1px solid #34D399; opacity: 0.65; cursor: not-allowed;">🔒 Próximamente</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOQUE 5 — POLÍTICA HONESTA -->
-  <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px;">
-    <p style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); line-height: 1.8; max-width: 680px;">
-      <strong style="color: rgba(255,255,255,0.4);">Sobre Finanzas.</strong> Es el único agente de pago porque es el único que es una aplicación completa, no un prompt — con más desarrollo detrás y mantenimiento continuo. El resto de la suite es y seguirá siendo gratis a cambio de tu email.
-    </p>
-  </div>
-
-</section>
 <div class="neon-line"></div>
 
 <!-- SERIES -->
@@ -1576,103 +1443,22 @@
 
 <div class="neon-line"></div>
 
-<!-- GUÍAS -->
-<div class="neon-line"></div>
+<!-- GUÍAS GRATIS (teaser) -->
 <section class="guias-section" id="guias">
-  <div class="section-label">Exclusivo web</div>
-  <h2 class="section-title">Guías</h2>
-  <p class="section-subtitle">Lee online o descarga en PDF — el contenido extendido de cada serie, con conceptos, prompts y checklists listos para usar. Deja tu email una vez y desbloqueas todo.</p>
-
-  <div class="gated-content locked" id="guias-gate">
-    <div class="guias-grid">
-
-      <div class="guia-card-full">
-        <span class="guia-serie-tag">Serie 01 · IA</span>
-        <div class="guia-title">Cómo funciona la IA de verdad — guía completa</div>
-        <div class="guia-desc">Desde transistores hasta prompts avanzados. Todo lo que necesitas saber para entender y usar la IA con ventaja real.</div>
-        <div class="guia-meta">
-          <span>12 min lectura</span>
-          <span>·</span>
-          <span>5 conceptos clave</span>
-        </div>
-        <div class="guia-actions">
-          <a href="guia-serie-1-ia.html" class="guia-btn-read">Leer guía completa →</a>
-          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — IA desde cero', 'Serie 01', 'https://drive.google.com/file/d/1kRHDJwsSiuMuf9ByUZ1DjvLcKU73tNKt/view')">Descargar PDF ↓</a>
-        </div>
-      </div>
-
-      <div class="guia-card-full">
-        <span class="guia-serie-tag">Serie 02 · Redes</span>
-        <div class="guia-title">Cómo funciona internet — de tu dedo a la pantalla</div>
-        <div class="guia-desc">IP, DNS, paquetes, HTTPS y firewall. El viaje completo que hace cada clic que das en un segundo.</div>
-        <div class="guia-meta">
-          <span>10 min lectura</span>
-          <span>·</span>
-          <span>7 conceptos clave</span>
-        </div>
-        <div class="guia-actions">
-          <a href="guia-serie-2-redes.html" class="guia-btn-read">Leer guía completa →</a>
-          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — Cómo funciona internet', 'Serie 02', 'https://drive.google.com/file/d/1myec8MVQLXonLIxl1K-x3SU2g5VW0PLm/view')">Descargar PDF ↓</a>
-        </div>
-      </div>
-
-      <div class="guia-card-full">
-        <span class="guia-serie-tag">Serie 03 · Nube</span>
-        <div class="guia-title">La nube explicada — de tus fotos a los servidores de Netflix</div>
-        <div class="guia-desc">Dónde están tus datos, cómo Netflix no se cae nunca, y cómo las empresas pierden (y ahorran) dinero en la nube.</div>
-        <div class="guia-meta">
-          <span>14 min lectura</span>
-          <span>·</span>
-          <span>8 conceptos clave</span>
-        </div>
-        <div class="guia-actions">
-          <a href="guia-serie-3-nube.html" class="guia-btn-read">Leer guía completa →</a>
-          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — La nube explicada', 'Serie 03', 'https://drive.google.com/file/d/18bwS2OJLXSFxvL5nMVCo41g3IUSIzaCn/view')">Descargar PDF ↓</a>
-        </div>
-      </div>
-
-      <div class="guia-card-full">
-        <span class="guia-serie-tag">Serie 04 · Ciberseguridad</span>
-        <div class="guia-title">Ciberseguridad explicada — cómo proteger lo que es tuyo</div>
-        <div class="guia-desc">Hackers, contraseñas, phishing, cifrado y VPNs. Todo lo que te protege y todo lo que te pone en riesgo.</div>
-        <div class="guia-meta">
-          <span>12 min lectura</span>
-          <span>·</span>
-          <span>6 conceptos clave</span>
-        </div>
-        <div class="guia-actions">
-          <a href="guia-serie-4-ciberseguridad.html" class="guia-btn-read">Leer guía completa →</a>
-          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — Protege lo que es tuyo', 'Serie 04', 'https://drive.google.com/file/d/1DplnZFaB_tuxsKukUioZHIExXUMsaO3P/view')">Descargar PDF ↓</a>
-        </div>
-      </div>
-
-      <div class="guia-card-full">
-        <span class="guia-serie-tag">Serie 06 · Programar Sin Código</span>
-        <div class="guia-title">El prompt es el nuevo código</div>
-        <div class="guia-desc">La fórmula Rol + Tarea + Formato para escribir prompts que ahorran horas de trabajo real, con ejemplos listos para copiar.</div>
-        <div class="guia-meta">
-          <span>8 min lectura</span>
-          <span>·</span>
-          <span>5 prompts listos</span>
-        </div>
-        <div class="guia-actions">
-          <a href="no-code.html" class="guia-btn-read">Ver las 9 guías →</a>
-          <a class="guia-btn-pdf" onclick="openModal('Guía PDF — El prompt es el nuevo código', 'Serie 06', 'https://tecnologiaexplicadasimple.com/Guia_El_Prompt_Es_El_Nuevo_Codigo.pdf')">Descargar PDF ↓</a>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="gate-overlay">
-      <div class="gate-card">
-        <div class="gate-icon">🔒</div>
-        <h3>Desbloquea todas las guías</h3>
-        <p>Deja tu email una vez y accedes a todas las guías completas y sus PDFs — sin volver a pedírtelo.</p>
-        <button onclick="scrollToUnlock()">Desbloquear con mi email →</button>
-      </div>
-    </div>
+  <div class="section-label">Recursos gratis</div>
+  <h2 class="section-title">Guías gratis</h2>
+  <p class="section-subtitle">Cada serie tiene su guía. Hay más de 40 recursos en un solo sitio: deja tu email una vez y se desbloquean todos.</p>
+  <div class="teaser-list">
+    <a href="recursos.html" class="teaser-item"><span>Serie 1–4</span>IA, redes, nube y ciberseguridad: la guía de cada serie</a>
+    <a href="recursos.html" class="teaser-item"><span>Serie 6</span>Programar sin código: 9 guías y el PDF «El prompt es el nuevo código»</a>
+    <a href="recursos.html" class="teaser-item"><span>Serie 7</span>El empleado nuevo: qué IA usar para cada tarea</a>
+    <a href="recursos.html" class="teaser-item"><span>Serie 8</span>Piensa como programador: 9 guías</a>
+    <a href="recursos.html" class="teaser-item"><span>Serie 9</span>Crea tu primera app con IA: 9 guías</a>
+    <a href="recursos.html" class="teaser-item"><span>Empresas</span>ASML y las empresas que mueven el mundo</a>
+    <a href="recursos.html" class="teaser-item"><span>Finanzas</span>Fondo de emergencia, metas y lo básico del dinero</a>
+    <a href="recursos.html" class="teaser-item"><span>Agentes Brutales</span>Agentes de IA listos para usar</a>
   </div>
-
+  <div style="text-align:center;margin-top:28px;"><a href="recursos.html" class="btn-primary">Ver todos los recursos →</a></div>
 </section>
 
 <div class="neon-line"></div>
@@ -2031,9 +1817,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <li><a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank">YouTube</a></li>
     <li><a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank">Instagram</a></li>
     <li><a href="https://www.tiktok.com/@techexplicadasimple" target="_blank">TikTok</a></li>
-    <li><a href="#guias">Guías</a></li>
-    <li><a href="#prompts">Agentes Brutales</a></li>
-    <li><a href="#recursos">Recursos</a></li>
+    <li><a href="recursos.html">Recursos</a></li>
     <li><a href="#blog">Blog</a></li>
   </ul>
   <div class="footer-copy">© 2026 Tecnología Explicada Simple · El Equipo TES</div>
