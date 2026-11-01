@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finanzas Brutales: los 8 fundamentos | Tecnología Explicada Simple</title>
+<meta name="description" content="Guía gratuita de finanzas personales: claridad, tipos de gasto, págate primero, fondo de emergencia, metas, cuentas, deuda e inversión y revisión semanal.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1WSKFYBEN"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-Z1WSKFYBEN');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--g:#34D399;--g2:#6EE7B7;--deep:#07140f;--deep2:#0f3a2a;--blue:#60A5FA;--amber:#FBBF24;--text:#e8f5ee;--muted:#8fb3a1}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7;-webkit-text-size-adjust:100%}
+.wrap{max-width:740px;margin:0 auto;padding:0 18px}
+header.top{padding:18px 0;border-bottom:1px solid var(--deep2)}
+header.top a{font-family:'Syne',sans-serif;font-weight:800;color:#fff;text-decoration:none}
+header.top a span{color:#4FC3F7}
+.hero{padding:54px 0 26px;text-align:center}
+.tag{font-family:'Space Mono',monospace;color:var(--g);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}
+h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,7vw,2.9rem);line-height:1.1;margin:14px 0}
+h1 em{font-style:normal;color:var(--g)}
+.sub{color:var(--muted);max-width:560px;margin:0 auto}
+.form-box{background:linear-gradient(160deg,var(--deep),#000);border:1px solid var(--deep2);border-radius:16px;padding:26px 20px;margin:26px 0 12px;box-shadow:0 0 40px rgba(52,211,153,.08)}
+.form-box h2{font-family:'Syne',sans-serif;font-size:1.25rem;margin-bottom:6px}
+.form-box p.s{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+input[type=text],input[type=email],input[type=number]{width:100%;padding:14px;margin-bottom:10px;background:#000;border:1px solid var(--deep2);border-radius:10px;color:#fff;font-size:16px;font-family:inherit}
+input:focus{outline:none;border-color:var(--g)}
+button.cta{width:100%;padding:15px;border:0;border-radius:10px;background:var(--g);color:#000;font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit}
+button.cta:disabled{opacity:.6}
+.legal{font-size:.78rem;color:var(--muted);margin-top:10px;text-align:center}
+.err{color:#ff8a80;font-size:.85rem;margin-bottom:8px;display:none}
+.preview{list-style:none;margin:18px 0 0;display:grid;gap:6px}
+.preview li{font-size:.9rem;color:var(--muted);padding:8px 12px;border:1px dashed var(--deep2);border-radius:8px}
+.preview li b{color:var(--g2);font-family:'Space Mono',monospace;margin-right:8px}
+.guide{display:none}
+.guide.visible{display:block}
+.order{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0 8px}
+.order div{background:var(--deep);border:1px solid var(--deep2);border-radius:10px;padding:12px 6px;text-align:center;font-size:.8rem}
+.order div b{display:block;color:var(--g);font-family:'Space Mono',monospace;font-size:1rem}
+.toc{background:var(--deep);border:1px solid var(--deep2);border-radius:14px;padding:18px;margin:10px 0 28px}
+.toc h2{font-family:'Syne',sans-serif;font-size:1.1rem;margin-bottom:8px}
+.toc a{display:block;color:var(--text);text-decoration:none;padding:8px 0;border-bottom:1px solid var(--deep2);font-size:.95rem}
+.toc a:last-child{border:0}
+.toc a b{color:var(--g);font-family:'Space Mono',monospace;margin-right:10px}
+.intro{margin-bottom:10px}
+.s{padding:32px 0;border-top:1px solid var(--deep2);scroll-margin-top:12px}
+.s .n{font-family:'Space Mono',monospace;color:var(--g);font-size:.8rem}
+.s h3{font-family:'Syne',sans-serif;font-size:1.5rem;line-height:1.2;margin:6px 0 14px}
+.s p{margin-bottom:13px}
+.s ul{padding-left:20px;margin:8px 0 14px}
+.s li{margin-bottom:7px}
+.punch{background:var(--deep);border-left:3px solid var(--g);padding:14px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-weight:600}
+.types{display:grid;gap:10px;margin:14px 0}
+.type{border:1px solid var(--deep2);border-radius:12px;padding:12px 14px;background:var(--deep)}
+.type b{display:block}
+.type.e b{color:var(--g)}.type.c b{color:var(--blue)}.type.k b{color:var(--amber)}
+.type span{color:var(--muted);font-size:.9rem}
+.calc{background:var(--deep);border:1px solid var(--g);border-radius:14px;padding:18px;margin:18px 0}
+.calc h4{font-family:'Syne',sans-serif;margin-bottom:4px}
+.calc p.h{color:var(--muted);font-size:.85rem;margin-bottom:12px}
+.out{margin-top:8px;font-size:.95rem}
+.out .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--deep2);gap:10px}
+.out .row:last-child{border:0}
+.out .row b{color:var(--g2)}
+.calc button{width:100%;padding:12px;border:0;border-radius:10px;background:var(--g);color:#000;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit}
+.check{list-style:none!important;padding:0!important}
+.check li{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--deep2);border-radius:10px;background:var(--deep);margin-bottom:8px}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:#34D399;flex-shrink:0}
+.note{font-size:.8rem;color:var(--muted);margin-top:10px}
+.close{text-align:center;padding:44px 0 36px;border-top:1px solid var(--deep2)}
+.close h3{font-family:'Syne',sans-serif;font-size:1.5rem;margin-bottom:10px}
+.close p{max-width:520px;margin:0 auto 14px;color:var(--text)}
+.close a.btn{display:inline-block;margin-top:6px;padding:14px 22px;border-radius:10px;background:var(--g);color:#000;font-weight:700;text-decoration:none}
+.disc{font-size:.78rem;color:var(--muted);text-align:center;padding:0 0 30px}
+footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.8rem;border-top:1px solid var(--deep2)}
+footer a{color:var(--g);text-decoration:none}
+@media(max-width:520px){.order{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a href="/">Tecnología <span>Explicada Simple</span></a></div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="tag">Finanzas Brutales · Guía gratuita</div>
+    <h1>Los 8 fundamentos del dinero que <em>lo construyen todo</em></h1>
+    <p class="sub">Sin humo y sin jerga. Lo básico que debes tener ordenado antes de pensar en invertir, ahorrar para algo grande o "cambiar tu vida financiera". Unos 15 minutos de lectura.</p>
+  </section>
+
+  <section id="gate" class="form-box">
+    <h2>Accede a la guía gratis</h2>
+    <p class="s">Déjame tu nombre y tu email y se abre al instante.</p>
+    <form id="f" novalidate>
+      <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name" required>
+      <input type="email" id="email" placeholder="Tu email" inputmode="email" autocomplete="email" required>
+      <div class="err" id="err">Escribe un nombre y un email válido.</div>
+      <button class="cta" id="btn" type="submit">Abrir la guía →</button>
+    </form>
+    <p class="legal">Tu email solo se usa para enviarte este recurso. Sin spam.</p>
+    <ul class="preview">
+      <li><b>01</b>Claridad: mira tus números</li>
+      <li><b>02</b>Los 3 tipos de gasto</li>
+      <li><b>03</b>Págate primero</li>
+      <li><b>04</b>El fondo de emergencia (con calculadora)</li>
+      <li><b>05</b>Metas con nombre y fecha (con calculadora)</li>
+      <li><b>06</b>Tus cuentas y el riesgo de impago</li>
+      <li><b>07</b>Deuda e inversión: el orden correcto</li>
+      <li><b>08</b>La revisión semanal de 5 minutos</li>
+    </ul>
+  </section>
+
+  <div id="guides" class="guide">
+    <p class="intro">La mayoría de la gente no tiene un problema de ingresos. Tiene un problema de <b>orden</b>. Estos son los ladrillos, en el orden en que se colocan:</p>
+    <div class="order">
+      <div><b>1</b>Claridad</div>
+      <div><b>2</b>Fondo</div>
+      <div><b>3</b>Metas</div>
+      <div><b>4</b>Inversión</div>
+    </div>
+    <p class="note" style="margin-bottom:18px">Saltarte un paso es construir el segundo piso sin haber terminado los cimientos.</p>
+
+    <nav class="toc">
+      <h2>Índice</h2>
+      <a href="#s1"><b>01</b>Claridad: mira tus números</a>
+      <a href="#s2"><b>02</b>Los 3 tipos de gasto</a>
+      <a href="#s3"><b>03</b>Págate primero</a>
+      <a href="#s4"><b>04</b>El fondo de emergencia</a>
+      <a href="#s5"><b>05</b>Metas con nombre y fecha</a>
+      <a href="#s6"><b>06</b>Tus cuentas y los cargos fijos</a>
+      <a href="#s7"><b>07</b>Deuda e inversión</a>
+      <a href="#s8"><b>08</b>La revisión semanal</a>
+    </nav>
+
+    <article class="s" id="s1">
+      <div class="n">FUNDAMENTO 01</div><h3>Claridad: mira tus números</h3>
+      <p>No puedes arreglar lo que no has medido. Si no sabes cuánto entra y cuánto sale, cualquier plan es una suposición.</p>
+      <p>El ejercicio es simple y es incómodo: durante <b>30 días</b> apunta cada ingreso y cada gasto. Todo. El café, la suscripción que olvidaste, el Bizum.</p>
+      <ul>
+        <li>Qué entra: nómina, extras, ingresos variables.</li>
+        <li>Qué sale: fijos (alquiler, seguros, recibos) y variables (comida, ocio, imprevistos).</li>
+        <li>Cuánto sobra o cuánto falta cada mes. Sin adornos.</li>
+      </ul>
+      <div class="punch">El primer mes da vergüenza. El segundo da tranquilidad. A partir del tercero tienes control.</div>
+      <p>El miedo a mirar tus números casi siempre es peor que los números en sí.</p>
+    </article>
+
+    <article class="s" id="s2">
+      <div class="n">FUNDAMENTO 02</div><h3>Los 3 tipos de gasto</h3>
+      <p>"Gastos fijos y variables" no te dice dónde está tu margen. Clasifica cada gasto con una sola pregunta: <b>¿qué pasa si lo quito?</b></p>
+      <div class="types">
+        <div class="type e"><b>Esencial</b><span>Sin esto, la vida se para. Alquiler o hipoteca, comida, transporte al trabajo, salud, suministros.</span></div>
+        <div class="type c"><b>Calidad de vida</b><span>Sin esto, la vida funciona pero se vuelve gris. El gimnasio, la cena mensual, la afición que te recarga.</span></div>
+        <div class="type k"><b>Capricho</b><span>Puedo vivir sin ello. Compras impulsivas, suscripciones que no usas, "ya que estoy".</span></div>
+      </div>
+      <p>Dos ideas que lo cambian todo:</p>
+      <ul>
+        <li><b>Calidad de vida no es culpa.</b> Un plan que te quita todo el disfrute se abandona en tres semanas.</li>
+        <li><b>El capricho es tu palanca.</b> Es donde puedes recortar sin que la vida se resienta. Cancelar una suscripción que no usas es ahorro instantáneo.</li>
+      </ul>
+      <div class="punch">Regla orientativa: esenciales + calidad de vida no deberían superar el 80% de tus ingresos.</div>
+    </article>
+
+    <article class="s" id="s3">
+      <div class="n">FUNDAMENTO 03</div><h3>Págate primero</h3>
+      <p>La mayoría ahorra "lo que sobra a fin de mes". Y casi nunca sobra. El truco es darle la vuelta: <b>apartas primero y gastas con el resto</b>.</p>
+      <ul>
+        <li>En cuanto entra la nómina, mueve un porcentaje a tu cuenta de ahorro. El mismo día.</li>
+        <li>Empieza con un <b>10%</b>. Cuando lo notes poco, sube a 15% y luego a 20%.</li>
+        <li>Haz que sea <b>automático</b>: una transferencia programada el día de cobro elimina la fuerza de voluntad.</li>
+      </ul>
+      <div class="punch">No necesitas ganar más para empezar a ahorrar. Necesitas decidir cuánto apartar antes de ver lo que sobra.</div>
+      <p>Y cuando te suban el sueldo, sube tu porcentaje de ahorro antes de que suba tu nivel de gasto.</p>
+    </article>
+
+    <article class="s" id="s4">
+      <div class="n">FUNDAMENTO 04</div><h3>El fondo de emergencia</h3>
+      <p>Es el cimiento de todo lo demás. No es para invertir ni para "ahorrar para algo": su único trabajo es <b>estar ahí</b> cuando la vida se tuerce. Una avería, una baja, un despido.</p>
+      <p><b>¿Cuánto?</b> Se calcula sobre tus gastos mensuales de esenciales + calidad de vida (los caprichos no cuentan: en una emergencia los recortas).</p>
+      <ul>
+        <li><b>Mínimo: 3 meses.</b> Con esto ya puedes dormir mejor.</li>
+        <li><b>Deseable: 6 meses.</b> Recomendable si tienes hijos, hipoteca o una sola fuente de ingresos.</li>
+        <li><b>Ideal: 12 meses.</b> Si eres autónomo o tus ingresos son variables, apunta aquí.</li>
+      </ul>
+      <div class="calc">
+        <h4>Calcula el tuyo</h4>
+        <p class="h">Esenciales + calidad de vida, al mes. Sin caprichos.</p>
+        <input type="number" id="c-gasto" inputmode="decimal" placeholder="Gasto mensual base (€)">
+        <input type="number" id="c-saldo" inputmode="decimal" placeholder="Lo que tienes ahora apartado (€, opcional)">
+        <button type="button" id="c-btn">Calcular mi fondo</button>
+        <div class="out" id="c-out"></div>
+      </div>
+      <p><b>Reglas de uso:</b></p>
+      <ul>
+        <li>Va en una cuenta <b>separada</b> y de acceso rápido, no mezclada con tu día a día.</li>
+        <li>Solo para emergencias reales. Unas vacaciones o un móvil nuevo no lo son.</li>
+        <li>Si lo usas, el siguiente objetivo es reponerlo.</li>
+        <li>¿Empiezas de cero? Primer hito: <b>un mes</b> de gastos. Luego dos. Luego tres.</li>
+      </ul>
+      <div class="punch">El fondo de emergencia no es ahorro: es infraestructura. No se toca.</div>
+    </article>
+
+    <article class="s" id="s5">
+      <div class="n">FUNDAMENTO 05</div><h3>Metas con nombre y fecha</h3>
+      <p>"Quiero ahorrar más" es un deseo. "Quiero 3.000 € para un viaje en diciembre" es un plan. Una meta necesita tres cosas:</p>
+      <ul>
+        <li><b>Nombre:</b> para qué es. Cuanto más concreto, más fácil mantenerla.</li>
+        <li><b>Importe:</b> cuánto cuesta de verdad.</li>
+        <li><b>Fecha:</b> cuándo la quieres. Sin fecha no hay cuota mensual y sin cuota no hay avance.</li>
+      </ul>
+      <div class="calc">
+        <h4>¿Cuánto tienes que apartar al mes?</h4>
+        <p class="h">Importe de la meta, lo que ya tienes y en cuántos meses la quieres.</p>
+        <input type="number" id="m-meta" inputmode="decimal" placeholder="Importe de la meta (€)">
+        <input type="number" id="m-ya" inputmode="decimal" placeholder="Ya tengo (€, opcional)">
+        <input type="number" id="m-meses" inputmode="numeric" placeholder="Meses para conseguirla">
+        <button type="button" id="m-btn">Calcular mi cuota</button>
+        <div class="out" id="m-out"></div>
+      </div>
+      <ul>
+        <li>Máximo <b>1 a 3 metas</b> a la vez. Con diez, no avanzas en ninguna.</li>
+        <li>Se construyen <b>en paralelo</b> al fondo de emergencia, pero el fondo manda si hay que priorizar.</li>
+        <li>Mira el avance. Ver la barra subir es lo que te mantiene en marcha.</li>
+      </ul>
+    </article>
+
+    <article class="s" id="s6">
+      <div class="n">FUNDAMENTO 06</div><h3>Tus cuentas y los cargos fijos</h3>
+      <p>Mucha gente no se queda corta de dinero: se queda corta <b>en la cuenta equivocada</b>. Los recibos llegan a una cuenta y el dinero está en otra.</p>
+      <p>Un sistema simple de tres cuentas:</p>
+      <ul>
+        <li><b>Cuenta de nómina o gastos:</b> entra el sueldo y salen los recibos.</li>
+        <li><b>Cuenta de ahorro:</b> aquí va tu 10-20% del "págate primero" y tus metas.</li>
+        <li><b>Cuenta del fondo de emergencia:</b> aparte y sin tocar.</li>
+      </ul>
+      <p>Cada mes, suma los cargos recurrentes que salen de cada cuenta (alquiler, seguros, suscripciones, cuotas) y comprueba que el saldo los cubre <b>antes</b> de que lleguen. Si no, tienes un riesgo de impago y todavía estás a tiempo de mover dinero.</p>
+      <ul>
+        <li>Si algo se paga una vez al año (seguro, impuesto), divide entre 12 y apártalo cada mes.</li>
+        <li>Revisa tus suscripciones: 8 €/mes son 96 € al año y casi nadie recuerda todas las que tiene.</li>
+        <li>Renegocia tu seguro o tu tarifa de móvil una vez al año.</li>
+      </ul>
+    </article>
+
+    <article class="s" id="s7">
+      <div class="n">FUNDAMENTO 07</div><h3>Deuda e inversión: el orden correcto</h3>
+      <p><b>Deuda cara primero.</b> Una deuda de tarjeta o un préstamo al consumo con intereses altos suele costar más de lo que ganarías invirtiendo. Págala antes de pensar en invertir.</p>
+      <p>Para elegir cómo atacarla, hay dos métodos:</p>
+      <ul>
+        <li><b>Avalancha:</b> pagas primero la de mayor interés. Es la más eficiente en dinero.</li>
+        <li><b>Bola de nieve:</b> pagas primero la más pequeña. Es la más motivadora porque cierras deudas rápido.</li>
+      </ul>
+      <p><b>Invertir, solo con el cimiento puesto.</b> Invertir sin fondo de emergencia es una apuesta: la primera urgencia te obliga a vender en el peor momento. La secuencia es: claridad, fondo mínimo de 3 meses, y entonces sí, empieza a invertir.</p>
+      <div class="punch">El interés compuesto premia el tiempo, no la cantidad. Pero solo funciona si no tienes que sacar el dinero cuando más cae.</div>
+      <p class="note">Esta guía explica conceptos generales y no recomienda productos ni activos concretos. Para tu caso particular, consulta con un profesional.</p>
+    </article>
+
+    <article class="s" id="s8">
+      <div class="n">FUNDAMENTO 08</div><h3>La revisión semanal</h3>
+      <p>Lo que sostiene todo lo anterior no es un gran esfuerzo puntual: es un hábito pequeño que repites. Cinco minutos a la semana y veinte al mes.</p>
+      <ul>
+        <li><b>Cada semana (5 min):</b> registra lo pendiente y mira cuánto llevas gastado frente a lo previsto. Evita sorpresas a fin de mes.</li>
+        <li><b>Cada mes (20 min):</b> ¿cuánto gané? ¿cuánto gasté y en qué tipo? ¿cuánto ahorré y voy según el plan?</li>
+      </ul>
+      <p>Y para empezar hoy, las 7 acciones:</p>
+      <ul class="check">
+        <li><input type="checkbox" id="k1"><label for="k1">Apunta todo lo que entra y sale durante 30 días.</label></li>
+        <li><input type="checkbox" id="k2"><label for="k2">Clasifica cada gasto: esencial, calidad de vida o capricho.</label></li>
+        <li><input type="checkbox" id="k3"><label for="k3">Programa una transferencia automática (10%) para el día de cobro.</label></li>
+        <li><input type="checkbox" id="k4"><label for="k4">Calcula tu fondo de emergencia y abre una cuenta aparte.</label></li>
+        <li><input type="checkbox" id="k5"><label for="k5">Define una meta con nombre, importe y fecha.</label></li>
+        <li><input type="checkbox" id="k6"><label for="k6">Revisa tus recibos y cancela una suscripción que no uses.</label></li>
+        <li><input type="checkbox" id="k7"><label for="k7">Pon en el calendario tu revisión semanal de 5 minutos.</label></li>
+      </ul>
+    </article>
+
+    <section class="close">
+      <h3>Esto es la base. Ahora toca hacerlo.</h3>
+      <p>Todo lo de esta guía lo puedes hacer con una libreta o una hoja de cálculo. Funciona.</p>
+      <p>Pero si quieres ponerte serio, de verdad, existe <b>Finanzas Brutales</b>: una app que hace este mismo método contigo. Tus gastos por tipo, tu fondo con sus tres niveles, tus metas con fecha y tus cuentas con aviso de impago, todo en un solo sitio.</p>
+      <a class="btn" href="finanzas.html">Ver la app Finanzas Brutales →</a>
+    </section>
+    <p class="disc">Contenido educativo de carácter general. No constituye asesoramiento financiero, fiscal ni de inversión personalizado.</p>
+  </div>
+</main>
+
+<footer><div class="wrap">© Tecnología Explicada Simple · <a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" rel="noopener">@tecnologia.explicada.simple</a></div></footer>
+
+<script>
+(function(){
+  var ENDPOINT='https://script.google.com/macros/s/AKfycbwzsnUiyIBJIgCk4YaHRbsuF4wlYJvw9fcAJRl-7OQU-wBXzRtomnyxNlBD8u69u4oH/exec';
+  function eur(n){return Math.round(n).toLocaleString('es-ES')+' €';}
+  function reveal(){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('guides').classList.add('visible');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  document.getElementById('f').addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=document.getElementById('nombre').value.trim();
+    var m=document.getElementById('email').value.trim();
+    var err=document.getElementById('err');
+    if(!n||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){err.style.display='block';return;}
+    err.style.display='none';
+    var b=document.getElementById('btn');b.disabled=true;b.textContent='Abriendo...';
+    try{
+      fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+        body:JSON.stringify({nombre:n,email:m,recurso:'Guia-FinanzasBrutales-Fundamentos'})}).catch(function(){});
+    }catch(x){}
+    try{gtag('event','generate_lead',{event_label:'guia-finanzas'});}catch(x){}
+    try{localStorage.setItem('tes_unlocked','true');}catch(x){}
+    setTimeout(reveal,500);
+  });
+  document.getElementById('c-btn').addEventListener('click',function(){
+    var g=parseFloat(document.getElementById('c-gasto').value);
+    var s=parseFloat(document.getElementById('c-saldo').value)||0;
+    var o=document.getElementById('c-out');
+    if(!g||g<=0){o.innerHTML='<div class="row">Escribe tu gasto mensual base.</div>';return;}
+    var h='<div class="row"><span>Mínimo (3 meses)</span><b>'+eur(g*3)+'</b></div>'+
+          '<div class="row"><span>Deseable (6 meses)</span><b>'+eur(g*6)+'</b></div>'+
+          '<div class="row"><span>Ideal (12 meses)</span><b>'+eur(g*12)+'</b></div>';
+    if(s>0){
+      var meses=s/g;
+      h+='<div class="row"><span>Hoy cubres</span><b>'+meses.toFixed(1).replace('.',',')+' meses</b></div>';
+      h+= s>=g*3 ? '<div class="row"><span>Mínimo alcanzado</span><b>✓</b></div>' :
+          '<div class="row"><span>Te faltan para el mínimo</span><b>'+eur(g*3-s)+'</b></div>';
+    }
+    o.innerHTML=h;
+  });
+  document.getElementById('m-btn').addEventListener('click',function(){
+    var t=parseFloat(document.getElementById('m-meta').value);
+    var y=parseFloat(document.getElementById('m-ya').value)||0;
+    var ms=parseFloat(document.getElementById('m-meses').value);
+    var o=document.getElementById('m-out');
+    if(!t||t<=0||!ms||ms<=0){o.innerHTML='<div class="row">Escribe el importe y los meses.</div>';return;}
+    var falta=Math.max(0,t-y);
+    o.innerHTML='<div class="row"><span>Te falta</span><b>'+eur(falta)+'</b></div>'+
+      '<div class="row"><span>Cuota mensual</span><b>'+eur(falta/ms)+'</b></div>'+
+      '<div class="row"><span>Cuota semanal aprox.</span><b>'+eur(falta/(ms*4.33))+'</b></div>';
+  });
+})();
+</script>
+</body>
+</html>
