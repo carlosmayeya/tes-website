@@ -163,11 +163,13 @@ function enviarGuia() {
     'recurso': 'Serie-PiensaComoProgramador-EP9-METODO'
   });
 
+  try{localStorage.setItem('tes_unlocked','true');}catch(x){}
   document.getElementById('capture-box').style.display = 'none';
   var success = document.getElementById('success-box');
   success.classList.add('visible');
   success.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
+<script>try{if(localStorage.getItem('tes_unlocked')==='true'){var c=document.getElementById('capture-box'),g=document.getElementById('guide-content');if(c&&g){c.style.display='none';g.classList.add('visible');}}}catch(e){}</script>
 </body>
 </html>

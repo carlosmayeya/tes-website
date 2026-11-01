@@ -130,11 +130,13 @@ function enviarRecurso() {
     'recurso': 'Serie9-EP9-5 lecciones'
   });
 
+  try{localStorage.setItem('tes_unlocked','true');}catch(x){}
   document.getElementById('capture-box').style.display = 'none';
   var guide = document.getElementById('guide-content');
   guide.classList.add('visible');
   guide.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
+<script>try{if(localStorage.getItem('tes_unlocked')==='true'){var c=document.getElementById('capture-box'),g=document.getElementById('guide-content');if(c&&g){c.style.display='none';g.classList.add('visible');}}}catch(e){}</script>
 </body>
 </html>

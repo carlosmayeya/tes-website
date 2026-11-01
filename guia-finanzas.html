@@ -298,6 +298,7 @@ footer a{color:var(--g);text-decoration:none}
     document.getElementById('guides').classList.add('visible');
     window.scrollTo({top:0,behavior:'smooth'});
   }
+  try{if(localStorage.getItem('tes_unlocked')==='true'){reveal();}}catch(e){}
   document.getElementById('f').addEventListener('submit',function(e){
     e.preventDefault();
     var n=document.getElementById('nombre').value.trim();
