@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentes Brutales — Tecnología Explicada Simple</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1WSKFYBEN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z1WSKFYBEN');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4FC3F7;
+    --blue-ice: #80D8FF;
+    --blue-dark: #0D2233;
+    --blue-mid: #0A3A5C;
+    --black: #000000;
+    --black-soft: #080808;
+    --grey: #4A6070;
+    --white: #FFFFFF;
+    --white-dim: rgba(255,255,255,0.75);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--blue); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,195,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,195,247,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(79,195,247,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-glow-2 {
+    position: absolute;
+    bottom: -300px;
+    left: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(79,195,247,0.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--blue);
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(52px, 7vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .hero-title .highlight {
+    color: var(--blue);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--white-dim);
+    max-width: 520px;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .hero-stat {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    background: rgba(79,195,247,0.08);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 8px 16px;
+    margin-bottom: 40px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover::after { opacity: 0.15; }
+
+  .btn-secondary {
+    border: 1px solid rgba(79,195,247,0.4);
+    color: var(--blue);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(79,195,247,0.08);
+    border-color: var(--blue);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--grey);
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 100px 48px;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--blue);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 54px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+    color: var(--white-dim);
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.6;
+    margin-bottom: 60px;
+  }
+
+  /* SERIES SECTION */
+  .series-section {
+    background: var(--black-soft);
+    border-top: 1px solid rgba(79,195,247,0.08);
+    border-bottom: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .series-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .serie-card {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.08);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .serie-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--blue);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .serie-card:hover {
+    background: var(--blue-dark);
+    border-color: rgba(79,195,247,0.25);
+  }
+
+  .serie-card:hover::before { opacity: 1; }
+
+  .serie-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--blue);
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .serie-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .serie-desc {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .serie-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+  }
+
+  .badge-live {
+    background: rgba(79,195,247,0.15);
+    color: var(--blue);
+    border: 1px solid rgba(79,195,247,0.3);
+  }
+
+  .badge-soon {
+    background: rgba(255,255,255,0.05);
+    color: var(--grey);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .serie-count {
+    font-size: 12px;
+    color: var(--grey);
+    margin-top: 12px;
+  }
+
+  /* BLOG SECTION */
+  .blog-section {
+    background: var(--black);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .blog-card {
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .blog-card:hover {
+    border-color: rgba(79,195,247,0.3);
+    background: rgba(79,195,247,0.03);
+  }
+
+  .blog-card::after {
+    content: '→';
+    position: absolute;
+    top: 36px;
+    right: 36px;
+    color: var(--blue);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s;
+    font-size: 18px;
+  }
+
+  .blog-card:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .blog-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 16px;
+  }
+
+  .blog-category {
+    color: var(--blue);
+  }
+
+  .blog-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .blog-excerpt {
+    font-size: 14px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .blog-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--blue);
+    margin: 20px 0;
+    opacity: 0.5;
+  }
+
+  /* PRODUCT SECTION */
+  .product-section {
+    background: var(--blue-dark);
+    border-top: 1px solid rgba(79,195,247,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-section::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .product-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .product-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--blue);
+    background: rgba(79,195,247,0.1);
+    border: 1px solid rgba(79,195,247,0.25);
+    padding: 6px 14px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .product-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 52px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .product-desc {
+    font-size: 16px;
+    color: var(--white-dim);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 36px;
+  }
+
+  .product-includes {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+
+  .product-includes li {
+    font-size: 14px;
+    color: var(--white-dim);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(79,195,247,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .product-includes li::before {
+    content: '✓';
+    color: var(--blue);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .product-form {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 40px;
+  }
+
+  .form-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .form-subtitle {
+    font-size: 13px;
+    color: var(--grey);
+    margin-bottom: 28px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(79,195,247,0.2);
+    color: var(--white);
+    padding: 14px 16px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input::placeholder { color: var(--grey); }
+
+  .form-input:focus {
+    border-color: var(--blue);
+    background: rgba(79,195,247,0.04);
+  }
+
+  .form-note {
+    font-size: 11px;
+    color: var(--grey);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  .price-badge {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 24px 0;
+  }
+
+  .price-amount {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 42px;
+    color: var(--blue);
+  }
+
+  .price-label {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.4;
+  }
+
+  .price-strike {
+    font-size: 18px;
+    color: var(--grey);
+    text-decoration: line-through;
+  }
+
+  a.serie-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
+  }
+
+  a.serie-card:hover {
+    background: var(--blue-dark);
+    border-color: rgba(79,195,247,0.25);
+  }
+
+  a.serie-card:hover::before { opacity: 1; }
+
+  /* GUÍAS EXTENDIDAS */
+  .guias-section {
+    background: var(--black-soft);
+    border-top: 1px solid rgba(79,195,247,0.08);
+    border-bottom: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .guias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .guia-card {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .guia-card:hover {
+    border-color: rgba(79,195,247,0.3);
+    background: var(--blue-dark);
+  }
+
+  .guia-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--blue);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .guia-card:hover::before { opacity: 1; }
+
+  .guia-serie-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--blue);
+    text-transform: uppercase;
+    background: rgba(79,195,247,0.08);
+    border: 1px solid rgba(79,195,247,0.2);
+    padding: 4px 10px;
+    display: inline-block;
+    margin-bottom: 18px;
+  }
+
+  .guia-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .guia-desc {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .guia-meta {
+    display: flex;
+    gap: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+  }
+
+  .guia-arrow {
+    position: absolute;
+    bottom: 36px;
+    right: 36px;
+    color: var(--blue);
+    font-size: 18px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s;
+  }
+
+  .guia-card:hover .guia-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Card fusionada: guía completa + PDF, dos acciones */
+  .guia-card-full {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .guia-card-full:hover {
+    border-color: rgba(79,195,247,0.3);
+    background: var(--blue-dark);
+  }
+  .guia-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .guia-btn-read {
+    display: block;
+    text-align: center;
+    background: var(--blue);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .guia-btn-read:hover { opacity: 0.88; }
+  .guia-btn-pdf {
+    display: block;
+    text-align: center;
+    background: transparent;
+    color: var(--blue);
+    border: 1px solid rgba(79,195,247,0.3);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 11px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .guia-btn-pdf:hover {
+    background: rgba(79,195,247,0.08);
+  }
+
+  /* BIBLIOTECA DE PROMPTS */
+  .prompts-section {
+    background: var(--black);
+  }
+
+  /* ── SISTEMA DE DESBLOQUEO POR EMAIL ── */
+  .gated-content {
+    position: relative;
+  }
+  .gated-content.locked > *:not(.gate-overlay) {
+    filter: blur(6px);
+    pointer-events: none;
+    user-select: none;
+  }
+  .gate-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: rgba(0,0,0,0.55);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .gated-content.locked .gate-overlay {
+    display: flex;
+  }
+  .gate-card {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.4);
+    padding: 36px 32px;
+    max-width: 380px;
+    text-align: center;
+  }
+  .gate-card .gate-icon {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .gate-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .gate-card p {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .gate-card button {
+    background: var(--blue);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .gate-card button:hover { opacity: 0.88; }
+
+  .free-agents-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  @media (max-width: 1024px) {
+    .free-agents-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .free-agents-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .prompts-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid rgba(79,195,247,0.2);
+    background: transparent;
+    color: var(--grey);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: rgba(79,195,247,0.1);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+
+  .prompt-card {
+    background: var(--blue-dark);
+    border: 1px solid rgba(79,195,247,0.12);
+    padding: 28px;
+    transition: all 0.2s;
+  }
+
+  .prompt-card:hover {
+    border-color: rgba(79,195,247,0.3);
+  }
+
+  .prompt-category {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .prompt-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  .prompt-box {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(79,195,247,0.15);
+    border-left: 3px solid var(--blue);
+    padding: 14px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .copy-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    background: transparent;
+    border: 1px solid rgba(79,195,247,0.3);
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .copy-btn:hover {
+    background: rgba(79,195,247,0.1);
+  }
+
+  .copy-btn.copied {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
+  /* RECURSOS / PDFs */
+  .recursos-section {
+    background: var(--black-soft);
+    border-top: 1px solid rgba(79,195,247,0.08);
+  }
+
+  .recursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .recurso-card {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.1);
+    padding: 36px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .recurso-card:hover {
+    border-color: rgba(79,195,247,0.3);
+    background: var(--blue-dark);
+  }
+
+  .recurso-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .recurso-serie {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .recurso-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .recurso-desc {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+
+  .recurso-includes {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+
+  .recurso-includes li {
+    font-size: 12px;
+    color: var(--white-dim);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(79,195,247,0.07);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .recurso-includes li::before {
+    content: '→';
+    color: var(--blue);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  /* MODAL EMAIL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open {
+    display: flex;
+  }
+
+  .modal-box {
+    background: var(--black);
+    border: 1px solid rgba(79,195,247,0.25);
+    padding: 48px;
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--grey);
+    font-size: 22px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--white); }
+
+  .modal-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .modal-subtitle {
+    font-size: 13px;
+    color: var(--white-dim);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(79,195,247,0.08);
+    padding: 60px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--grey);
+    font-weight: 300;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--grey);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--blue); }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--grey);
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeUp 0.6s ease forwards; }
+  .hero-title { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-subtitle { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-stat { animation: fadeUp 0.6s 0.25s ease both; }
+  .hero-ctas { animation: fadeUp 0.6s 0.3s ease both; }
+
+  /* NEON LINE */
+  .neon-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0.3;
+    margin: 0;
+  }
+
+  /* RESPONSIVE */
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--blue);
+    transition: all 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  @media (max-width: 1024px) {
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #000000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      z-index: 150;
+      list-style: none;
+      padding: 40px 20px;
+      overflow-y: auto;
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links a {
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--blue); }
+
+    /* Banner Agentes Brutales — columna única en móvil */
+    .banner-inner-grid {
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+    }
+    /* Grid de diferenciación — columna única en móvil */
+    #prompts > div:first-of-type > div:last-child {
+      grid-template-columns: 1fr !important;
+    }
+    
+    section { padding: 60px 20px; }
+    .hero { padding: 90px 20px 60px; }
+    .hero-scroll { left: 20px; }
+    .hero-logo { width: 72px !important; height: 72px !important; }
+    .hero-title { font-size: 28px; line-height: 1.05; }
+    .hero-eyebrow { font-size: 9px; }
+    .hero-subtitle { font-size: 16px; line-height: 1.7; }
+    .hero-stat { font-size: 13px; line-height: 1.6; }
+    .hero-ctas { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 14px 20px; }
+    .section-title { font-size: 28px; }
+    .section-subtitle { font-size: 15px; line-height: 1.7; }
+    .series-grid { grid-template-columns: 1fr; gap: 2px; }
+    .serie-name { font-size: 18px; }
+    .serie-desc { font-size: 14px; line-height: 1.6; }
+    .blog-grid { grid-template-columns: 1fr; gap: 16px; }
+    .blog-title { font-size: 19px; }
+    .blog-excerpt { font-size: 14px; line-height: 1.7; }
+    .guias-grid { grid-template-columns: 1fr; gap: 16px; }
+    .guia-title { font-size: 18px; }
+    .guia-desc { font-size: 14px; line-height: 1.7; }
+    .prompts-grid { grid-template-columns: 1fr; gap: 16px; }
+    .prompt-title { font-size: 15px; }
+    .prompt-box { font-size: 12px; line-height: 1.7; }
+    .recursos-grid { grid-template-columns: 1fr; gap: 16px; }
+    .recurso-title { font-size: 17px; }
+    .recurso-desc { font-size: 14px; line-height: 1.7; }
+    .recurso-includes li { font-size: 13px; }
+    .product-inner { grid-template-columns: 1fr; gap: 40px; }
+    .product-title { font-size: 28px; }
+    .product-desc { font-size: 15px; line-height: 1.7; }
+    .product-includes li { font-size: 14px; }
+    .price-amount { font-size: 36px; }
+    .modal-box { padding: 32px 24px; }
+    .modal-title { font-size: 20px; }
+    .modal-subtitle { font-size: 14px; }
+    footer { padding: 40px 20px; flex-direction: column; align-items: flex-start; gap: 24px; }
+    .footer-links { flex-wrap: wrap; gap: 16px; }
+    .prompts-filters { gap: 6px; }
+    .filter-btn { font-size: 9px; padding: 6px 12px; }
+  }
+</style>
+</head>
+<body>
+<div style="padding:20px 24px"><a href="recursos.html" style="color:#4FC3F7;font-family:'Space Mono',monospace;font-size:12px;text-decoration:none">← Volver a Recursos</a></div>
+<!-- AGENTES BRUTALES -->
+<div class="neon-line"></div>
+<section class="prompts-section" id="prompts">
+  <div class="section-label">Ecosistema de productos</div>
+  <h2 class="section-title">Agentes Brutales</h2>
+  <p class="section-subtitle">Una suite de agentes especializados, gratis a cambio de tu email — con métodos reales de coaching y psicología integrados. Finanzas es la excepción: una app completa, no un prompt.</p>
+
+  <!-- BLOQUE 1 — DIFERENCIACIÓN -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 24px; color: var(--white);">¿No es lo mismo que preguntarle a ChatGPT?</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
+
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 28px;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; margin-bottom: 14px;">Un LLM sin configurar</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 12px;">Un genio que puede ser cualquier cosa</div>
+        <p style="font-size: 13px; color: var(--grey); line-height: 1.75;">Médico, abogado, coach — si sabes exactamente cómo pedírselo. El problema: la mayoría no sabe qué preguntar ni por dónde empezar. Empieza de cero en cada conversación.</p>
+      </div>
+
+      <div style="background: var(--blue-dark); border: 1px solid rgba(79,195,247,0.3); border-left: 3px solid var(--blue); padding: 28px;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 14px;">Un Agente Brutal</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 12px;">Un especialista ya configurado</div>
+        <p style="font-size: 13px; color: var(--white-dim); line-height: 1.75;">Con métodos reales de coaching y psicología. Sabe exactamente qué preguntarte, cómo guiarte y adónde llevarte. No necesitas saber qué pedirle — él te lleva al resultado aunque no sepas por dónde empezar.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BLOQUE 2 — TRANSPARENCIA -->
+  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 32px; margin-bottom: 48px;">
+    <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px;">Lo que necesitas saber antes de comprar</div>
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; gap: 16px; align-items: flex-start;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">01</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Necesitas un LLM con plan de pago</strong> — Claude, ChatGPT o Grok (~20€/mes). Los agentes son gratis; el LLM donde los usas no.</p>
+      </div>
+      <div style="display: flex; gap: 16px; align-items: flex-start;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">02</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Tus conversaciones son completamente privadas.</strong> Los agentes viven en tu LLM — nosotros nunca vemos lo que hablas con ellos.</p>
+      </div>
+      <div style="display: flex; gap: 16px; align-items: flex-start;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; padding-top: 1px;">03</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0;"><strong style="color: var(--white);">Para TDAH: COMPA está diseñado para usarse en voz con Grok.</strong> No es un agente de texto — es un compañero que te acompaña en tiempo real mientras trabajas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 3 — AXON GRATIS -->
+  <div style="background: linear-gradient(135deg, #0a1a0a, #0d2a1a); border: 1px solid rgba(52,211,153,0.3); border-left: 3px solid #34D399; padding: 40px; margin-bottom: 48px; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(52,211,153,0.08) 0%, transparent 65%); pointer-events: none;"></div>
+    <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
+      <div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">⚡ Empieza aquí · Completamente gratis</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 10px; line-height: 1.2;">AXON — tu guía personal de IA</div>
+        <p style="font-size: 14px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 500px;">Copia el agente y actívalo en tu Claude, ChatGPT o Grok en 30 segundos. Es texto, no una app — vive en tu LLM, con tu cuenta y tus propias conversaciones, sin límites impuestos por nosotros.</p>
+      </div>
+      <div style="flex-shrink: 0; text-align: center; min-width: 160px;">
+        <a href="/#producto" style="display: block; background: #34D399; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 24px; text-decoration: none; text-align: center; transition: opacity 0.2s; margin-bottom: 10px;">Conseguir AXON →</a>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); line-height: 1.6;">Gratis · Se activa en tu LLM<br>Claude · ChatGPT · Grok</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 4 — LOS AGENTES GRATIS -->
+  <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.3em; color: var(--grey); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+    <span style="display: block; width: 20px; height: 1px; background: var(--grey);"></span>
+    Los agentes gratis de la suite
+  </div>
+
+  <div class="free-agents-grid" style="display: grid; gap: 16px; margin-bottom: 32px;">
+
+    <!-- PRO — violeta, gratis por email -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(192,132,252,0.25); border-top: 3px solid #C084FC; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #C084FC; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #C084FC; background: rgba(192,132,252,0.08); border: 1px solid rgba(192,132,252,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Pro</div>
+      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Ventas, carrera y liderazgo — 12 agentes especializados.</p>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">12 agentes · Por email</div>
+      <a href="/#producto" style="display: block; background: #C084FC; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
+    </div>
+
+    <!-- TDAH — rosa, gratis por email -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(244,114,182,0.25); border-top: 3px solid #F472B6; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #F472B6; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #F472B6; background: rgba(244,114,182,0.08); border: 1px solid rgba(244,114,182,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">TDAH</div>
+      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Foco y ejecución con psicología real del TDAH.</p>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">3 agentes · Por email</div>
+      <a href="/#producto" style="display: block; background: #F472B6; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
+    </div>
+
+    <!-- NEGOCIO ONLINE — dorado, gratis por email -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(251,191,36,0.25); border-top: 3px solid #FBBF24; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FBBF24; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FBBF24; background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Negocio Online</div>
+      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">De la idea al negocio funcionando — 8 agentes.</p>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">8 agentes · Por email</div>
+      <a href="/#producto" style="display: block; background: #FBBF24; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
+    </div>
+
+    <!-- DEV IA — rojo coral, gratis por email -->
+    <div style="background: var(--blue-dark); border: 1px solid rgba(255,107,107,0.25); border-top: 3px solid #FF6B6B; padding: 24px 20px; position: relative; display: flex; flex-direction: column;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; color: #FF6B6B; text-transform: uppercase; margin-bottom: 10px;">Agentes Brutales</div>
+      <div style="position: absolute; top: 12px; right: 12px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #FF6B6B; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.25); padding: 3px 7px; text-transform: uppercase;">Gratis</div>
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); margin-bottom: 8px;">Dev IA</div>
+      <p style="font-size: 12px; color: var(--white-dim); line-height: 1.55; margin-bottom: 14px; flex-grow: 1;">Construye apps con IA — 4 agentes especializados.</p>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); margin-bottom: 16px;">4 agentes · Por email</div>
+      <a href="/#producto" style="display: block; background: #FF6B6B; color: #000000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px; text-decoration: none; text-align: center; transition: opacity 0.2s;">Conseguir →</a>
+    </div>
+
+  </div>
+
+  <!-- FINANZAS — banner ancho completo, estilo AXON -->
+  <div style="background: linear-gradient(135deg, var(--blue-dark), #0d2a1a); border: 1px solid rgba(52,211,153,0.4); border-left: 3px solid #34D399; padding: 40px; margin-bottom: 32px; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(52,211,153,0.1) 0%, transparent 65%); pointer-events: none;"></div>
+    <div class="banner-inner-grid" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;">
+      <div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">💎 El agente premium · App completa</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; margin-bottom: 12px; line-height: 1.2;">Finanzas — el único que no es un prompt</div>
+        <p style="font-size: 15px; color: var(--white-dim); line-height: 1.75; margin-bottom: 0; max-width: 560px;">No copias esto en tu LLM — es una aplicación completa que lleva tus finanzas contigo: presupuesto, deudas y ahorro en un panel que recuerda tu historial y avanza contigo mes a mes. El más completo de toda la suite, con más desarrollo y mantenimiento continuo detrás.</p>
+      </div>
+      <div style="flex-shrink: 0; text-align: center; min-width: 180px;">
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 40px; color: #34D399; line-height: 1; margin-bottom: 4px;">47€</div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 9px; color: var(--grey); margin-bottom: 16px;">App completa · Pago único</div>
+        <button disabled style="display: block; width: 100%; background: transparent; color: #34D399; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 20px; border: 1px solid #34D399; opacity: 0.65; cursor: not-allowed;">🔒 Próximamente</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 5 — POLÍTICA HONESTA -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px;">
+    <p style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--grey); line-height: 1.8; max-width: 680px;">
+      <strong style="color: rgba(255,255,255,0.4);">Sobre Finanzas.</strong> Es el único agente de pago porque es el único que es una aplicación completa, no un prompt — con más desarrollo detrás y mantenimiento continuo. El resto de la suite es y seguirá siendo gratis a cambio de tu email.
+    </p>
+  </div>
+
+</section>
+<script>try{localStorage.getItem("x")}catch(e){}</script>
+</body>
+</html>
