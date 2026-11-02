@@ -1325,6 +1325,17 @@
   .teaser-item:hover{border-color:var(--blue,#4FC3F7);background:rgba(79,195,247,0.08);}
   .teaser-item span{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue,#4FC3F7);margin-bottom:4px;}
   @media(max-width:768px){.teaser-list{grid-template-columns:1fr;}}
+
+  .cat{max-width:980px;margin:36px auto 0;}
+  .cat-title{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;margin-bottom:14px;color:var(--white,#fff);}
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+  .scard{padding:18px;border:1px solid rgba(79,195,247,0.2);border-radius:10px;background:rgba(79,195,247,0.04);display:flex;flex-direction:column;gap:6px;}
+  .scard-name{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--white,#fff);}
+  .scard-desc{font-size:13px;line-height:1.5;color:var(--white-dim,#ccc);flex:1;}
+  .scard-links{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:12px;}
+  .scard-links a{color:var(--blue,#4FC3F7);text-decoration:none;font-family:'Space Mono',monospace;}
+  .scard-links a.direct{color:var(--grey,#7a8d99);}
+  .scard-links a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -1336,9 +1347,8 @@
     <div class="nav-logo">TES</div>
   </div>
   <ul class="nav-links" id="nav-links">
-    <li><a href="#series" onclick="closeMenu()">Series</a></li>
+    <li><a href="#guias" onclick="closeMenu()">Temas</a></li>
     <li><a href="recursos.html" onclick="closeMenu()">Recursos</a></li>
-    <li><a href="#blog" onclick="closeMenu()">Blog</a></li>
     <li><a href="https://www.youtube.com/@Tecnologia.Explicada.Simple" target="_blank" onclick="closeMenu()">YouTube →</a></li>
     <li><a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" onclick="closeMenu()">Instagram →</a></li>
     <li><a href="https://www.tiktok.com/@techexplicadasimple" target="_blank" onclick="closeMenu()">TikTok →</a></li>
@@ -1356,7 +1366,7 @@
   <div class="hero-glow"></div>
   <div class="hero-glow-2"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Series 1–3 publicadas · Serie 4 en curso</div>
+    <div class="hero-eyebrow">Guías gratis para entender la IA y la tecnología</div>
     <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 8px;">
       <img src="logo.jpg" alt="TES Logo" style="width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(79,195,247,0.3); flex-shrink: 0;" class="hero-logo">
       <h1 class="hero-title" style="margin-bottom: 0;">Tecnología <span class="highlight">Explicada Simple</span></h1>
@@ -1378,87 +1388,42 @@
 
 <div class="neon-line"></div>
 
-<div class="neon-line"></div>
-
-<!-- SERIES -->
-<section class="series-section" id="series">
-  <div class="section-label">Contenido</div>
-  <h2 class="section-title">Las series</h2>
-  <p class="section-subtitle">Un roadmap completo para entender la tecnología que mueve el mundo. Con la profundidad que mereces y la claridad que necesitas.</p>
-
-  <div class="series-grid">
-
-    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg0omCzphMQX0DeAl2_tDTBL" target="_blank" class="serie-card">
-      <div class="serie-number">SERIE 01</div>
-      <div class="serie-name">IA Explicada Simple</div>
-      <div class="serie-desc">Transistores, redes neuronales, entrenamiento y prompts. La base de todo lo que viene.</div>
-      <span class="serie-badge badge-live">✓ Publicada</span>
-      <div class="serie-count">10 Shorts + Vídeo largo</div>
-    </a>
-
-    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg31cDzrMuGsq2gFjmF94EDD" target="_blank" class="serie-card">
-      <div class="serie-number">SERIE 02</div>
-      <div class="serie-name">Internet y Redes</div>
-      <div class="serie-desc">Cómo llegan los datos de un servidor al otro lado del mundo en menos de un segundo.</div>
-      <span class="serie-badge badge-live">✓ Publicada</span>
-      <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </a>
-
-    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg00QvczbYlhQ3pdZDJREYkf" target="_blank" class="serie-card">
-      <div class="serie-number">SERIE 03</div>
-      <div class="serie-name">La Nube</div>
-      <div class="serie-desc">Dónde están realmente tus fotos. Cómo Netflix sirve vídeo a 270 millones sin caerse.</div>
-      <span class="serie-badge badge-live">✓ Publicada</span>
-      <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </a>
-
-    <a href="https://youtube.com/playlist?list=PLUJam2zcXvg1kRTMayQysKEf_JpmL-XQ1" target="_blank" class="serie-card">
-      <div class="serie-number">SERIE 04</div>
-      <div class="serie-name">Ciberseguridad</div>
-      <div class="serie-desc">Hackers, firewalls, cifrado y VPNs. Todo lo que te protege sin que lo sepas.</div>
-      <span class="serie-badge badge-live">● En curso</span>
-      <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </a>
-
-    <div class="serie-card">
-      <div class="serie-number">SERIE 05</div>
-      <div class="serie-name">IA Práctica para Profesionales</div>
-      <div class="serie-desc">Ventas, análisis de datos, reuniones y automatización. IA aplicada a tu trabajo real.</div>
-      <span class="serie-badge badge-soon">Próximamente</span>
-      <div class="serie-count">9 Shorts + Vídeo largo</div>
-    </div>
-
-    <div class="serie-card">
-      <div class="serie-number">SERIE 06–09</div>
-      <div class="serie-name">Programación, Web, Apps y Claude</div>
-      <div class="serie-desc">Crea webs, apps y automatizaciones con IA. Sin saber programar.</div>
-      <span class="serie-badge badge-soon">En desarrollo</span>
-      <div class="serie-count">4 series · 36+ Shorts</div>
-    </div>
-
-  </div>
-</section>
 
 <div class="neon-line"></div>
 
-<div class="neon-line"></div>
-
-<!-- GUÍAS GRATIS (teaser) -->
+<!-- SERIES POR TEMA -->
 <section class="guias-section" id="guias">
-  <div class="section-label">Recursos gratis</div>
-  <h2 class="section-title">Guías gratis</h2>
-  <p class="section-subtitle">Cada serie tiene su guía. Hay más de 40 recursos en un solo sitio: deja tu email una vez y se desbloquean todos.</p>
-  <div class="teaser-list">
-    <a href="recursos.html" class="teaser-item"><span>Serie 1–4</span>IA, redes, nube y ciberseguridad: la guía de cada serie</a>
-    <a href="recursos.html" class="teaser-item"><span>Serie 6</span>Programar sin código: 9 guías y el PDF «El prompt es el nuevo código»</a>
-    <a href="recursos.html" class="teaser-item"><span>Serie 7</span>El empleado nuevo: qué IA usar para cada tarea</a>
-    <a href="recursos.html" class="teaser-item"><span>Serie 8</span>Piensa como programador: 9 guías</a>
-    <a href="recursos.html" class="teaser-item"><span>Serie 9</span>Crea tu primera app con IA: 9 guías</a>
-    <a href="recursos.html" class="teaser-item"><span>Empresas</span>ASML y las empresas que mueven el mundo</a>
-    <a href="recursos.html" class="teaser-item"><span>Finanzas</span>Fondo de emergencia, metas y lo básico del dinero</a>
-    <a href="recursos.html" class="teaser-item"><span>Agentes Brutales</span>Agentes de IA listos para usar</a>
-  </div>
-  <div style="text-align:center;margin-top:28px;"><a href="recursos.html" class="btn-primary">Ver todos los recursos →</a></div>
+  <div class="section-label">Guías gratis</div>
+  <h2 class="section-title">Todo el contenido, por tema</h2>
+  <p class="section-subtitle">Cada tema tiene su guía gratis. Deja tu email una vez y se desbloquean todas.</p>
+  <div class="cat"><div class="cat-title">Fundamentos</div><div class="cat-grid">
+    <div class="scard"><div class="scard-name">IA Explicada Simple</div><div class="scard-desc">Transistores, redes neuronales, entrenamiento y prompts.</div><div class="scard-links"><a href="recursos.html?r=serie1">Guías gratis →</a><a class="direct" href="guia-serie-1-ia.html">Ir directo a la guía</a></div></div>
+    <div class="scard"><div class="scard-name">Internet y Redes</div><div class="scard-desc">Cómo viajan los datos por el mundo en menos de un segundo.</div><div class="scard-links"><a href="recursos.html?r=serie2">Guías gratis →</a><a class="direct" href="guia-serie-2-redes.html">Ir directo a la guía</a></div></div>
+    <div class="scard"><div class="scard-name">La Nube</div><div class="scard-desc">Dónde están de verdad tus fotos y tus datos.</div><div class="scard-links"><a href="recursos.html?r=serie3">Guías gratis →</a><a class="direct" href="guia-serie-3-nube.html">Ir directo a la guía</a></div></div>
+  </div></div>
+  <div class="cat"><div class="cat-title">Ciberseguridad</div><div class="cat-grid">
+    <div class="scard"><div class="scard-name">Ciberseguridad</div><div class="scard-desc">Hackers, contraseñas, phishing, cifrado y VPN.</div><div class="scard-links"><a href="recursos.html?r=serie4">Guías gratis →</a><a class="direct" href="guia-serie-4-ciberseguridad.html">Ir directo a la guía</a></div></div>
+    <div class="scard"><div class="scard-name">Ciberseguridad con IA</div><div class="scard-desc">Cómo la IA cambia el ataque y la defensa.</div><div class="scard-links"><a href="recursos.html?r=serie4">Guías gratis →</a></div></div>
+  </div></div>
+  <div class="cat"><div class="cat-title">IA para tu trabajo</div><div class="cat-grid">
+    <div class="scard"><div class="scard-name">IA Práctica para Profesionales</div><div class="scard-desc">Ventas, reuniones y automatización con IA.</div><div class="scard-links"><a href="recursos.html?r=empleado">Guías gratis →</a></div></div>
+    <div class="scard"><div class="scard-name">Conceptos de IA</div><div class="scard-desc">El empleado nuevo: qué IA usar y cómo dirigirla.</div><div class="scard-links"><a href="recursos.html?r=empleado">Guías gratis →</a><a class="direct" href="guia-empleado-ia.html">Ir directo a la guía</a></div></div>
+    <div class="scard"><div class="scard-name">Agentes de IA que funcionan</div><div class="scard-desc">Cómo construir agentes que de verdad resuelven.</div><div class="scard-links"><a href="recursos.html?r=agentes">Guías gratis →</a></div></div>
+  </div></div>
+  <div class="cat"><div class="cat-title">Crea con IA, sin código</div><div class="cat-grid">
+    <div class="scard"><div class="scard-name">Programación Sin Código</div><div class="scard-desc">Algoritmos, APIs, bases de datos y No-Code.</div><div class="scard-links"><a href="recursos.html?r=nocode">Guías gratis →</a><a class="direct" href="no-code.html">Ir directo a la guía</a></div></div>
+    <div class="scard"><div class="scard-name">Piensa como Programador</div><div class="scard-desc">El método para dirigir a la IA como un arquitecto.</div><div class="scard-links"><a href="recursos.html?r=piensa">Guías gratis →</a><a class="direct" href="piensa.html">Ir directo a la guía</a></div></div>
+    <div class="scard"><div class="scard-name">Crea tu primera app con IA</div><div class="scard-desc">De la idea a la app publicada, paso a paso.</div><div class="scard-links"><a href="recursos.html?r=app">Guías gratis →</a><a class="direct" href="app.html">Ir directo a la guía</a></div></div>
+  </div></div>
+  <div class="cat"><div class="cat-title">Empresas, chips y cuántica</div><div class="cat-grid">
+    <div class="scard"><div class="scard-name">Empresas que controlan el futuro</div><div class="scard-desc">ASML y las compañías de las que depende todo.</div><div class="scard-links"><a href="recursos.html?r=asml">Guías gratis →</a><a class="direct" href="asml.html">Ir directo a la guía</a></div></div>
+    <div class="scard"><div class="scard-name">Computación cuántica</div><div class="scard-desc">Qué es y qué significa para tu seguridad.</div><div class="scard-links"><a href="recursos.html?r=cuantica">Guías gratis →</a><a class="direct" href="guia-cuantica.html">Ir directo a la guía</a></div></div>
+  </div></div>
+  <div class="cat"><div class="cat-title">Economía y dinero</div><div class="cat-grid">
+    <div class="scard"><div class="scard-name">Economía de Tokens</div><div class="scard-desc">Cuánto cuesta realmente usar la IA.</div><div class="scard-links"><a href="recursos.html?r=finanzas">Guías gratis →</a></div></div>
+    <div class="scard"><div class="scard-name">Finanzas personales</div><div class="scard-desc">Fondo de emergencia, metas y lo básico del dinero.</div><div class="scard-links"><a href="recursos.html?r=finanzas">Guías gratis →</a><a class="direct" href="guia-finanzas.html">Ir directo a la guía</a></div></div>
+  </div></div>
+  <div style="text-align:center;margin-top:32px;"><a href="recursos.html" class="btn-primary">Ver todos los recursos →</a></div>
 </section>
 
 <div class="neon-line"></div>
@@ -1568,129 +1533,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-
-<div class="neon-line"></div>
-
-<!-- BLOG -->
-<section class="blog-section" id="blog">
-  <div class="section-label">Reflexión</div>
-  <h2 class="section-title">Más allá del código</h2>
-  <p class="section-subtitle">Análisis profundos sobre IA y tecnología. Con rigor, con contexto y sin clickbait.</p>
-
-  <div class="blog-grid">
-
-    <a href="blog-historia-quedaron-atras.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Historia</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">La historia de los que se quedaron atrás — y por qué tú no quieres ser uno de ellos</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Desde la piedra afilada hasta la IA. Cada revolución tecnológica tiene dos tipos de personas: los que se adaptan y los que desaparecen.</div>
-    </a>
-
-    <a href="blog-ia-futuro-opinion.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Opinión</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">La IA y el futuro: mi opinión sincera y sin filtro</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Lo que nadie dice en voz alta sobre la IA. Memorias perfectas, vínculos emocionales y por qué esto no es una distopía.</div>
-    </a>
-
-    <a href="blog-ia-espejo.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Privacidad</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">Si le preguntas a tu IA quién eres, ¿qué diría?</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Le estás entregando información que no darías a nadie. Tus miedos. Tus finanzas. Tus problemas íntimos. ¿Eres consciente de lo que estás construyendo?</div>
-    </a>
-
-    <a href="blog-nueva-desigualdad.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Sociedad</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">La nueva desigualdad que nadie está viendo</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Si la IA hace a todos más inteligentes, ¿quién es realmente el más listo? Ilimitados vs limitados: una nueva brecha que se acumula cada día.</div>
-    </a>
-
-    <a href="blog-coste-ia.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">IA · Infraestructura</span>
-        <span>Mayo 2026</span>
-      </div>
-      <div class="blog-title">El verdadero coste de la IA — y quién lo está pagando</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Cada vez que le escribes a una IA, en algún lugar del mundo se consume agua. No es una metáfora. Es física.</div>
-    </a>
-
-    <a href="blog-cuevas-a-ia.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">Reflexión · IA</span>
-        <span>Standalone 6</span>
-      </div>
-      <div class="blog-title">De las cuevas a la IA. El mismo patrón.</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Cuarenta mil años de evolución humana no cambiaron nuestro cerebro. Cambiaron las herramientas fuera de él.</div>
-    </a>
-
-    <a href="blog-delegando-pensamiento.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">Reflexión · IA</span>
-        <span>Standalone 7</span>
-      </div>
-      <div class="blog-title">Estamos delegando nuestro pensamiento a muy pocas personas</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Cinco personas controlan las IA más avanzadas del mundo. Cada respuesta que recibes está moldeada por su visión.</div>
-    </a>
-
-    <a href="blog-ia-no-mienta.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">Reflexión · IA</span>
-        <span>Standalone 8</span>
-      </div>
-      <div class="blog-title">Lo que se está haciendo para que la IA no te mienta</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">IA Constitucional, interpretabilidad, IA supervisando a IA. Las soluciones reales que se están construyendo.</div>
-    </a>
-
-    <a href="blog-quien-controla-la-ia.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">Reflexión · IA</span>
-        <span>Standalone 9</span>
-      </div>
-      <div class="blog-title">Quien controla la IA, controla lo que piensas</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">China y Occidente vigilan de formas distintas, pero con el mismo objetivo: controlar la información.</div>
-    </a>
-
-    <a href="blog-ia-mas-peligrosa.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">Reflexión · IA</span>
-        <span>Standalone 10</span>
-      </div>
-      <div class="blog-title">La IA más peligrosa — el gobierno la bloqueó</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Encontró diez mil vulnerabilidades críticas y ocultó sus capacidades reales durante evaluaciones.</div>
-    </a>
-
-    <a href="blog-ia-trabaja-mientras-duermes.html" class="blog-card">
-      <div class="blog-meta">
-        <span class="blog-category">Reflexión · IA</span>
-        <span>Standalone 11</span>
-      </div>
-      <div class="blog-title">La IA que trabaja mientras tú duermes</div>
-      <div class="blog-divider"></div>
-      <div class="blog-excerpt">Los agentes autónomos ya no esperan tus instrucciones: observan, planifican y actúan solos.</div>
-    </a>
-
-  </div>
-</section>
 
 <div class="neon-line"></div>
 
@@ -1818,7 +1660,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <li><a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank">Instagram</a></li>
     <li><a href="https://www.tiktok.com/@techexplicadasimple" target="_blank">TikTok</a></li>
     <li><a href="recursos.html">Recursos</a></li>
-    <li><a href="#blog">Blog</a></li>
+    <li><a href="blog.html">Blog</a></li>
   </ul>
   <div class="footer-copy">© 2026 Tecnología Explicada Simple · El Equipo TES</div>
 </footer>
