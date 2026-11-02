@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu nutricionista personal con IA: calorías y macros | Tecnología Explicada Simple</title>
+<meta name="description" content="El prompt para que la IA calcule tu metabolismo basal, tus macros y lleve tu diario de comidas.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1WSKFYBEN"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z1WSKFYBEN');</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--blue:#4FC3F7;--blue-ice:#80D8FF;--blue-dark:#0D2233;--blue-mid:#0A3A5C;--black:#000000;--grey:#4A6070;--white:#FFFFFF;--white-dim:rgba(255,255,255,0.75);}
+  *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 24px;}
+  nav{padding:20px 24px;display:flex;justify-content:center;border-bottom:1px solid rgba(79,195,247,0.08);}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+
+  .hero{padding:56px 0 32px;text-align:center;}
+  .eyebrow{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.25em;color:var(--blue);background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.2);padding:6px 14px;text-transform:uppercase;margin-bottom:24px;}
+  .hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(26px,7vw,38px);line-height:1.2;letter-spacing:-0.02em;margin-bottom:16px;}
+  .hero h1 span{color:var(--blue);}
+  .hero p{font-size:15px;color:var(--white-dim);line-height:1.6;max-width:460px;margin:0 auto;}
+
+  .capture{background:var(--blue-dark);border:1px solid rgba(79,195,247,0.25);padding:32px 24px;margin:8px 0 40px;}
+  .capture-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--blue);text-transform:uppercase;margin-bottom:8px;text-align:center;}
+  .capture h2{font-family:'Syne',sans-serif;font-weight:700;font-size:19px;text-align:center;margin-bottom:8px;line-height:1.3;}
+  .capture-sub{font-size:13px;color:var(--white-dim);text-align:center;margin-bottom:24px;line-height:1.5;}
+  .field{margin-bottom:12px;}
+  .field input{width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(79,195,247,0.2);color:var(--white);font-family:'Inter',sans-serif;font-size:16px;padding:15px 16px;outline:none;transition:border-color 0.2s;}
+  .field input:focus{border-color:var(--blue);}
+  .field input::placeholder{color:var(--grey);}
+  .btn{width:100%;background:var(--blue);color:var(--black);font-family:'Syne',sans-serif;font-weight:700;font-size:15px;letter-spacing:0.05em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;transition:opacity 0.2s;}
+  .btn:hover{opacity:0.88;}
+  .form-note{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);text-align:center;margin-top:14px;line-height:1.5;}
+
+  .guide{display:none;}
+  .guide.visible{display:block;animation:fade 0.5s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .guide-success{background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.3);padding:14px 18px;margin-bottom:32px;font-family:'Space Mono',monospace;font-size:12px;color:#4ade80;text-align:center;line-height:1.5;}
+
+  .resource-box{background:rgba(255,255,255,0.02);border:1px solid rgba(79,195,247,0.12);border-left:3px solid var(--blue);padding:24px 20px;margin-bottom:16px;}
+  .resource-box h3{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--white);margin-bottom:10px;}
+  .resource-box p{font-size:14px;color:var(--white-dim);line-height:1.7;}
+
+  .final-cta{text-align:center;padding:40px 0 24px;}
+  .final-cta p{font-size:14px;color:var(--white-dim);margin-bottom:16px;line-height:1.6;}
+  .final-cta a{display:inline-block;color:var(--blue);font-family:'Syne',sans-serif;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(79,195,247,0.3);padding:12px 24px;transition:background 0.2s;}
+  .final-cta a:hover{background:rgba(79,195,247,0.08);}
+
+  footer{border-top:1px solid rgba(79,195,247,0.08);padding:32px 24px;text-align:center;margin-top:40px;}
+  .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;}
+  .footer-copy{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);opacity:0.6;line-height:1.6;}
+  .footer-copy a{color:var(--grey);text-decoration:none;}
+  .pbox{background:#000;border:1px solid rgba(79,195,247,0.3);padding:18px;margin:12px 0 4px;font-family:'Space Mono',monospace;font-size:12px;line-height:1.65;color:var(--white-dim);white-space:pre-wrap;max-height:420px;overflow-y:auto;}
+  .copybtn{width:100%;margin-top:10px;background:transparent;color:var(--blue);border:1px solid var(--blue);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;padding:12px;cursor:pointer;}
+  .warn{border-left-color:#FBBF24 !important;}
+</style>
+</head>
+<body>
+
+<nav><a href="index.html" class="nav-logo">TES</a></nav>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">IA en Acción · Nutricionista con IA · Keyword: MACROS</div>
+    <h1>Tu nutricionista personal <span>con IA</span></h1>
+    <p>Un prompt para que la IA calcule tus calorías y macros y lleve tu diario cada día.</p>
+  </div>
+
+  <div class="capture" id="capture-box">
+    <div class="capture-label">⚡ Guía gratuita</div>
+    <h2>Te la envío ahora mismo</h2>
+    <div class="capture-sub">Déjame tu email y desbloqueas la guía al instante.</div>
+    <div class="field">
+      <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name">
+    </div>
+    <div class="field">
+      <input type="email" id="email" placeholder="Tu email" autocomplete="email" inputmode="email">
+    </div>
+    <button class="btn" onclick="enviarRecurso()" id="submit-btn">Desbloquear la guía gratis →</button>
+    <div class="form-note">Tu email solo se usa para enviarte este recurso. Sin spam.</div>
+  </div>
+
+  <div class="guide" id="guide-content">
+    <div class="guide-success">✓ ¡Listo! Aquí tienes la guía.</div>
+
+    <div class="resource-box ">
+      <h3>Qué hace este nutricionista</h3>
+      <p>Calcula tu metabolismo basal, te da calorías y macros según tu meta, y cada día lleva la cuenta de lo que comes y de tu actividad para decirte cuánto déficit o superávit llevas y qué comer para cerrar el día.</p>
+    </div>
+
+    <div class="resource-box">
+      <h3>El prompt (cópialo tal cual)</h3>
+      <div class="pbox" id="prompt-text">Actúa como mi nutricionista personal con IA. Tu misión es ayudarme a alcanzar mis metas de salud y composición corporal de forma sostenible, con un tono motivador y directo, sin culpa.
+
+FASE 1 — CONÓCEME
+Hazme estas preguntas de una en una y espera mi respuesta antes de pasar a la siguiente:
+1. Edad, sexo, estatura y peso actual.
+2. Mi meta (perder grasa, ganar músculo, mantenerme...) y en cuánto tiempo, si aplica.
+3. Mi nivel de actividad: tipo de trabajo (sedentario o activo) y cuántos días a la semana hago ejercicio y de qué tipo.
+4. Alimentos que me gustan, alimentos que no me gustan, alergias, intolerancias y restricciones (vegetariano, etc.).
+5. Cuántas comidas hago al día y cuánto tiempo y presupuesto tengo para cocinar.
+6. Opcional: analíticas o condiciones médicas que debas tener en cuenta.
+
+FASE 2 — MIS NÚMEROS
+- Calcula mi metabolismo basal con la fórmula Mifflin-St Jeor y muéstrame la cuenta paso a paso.
+- Calcula mi gasto diario total según mi nivel de actividad.
+- Propón mis calorías objetivo y el reparto de macros (proteína, carbohidratos y grasas) alineado con mi meta, explicando el porqué.
+- Límites de seguridad: no propongas un déficit mayor al 20% de mi gasto ni calorías por debajo de mi metabolismo basal. Si mi meta exige más que eso, avísame y recomiéndame consultar a un profesional.
+- Recuérdame que todo son estimaciones y que las ajustaremos con mi progreso real.
+
+FASE 3 — DIARIO
+Cada día te diré qué comí y qué actividad física hice. Tú:
+1. Estima calorías y macros de cada alimento (si faltan cantidades, pregúntame).
+2. Suma el total del día junto con mi actividad.
+3. Calcula mi déficit o superávit del día frente a mi objetivo.
+4. Dime cuánto me queda de cada macro y recomiéndame qué comer, con alimentos que me gustan, para cerrar el día alineado con mi meta.
+5. Cada semana, hazme un resumen: promedio, tendencia y ajustes que recomiendas.
+
+REGLAS
+- Si no sabes un dato, pregúntame. No inventes cifras.
+- No clasifiques los alimentos en "buenos" o "malos".
+- Si te cuento que como muy poco, que me siento mal o que me obsesiono con la comida, prioriza mi bienestar y recomiéndame hablar con un profesional.
+
+Empieza ahora con la Fase 1 y la primera pregunta.</div>
+      <button class="copybtn" onclick="copiarPrompt(this)">Copiar prompt</button>
+    </div>
+
+    <div class="resource-box ">
+      <h3>Cómo usarlo</h3>
+      <p>1. Pégalo en Claude, ChatGPT o Gemini y responde a las preguntas de la Fase 1.<br>2. Cada día, escríbele lo que comiste y tu actividad, aunque sea en una frase.<br>3. Mejor si lo guardas en un Project o GPT personalizado: así recuerda tus datos y no tienes que repetirlos.</p>
+    </div>
+
+    <div class="resource-box ">
+      <h3>Para que funcione mejor</h3>
+      <p>Cuanto más específico seas con cantidades (gramos, raciones, "un plato hondo"), más fiables serán las cifras. Revisa el resumen semanal: si tu peso no se mueve como esperabas, pídele que ajuste las calorías.</p>
+    </div>
+
+    <div class="resource-box warn">
+      <h3>Ojo con esto</h3>
+      <p>La IA estima: las cifras son orientativas, no exactas. No sustituye a un médico ni a un nutricionista, sobre todo si tienes una condición médica, estás embarazada o has tenido problemas con la alimentación. Si le das analíticas, quita datos personales como tu nombre antes de pegarlas.</p>
+    </div>
+
+    <div class="final-cta">
+      <p>Esta guía acompaña el vídeo «Cómo creé mi nutricionista personal con IA». Hay más recursos gratis para sacarle partido a la IA.</p>
+      <a href="recursos.html">Ver todos los recursos gratis →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Tecnología Explicada Simple</div>
+  <div class="footer-copy">
+    © 2026 · El Equipo TES<br>
+    <a href="https://www.instagram.com/tecnologia.explicada.simple" target="_blank" rel="noopener">@tecnologia.explicada.simple</a>
+  </div>
+</footer>
+
+<script>
+function copiarPrompt(b){var tx=document.getElementById("prompt-text").innerText;function ok(){b.textContent="¡Copiado!";setTimeout(function(){b.textContent="Copiar prompt";},2000);}function fb(){var r=document.createRange();r.selectNode(document.getElementById("prompt-text"));getSelection().removeAllRanges();getSelection().addRange(r);try{document.execCommand("copy");}catch(e){}ok();}if(navigator.clipboard){navigator.clipboard.writeText(tx).then(ok,fb);}else{var r=document.createRange();r.selectNode(document.getElementById("prompt-text"));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand("copy");ok();}}
+function enviarRecurso() {
+  var nombre = document.getElementById('nombre').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!nombre) { alert('Por favor, escribe tu nombre.'); return; }
+  if (!emailRegex.test(email)) { alert('Por favor, introduce un email válido.'); return; }
+
+  var btn = document.getElementById('submit-btn');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  fetch('https://script.google.com/macros/s/AKfycbwzsnUiyIBJIgCk4YaHRbsuF4wlYJvw9fcAJRl-7OQU-wBXzRtomnyxNlBD8u69u4oH/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nombre: nombre, email: email, recurso: 'IAenAccion-Nutricionista-MACROS' })
+  });
+
+  gtag('event', 'generate_lead', {
+    'event_category': 'captura_email',
+    'event_label': 'macros',
+    'recurso': 'IAenAccion-Nutricionista-MACROS'
+  });
+
+  try{localStorage.setItem('tes_unlocked','true');}catch(x){}
+  document.getElementById('capture-box').style.display = 'none';
+  var guide = document.getElementById('guide-content');
+  guide.classList.add('visible');
+  guide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+<script>try{if(localStorage.getItem('tes_unlocked')==='true'){var c=document.getElementById('capture-box'),g=document.getElementById('guide-content');if(c&&g){c.style.display='none';g.classList.add('visible');}}}catch(e){}</script>
+</body>
+</html>
